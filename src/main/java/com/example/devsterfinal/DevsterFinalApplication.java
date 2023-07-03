@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"data.*", "naver.cloud", })
+@ComponentScan({"data.*", "naver.cloud","jwt.setting"})
 @EnableJpaRepositories(basePackages = {"data.repository"})
 @EntityScan("data.entity")
 public class DevsterFinalApplication {
