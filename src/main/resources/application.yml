@@ -1,10 +1,11 @@
 server:
   port: 443
   port-html : 80
+
   ssl:
     key-store: classpath:keystore.p12
     key-store-type: PKCS12
-    key-store-password: bit4!@#$
+    key-store-password: vpfldk123!@#
 
 spring:
   datasource:
