@@ -1,5 +1,9 @@
 server:
-  port: 9010
+  port: 443
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-type: PKCS12
+    key-store-password: bit4!@#$
 
 spring:
   datasource:
