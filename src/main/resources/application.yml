@@ -1,5 +1,6 @@
 server:
   port: 443
+  port-html : 80
   ssl:
     key-store: classpath:keystore.p12
     key-store-type: PKCS12
