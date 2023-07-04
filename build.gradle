@@ -58,7 +58,7 @@ task appNpmInstall(type: NpmTask) {
 }
 
 // React build 설정
-def reactAppDir = "$projectDir/src/main/reactjs/my-app"
+def reactAppDir = "$projectDir/src/main/reactJs/my-app"
 /*
 sourceSets {
   main {
