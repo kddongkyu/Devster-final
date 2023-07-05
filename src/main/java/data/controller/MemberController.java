@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Member;
 import java.util.List;
@@ -41,5 +42,26 @@ public class MemberController {
         return new ResponseEntity<MemberDto>(memberService.insertMember(dto), HttpStatus.OK);
     }
 
+    @PostMapping("/photo")
+    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
+        return new ResponseEntity<String>(memberService.uploadPhoto(upload),HttpStatus.OK);
+    }
 
+    @PutMapping("/photo/reset")
+    public ResponseEntity<Void> resetPhoto(String photo){
+        memberService.resetPhoto(photo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> updateMember(@RequestBody MemberDto dto) {
+        memberService.updateMember(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/photo/{m_idx}")
+    public ResponseEntity<Void> updatePhoto(@PathVariable Integer m_idx,@RequestBody MultipartFile upload) {
+        memberService.updatePhoto(m_idx,upload);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
