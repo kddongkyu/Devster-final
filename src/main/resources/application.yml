@@ -35,3 +35,7 @@ logging:
 aws:
   s3:
     bucketName: bit701.bucket.102
+
+jwt:
+  token:
+    secret : KbPeShVmYq3t6w9z$C&F)H@McQfTjWnZ

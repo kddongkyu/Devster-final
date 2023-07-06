@@ -4,12 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from "./Home";
+import Bot from "./Bot";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/*<App />*/}
-      <Home/>
+    {/*  <Home/>*/}
+      <Bot/>
   </React.StrictMode>
 );
 

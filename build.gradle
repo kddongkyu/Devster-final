@@ -26,8 +26,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.jetbrains:annotations:24.0.0'
-    implementation 'org.apache.commons:commons-text:1.9'
+    implementation 'org.apache.commons:commons-text:1.10.0'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
@@ -52,62 +53,62 @@ tasks.named('test') {
 //   download = true
 // }
 
-//task appNpmInstall(type: NpmTask) {
-//    dependsOn "npmSetup"
-//    description = "Installs dependencies from package.json"
-//    workingDir = file("${projectDir}/src/main/resources/static")
-//    args = ["install"]
-//}
-//
-//// React build 설정
-//def reactAppDir = "$projectDir/src/main/reactJs/my-app"
-///*
-//sourceSets {
-//  main {
-//    resources {
-//      srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
-//    }
-//  }
-//}
-//*/
-//
-//processResources {
-//    dependsOn "copyReactFile"
-////    dependsOn "appNpmInstall"
-//
-//}
-//
-//
-//task copyReactFile(type: Copy) {
-//    dependsOn "buildReact"
-//    from "$reactAppDir/build"
-//    //into "$buildDir/resources/main/static"
-//    into "$projectDir/src/main/resources/static/"
-//}
-//
-//task buildReact(type: Exec) {
-//    dependsOn "installReact"
-//    workingDir "$reactAppDir"
-//    inputs.dir "$reactAppDir"
-//    group = BasePlugin.BUILD_GROUP
-//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-//        commandLine "npm.cmd", "run-script", "build"
-//    } else {
-//        commandLine "npm", "run-script", "build"
-//    }
-//}
-//
-//task installReact(type: Exec) {
-//    workingDir "$reactAppDir"
-//    inputs.dir "$reactAppDir"
-//    group = BasePlugin.BUILD_GROUP
-//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-//        commandLine "npm.cmd", "audit", "fix"
-//        commandLine "npm.cmd", "install"
-//    } else {
-//        commandLine "npm", "audit", "fix"
-//        commandLine "npm", "install"
-//    }
-//}
-//
-//
+task appNpmInstall(type: NpmTask) {
+    dependsOn "npmSetup"
+    description = "Installs dependencies from package.json"
+    workingDir = file("${projectDir}/src/main/resources/static")
+    args = ["install"]
+}
+
+// React build 설정
+def reactAppDir = "$projectDir/src/main/reactJs/my-app"
+/*
+sourceSets {
+  main {
+    resources {
+      srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+    }
+  }
+}
+*/
+
+processResources {
+    dependsOn "copyReactFile"
+//    dependsOn "appNpmInstall"
+
+}
+
+
+task copyReactFile(type: Copy) {
+    dependsOn "buildReact"
+    from "$reactAppDir/build"
+    //into "$buildDir/resources/main/static"
+    into "$projectDir/src/main/resources/static/"
+}
+
+task buildReact(type: Exec) {
+    dependsOn "installReact"
+    workingDir "$reactAppDir"
+    inputs.dir "$reactAppDir"
+    group = BasePlugin.BUILD_GROUP
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine "npm.cmd", "run-script", "build"
+    } else {
+        commandLine "npm", "run-script", "build"
+    }
+}
+
+task installReact(type: Exec) {
+    workingDir "$reactAppDir"
+    inputs.dir "$reactAppDir"
+    group = BasePlugin.BUILD_GROUP
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine "npm.cmd", "audit", "fix"
+        commandLine "npm.cmd", "install"
+    } else {
+        commandLine "npm", "audit", "fix"
+        commandLine "npm", "install"
+    }
+}
+
+

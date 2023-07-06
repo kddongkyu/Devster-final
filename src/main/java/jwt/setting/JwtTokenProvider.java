@@ -3,6 +3,7 @@ package jwt.setting;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,9 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
     //https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx
-    private static final String JWT_SECRET = "KbPeShVmYq3t6w9z$C&F)H@McQfTjWnZ";
+
+    @Value("${jwt.token.secret}")
+    private String JWT_SECRET;
 
     // 토큰 유효시간
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분

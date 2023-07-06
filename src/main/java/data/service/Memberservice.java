@@ -1,7 +1,9 @@
 package data.service;
 
 import data.dto.MemberDto;
+import data.entity.AcademyInfoEntity;
 import data.entity.MemberEntity;
+import data.repository.AcademyInfoRepository;
 import data.repository.MemberRepository;
 import naver.cloud.NcpObjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ public class Memberservice {
     private final Logger logger = LoggerFactory.getLogger(Memberservice.class);
 
     private final MemberRepository memberRepository;
+    private final AcademyInfoRepository academyInfoRepository;
 
     @Autowired
     private NcpObjectStorageService storageService;
@@ -33,8 +36,9 @@ public class Memberservice {
 
     String photo = null;
 
-    public Memberservice(MemberRepository memberRepository) {
+    public Memberservice(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository) {
         this.memberRepository = memberRepository;
+        this.academyInfoRepository = academyInfoRepository;
     }
 
     public String uploadPhoto(MultipartFile upload){
@@ -150,10 +154,29 @@ public class Memberservice {
         try {
             return memberRepository.existsByMEmail(m_email);
         } catch (NullPointerException e){
-            logger.error("Error occurred while check duplicate email");
+            logger.error("Error occurred while check duplicate email",e);
             throw e;
         }
     }
+
+    public List<AcademyInfoEntity> academyNameSearch(String name) {
+        try {
+           return academyInfoRepository.findAllByAInameContains(name);
+        } catch (Exception e){
+            logger.error("Error occurred while check academy name ",e);
+            throw e;
+        }
+    }
+
+    public boolean isDuplicateId(String id) {
+        try {
+            return memberRepository.existsByMId(id);
+        } catch (NullPointerException e){
+            logger.error("Error occurred while check duplicate email",e);
+            throw e;
+        }
+    }
+
 
 
 

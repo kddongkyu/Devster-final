@@ -2,6 +2,8 @@ package data.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import data.dto.MemberDto;
+import data.entity.AcademyInfoEntity;
+import data.service.MailService;
 import data.service.Memberservice;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringEscapeUtils;
@@ -24,8 +26,11 @@ public class MemberController {
 
     private final Memberservice memberService;
 
-    public MemberController(Memberservice memberservice){
+    private final MailService mailService;
+
+    public MemberController(Memberservice memberservice, MailService mailService){
         this.memberService = memberservice;
+        this.mailService = mailService;
     }
 
     @GetMapping
@@ -72,7 +77,22 @@ public class MemberController {
         return memberService.isDuplicateEmail(safeEmail);
     }
 
+    @GetMapping("/academy/{name}")
+    public ResponseEntity<List<AcademyInfoEntity>> academyInfoSearch(@PathVariable String name) {
+        return new ResponseEntity<List<AcademyInfoEntity>>(memberService.academyNameSearch(name),HttpStatus.OK);
+    }
 
+    @PostMapping("/email/validation")
+    public ResponseEntity<String> emailValidation(@RequestBody JsonNode jsonNode) throws Exception {
+        String safeEmail = StringEscapeUtils.escapeHtml4(jsonNode.get("m_email").asText());
+        return new ResponseEntity<String>(mailService.sendSimpleMessage(safeEmail),HttpStatus.OK);
+    }
+
+    @GetMapping("/id/{id}")
+    public boolean isDuplicateId(@PathVariable String id) {
+        String safeId = StringEscapeUtils.escapeHtml4(id);
+        return memberService.isDuplicateId(safeId);
+    }
 
     public MemberDto escapeDto(MemberDto dto) {
 
