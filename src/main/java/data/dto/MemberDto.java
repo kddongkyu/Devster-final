@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Builder
 public class MemberDto {
     private int m_idx;
+    private String m_id;
     private String m_email;
     private String m_pass;
     private int m_state;
@@ -29,21 +30,22 @@ public class MemberDto {
 
     public static MemberDto toMemberDto(MemberEntity entity){
         return MemberDto.builder()
-                .m_name(entity.getM_name())
-                .m_email(entity.getM_email())
-                .m_pass(entity.getM_pass())
-                .m_state(entity.getM_state())
-                .m_tele(entity.getM_tele())
-                .ai_idx(entity.getAi_idx())
-                .m_nickname(entity.getM_nickname())
-                .m_photo(entity.getM_photo())
-                .m_point(entity.getM_point())
-                .m_filename(entity.getM_filename())
-                .m_new(entity.getM_new())
-                .ai_name(entity.getAi_name())
+                .m_name(entity.getMName())
+                .m_id(entity.getMId())
+                .m_email(entity.getMEmail())
+                .m_pass(entity.getMPass())
+                .m_state(entity.getMState())
+                .m_tele(entity.getMTele())
+                .ai_idx(entity.getAIidx())
+                .m_nickname(entity.getMNickname())
+                .m_photo(entity.getMPhoto())
+                .m_point(entity.getMPoint())
+                .m_filename(entity.getMFilename())
+                .m_new(entity.getMNew())
+                .ai_name(entity.getAIname())
                 .salt(entity.getSalt())
-                .m_type(entity.getM_type())
-                .m_date(entity.getM_date())
+                .m_type(entity.getMType())
+                .m_date(entity.getMDate())
                 .build();
     }
 }

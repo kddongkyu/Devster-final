@@ -15,45 +15,74 @@ public class MemberEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int m_idx;
+    @Column(name = "m_idx")
+    private int MIdx;
 
-    private String m_name;
-    private String m_email;
-    private String m_pass;
-    @Column(insertable = false)
-    private int m_state;
-    private String m_tele;
-    private int ai_idx;
-    private String m_nickname;
-    private String m_photo;
-    @Column(insertable = false)
-    private int m_point;
-    private String m_filename;
-    @Column(insertable = false)
-    private int m_new;
-    private String ai_name;
+    @Column(name = "m_id")
+    private String MId;
+
+    @Column(name = "m_name")
+    private String MName;
+
+    @Column(name = "m_email")
+    private String MEmail;
+
+    @Column(name = "m_pass")
+    private String MPass;
+
+    @Column(name = "m_state", insertable = false)
+    private int MState;
+
+    @Column(name = "m_tele")
+    private String MTele;
+
+    @Column(name = "ai_idx")
+    private int AIidx;
+
+    @Column(name = "m_nickname")
+    private String MNickname;
+
+    @Column(name = "m_photo")
+    private String MPhoto;
+
+    @Column(name = "m_point",insertable = false)
+    private int MPoint;
+
+    @Column(name = "m_filename")
+    private String MFilename;
+
+    @Column(name = "m_new", insertable = false)
+    private int MNew;
+
+    @Column(name = "ai_name")
+    private String AIname;
+
     private String salt;
-    private int m_type;
-    @Column(insertable = false)
-    private Timestamp m_date;
+
+    @Column(name = "m_type")
+    private int MType;
+
+    @Column(name = "m_date", insertable = false)
+    private Timestamp MDate;
 
     public static MemberEntity toMemberEntity(MemberDto dto){
         return MemberEntity.builder()
-                .m_name(dto.getM_name())
-                .m_email(dto.getM_email())
-                .m_pass(dto.getM_pass())
-                .m_state(dto.getM_state())
-                .m_tele(dto.getM_tele())
-                .ai_idx(dto.getAi_idx())
-                .m_nickname(dto.getM_nickname())
-                .m_photo(dto.getM_photo())
-                .m_point(dto.getM_point())
-                .m_filename(dto.getM_filename())
-                .m_new(dto.getM_new())
-                .ai_name(dto.getAi_name())
+                .MName(dto.getM_name())
+                .MId(dto.getM_id())
+                .MEmail(dto.getM_email())
+                .MPass(dto.getM_pass())
+                .MState(dto.getM_state())
+                .MTele(dto.getM_tele())
+                .AIidx(dto.getAi_idx())
+                .MNickname(dto.getM_nickname())
+                .MPhoto(dto.getM_photo())
+                .MPoint(dto.getM_point())
+                .MFilename(dto.getM_filename())
+                .MNew(dto.getM_new())
+                .AIname(dto.getAi_name())
                 .salt(dto.getSalt())
-                .m_type(dto.getM_type())
-                .m_date(dto.getM_date())
+                .MType(dto.getM_type())
+                .MDate(dto.getM_date())
                 .build();
     }
 }
