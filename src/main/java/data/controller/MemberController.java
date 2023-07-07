@@ -4,11 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import data.dto.MemberDto;
 import data.entity.AcademyInfoEntity;
 import data.service.MailService;
-import data.service.Memberservice;
-import lombok.extern.slf4j.Slf4j;
+import data.service.MemberService;
 import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +15,14 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@Slf4j
 @RequestMapping("/member")
 public class MemberController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private final Memberservice memberService;
+    private final MemberService memberService;
 
     private final MailService mailService;
 
-    public MemberController(Memberservice memberservice, MailService mailService){
+    public MemberController(MemberService memberservice, MailService mailService){
         this.memberService = memberservice;
         this.mailService = mailService;
     }
