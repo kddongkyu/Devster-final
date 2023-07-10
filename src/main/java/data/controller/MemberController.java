@@ -3,11 +3,14 @@ package data.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import data.dto.MemberDto;
 import data.entity.AcademyInfoEntity;
+import data.service.LoginService;
 import data.service.MailService;
 import data.service.MemberService;
+import oauth2.service.CustomOAuth2UserService;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,9 +25,14 @@ public class MemberController {
 
     private final MailService mailService;
 
-    public MemberController(MemberService memberservice, MailService mailService){
+    private final LoginService loginService;
+
+    private final CustomOAuth2UserService customOAuth2UserService;
+    public MemberController(MemberService memberservice, MailService mailService, LoginService loginService, CustomOAuth2UserService customOAuth2UserService){
         this.memberService = memberservice;
         this.mailService = mailService;
+        this.loginService = loginService;
+        this.customOAuth2UserService = customOAuth2UserService;
     }
 
     @GetMapping
@@ -88,6 +96,18 @@ public class MemberController {
         return memberService.isDuplicateId(safeId);
     }
 
+    @PostMapping("/sign-up")
+    public String signUp(@RequestBody MemberDto dto) throws Exception {
+        memberService.registerMember(dto);
+        return "회원가입 성공";
+    }
+
+    @GetMapping("/social/naver")
+    public String socialSignUp(OAuth2UserRequest userRequest){
+        customOAuth2UserService.loadUser(userRequest);
+        return "소셜 회원가입 성공!";
+    }
+
     public MemberDto escapeDto(MemberDto dto) {
 
         dto.setM_email(StringEscapeUtils.escapeHtml4(dto.getM_email()));
@@ -98,6 +118,11 @@ public class MemberController {
         dto.setM_nickname(StringEscapeUtils.escapeHtml4(dto.getM_nickname()));
 
         return dto;
+    }
+
+    @GetMapping("/jwt-test")
+    public String jwtTest() {
+        return "jwtTest 요청 성공";
     }
 
 }

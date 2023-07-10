@@ -8,6 +8,7 @@ import data.repository.MemberRepository;
 import naver.cloud.NcpObjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -28,6 +29,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final AcademyInfoRepository academyInfoRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     private NcpObjectStorageService storageService;
 
@@ -36,9 +39,10 @@ public class MemberService {
 
     String photo = null;
 
-    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository) {
+    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
         this.academyInfoRepository = academyInfoRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String uploadPhoto(MultipartFile upload){
@@ -67,6 +71,28 @@ public class MemberService {
         logger.info("일반회원 회원가입 완료.");
         return dto;
     }
+
+    public void registerMember(MemberDto dto) throws Exception {
+        if(memberRepository.existsByMEmail(dto.getM_email())) {
+            throw new Exception("이미 존재하는 이메일입니다.");
+        }
+
+        if(memberRepository.existsByMId(dto.getM_id())) {
+            throw new Exception("이미 존재하는 아이디 입니다.");
+        }
+
+        if(memberRepository.existsByMNickname(dto.getM_nickname())) {
+            throw new Exception("이미 존재하는 닉네임 입니다.");
+        }
+
+        dto.setM_photo(photo);
+        MemberEntity member = MemberEntity.toMemberEntity(dto);
+        member.passwordEncode(passwordEncoder);
+        memberRepository.save(member);
+
+    }
+
+
 
     public List<MemberDto> getAllMembers() {
         List<MemberDto> list = new ArrayList<>();
