@@ -1,7 +1,7 @@
 .header-box {
     width: 100%;
     right: 0;
-    background-color: rgba(245, 245, 247, 0.9);
+    background-color: rgba(245, 245, 247, 0.8);
     backdrop-filter: blur(7px);
     border-bottom: 1px solid rgba(210, 210, 210, 0.9);
     box-sizing: border-box;

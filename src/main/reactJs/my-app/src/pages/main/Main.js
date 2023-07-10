@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {NavLink, useNavigate} from 'react-router-dom';
 import './style/Main.css';
+import {MainBest, MainFreeboard, MainQnA} from "./index";
+
 
 function Main(props) {
     const navi=useNavigate();
     const [ai_idx,setAi_idx]=useState(3); //dummy
-    
+
     return (
         <div>
             {/*<h1>*/}
@@ -20,46 +22,7 @@ function Main(props) {
                     <div className="main-preview-name-box" />
                     <b className="main-preview-name-text">실시간 인기글</b>
                 </div>
-                <div className="main-best-preview">
-                    <div className="main-best-box" />
-                    <div className="main-best-profile-img" />
-                    <div className="main-best-info">
-                        <b className="main-best-info-type">게시판명길이최대로</b>
-                        <div className="main-best-info-date">작성시간</div>
-                    </div>
-                    <div className="main-best-id">
-                        <div className="main-best-info-type">ABCDEFGHIJ</div>
-                    </div>
-                    <b className="main-best-subject">제목 일이삼사오육칠팔구...</b>
-                    <div className="main-best-content">
-                        본문 일이삼사오육칠팔구십일이...
-                    </div>
-                    <div className="main-best-img" />
-                    <div className="main-best-likes">
-                        <div className="main-best-likes-text">99.9k</div>
-                        <img
-                            className="main-best-likes-icon"
-                            alt=""
-                            src="/main-best-likes-icon.svg"
-                        />
-                    </div>
-                    <div className="main-best-coments">
-                        <div className="main-best-likes-text">99.9k</div>
-                        <img
-                            className="main-best-coments-icon"
-                            alt=""
-                            src="/main-best-coments-icon.svg"
-                        />
-                    </div>
-                    <div className="main-best-views">
-                        <div className="main-best-views-text">99.9k</div>
-                        <img
-                            className="main-best-views-icon"
-                            alt=""
-                            src="/main-best-views-icon.svg"
-                        />
-                    </div>
-                </div>
+                <MainBest/>
                 <div className="main-more">
                     <div className="main-more-text">더보기</div>
                     <img className="main-more-icon" alt="" src="/main-more-icon.svg" />
@@ -72,39 +35,7 @@ function Main(props) {
                     <div className="main-preview-name-box" />
                     <b className="main-preview-name-text">자유게시판 (최신순)</b>
                 </div>
-                <div className="main-freeboard-preview">
-                    <div className="main-freeboard-box" />
-                    <div className="main-best-profile-img" />
-                    <div className="main-freeboard-info">
-                        <div className="main-best-info-type">아이디명최대로ㅇㅇㅇ</div>
-                        <div className="main-freeboard-info-spacing" />
-                        <div className="main-best-info-date">작성시간</div>
-                    </div>
-                    <b className="main-freeboard-subject">
-                        제목 일이삼사오육칠팔구십일이삼사...
-                    </b>
-                    <div className="main-freeboard-likes">
-                        <div className="main-freeboard-likes-text">99.9k</div>
-                        <img
-                            className="main-freeboard-likes-icon"
-                            alt=""
-                            src="/main-freeboard-likes-icon.svg"
-                        />
-                    </div>
-                    <div className="main-freeboard-coments">
-                        <div className="main-freeboard-likes-text">99.9k</div>
-                        <img
-                            className="main-freeboard-coments-icon"
-                            alt=""
-                            src="/main-freeboard-coments-icon.svg"
-                        />
-                    </div>
-                    <img
-                        className="main-freeboard-img-icon"
-                        alt=""
-                        src="/main-freeboard-img-icon.svg"
-                    />
-                </div>
+                <MainFreeboard/>
                 <div className="main-more1">
                     <div className="main-more-text">더보기</div>
                     <img className="main-more-icon" alt="" src="/main-more-icon1.svg" />
@@ -113,31 +44,7 @@ function Main(props) {
                     <div className="main-preview-name-box" />
                     <b className="main-preview-name-text">질문게시판 (최신순)</b>
                 </div>
-                <div className="main-qna-preview">
-                    <div className="main-freeboard-box" />
-                    <div className="main-best-profile-img" />
-                    <div className="main-freeboard-info">
-                        <div className="main-best-info-type">아이디명최대로ㅇㅇㅇ</div>
-                        <div className="main-freeboard-info-spacing" />
-                        <div className="main-best-info-date">작성시간</div>
-                    </div>
-                    <b className="main-freeboard-subject">
-                        제목 일이삼사오육칠팔구십일이삼사...
-                    </b>
-                    <div className="main-freeboard-coments">
-                        <div className="main-freeboard-likes-text">99.9k</div>
-                        <img
-                            className="main-freeboard-coments-icon"
-                            alt=""
-                            src="/main-qna-coments-icon.svg"
-                        />
-                    </div>
-                    <img
-                        className="main-freeboard-img-icon"
-                        alt=""
-                        src="/main-qna-img-icon.svg"
-                    />
-                </div>
+                <MainQnA/>
                 <div className="main-more2">
                     <div className="main-more-text">더보기</div>
                     <img className="main-more-icon" alt="" src="/main-more-icon2.svg" />
