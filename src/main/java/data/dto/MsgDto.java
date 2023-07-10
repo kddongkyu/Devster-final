@@ -10,4 +10,5 @@ public class MsgDto {
     private String roomId;
     private String userName;
     private String msg;
+    private int ppl;
 }

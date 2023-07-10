@@ -1,2 +1,1 @@
-export {default as Lobby} from './Lobby';
-export {default as Room} from './Room';
+export {default as DevChat} from './DevChat';
