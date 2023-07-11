@@ -1,0 +1,108 @@
+.text-myaccount {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 2rem;
+  letter-spacing: -0.24px;
+  color: #222;
+}
+.menulist-userinfo-box {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  height: 4rem;
+}
+.text_userinfo {
+  position: absolute;
+  top: 1rem;
+  left: 5.1rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+}
+.icon-userinfo {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.9rem;
+  width: 2.8rem;
+  height: 2.8rem;
+}
+.menu-userinfo {
+  position: absolute;
+  /* width: calc(100% - 2px); */
+  width: 100%;
+  top: 4.4rem;
+  right: 0;
+  left: 0.2rem;
+  height: 4rem;
+}
+.text-bookmarks {
+  position: absolute;
+  top: 1.08rem;
+  left: 5.1rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+}
+.menu-bookmarklist {
+  position: absolute;
+  width: calc(100% - 2px);
+  top: 9.2rem;
+  right: 0;
+  left: 0.2rem;
+  height: 4rem;
+}
+.icon-resume {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.9rem;
+  width: 2.8rem;
+  height: 2.8rem;
+}
+.menu-myresume,
+.menu-notice,
+.menu-withdrawal {
+  position: absolute;
+  width: calc(100% - 2px);
+  top: 14rem;
+  right: 0;
+  left: 0.2rem;
+  height: 4rem;
+}
+.menu-notice,
+.menu-withdrawal {
+  top: 18.8rem;
+}
+.menu-notice {
+  top: 23.6rem;
+}
+.line-mypage {
+  position: absolute;
+  width: calc(100% - 1px);
+  top: 30.55rem;
+  right: -0.05rem;
+  left: 0.15rem;
+  border-top: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  height: 0.1rem;
+}
+.mypage-wrapper {
+  position: absolute;
+  top: 8.4rem;
+  left: 2rem;
+  width: calc(100% - 4.4rem);
+  height: 30.6rem;
+  z-index: 100;
+}
+.mypage {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  /* height: 39rem; */
+  text-align: left;
+  font-size: 1.4rem;
+  color: #6e727f;
+  font-family: "Noto Sans KR";
+}

@@ -1,0 +1,507 @@
+.resumeform-header-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.9rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  color: #000;
+  width: 16.4rem;
+  height: 2.3rem;
+}
+.resumeform-header-ck-text {
+  position: absolute;
+  top: 0.2rem;
+  right: 4.4rem;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  display: inline-block;
+  width: 8.8rem;
+  height: 1.8rem;
+}
+.resumeform-header-ck-rec-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 10px;
+  width: 4.2rem;
+  height: 2.2rem;
+}
+.resumeform-header-ck-ecl {
+  position: absolute;
+  top: 0;
+  right: 0.05rem;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1.5px solid #721ea6;
+  box-sizing: border-box;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+.resumeform-header-ck {
+  position: absolute;
+  top: 0.1rem;
+  right: 0;
+  width: 13.2rem;
+  height: 2.2rem;
+}
+.resumeform-header-email-icon {
+  position: absolute;
+  top: 0.2rem;
+  left: -0.1rem;
+  width: 1.7rem;
+  height: 1.35rem;
+}
+.resumeform-header-email-text {
+  position: absolute;
+  top: 0;
+  left: 2.4rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 15.4rem;
+  height: 1.7rem;
+}
+.resumeform-header-email {
+  position: absolute;
+  top: 3.8rem;
+  left: 0.2rem;
+  width: 17.8rem;
+  height: 1.7rem;
+}
+.resumeform-header-tel-icon {
+  position: absolute;
+  top: 0;
+  left: -0.1rem;
+  width: 1.7rem;
+  height: 1.7rem;
+}
+.resumeform-header-tel {
+  position: absolute;
+  top: 6rem;
+  left: 0.2rem;
+  width: 17.8rem;
+  height: 1.7rem;
+}
+.resumeform-header {
+  position: absolute;
+  top: 0;
+  left: 0.3rem;
+  width: 100%;
+  height: 7.7rem;
+  font-size: 1.2rem;
+  color: #626567;
+}
+.resumeform-job-tiltle-text {
+  position: absolute;
+  top: 0;
+  left: 0.3rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 34.1rem;
+  height: 2.3rem;
+}
+.resumeform-job-line-01-icon {
+  position: absolute;
+  width: 100%;
+  top: 2.84rem;
+  right: 0;
+  left: 0;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.12rem;
+}
+.resumeform-job-tiltle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35rem;
+  height: 2.9rem;
+}
+.resumeform-job-box-rec {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #f5eff9;
+  height: 2.8rem;
+}
+.resumeform-job-box-text {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.6rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 12.4rem;
+  height: 1.4rem;
+}
+.resumeform-job-box {
+  position: absolute;
+  width: calc(100% - 11px);
+  top: 4.1rem;
+  right: 0.6rem;
+  left: 0.5rem;
+  height: 2.8rem;
+  font-size: 1.3rem;
+  color: #626567;
+}
+.resumeform-job {
+  position: absolute;
+  top: 10.4rem;
+  left: 0;
+  width: 100%;
+  height: 6.9rem;
+}
+.span {
+  font-size: 1rem;
+}
+.resumeform-skill-box-text {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.6rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 25.5rem;
+  height: 1.4rem;
+}
+.resumeform-skill {
+  position: absolute;
+  top: 19.3rem;
+  left: 0;
+  width: 100%;
+  height: 6.9rem;
+}
+.resumeform-link-box-icon-text {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.6rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 32.1rem;
+  height: 1.4rem;
+}
+.resumeform-link-box-icon {
+  position: absolute;
+  top: 1.15rem;
+  left: 0.85rem;
+  width: 1.48rem;
+  height: 0.74rem;
+}
+.resumeform-link {
+  position: absolute;
+  top: 28.2rem;
+  left: 0;
+  width: 100%;
+  height: 6.9rem;
+}
+.resumeform-school-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35rem;
+  height: 2.9rem;
+  font-size: 1.5rem;
+  color: #000;
+}
+.resumeform-school-entrance-rec {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #f5eff9;
+  height: 2.8rem;
+}
+.resumeform-school-entrance-ico {
+  position: absolute;
+  top: 0.7rem;
+  left: calc(50% - 61.5px);
+  letter-spacing: -0.24px;
+}
+.resumeform-school-entrance-ico-icon {
+  position: absolute;
+  top: 0.84rem;
+  right: 1.3rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.resumeform-school-entrance {
+  position: absolute;
+  width: 42%;
+  top: 4.1rem;
+  right: 52.29%;
+  left: 5.71%;
+  height: 2.8rem;
+}
+.resumeform-school-graduation-i {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.6rem;
+  letter-spacing: -0.24px;
+}
+.resumeform-school-graduation-i-icon {
+  position: absolute;
+  top: 0.84rem;
+  left: 12rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.resumeform-school-graduation,
+.resumeform-school-inputname {
+  position: absolute;
+  width: 41.43%;
+  top: 4.1rem;
+  right: 5.43%;
+  left: 53.14%;
+  height: 2.8rem;
+}
+.resumeform-school-inputname {
+  width: 89.43%;
+  top: 8.1rem;
+  right: 4.86%;
+  left: 5.71%;
+}
+.resumeform-school {
+  position: absolute;
+  top: 37.1rem;
+  left: 0;
+  width: 100%;
+  height: 10.9rem;
+  font-size: 1rem;
+  color: #626567;
+}
+.icon-add-circle-outline {
+  position: absolute;
+  top: 0.64rem;
+  left: 3.74rem;
+  width: 1.43rem;
+  height: 1.43rem;
+}
+.resumeform-career-group-02-tex {
+  position: absolute;
+  top: 0.7rem;
+  left: 8.16%;
+  letter-spacing: -0.24px;
+}
+.icon-calendar-outline-02 {
+  position: absolute;
+  width: 8.16%;
+  top: 0.84rem;
+  right: 8.87%;
+  left: 82.97%;
+  max-width: 100%;
+  overflow: hidden;
+  height: 1.2rem;
+}
+.resumeform-career-group-02-gro {
+  position: absolute;
+  width: 47.12%;
+  top: 0;
+  right: 52.88%;
+  left: 0;
+  height: 2.8rem;
+}
+.resumeform-career-group-02-tex1 {
+  position: absolute;
+  top: 0.7rem;
+  left: 1.1rem;
+  letter-spacing: -0.24px;
+}
+.resumeform-career-group-02-gro2 {
+  position: absolute;
+  width: 46.47%;
+  top: 0;
+  right: 0.32%;
+  left: 53.21%;
+  height: 2.8rem;
+}
+.resumeform-career-group-02-tex2 {
+  position: absolute;
+  top: 0.8rem;
+  left: 1.4rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 4.7rem;
+  height: 1.5rem;
+}
+.resumeform-career-group-02-gro4,
+.resumeform-career-group-02-gro6 {
+  position: absolute;
+  width: 32.69%;
+  top: 4rem;
+  right: 67.31%;
+  left: 0;
+  height: 2.8rem;
+}
+.resumeform-career-group-02-gro6 {
+  right: 33.65%;
+  left: 33.65%;
+}
+.resumeform-career-group-02-tex4 {
+  position: absolute;
+  width: 46.08%;
+  top: 0.8rem;
+  left: 13.73%;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  height: 1.5rem;
+}
+.resumeform-career-group-02-gro8 {
+  position: absolute;
+  width: 32.69%;
+  top: 4rem;
+  right: 0;
+  left: 67.31%;
+  height: 2.8rem;
+}
+.resumeform-career-group-02 {
+  position: absolute;
+  width: 89.14%;
+  top: 4.1rem;
+  right: 5.14%;
+  left: 5.71%;
+  height: 6.8rem;
+  font-size: 1rem;
+  color: #626567;
+}
+.resumeform-career {
+  position: absolute;
+  top: 50rem;
+  left: 0;
+  width: 100%;
+  height: 10.9rem;
+}
+.resume-certificate-plusicon {
+  position: absolute;
+  top: 0.64rem;
+  left: 5.04rem;
+  width: 1.43rem;
+  height: 1.43rem;
+}
+.resumeform-certificate-box-dat2 {
+  position: absolute;
+  top: 0.7rem;
+  left: 11.43%;
+  letter-spacing: -0.24px;
+}
+.resumeform-certificate-box-dat-icon {
+  position: absolute;
+  width: 11.43%;
+  top: 0.84rem;
+  right: 9.56%;
+  left: 79.01%;
+  max-width: 100%;
+  overflow: hidden;
+  height: 1.2rem;
+}
+.resumeform-certificate-box-dat,
+.resumeform-certificate-box-inp {
+  position: absolute;
+  width: 33.76%;
+  top: 0;
+  right: 66.24%;
+  left: 0;
+  height: 2.8rem;
+}
+.resumeform-certificate-box-inp {
+  width: 63.99%;
+  right: 0;
+  left: 36.01%;
+  border-radius: 5px;
+  background-color: #f5eff9;
+}
+.resumeform-certificate-box {
+  position: absolute;
+  width: 88.86%;
+  top: 4.1rem;
+  right: 5.43%;
+  left: 5.71%;
+  height: 2.8rem;
+  font-size: 1rem;
+  color: #626567;
+}
+.resumeform-certificate {
+  position: absolute;
+  top: 63rem;
+  left: 0;
+  width: 100%;
+  height: 6.9rem;
+}
+.resume-content-box-input {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #f5eff9;
+  height: 19.7rem;
+}
+.p {
+  margin: 0;
+}
+.resume-content-box-text {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.6rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 30.6rem;
+}
+.resume-content-box {
+  position: absolute;
+  width: calc(100% - 11px);
+  top: 4.1rem;
+  right: 0.6rem;
+  left: 0.5rem;
+  height: 19.7rem;
+  font-size: 1.3rem;
+  color: #626567;
+}
+.resumeform-content {
+  position: absolute;
+  top: 72rem;
+  left: 0;
+  width: 100%;
+  height: 23.8rem;
+}
+.resumeform-fileupload-box-icon {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.9rem;
+  width: 1.5rem;
+  height: 1.2rem;
+}
+.resumeform-fileupload,
+.resumeform-resumefileupload {
+  position: absolute;
+  top: 97.9rem;
+  left: 0;
+  width: 100%;
+  height: 6.9rem;
+}
+.resumeform-resumefileupload {
+  top: 106.3rem;
+}
+.resumeform-wrapper {
+  position: absolute;
+  top: 9.2rem;
+  left: 2rem;
+  width: calc(100% - 4.4rem);
+  height: 113.2rem;
+}
+.resumeform {
+  position: relative;
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  height: 122.4rem;
+  overflow: hidden;
+  text-align: left;
+  font-size: 1.5rem;
+  color: #000;
+  font-family: "Noto Sans KR";
+}
