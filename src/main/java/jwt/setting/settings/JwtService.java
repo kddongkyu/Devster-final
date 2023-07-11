@@ -37,17 +37,17 @@ public class JwtService {
 
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String ID_CLAIM = "m_id";
+    private static final String IDX_CLAIM = "m_idx";
     private static final String BEARER = "Bearer ";
 
     private final MemberRepository memberRepository;
 
-    public String generateAccessToken(String m_id) {
+    public String generateAccessToken(int m_idx) {
         Date now = new Date();
             return JWT.create()
-                    .withSubject(REFRESH_TOKEN_SUBJECT)
-                    .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
-                    .withClaim(ID_CLAIM, m_id)
+                    .withSubject(ACCESS_TOKEN_SUBJECT)
+                    .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
+                    .withClaim(IDX_CLAIM, m_idx)
                     .sign(Algorithm.HMAC512(secretKey));
     }
 
@@ -103,13 +103,13 @@ public class JwtService {
      * 유효하다면 getClaim()으로 이메일 추출
      * 유효하지 않다면 빈 Optional 객체 반환
      */
-    public Optional<String> extractId(String accessToken) {
+    public Optional<Integer> extractIdx(String accessToken) {
         try {
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
                     .build()
                     .verify(accessToken)
-                    .getClaim(ID_CLAIM)
-                    .asString());
+                    .getClaim(IDX_CLAIM)
+                    .asInt());
 
         } catch (Exception e){
             log.error(" 액세스 토큰이 유효하지 않습니다. ");
@@ -131,10 +131,20 @@ public class JwtService {
         response.setHeader(refreshHeader, refreshToken);
     }
 
-    public void saveRefreshToken(String id , String refreshToken) {
-        memberRepository.findByMId(id)
+    public void saveRefreshToken(int m_idx , String refreshToken) {
+        memberRepository.findById(m_idx)
                 .ifPresentOrElse(
                         member -> member.setMRefreshtoken(refreshToken),
+                        () -> new Exception(" 일치하는 회원이 없습니다. ")
+                );
+    }
+
+    public void removeRefreshToken(String accessToken) {
+        Optional<Integer> m_idx = extractIdx(accessToken);
+
+        memberRepository.findById(Integer.parseInt(m_idx.toString()))
+                .ifPresentOrElse(
+                        member -> member.setMRefreshtoken(""),
                         () -> new Exception(" 일치하는 회원이 없습니다. ")
                 );
     }

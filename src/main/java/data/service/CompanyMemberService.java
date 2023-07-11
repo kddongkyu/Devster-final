@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static data.service.MemberService.encryptPass;
 
 
 @Service
@@ -55,9 +54,9 @@ public class CompanyMemberService {
     public CompanyMemberDto insertCompanyMember(CompanyMemberDto dto) {
 
         dto.setCm_filename(photo);
-        Map<String,String> map = encryptPass(dto.getCm_pass());
-        dto.setCm_pass(map.get("password"));
-        dto.setSalt(map.get("salt"));
+//        Map<String,String> map = encryptPass(dto.getCm_pass());
+//        dto.setCm_pass(map.get("password"));
+//        dto.setSalt(map.get("salt"));
 
         CompanyMemberEntity companyMemberEntity = CompanyMemberEntity.toCompanyMemberEntity(dto);
         companyMemberRepository.save(companyMemberEntity);
@@ -96,9 +95,9 @@ public class CompanyMemberService {
             entityForUpdate.setCMcp(dto.getCm_cp());
 
             //비밀번호 암호화후 재 삽입
-            Map<String,String> encryptedMap = encryptPass(dto.getCm_pass());
-            entityForUpdate.setCMpass(encryptedMap.get("password"));
-            entityForUpdate.setSalt(encryptedMap.get("salt"));
+//            Map<String,String> encryptedMap = encryptPass(dto.getCm_pass());
+//            entityForUpdate.setCMpass(encryptedMap.get("password"));
+//            entityForUpdate.setSalt(encryptedMap.get("salt"));
             companyMemberRepository.save(entityForUpdate);
 
             logger.info("기업회원정보 업데이트 완료");

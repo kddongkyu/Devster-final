@@ -18,14 +18,12 @@ public class MemberDto {
     private String m_email;
     private String m_pass;
     private Role m_role;
-    private String m_tele;
     private int ai_idx;
     private String m_name;
     private String m_nickname;
     private String m_photo;
     private String m_filename;
     private String ai_name;
-    private String salt;
     private String m_refreshtoken;
     private SocialType m_socialtype;
     private Timestamp m_date;
@@ -37,13 +35,11 @@ public class MemberDto {
                 .m_email(entity.getMEmail())
                 .m_pass(entity.getMPass())
                 .m_role(entity.getMRole())
-                .m_tele(entity.getMTele())
                 .ai_idx(entity.getAIidx())
                 .m_nickname(entity.getMNickname())
                 .m_photo(entity.getMPhoto())
                 .m_filename(entity.getMFilename())
                 .ai_name(entity.getAIname())
-                .salt(entity.getSalt())
                 .m_socialtype(entity.getMSocialType())
                 .m_date(entity.getMDate())
                 .build();

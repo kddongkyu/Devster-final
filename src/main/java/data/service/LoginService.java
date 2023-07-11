@@ -19,19 +19,10 @@ public class LoginService implements UserDetailsService {
         MemberEntity member = memberRepository.findByMId(id)
                 .orElseThrow(()-> new UsernameNotFoundException("해당 아이디가 존재하지 않습니다."));
 
-        String role = "";
-        if(member.getMType() == 0) {
-            role = "GUEST";
-        } else if (member.getMType() == 1) {
-            role = "USER";
-        } else {
-            role = "GUEST";
-        }
-
         return org.springframework.security.core.userdetails.User.builder()
                 .username(member.getMId())
                 .password(member.getMPass())
-                .roles(role)
+                .roles(member.getMRole().name())
                 .build();
     }
 }

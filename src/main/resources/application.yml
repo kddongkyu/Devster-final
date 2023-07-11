@@ -46,5 +46,12 @@ jwt:
     header: Authorization
 
   refresh:
-    expiration: 1209600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
+    expiration: 86400000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
     header: Authorization-refresh
+
+naver:
+  client_id: qwQJi2mXut9egJr1uiFj
+  client_secret: v3n11rGdRW
+
+kakao:
+  client_id: 168ba1a4e0e55db8af46e892ae6c7b82

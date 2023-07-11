@@ -59,19 +59,6 @@ public class MemberService {
         logger.info("일반회원 사진 초기화 완료");
     }
 
-    public MemberDto insertMember(MemberDto dto) {
-        dto.setM_photo(photo);
-        Map<String,String> map = encryptPass(dto.getM_pass());
-        dto.setM_pass(map.get("password"));
-        dto.setSalt(map.get("salt"));
-
-        MemberEntity member = MemberEntity.toMemberEntity(dto);
-        memberRepository.save(member);
-        photo = null;
-        logger.info("일반회원 회원가입 완료.");
-        return dto;
-    }
-
     public void registerMember(MemberDto dto) throws Exception {
         if(memberRepository.existsByMEmail(dto.getM_email())) {
             throw new Exception("이미 존재하는 이메일입니다.");
@@ -119,12 +106,9 @@ public class MemberService {
         if(entity.isPresent()){
             MemberEntity entityForUpdate = entity.get();
             entityForUpdate.setMNickname(dto.getM_nickname());
-            entityForUpdate.setMTele(dto.getM_tele());
 
             //비밀번호 암호화후 재 삽입
-            Map<String,String> encryptedMap = encryptPass(dto.getM_pass());
-            entityForUpdate.setMPass(encryptedMap.get("password"));
-            entityForUpdate.setSalt(encryptedMap.get("salt"));
+            entityForUpdate.passwordEncode(passwordEncoder);
 
             entityForUpdate.setAIidx(dto.getAi_idx());
             entityForUpdate.setAIname(dto.getAi_name());
@@ -157,33 +141,11 @@ public class MemberService {
         logger.info("일반회원 아이디 중복확인 완료");
         return memberRepository.existsByMId(id);
     }
-
-    public static Map<String,String> encryptPass(String password) {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[20];
-        random.nextBytes(salt);
-
-        StringBuffer sb = new StringBuffer();
-        for(byte b : salt) {
-            sb.append(String.format("%02x",b));
-        }
-
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update((password+sb.toString()).getBytes());
-            byte[] pwdsalt = md.digest();
-
-            StringBuffer sb2 = new StringBuffer();
-            for(byte b : pwdsalt) {
-                sb2.append(String.format("%02x",b));
-            }
-            Map<String,String > map = new HashMap<>();
-            map.put("password",sb2.toString());
-            map.put("salt",sb.toString());
-            return map;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+    
+    public boolean isDuplicateNickname(String nickname) {
+        logger.info("일반회원 닉네임 중복확인 완료");
+        return memberRepository.existsByMNickname(nickname);
     }
+
 }
 

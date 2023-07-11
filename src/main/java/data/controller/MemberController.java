@@ -6,11 +6,10 @@ import data.entity.AcademyInfoEntity;
 import data.service.LoginService;
 import data.service.MailService;
 import data.service.MemberService;
-import oauth2.service.CustomOAuth2UserService;
+import jwt.setting.settings.JwtService;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,12 +26,13 @@ public class MemberController {
 
     private final LoginService loginService;
 
-    private final CustomOAuth2UserService customOAuth2UserService;
-    public MemberController(MemberService memberservice, MailService mailService, LoginService loginService, CustomOAuth2UserService customOAuth2UserService){
+    private final JwtService jwtService;
+
+    public MemberController(MemberService memberservice, MailService mailService, LoginService loginService, JwtService jwtService){
         this.memberService = memberservice;
         this.mailService = mailService;
         this.loginService = loginService;
-        this.customOAuth2UserService = customOAuth2UserService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping
@@ -45,17 +45,12 @@ public class MemberController {
         return new ResponseEntity<MemberDto>(memberService.getOneMember(idx),HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<MemberDto> insert(@RequestBody MemberDto dto) {
-        return new ResponseEntity<MemberDto>(memberService.insertMember(escapeDto(dto)), HttpStatus.OK);
-    }
-
-    @PostMapping("/photo")
+    @PostMapping("/sign-up/photo")
     public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
         return new ResponseEntity<String>(memberService.uploadPhoto(upload),HttpStatus.OK);
     }
 
-    @PutMapping("/photo/reset")
+    @PutMapping("/sign-up/photo/reset")
     public ResponseEntity<Void> resetPhoto(String photo){
         memberService.resetPhoto(photo);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -73,24 +68,30 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/email")
+    @PostMapping("/sign-up/email")
     public boolean isDuplicateEmail(@RequestBody JsonNode jsonNode) {
         String safeEmail = StringEscapeUtils.escapeHtml4(jsonNode.get("m_email").asText());
         return memberService.isDuplicateEmail(safeEmail);
     }
 
-    @GetMapping("/academy/{name}")
+    @GetMapping("/sign-up/nickname/{NN}")
+    public boolean isDuplicateNickname(@PathVariable String NN) {
+        String safeNickname = StringEscapeUtils.escapeHtml4(NN);
+        return memberService.isDuplicateNickname(safeNickname);
+    }
+
+    @GetMapping("/sign-up/academy/{name}")
     public ResponseEntity<List<AcademyInfoEntity>> academyInfoSearch(@PathVariable String name) {
         return new ResponseEntity<List<AcademyInfoEntity>>(memberService.academyNameSearch(name),HttpStatus.OK);
     }
 
-    @PostMapping("/email/validation")
+    @PostMapping("/sign-up/email/validation")
     public ResponseEntity<String> emailValidation(@RequestBody JsonNode jsonNode) throws Exception {
         String safeEmail = StringEscapeUtils.escapeHtml4(jsonNode.get("m_email").asText());
         return new ResponseEntity<String>(mailService.sendSimpleMessage(safeEmail),HttpStatus.OK);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/sign-up/id/{id}")
     public boolean isDuplicateId(@PathVariable String id) {
         String safeId = StringEscapeUtils.escapeHtml4(id);
         return memberService.isDuplicateId(safeId);
@@ -102,10 +103,11 @@ public class MemberController {
         return "회원가입 성공";
     }
 
-    @GetMapping("/social/naver")
-    public String socialSignUp(OAuth2UserRequest userRequest){
-        customOAuth2UserService.loadUser(userRequest);
-        return "소셜 회원가입 성공!";
+    @PostMapping("/logout")
+    public String logOut(@RequestHeader(name = "Authorization")String token) {
+        jwtService.removeRefreshToken(token);
+
+        return "로그아웃 성공";
     }
 
     public MemberDto escapeDto(MemberDto dto) {
@@ -113,16 +115,10 @@ public class MemberController {
         dto.setM_email(StringEscapeUtils.escapeHtml4(dto.getM_email()));
         dto.setM_id(StringEscapeUtils.escapeHtml4(dto.getM_nickname()));
         dto.setM_name(StringEscapeUtils.escapeHtml4(dto.getM_name()));
-        dto.setM_tele(StringEscapeUtils.escapeHtml4(dto.getM_tele()));
         dto.setM_pass(StringEscapeUtils.escapeHtml4(dto.getM_pass()));
         dto.setM_nickname(StringEscapeUtils.escapeHtml4(dto.getM_nickname()));
 
         return dto;
-    }
-
-    @GetMapping("/jwt-test")
-    public String jwtTest() {
-        return "jwtTest 요청 성공";
     }
 
 }

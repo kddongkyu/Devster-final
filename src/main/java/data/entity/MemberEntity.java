@@ -36,42 +36,33 @@ public class MemberEntity {
     @Column(name = "m_pass")
     private String MPass;
 
-    @Column(name = "m_state", insertable = false)
-    private int MState;
-
-    @Column(name = "m_tele")
-    private String MTele;
-
     @Column(name = "ai_idx")
     private int AIidx;
 
     @Column(name = "m_nickname")
     private String MNickname;
 
-    @Column(name = "m_photo")
+    @Column(name = "m_photo", insertable = false)
     private String MPhoto;
 
-    @Column(name = "m_filename")
+    @Column(name = "m_filename", insertable = false)
     private String MFilename;
 
     @Column(name = "ai_name")
     private String AIname;
 
-    private String salt;
-
     @Column(name = "m_refreshtoken")
     private String MRefreshtoken;
-
-    @Column(name = "m_type")
-    private int MType;
 
     @Column(name = "m_date", insertable = false)
     private Timestamp MDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "m_role", insertable = false)
     private Role MRole;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "m_socialtype")
     private SocialType MSocialType;
 
     public void authorizeUser() {
@@ -101,13 +92,11 @@ public class MemberEntity {
                 .MSocialid(dto.getM_socialid())
                 .MEmail(dto.getM_email())
                 .MPass(dto.getM_pass())
-                .MTele(dto.getM_tele())
                 .AIidx(dto.getAi_idx())
                 .MNickname(dto.getM_nickname())
                 .MPhoto(dto.getM_photo())
                 .MFilename(dto.getM_filename())
                 .AIname(dto.getAi_name())
-                .salt(dto.getSalt())
                 .MRefreshtoken(dto.getM_refreshtoken())
                 .MDate(dto.getM_date())
                 .MRole(dto.getM_role())

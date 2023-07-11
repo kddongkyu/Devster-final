@@ -18,16 +18,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final List<String> NO_CHECK_URLS = Arrays.asList("/member/login","/login", "/social/naver");
-//    private static final String NO_CHECK_URL = "/member/login";
+//    private static final List<String> NO_CHECK_URLS = Arrays.asList("/member/login","/login", "/social/naver");
+    private static final String NO_CHECK_URL = "/member/login";
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
 
@@ -36,15 +34,15 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String path = request.getRequestURI();
-        if (NO_CHECK_URLS.contains(path)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-//        if (request.getRequestURI().equals(NO_CHECK_URL)) {
-//            filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
-//            return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
+//        String path = request.getRequestURI();
+//        if (NO_CHECK_URLS.contains(path)) {
+//            filterChain.doFilter(request, response);
+//            return;
 //        }
+        if (request.getRequestURI().equals(NO_CHECK_URL)) {
+            filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
+            return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
+        }
 
 
         // 사용자 요청 헤더에서 RefreshToken 추출
@@ -75,7 +73,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         memberRepository.findByMRefreshtoken(refreshToken)
                 .ifPresent(memberEntity -> {
                     String reIssuedRefreshToken = reIssueRefreshToken(memberEntity);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(memberEntity.getMId()),
+                    jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(memberEntity.getMIdx()),
                             reIssuedRefreshToken);
                 });
     }
@@ -91,8 +89,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         log.info("checkAccessTokenAndAuthentication() 호출");
         jwtService.extractAccessToken(request)
                 .filter(jwtService::isTokenValid)
-                .ifPresent(accessToken -> jwtService.extractId(accessToken)
-                        .ifPresent(id -> memberRepository.findByMId(id)
+                .ifPresent(accessToken -> jwtService.extractIdx(accessToken)
+                        .ifPresent(m_idx -> memberRepository.findById(m_idx)
                                 .ifPresent(this::saveAuthentication)));
 
         filterChain.doFilter(request,response);
@@ -104,19 +102,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             password = UUID.randomUUID().toString();
         }
 
-        String role = "";
-        if(member.getMState() == 0) {
-            role = "GUEST";
-        } else if (member.getMState() == 1) {
-            role = "USER";
-        } else {
-            role = "GUEST";
-        }
-
         UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
                 .username(member.getMId())
                 .password(password)
-                .roles(role)
+                .roles(member.getMRole().getKey())
                 .build();
 
         Authentication authentication =

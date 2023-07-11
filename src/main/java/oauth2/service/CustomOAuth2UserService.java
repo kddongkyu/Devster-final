@@ -3,7 +3,6 @@ package oauth2.service;
 import data.entity.MemberEntity;
 import data.repository.MemberRepository;
 import jwt.setting.config.SocialType;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import oauth2.CustomOAuth2User;
 import oauth2.OAuthAttributes;
@@ -20,13 +19,16 @@ import java.util.Map;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository memberRepository;
 
-    private static final String NAVER = "naver";
+    private static final String NAVER = "Naver";
     private static final String KAKAO = "kakao";
+
+    public CustomOAuth2UserService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -74,7 +76,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         if(KAKAO.equals(registrationId)) {
             return SocialType.KAKAO;
         }
-        return SocialType.GOOGLE;
+        return SocialType.NAVER;
     }
 
     /**
@@ -82,7 +84,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
      * 만약 찾은 회원이 있다면, 그대로 반환하고 없다면 saveUser()를 호출하여 회원을 저장한다.
      */
     private MemberEntity getUser(OAuthAttributes attributes, SocialType socialType) {
-        MemberEntity findUser = memberRepository.findByMTypeAndMSocialid(socialType,
+        MemberEntity findUser = memberRepository.findByMSocialTypeAndMSocialid(socialType,
                 attributes.getOauth2UserInfo().getId()).orElse(null);
 
         if(findUser == null) {

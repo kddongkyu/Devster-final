@@ -26,7 +26,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String id = extractUsername(authentication);
-        String accessToken = jwtService.generateAccessToken(id);
+        int m_idx = memberRepository.findByMId(id).get().getMIdx();
+        String accessToken = jwtService.generateAccessToken(m_idx);
         String refreshToken = jwtService.generateRefreshToken();
 
         jwtService.sendAccessAndRefreshToken(response,accessToken,refreshToken);
@@ -36,7 +37,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                     member.setMRefreshtoken(refreshToken);
                     memberRepository.saveAndFlush(member);
                 });
-        log.info("로그인에 성공하였습니다. 아이디 : {}", id);
+        log.info("로그인에 성공하였습니다. 회원 인덱스 번호 : {}", m_idx);
         log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);
         log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
     }
