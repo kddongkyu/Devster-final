@@ -1,8 +1,8 @@
 import React from 'react';
 
-function MainFreeboard(props) {
+function MainHire(props) {
     return (
-        <div className='main-freeboard-preview'>
+        <div className='main-hire-preview'>
             <div className='main-freeboard-box'/>
             <div className='main-best-profile-img'/>
             <div className='main-freeboard-info'>
@@ -38,4 +38,4 @@ function MainFreeboard(props) {
     );
 }
 
-export default MainFreeboard;
+export default MainHire;

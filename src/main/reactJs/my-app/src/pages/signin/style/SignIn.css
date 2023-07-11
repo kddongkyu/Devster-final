@@ -1,0 +1,381 @@
+.moblie {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 39rem;
+    height: 84.4rem;
+    overflow: hidden;
+    display: none;
+}
+.login-logo-img-icon {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 44px);
+    width: 8.7rem;
+    height: 5.1rem;
+}
+.login-logo-text {
+    position: absolute;
+    top: 3.9rem;
+    left: calc(50% - 86px);
+    display: inline-block;
+    width: 17.2rem;
+}
+.login-logo-slogan {
+    position: absolute;
+    top: 9rem;
+    left: calc(50% - 76px);
+    font-size: 1.3rem;
+    letter-spacing: 7.5px;
+    color: #721ea6;
+}
+.login-logo-img {
+    position: absolute;
+    top: 6.4rem;
+    left: calc(50% - 86px);
+    width: 17.2rem;
+    height: 11.4rem;
+    font-size: 4.8rem;
+    font-family: Lalezar;
+}
+.devster {
+    margin: 0;
+}
+.login-logo-slogan1 {
+    position: absolute;
+    top: 19rem;
+    left: calc(50% - 132px);
+    letter-spacing: 0.01em;
+    color: #626567;
+}
+
+.login-type-select-norm {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 67.5px);
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor:pointer;
+}
+
+.login-type-select-norm-false {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 67.5px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    cursor:pointer;
+}
+
+.login-type-select-bar-icon {
+    position: absolute;
+    top: 0.25rem;
+    left: calc(50% - 0.1px);
+    width: 0.12rem;
+    height: 1.9rem;
+}
+.login-type-select-comp {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 11.5px);
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor:pointer;
+}
+
+.login-type-select-comp-false {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 11.5px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    color: #000;
+    cursor:pointer;
+}
+
+.login-type-select {
+    position: absolute;
+    top: 25.7rem;
+    left: calc(50% - 68px);
+    width: 13.5rem;
+    height: 2.2rem;
+    font-size: 1.5rem;
+}
+.login-sns-text {
+    position: absolute;
+    top: 30.4rem;
+    left: 2.4rem;
+    letter-spacing: 0.01em;
+}
+.login-sns-kakao,
+.login-sns-naver {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 33.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    background-color: #f7fc01;
+    height: 3.9rem;
+}
+.login-sns-naver {
+    top: 38.6rem;
+    background-color: #16fc01;
+}
+.login-devster-hr {
+    position: absolute;
+    width: 100%;
+    top: 44.8rem;
+    right: 0.1rem;
+    left: -0.1rem;
+    border-top: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 0.1rem;
+}
+.login-devster-id-text,
+.login-devster-text {
+    position: absolute;
+    top: 47.6rem;
+    left: 2.3rem;
+    letter-spacing: 0.01em;
+}
+.login-devster-id-text {
+    top: 51.3rem;
+    left: 5.6rem;
+    font-weight: 500;
+}
+.login-devster-id-remember-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+.login-devster-id-remember-ck {
+    position: absolute;
+    top: 0.3rem;
+    right: 6rem;
+    border-radius: 1px;
+    background-color: #fff;
+    border: 1px solid #626567;
+    box-sizing: border-box;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+.login-devster-id-remember {
+    position: absolute;
+    top: 51.5rem;
+    right: 5.6rem;
+    width: 7.1rem;
+    height: 1.6rem;
+    font-size: 1.1rem;
+    color: #626567;
+}
+.login-devster-id-box-input {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 53.6rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+.login-devster-pw-text {
+    position: absolute;
+    top: 59.3rem;
+    left: 5.6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+.login-devster-pw-input {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 61.6rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+.login-devster-finder {
+    position: absolute;
+    top: 67.3rem;
+    right: 5.6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    color: #721ea6;
+}
+.login-loginbtn-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #721ea6;
+    height: 3.9rem;
+}
+.login-loginbtn-text {
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - 19px);
+    letter-spacing: 0.03em;
+    font-weight: 500;
+}
+.login-loginbtn {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 71rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    height: 3.9rem;
+    color: #fff;
+}
+.login-signuplink-signup,
+.login-signuplink-text {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 93.5px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+.login-signuplink-signup {
+    left: calc(50% + 44.5px);
+    text-decoration: underline;
+    color: #721ea6;
+}
+.login-signuplink {
+    position: absolute;
+    top: 76.7rem;
+    left: calc(50% - 94px);
+    width: 18.7rem;
+    height: 1.9rem;
+}
+.login {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 84.4rem;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+
+.login-company-devster {
+    position: absolute;
+    top: 30.4rem;
+    left: 2.3rem;
+    letter-spacing: 0.01em;
+}
+.login-company-email,
+.login-company-email-remember-t {
+    position: absolute;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+.login-company-email {
+    top: 34.1rem;
+    left: 5.6rem;
+}
+.login-company-email-remember-t {
+    top: 0;
+    right: 0;
+}
+.login-company-email-remember-c {
+    position: absolute;
+    top: 0.3rem;
+    right: 7.9rem;
+    border-radius: 1px;
+    background-color: #fff;
+    border: 1px solid #626567;
+    box-sizing: border-box;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+.login-company-email-remember {
+    position: absolute;
+    top: 34.3rem;
+    right: 5.6rem;
+    width: 9rem;
+    height: 1.6rem;
+    font-size: 1.1rem;
+    color: #626567;
+}
+.login-company-email-input {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 36.4rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+.login-company-pw-text {
+    position: absolute;
+    top: 42.1rem;
+    left: 5.6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+.login-company-pw-input {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 44.4rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+.login-company-finder {
+    position: absolute;
+    top: 50.1rem;
+    right: 5.6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    color: #721ea6;
+}
+.login-loginbtn-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #721ea6;
+    height: 3.9rem;
+}
+.login-loginbtn-text {
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - 19px);
+    letter-spacing: 0.03em;
+    font-weight: 500;
+}
+.login-company-loginbtn {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 53.8rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    height: 3.9rem;
+    color: #fff;
+}
+
+.login-signuplink-comp {
+    position: absolute;
+    top: 59.5rem;
+    left: calc(50% - 94px);
+    width: 18.7rem;
+    height: 1.9rem;
+}
