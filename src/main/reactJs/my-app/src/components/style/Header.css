@@ -1,0 +1,76 @@
+.header-box {
+    width: 100%;
+    right: 0;
+    background-color: rgba(245, 245, 247, 0.8);
+    backdrop-filter: blur(7px);
+    border-bottom: 1px solid rgba(210, 210, 210, 0.9);
+    box-sizing: border-box;
+    height: 6.5rem;
+    font-size: 3rem;
+    font-family: Lalezar;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+/* ========== 로고 ============ */
+
+.header-logo {
+    position: absolute;
+    top: 1.3rem;
+    left: 1.7rem;
+    width: 21.4rem;
+    height: 3.3rem;
+}
+
+/* 로고이미지 */
+.header-logo-img-icon {
+    position: absolute;
+    top: 0.8rem;
+    left: 0;
+    width: 3.2rem;
+    height: 2.3rem;
+}
+
+/* 로고텍스트 */
+.header-logo-text {
+    position: absolute;
+    top: 0;
+    left: 3.5rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 17.9rem;
+    height: 3.3rem;
+}
+
+/* ========== 로고 끝============ */
+
+
+/* 돋보기 아이콘 */
+.header-icon-search {
+    position: absolute;
+    top: 2.41rem;
+    right: 5.31rem;
+    width: 1.48rem;
+    height: 1.48rem;
+}
+
+/* 햄버거버튼 */
+.header-icon-list {
+    position: absolute;
+    top: 2.49rem;
+    right: 2.07rem;
+    width: 1.85rem;
+    height: 1.33rem;
+    cursor: pointer;
+
+}
+
+.header-icon-list-text{
+    position: absolute;
+    top: 2.49rem;
+    right: 6.07rem;
+    width: inline;
+    /* height: 1.33rem; */
+
+}

@@ -1,0 +1,9 @@
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="resume_add_button">
+        <circle id="Ellipse 94" cx="17" cy="17" r="17" fill="#721EA6" />
+        <g id="icon_plus">
+            <path d="M15 9H19V25H15V9Z" fill="white" />
+            <path d="M25 15V19L9 19L9 15L25 15Z" fill="white" />
+        </g>
+    </g>
+</svg>

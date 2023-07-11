@@ -55,3 +55,8 @@ naver:
 
 kakao:
   client_id: 168ba1a4e0e55db8af46e892ae6c7b82
+
+mybatis:
+  type-aliases-package: data.dto
+  mapper-locations:
+    - /mapper/**/*.xml
