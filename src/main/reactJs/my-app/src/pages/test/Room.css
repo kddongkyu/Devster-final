@@ -1,0 +1,220 @@
+.chat-header-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #721ea6;
+    height: 7.2rem;
+}
+.chat-header-acaname,
+.chat-header-ppls {
+    position: absolute;
+    top: 2.4rem;
+    left: 1.5rem;
+    letter-spacing: -0.24px;
+}
+.chat-header-ppls {
+    left: 20.7rem;
+    display: inline-block;
+    width: 5.8rem;
+    height: 2.3rem;
+}
+.chat-header-close-icon {
+    position: absolute;
+    top: 2.8rem;
+    right: 1.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
+}
+.chat-header {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 7.2rem;
+    color: #fff;
+}
+.chat-body-msg-r-img {
+    position: absolute;
+    top: 0.2rem;
+    left: 0;
+    border-radius: 15px;
+    background-color: #f6f6f8;
+    border: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    width: 4.2rem;
+    height: 4.2rem;
+}
+.chat-body-msg-r-id {
+    position: absolute;
+    top: 0;
+    left: 5.3rem;
+    letter-spacing: -0.24px;
+}
+.chat-body-msg-r-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 2px;
+    background-color: #fff;
+    border: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    width: 25.4rem;
+    height: 4.7rem;
+}
+.chat-body-msg-r-text {
+    position: absolute;
+    top: 0.8rem;
+    left: 1.6rem;
+    letter-spacing: -0.24px;
+    display: flex;
+    align-items: center;
+    width: 22.2rem;
+    height: 3.1rem;
+}
+.chat-body-msg-r1 {
+    position: absolute;
+    top: 2.1rem;
+    left: 5.3rem;
+    width: 25.4rem;
+    height: 4.7rem;
+}
+.chat-body-msg-r-date {
+    position: absolute;
+    top: 5.1rem;
+    left: 31.2rem;
+    letter-spacing: -0.24px;
+}
+.chat-body-msg-r {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 36.6rem;
+    height: 6.8rem;
+}
+.chat-body-msg-s-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 2px;
+    background-color: #f5eff9;
+    border: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    width: 25.4rem;
+    height: 4.7rem;
+}
+.chat-body-msg-s-text {
+    position: absolute;
+    top: 0.8rem;
+    right: 1.6rem;
+    letter-spacing: -0.24px;
+    display: flex;
+    align-items: center;
+    width: 22.2rem;
+    height: 3.1rem;
+}
+.chat-body-msg-s1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25.4rem;
+    height: 4.7rem;
+}
+.chat-body-msg-s-date {
+    position: absolute;
+    top: 3rem;
+    right: 25.9rem;
+    letter-spacing: -0.24px;
+}
+.chat-body-msg-s {
+    position: absolute;
+    top: 8.4rem;
+    right: 0;
+    width: 31.3rem;
+    height: 4.7rem;
+}
+.chat-body {
+    position: absolute;
+    top: 12rem;
+    left: 1.2rem;
+    width: 36.6rem;
+    height: 13.1rem;
+    font-size: 1.2rem;
+}
+.chat-footer-upload-icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 5.5rem;
+    height: 5.5rem;
+}
+.chat-footer-input-box {
+    position: absolute;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    border-top: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    height: 5.5rem;
+}
+.chat-footer-input-text {
+    position: absolute;
+    width: calc(100% - 44px);
+    bottom: 1.5rem;
+    left: 2.2rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    height: 2.6rem;
+}
+.chat-footer-input {
+    position: absolute;
+    width: calc(100% - 110px);
+    right: 5.5rem;
+    bottom: 0;
+    left: 5.5rem;
+    height: 5.5rem;
+}
+.chat-footer-send-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: #721ea6;
+    width: 5.5rem;
+    height: 5.5rem;
+}
+.chat-footer-send-icon {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.46rem;
+    width: 3.09rem;
+    height: 2.43rem;
+}
+.chat-footer,
+.chat-footer-send {
+    position: absolute;
+    bottom: 0;
+    height: 5.5rem;
+}
+.chat-footer-send {
+    right: 0;
+    width: 5.5rem;
+}
+.chat-footer {
+    left: 0;
+    width: 39rem;
+}
+.moblie-chat-room {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 84.4rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.6rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}

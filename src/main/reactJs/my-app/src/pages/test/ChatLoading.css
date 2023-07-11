@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Lalezar:wght@400&display=swap");
+
+html {
+    font-size: 10px;
+}
+
+body {
+    margin: 0;
+    line-height: normal;
+}
+
+.chat-logo-icon,
+.chat-logo-text {
+    position: absolute;
+    top: calc(50% + 4px);
+    left: calc(50% - 106px);
+}
+
+.chat-logo-icon {
+    top: calc(50% - 103px);
+    left: calc(50% - 100px);
+    width: 20rem;
+    height: 11.72rem;
+}
+
+.chat-slogan {
+    position: absolute;
+    bottom: 6.1rem;
+    left: calc(50% - 115px);
+    font-size: 2.8rem;
+    letter-spacing: 7.5px;
+}
+
+.moblie-chat {
+    position: relative;
+    background-color: #721ea6;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    text-align: left;
+    font-size: 6.4rem;
+    color: #fff;
+    font-family: Lalezar;
+}
+
+@keyframes chat-text-opacity {
+    0% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.chat-logo-text {
+    animation: chat-text-opacity 0.6s cubic-bezier(0.5, 0.35, 0.15, 1) 0.5s 1 normal both;
+}
+
+@keyframes chat-logo-position {
+    0% {
+        translate: -100px 0px;
+    }
+
+    38% {
+        translate: 15px 0px;
+    }
+
+    76% {
+        translate: -2px 0px;
+    }
+
+    100% {
+        translate: 0px 0px;
+    }
+}
+
+@keyframes chat-logo-opacity {
+    0% {
+        opacity: 0%;
+    }
+
+    38% {
+        opacity: 115.47%;
+    }
+
+    76% {
+        opacity: 97.6%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.chat-logo-icon {
+    animation: chat-logo-position 0.8s cubic-bezier(0.33, 0, 0.67, 1) 0.15s normal both,
+    chat-logo-opacity 0.8s cubic-bezier(0.33, 0, 0.67, 1) 0.15s 1 normal both;
+}
+
+@keyframes chat-bgcolor {
+    0% {
+        background-color: rgba(114, 30, 166, 1);
+    }
+
+    100% {
+        background-color: rgba(114, 30, 166, 0);
+    }
+}
+
+@keyframes chat-logo-fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.moblie-chat-loaded {
+    animation: chat-bgcolor 0.15s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
+}
+
+.moblie-logo-loaded {
+    animation: chat-logo-fadeout 0.15s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
+}
+
+@keyframes chat-sloan-position {
+    0% {
+        translate: 0px 100px;
+    }
+
+    38% {
+        translate: 0px -15px;
+    }
+
+    76% {
+        translate: 0px 2px;
+    }
+
+    100% {
+        translate: 0px 0px;
+    }
+}
+
+@keyframes chat-slogan-opacity {
+    0% {
+        opacity: 0%;
+    }
+
+    38% {
+        opacity: 115.47%;
+    }
+
+    76% {
+        opacity: 97.6%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.chat-slogan {
+    animation: chat-sloan-position 0.6s cubic-bezier(0.33, 0, 0.67, 1) 0.96s 1 normal both,
+    chat-slogan-opacity 0.6s cubic-bezier(0.33, 0, 0.67, 1) 0.96s 1 normal both;
+}
+
+@keyframes chat-list-fadein {
+    0% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.chat-list {
+    animation: chat-list-fadein 0.6s cubic-bezier(0.5, 0.35, 0.15, 1) 0.5s 1 normal both;
+}

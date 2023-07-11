@@ -1,0 +1,111 @@
+.footer-box {
+    margin-top:3.2rem;
+    width: calc(100% - 4.4rem);
+    font-size: 1.3rem;
+    color: #626567;
+    margin-left: 2.2rem;
+    padding-bottom: 4.2rem;
+}
+
+.line03 {
+    height: 0.1rem;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    background-color: #D2D2D2;
+}
+
+/* ========== 로고 ============ */
+
+.footer-logo {
+    width: 23rem;
+    height: 3.7rem;
+    font-size: 3.6rem;
+    color: #000;
+    font-family: Lalezar;
+    margin-top: 2rem;
+    margin-right: auto;
+}
+/* 로고이미지 */
+.footer-logo-icon {
+    width: 4.2rem;
+    height: 2.7rem;
+}
+/* 로고텍스트 */
+.footer-logo-text {
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 17.9rem;
+    height: 3.3rem;
+}
+
+/* 유틸아이콘들 */
+.footer-icons {
+    width: 9.2rem;
+    height: 2.15rem;
+}
+
+/* ========== 로고,아이콘 끝 ============ */
+
+.footer-info-service-intro
+.footer-info-service-contact,
+.footer-info-service-notice,
+.footer-info-service-adv,
+.footer-info-service-hire,
+.footer-info-service-contract,
+.footer-info-service-report {
+    letter-spacing: -0.24px;
+}
+
+.footer-info-contact {
+    width: 26.3rem;
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 3rem;
+}
+
+/* 가로줄이미지 */
+.footer-info-service-bar-icon {
+    width: 0.12rem;
+    height: 1.05rem;
+}
+
+.footer-info-service {
+    height: 1.9rem;
+    display: flex;
+}
+
+.devster,
+.span {
+    font-family: "Noto Sans KR";
+}
+
+.devster {
+    font-weight: 500;
+}
+
+.devster-kdk,
+.p2 {
+    margin: 0;
+}
+
+.p2 {
+    font-size: 1.15rem;
+}
+
+.footer-comp-info {
+    letter-spacing: -0.24px;
+    white-space: pre-wrap;
+    font-size: 1.2rem;
+    margin-top: 1.2rem;
+}
+
+
+.mypage {
+    background-color: #fff;
+    width: 100%;
+}
+
+.footer-info-service-personal{
+    margin-right: 2.4rem;
+}
