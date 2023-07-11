@@ -1,7 +1,7 @@
 .header-box {
     width: 100%;
     right: 0;
-    background-color: rgba(245, 245, 247, 0.9);
+    background-color: rgba(245, 245, 247, 0.8);
     backdrop-filter: blur(7px);
     border-bottom: 1px solid rgba(210, 210, 210, 0.9);
     box-sizing: border-box;
@@ -62,4 +62,16 @@
     right: 2.07rem;
     width: 1.85rem;
     height: 1.33rem;
+<<<<<<< HEAD
+    cursor: pointer;
+=======
+}
+
+.header-icon-list-text{
+    position: absolute;
+    top: 2.49rem;
+    right: 6.07rem;
+    width: inline;
+    /* height: 1.33rem; */
+>>>>>>> 650d23de1d2d797c299ab3a7572dbb4fb347635a
 }

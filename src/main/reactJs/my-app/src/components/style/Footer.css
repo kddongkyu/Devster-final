@@ -4,7 +4,8 @@
     font-size: 1.3rem;
     color: #626567;
     margin-left: 2.2rem;
-    padding-bottom: 4.2rem;
+    /* padding-bottom: 4.2rem; */
+    height: 33.5rem;
 }
 
 .line03 {
@@ -100,11 +101,6 @@
     margin-top: 1.2rem;
 }
 
-
-.mypage {
-    background-color: #fff;
-    width: 100%;
-}
 
 .footer-info-service-personal{
     margin-right: 2.4rem;

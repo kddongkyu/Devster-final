@@ -1,0 +1,129 @@
+.text-constent-withdrawal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 2rem;
+    letter-spacing: -0.24px;
+  }
+  .p {
+    margin: 0;
+  }
+  .text-before-withdrawal {
+    position: absolute;
+    top: 7rem;
+    left: 0;
+    font-size: 2rem;
+    letter-spacing: -0.24px;
+  }
+  .ul {
+    margin: 0;
+    /* padding-left: 1.33rem; */
+  }
+  .text-withdrawal-confirm-01 {
+    position: absolute;
+    top: 15.2rem;
+    left: 0.1rem;
+    font-size: inherit;
+    letter-spacing: -0.24px;
+    font-family: inherit;
+  }
+  .text-withdrawal-confirm-conten {
+    position: absolute;
+    top: 18.2rem;
+    left: 0.5rem;
+    letter-spacing: -0.24px;
+    color: #444;
+  }
+  .text-withdrawal-confirm-02 {
+    position: absolute;
+    top: 25.8rem;
+    left: 0.1rem;
+    font-size: inherit;
+    letter-spacing: -0.24px;
+    font-family: inherit;
+  }
+  .text-withdrawal-confirm-conten1 {
+    position: absolute;
+    top: 28.8rem;
+    left: 0.1rem;
+    letter-spacing: -0.24px;
+    color: #444;
+  }
+  .content-withrawal-child {
+    position: absolute;
+    top: 39.65rem;
+    left: 0.05rem;
+    border-top: 1px solid #e4e4e4;
+    box-sizing: border-box;
+    width: 100%;
+    height: 0.1rem;
+  }
+  .text-user-confirm {
+    position: absolute;
+    top: 42.7rem;
+    left: 0.1rem;
+    font-size: 1.8rem;
+    letter-spacing: -0.24px;
+  }
+  .text-content-withdrawal-email,
+  .user-email-confirm {
+    position: absolute;
+    top: 45.7rem;
+    left: 0.1rem;
+    letter-spacing: -0.24px;
+    color: #444;
+  }
+  .text-content-withdrawal-email {
+    top: 50rem;
+  }
+  .email-input-box,
+  .withrawal-button {
+    position: absolute;
+    top: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #d3d4d8;
+    box-sizing: border-box;
+    height: 4.7rem;
+  }
+  .email-input-box {
+    /* width: calc(100% - 8rem); */
+    width: 76.5%;
+    right: 8rem;
+    left: 0;
+  }
+  .withrawal-button {
+    width: 20.5%;
+    right: 0;
+    /* left: 27.4rem; */
+  }
+  .text-go-withdrawal {
+   text-align: center;
+  }
+  .email-confirm-box {
+    position: absolute;
+    width: 100%;
+    top: 53.9rem;
+    right: 0;
+    left: 0.1rem;
+    height: 4.7rem;
+    color: #444;
+  }
+  .content-withrawal {
+    position: absolute;
+    top: 42.7rem;
+    left: 2.1rem;
+    width: calc(100% - 4.4rem);
+    height: 58.6rem;
+  }
+  .withrawal {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 101.3rem;
+    text-align: left;
+    font-size: 1.6rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+  }
+  
