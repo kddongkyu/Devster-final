@@ -1,0 +1,104 @@
+.text-bookmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 2rem;
+    letter-spacing: -0.24px;
+  }
+  .bookmark-image-01 {
+    position: absolute;
+    width: 99.39%;
+    top: 0;
+    right: 0;
+    left: 0.61%;
+    border-radius: 4px;
+    background-color: #d9d9d9;
+    height: 10.8rem;
+  }
+  .text-bookmark-01 {
+    position: absolute;
+    width: 100%;
+    top: 11.8rem;
+    left: 0;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+  }
+  .bookmark-01 {
+    position: absolute;
+    width: 46.84%;
+    top: 7rem;
+    right: 53.16%;
+    left: 0;
+    height: 15.8rem;
+  }
+  .bookmark-image-02 {
+    position: absolute;
+    width: 99.39%;
+    top: 0;
+    right: 0.61%;
+    left: 0;
+    border-radius: 4px;
+    background-color: #d9d9d9;
+    height: 10.8rem;
+  }
+  .bookmark-02 {
+    position: absolute;
+    width: 46.84%;
+    top: 7rem;
+    right: 0;
+    left: 53.16%;
+    height: 15.8rem;
+  }
+  .bookmark-03,
+  .bookmark-04,
+  .bookmark-05,
+  .bookmark-06 {
+    position: absolute;
+    width: 46.84%;
+    top: 28.8rem;
+    right: 53.16%;
+    left: 0;
+    height: 15.8rem;
+  }
+  .bookmark-04,
+  .bookmark-05,
+  .bookmark-06 {
+    right: 0;
+    left: 53.16%;
+  }
+  .bookmark-05,
+  .bookmark-06 {
+    top: 50.6rem;
+    right: 53.16%;
+    left: 0;
+  }
+  .bookmark-06 {
+    right: 0;
+    left: 53.16%;
+  }
+  .content-bookmarks{
+    position: absolute;
+    /* width: calc(100% - 4.4rem); */
+    width: calc(100% - 4.4rem);
+    height: 66.4rem;
+  }
+  .content-bookmarks1 {
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .content-bookmarks {
+    top: 42.7rem;
+    left: 2.1rem;
+  }
+  .bookmarks {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 109.1rem;
+    text-align: left;
+    font-size: 1.4rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+  }
