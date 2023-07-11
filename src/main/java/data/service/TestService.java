@@ -33,6 +33,10 @@ public class TestService {
         return list;
     }
 
+    public Optional<TestEntity> findOnePerson(int idx) {
+       return testRepository.findById(idx);
+    }
+
     public TestEntity findByIdx(int idx){
         return testRepository.findByIdx(idx);
     }
