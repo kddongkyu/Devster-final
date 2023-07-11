@@ -41,7 +41,7 @@ function RouteMain(props) {
         <Route path='/notice' element={<Reviewlist/>}/>
 
         <Route path='/fboard/form' element={<FboardForm/>}/>
-        <Route path='/qboard/form' element={<QboardForm/>}/>
+        <Route path='/qboard/form' element={<QboardForm/>}/>ㄱ
         <Route path='/hboard/form' element={<HboardForm/>}/>
         <Route path='/aboard/form' element={<AboardForm/>}/>
        <Route path='/notice/form' element={<Reviewform/>}/>
