@@ -1,0 +1,213 @@
+.text-name,
+.text-userinfo {
+  position: absolute;
+  left: 0;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  height: 2.3rem;
+}
+.text-userinfo {
+  top: 0;
+  font-size: 2rem;
+  color: #000;
+  width: 7.4rem;
+}
+.text-name {
+  top: 6.5rem;
+  font-weight: 500;
+  width: 2.8rem;
+}
+.userinfo-name-box {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #d3d4d8;
+  box-sizing: border-box;
+  height: 3.8rem;
+}
+.text-email,
+.userinfo-name {
+  position: absolute;
+  left: 0.1rem;
+}
+.userinfo-name {
+  /* width: calc(100% - 1px); */
+  width: 100%;
+  top: 9rem;
+  right: 0;
+  height: 3.8rem;
+}
+.text-email {
+  top: 15.2rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 4.2rem;
+  height: 2.3rem;
+}
+.userinfo-email {
+  position: absolute;
+  width: 100%;
+  top: 17.7rem;
+  right: 0;
+  left: 0.1rem;
+  height: 3.8rem;
+}
+.text-hp {
+  top: 23.9rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 5.6rem;
+  height: 2.3rem;
+}
+.text-belong,
+.text-hp,
+.userinfo-hp {
+  position: absolute;
+  left: 0.1rem;
+}
+.userinfo-hp {
+  width: 100%;
+  top: 26.4rem;
+  right: 0;
+  height: 3.8rem;
+}
+.text-belong {
+  top: 32.6rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 2.6rem;
+  height: 2.3rem;
+}
+.userinfo-belong {
+  position: absolute;
+  width: 100%;
+  top: 35.1rem;
+  right: 0;
+  left: 0.1rem;
+  height: 3.8rem;
+}
+.text-nickname {
+  position: absolute;
+  top: 41.3rem;
+  left: 0.1rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 2.6rem;
+  height: 2.3rem;
+}
+.userinfo-nickname {
+  position: absolute;
+  width: 100%;
+  top: 43.8rem;
+  right: 0;
+  left: 0.1rem;
+  height: 3.8rem;
+}
+.text-profilepic {
+  position: absolute;
+  top: 50rem;
+  left: 0.1rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+}
+.button-profilechange-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #d2d5da;
+  box-sizing: border-box;
+  width: 5rem;
+  height: 4.2rem;
+}
+.text-change {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.4rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+}
+.button-profilechange {
+  position: absolute;
+  top: 0.3rem;
+  left: 6.8rem;
+  width: 5rem;
+  height: 4.2rem;
+}
+.profile-picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #e6e7eb;
+  box-sizing: border-box;
+  width: 4.8rem;
+  height: 4.8rem;
+}
+.userinfo-profile {
+  position: absolute;
+  top: 52.6rem;
+  left: 0.1rem;
+  width: 11.8rem;
+  height: 4.8rem;
+  font-size: 1.2rem;
+}
+.userinfo-line-01-icon {
+  position: absolute;
+  width: calc(100% - 1px);
+  top: 61.54rem;
+  right: 0;
+  left: 0.1rem;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.12rem;
+}
+.button-userinfo-save-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 6px;
+  background-color: #721ea6;
+  width: 8.8rem;
+  height: 4.1rem;
+}
+.text-save {
+  position: absolute;
+  top: 1rem;
+  right: 3.1rem;
+  letter-spacing: -0.24px;
+}
+.button-userinfo-save {
+  position: absolute;
+  top: 63.6rem;
+  right: 0;
+  width: 8.8rem;
+  height: 4.1rem;
+  color: #fff;
+}
+.userinfo-wrapper {
+  position: absolute;
+  top: 42.6rem;
+  left: 2.1rem;
+  width: calc(100% - 4.4rem);
+  height: 67.7rem;
+}
+.userinfo {
+  position: relative;
+  width: 100%;
+  height: 110.3rem;
+  text-align: left;
+  font-size: 1.4rem;
+  color: #3b4150;
+  font-family: "Noto Sans KR";
+}

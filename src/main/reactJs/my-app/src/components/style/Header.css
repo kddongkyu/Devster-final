@@ -63,3 +63,11 @@
     width: 1.85rem;
     height: 1.33rem;
 }
+
+.header-icon-list-text{
+    position: absolute;
+    top: 2.49rem;
+    right: 6.07rem;
+    width: inline;
+    /* height: 1.33rem; */
+}
