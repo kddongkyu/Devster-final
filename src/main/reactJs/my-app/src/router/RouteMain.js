@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
 import { Layout, NotFound } from "../components";
+import {Reviewlist, Reviewform, Reviewdetail} from "../pages/notice";
 import {
   Bookmarks,
   MyResume,
@@ -24,6 +25,7 @@ import Withdrawal from "../pages/mypage/Withdrawal";
 import LoginForm from "../components/LoginForm";
 import { SignIn } from "../pages/signin";
 
+
 function RouteMain(props) {
   return (
     <Routes>
@@ -36,17 +38,23 @@ function RouteMain(props) {
         <Route path='/qboard' element={<Qboard/>}/>
         <Route path='/hboard' element={<Hboard/>}/>
         <Route path='/aboard' element={<Aboard/>}/>
+        <Route path='/notice' element={<Reviewlist/>}/>
+
         <Route path='/fboard/form' element={<FboardForm/>}/>
         <Route path='/qboard/form' element={<QboardForm/>}/>
         <Route path='/hboard/form' element={<HboardForm/>}/>
         <Route path='/aboard/form' element={<AboardForm/>}/>
+       <Route path='/notice/form' element={<Reviewform/>}/>
+
+
+        <Route path='/notice/detail' element={<Reviewdetail/>}/>
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/myresume" element={<MyResume />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
-          <Route path="/notice" element={<Notice />} />
+          <Route path="/notice" element={<Notice/>} />
         </Route>
 
         <Route>
