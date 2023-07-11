@@ -62,9 +62,8 @@
     right: 2.07rem;
     width: 1.85rem;
     height: 1.33rem;
-<<<<<<< HEAD
     cursor: pointer;
-=======
+
 }
 
 .header-icon-list-text{
@@ -73,5 +72,5 @@
     right: 6.07rem;
     width: inline;
     /* height: 1.33rem; */
->>>>>>> 650d23de1d2d797c299ab3a7572dbb4fb347635a
+
 }
