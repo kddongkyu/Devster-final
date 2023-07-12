@@ -17,8 +17,12 @@ import java.util.List;
 public class TestController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
+    final
     TestService testService;
+
+    public TestController(TestService testService) {
+        this.testService = testService;
+    }
 
     @GetMapping
     public ResponseEntity<List<TestEntity>> getAllTests(){

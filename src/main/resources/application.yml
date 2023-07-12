@@ -23,6 +23,38 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
+  profiles:
+    include: oauth
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+aws:
+  s3:
+    bucketName: bit701.bucket.102
+
+jwt:
+  secretKey: HellOImFakerIAgrreLGBTIlikeTeaMC0OKYoUKMowWhatImsaYinGIdONtKnowHAHeHaaaCutEMeaRonGGGG12312TQLVKFKasd
+
+  access:
+    expiration: 3600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    header: Authorization
+
+  refresh:
+    expiration: 86400000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
+    header: Authorization-refresh
+
+naver:
+  client_id: qwQJi2mXut9egJr1uiFj
+  client_secret: v3n11rGdRW
+
+kakao:
+  client_id: 168ba1a4e0e55db8af46e892ae6c7b82
 
 mybatis:
   type-aliases-package: data.dto
