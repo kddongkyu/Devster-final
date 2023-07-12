@@ -74,3 +74,13 @@
     /* height: 1.33rem; */
 
 }
+
+.test-login-button {
+    position: absolute;
+    top: 1.8rem;
+    right: 6.07rem;
+    width: inline;
+    /* height: 1.33rem; */
+    cursor: pointer;
+
+}

@@ -159,7 +159,7 @@
 .menu-account {
     position: absolute;
     width: 100%;
-    top: 30.3rem;
+    top: 36.3rem;
     right: 0;
     left: 0;
     height: 53.9rem;
@@ -200,4 +200,13 @@
 }
 .menu-modal-box {
     animation: modal-fadein 0.3s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
+}
+
+.menu-mypage {
+    position: absolute;
+    top: 30rem;
+    left: 2.2rem;
+    width: inline-block;
+    height: 20.3rem;
+    font-size: 2rem;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import "./style/LoginForm.css";
 
 function LoginForm(props) {
   const [myid, setMyid] = useState("");
@@ -56,68 +57,49 @@ function LoginForm(props) {
   };
 
   return (
-    <div className="login" style={{ marginTop: "100px" }}>
+    <div className="login">
       <form onSubmit={onSubmitLogin}>
         <table className="table table-bordered">
-          <tbody>
-            <tr>
-              <th
-                style={{
-                  width: "100px",
-                  backgroundColor: "#ddd",
-                  textAlign: "center",
-                }}
+          <tr>
+            <th style={{ width: "100px", backgroundColor: "#ddd" }}>아이디</th>
+            <td>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="아이디"
+                required
+                autoFocus
+                value={myid}
+                onChange={(e) => setMyid(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <th style={{ width: "100px", backgroundColor: "#ddd" }}>
+              비밀번호
+            </th>
+            <td>
+              <input
+                type="password"
+                className="form-control"
+                required
+                placeholder="비밀번호"
+                value={mypass}
+                onChange={(e) => setMypass(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2} className="table-danger" align="center">
+              <button
+                type="submit"
+                className="btn btn-default"
+                style={{ width: "150px" }}
               >
-                아이디
-              </th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="아이디"
-                  required
-                  autoFocus
-                  value={myid}
-                  onChange={(e) => setMyid(e.target.value)}
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <th
-                style={{
-                  width: "100px",
-                  backgroundColor: "#ddd",
-                  textAlign: "center",
-                }}
-              >
-                비밀번호
-              </th>
-              <td>
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="비밀번호"
-                  required
-                  value={mypass}
-                  onChange={(e) => setMypass(e.target.value)}
-                />
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan={2} align="center" className="table-danger">
-                <button
-                  type="submit"
-                  className="btn btn-default"
-                  style={{ width: "150px" }}
-                >
-                  회원로그인
-                </button>
-              </td>
-            </tr>
-          </tfoot>
+                회원로그인
+              </button>
+            </td>
+          </tr>
         </table>
       </form>
     </div>
