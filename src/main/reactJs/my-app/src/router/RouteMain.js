@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
 import { Layout, NotFound } from "../components";
-import {Reviewlist, Reviewform, Reviewdetail} from "../pages/notice";
+
 import {
   Bookmarks,
   MyResume,
@@ -24,6 +24,7 @@ import AboardForm from "../pages/aboard/AboardForm"
 import Withdrawal from "../pages/mypage/Withdrawal";
 import LoginForm from "../components/LoginForm";
 import { SignIn } from "../pages/signin";
+import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
 
 
 function RouteMain(props) {
@@ -38,16 +39,16 @@ function RouteMain(props) {
         <Route path='/qboard' element={<Qboard/>}/>
         <Route path='/hboard' element={<Hboard/>}/>
         <Route path='/aboard' element={<Aboard/>}/>
-        <Route path='/notice' element={<Reviewlist/>}/>
+        <Route path='/notice' element={<Noticelist/>}/>
 
         <Route path='/fboard/form' element={<FboardForm/>}/>
         <Route path='/qboard/form' element={<QboardForm/>}/>ㄱ
         <Route path='/hboard/form' element={<HboardForm/>}/>
         <Route path='/aboard/form' element={<AboardForm/>}/>
-       <Route path='/notice/form' element={<Reviewform/>}/>
+       <Route path='/notice/form' element={<Noticeform/>}/>
 
 
-        <Route path='/notice/detail' element={<Reviewdetail/>}/>
+        <Route path='/notice/detail' element={<Noticedetail/>}/>
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />

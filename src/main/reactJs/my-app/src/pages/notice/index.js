@@ -1,3 +1,3 @@
-export {default as Reviewdetail} from './Reviewdetail';
-export {default as Reviewlist} from './Reviewlist';
-export {default as Reviewform} from './Reviewform';
+export {default as Noticelist} from './Noticelist';
+export {default as Noticedetail} from './Noticedetail';
+export {default as Noticeform} from './Noticeform';

@@ -1,7 +1,7 @@
 import React from 'react';
-import './style/Reviewlist.css';
+import './style/Reviewform.css';
 
-function Reviewlist(props) {
+function Reviewform(props) {
     return (
         <div className="notice-list">
             <div className="notice-advertise-box">
@@ -14,57 +14,54 @@ function Reviewlist(props) {
             </div>
             <div className="notice-option">
                 <div className="notice-option-box" />
-                <img className="notice-option-child" alt=""
-                     src={require('./assets/Vector 176.svg').default}/>
+                <img className="notice-option-child" alt="" src="/vector-176.svg" />
                 <div className="notice-list-all">전체</div>
-                <img className="notice-list-icon" alt=""
-                     src={require('./assets/notice-list-icon.svg').default}/>
+                <img className="notice-list-icon" alt="" src="/noticelisticon.svg" />
             </div>
             <div className="notice-list-write">
-                <button className="notice-list-write-box" >
-                    <img
-                        className="notice-list-write-icon"
-                        alt=""
-                        src={require('./assets/notice-list-write_icon.svg').default}
-                    />  글 쓰기
-                </button>
-                {/*<div className="notice-list-write-text">글쓰기</div>*/}
+                <div className="notice-list-write-box" />
+                <img
+                    className="notice-list-write-icon"
+                    alt=""
+                    src="/noticelistwrite-icon.svg"
+                />
+                <div className="notice-list-write-text">글쓰기</div>
             </div>
             <div className="notice-function-search-input">
                 <div className="notice-function-search-input1" />
                 <img
                     className="notice-function-search-icon"
                     alt=""
-                    src={require('./assets/notice_function_search_icon.svg').default}
+                    src="/notice-function-search-icon.svg"
                 />
             </div>
+            <img className="notice-hr-icon" alt="" src="/notice-hr.svg" />
             <div className="notice-list-pages">
                 <div className="notice-list-pages-current">12345 / 12345 페이지</div>
                 <img
                     className="notice-list-pages-back-icon"
                     alt=""
-                    src={require('./assets/notice-list-_pages_back.svg').default}
+                    src="/noticelist-pages-back.svg"
                 />
                 <img
                     className="notice-list-pages-forward-icon"
                     alt=""
-                    src={require('./assets/notice-list-pages_forward.svg').default}
+                    src="/noticelistpages-forward.svg"
                 />
             </div>
             <img
                 className="notice-list-pages-reset-icon"
                 alt=""
-                src={require('./assets/notice-list-_pages_reset.svg').default}
+                src="/noticelist-pages-reset.svg"
             />
             <div className="notice-list-line" />
             <div className="notice-list1">
-                {/*<img className="notice-list-child" alt=""*/}
-                {/*     src="/vector-179.svg" />*/}
+                <img className="notice-list-child" alt="" src="/vector-179.svg" />
                 <div className="notice-list-writer">
                     <img
                         className="notice-list-logo-icon"
                         alt=""
-                        src={require('./assets/notice-list-logo.svg').default}
+                        src="/noticelistlogo.svg"
                     />
                     <div className="notice-list-writer-time">admin_01 · 약 4시간 전</div>
                 </div>
@@ -76,7 +73,7 @@ function Reviewlist(props) {
                         <img
                             className="notice-list-like-icon"
                             alt=""
-                            src={require('./assets/notice-list-like-icon.svg').default}
+                            src="/noticelistlikeicon.svg"
                         />
                     </div>
                     <div className="notice-comments">
@@ -84,7 +81,7 @@ function Reviewlist(props) {
                         <img
                             className="notice-comments-icon"
                             alt=""
-                            src={require('./assets/notice-comments-icon.svg').default}
+                            src="/noticecommentsicon.svg"
                         />
                     </div>
                     <div className="notice-list-readcount">
@@ -92,7 +89,7 @@ function Reviewlist(props) {
                         <img
                             className="notice-list-readcount-icon"
                             alt=""
-                            src={require('./assets/notice-list-readcount-icon.svg').default}
+                            src="/noticelistreadcounticon.svg"
                         />
                     </div>
                 </div>
@@ -103,4 +100,4 @@ function Reviewlist(props) {
     );
 }
 
-export default Reviewlist;
+export default Reviewform;

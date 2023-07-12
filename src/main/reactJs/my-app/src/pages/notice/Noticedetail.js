@@ -1,6 +1,6 @@
 import React from 'react';
-import './style/Reviewdetail.css';
-function Reviewdetail(props) {
+import './style/Noticedetail.css';
+function Noticedetail(props) {
     return (
         <div className="notice-detail">
             <div className="advertise-box">
@@ -110,4 +110,4 @@ function Reviewdetail(props) {
     );
 }
 
-export default Reviewdetail;
+export default Noticedetail;

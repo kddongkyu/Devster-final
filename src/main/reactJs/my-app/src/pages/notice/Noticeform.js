@@ -1,6 +1,6 @@
 import React from 'react';
-import './style/Reviewform.css';
-function Reviewform(props) {
+import './style/Noticeform.css';
+function Noticeform(props) {
     return (
         <div className="notice-form">
             <div className="advertise-box">
@@ -50,4 +50,4 @@ function Reviewform(props) {
     );
 }
 
-export default Reviewform;
+export default Noticeform;
