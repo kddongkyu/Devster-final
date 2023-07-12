@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
+
 import {
   Layout,
   LoginForm,
@@ -40,6 +41,7 @@ function RouteMain(props) {
         <Route path="/qboard" element={<Qboard />} />
         <Route path="/hboard" element={<Hboard />} />
         <Route path="/aboard" element={<Aboard />} />
+
         <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
@@ -50,8 +52,7 @@ function RouteMain(props) {
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/myresume" element={<MyResume />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
-          {/* <Route path="/notice" element={<Notice />} /> */}
-          <Route path="/notice" element={<MemberList />} />
+          <Route path="/notice" element={<Notice />} />
         </Route>
 
         <Route>
