@@ -1,6 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import "./style/Hboard.css";
+import Axios from "axios";
+import { useEffect, useState } from "react";
+
 const Hboard = () => {
+  const [data, setData] = useState("");
+
+  const { currentPage } = useParams();
+
+  const list = () => {
+    const url =
+      "/hboard/list?currentPage=" + (currentPage == null ? 1 : currentPage);
+    Axios.get(url).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    });
+  };
+
+  useEffect(() => {
+    list();
+  }, [currentPage]);
+
   return (
     <div className="hboard">
       <div className="advertise-box">
@@ -17,11 +37,19 @@ const Hboard = () => {
         </div>
       </div>
       <div className="hboard-selection">
-        <NavLink to="/fboard" activeClassName="active" className="hboard-selection-freeboard">
+        <NavLink
+          to="/fboard"
+          activeClassName="active"
+          className="hboard-selection-freeboard"
+        >
           <div className="board-selection-freeboard-box" />
           <div className="board-selection-freeboard-text">자유</div>
         </NavLink>
-        <NavLink to="/qboard" activeClassName="active" className="hboard-selection-qna">
+        <NavLink
+          to="/qboard"
+          activeClassName="active"
+          className="hboard-selection-qna"
+        >
           <div className="hboard-selection-qna-box" />
           <div className="hboard-selection-qna-text">{`Q&A`}</div>
         </NavLink>
@@ -29,13 +57,21 @@ const Hboard = () => {
           <div className="hboard-selection-hire-box" />
           <div className="hboard-selection-hire-text">채용정보</div>
         </div>
-        <NavLink to="/aboard" activeClassName="active" className="hboard-selection-academy">
+        <NavLink
+          to="/aboard"
+          activeClassName="active"
+          className="hboard-selection-academy"
+        >
           <div className="hboard-selection-qna-box" />
           <div className="hboard-selection-academy-text">학원별</div>
         </NavLink>
       </div>
-      <NavLink to="/hboard/form" activeClassName="active" className="hboard-write">
-      <div className="hboard-write-box" />
+      <NavLink
+        to="/hboard/form"
+        activeClassName="active"
+        className="hboard-write"
+      >
+        <div className="hboard-write-box" />
         <img
           className="hboard-write-icon"
           alt=""
@@ -91,7 +127,9 @@ const Hboard = () => {
             <img
               className="hboard-notice-preview-info-logo-icon"
               alt=""
-              src={require("./assets/board_notice_preview_info_logo.svg").default}
+              src={
+                require("./assets/board_notice_preview_info_logo.svg").default
+              }
             />
             <div className="hboard-notice-preview-info-tex">
               admin_01 · 약 4시간 전
@@ -117,7 +155,9 @@ const Hboard = () => {
               <img
                 className="hboard-notice-preview-icons-co2"
                 alt=""
-                src={require("./assets/board_preview_comments_icon.svg").default}
+                src={
+                  require("./assets/board_preview_comments_icon.svg").default
+                }
               />
             </div>
             <div className="hboard-notice-preview-icons-li">
@@ -151,7 +191,7 @@ const Hboard = () => {
           <img
             className="hboard-preview-likes-icon"
             alt=""
-           src={require("./assets/board_preview_likes_icon.svg").default}
+            src={require("./assets/board_preview_likes_icon.svg").default}
           />
         </div>
         <div className="hboard-preview-comments">
