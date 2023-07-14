@@ -46,8 +46,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private void isNormalMember(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String id = extractUsername(authentication);
         int m_idx = memberRepository.findByMId(id).get().getMIdx();
-        String accessToken = jwtService.generateAccessToken(m_idx);
-        String refreshToken = jwtService.generateRefreshToken();
+        String accessToken = jwtService.generateAccessToken(m_idx,"normal");
+        String refreshToken = jwtService.generateRefreshToken("normal");
 
         jwtService.sendAccessAndRefreshToken(response,accessToken,refreshToken);
 
@@ -64,8 +64,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private void isCompanyMember(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String id = extractUsername(authentication);
         int cm_idx = companyMemberRepository.findByCMemail(id).get().getCMidx();
-        String accessToken = jwtService.generateAccessToken(cm_idx);
-        String refreshToken = jwtService.generateRefreshToken();
+        String accessToken = jwtService.generateAccessToken(cm_idx,"company");
+        String refreshToken = jwtService.generateRefreshToken("company");
 
         jwtService.sendAccessAndRefreshToken(response,accessToken,refreshToken);
 

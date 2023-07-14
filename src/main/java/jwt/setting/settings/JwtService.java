@@ -39,17 +39,19 @@ public class JwtService {
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     private static final String IDX_CLAIM = "idx";
+    private static final String TYPE_CLAIM = "type";
     private static final String BEARER = "Bearer ";
 
     private final MemberRepository memberRepository;
     private final CompanyMemberRepository companyMemberRepository;
 
-    public String generateAccessToken(int idx) {
+    public String generateAccessToken(int idx,String type) {
         Date now = new Date();
             return JWT.create()
                     .withSubject(ACCESS_TOKEN_SUBJECT)
                     .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
                     .withClaim(IDX_CLAIM, idx)
+                    .withClaim(TYPE_CLAIM, type)
                     .sign(Algorithm.HMAC512(secretKey));
     }
 
@@ -57,11 +59,12 @@ public class JwtService {
      * RefreshToken 생성
      * RefreshToken은 Claim에 email도 넣지 않으므로 withClaim() X
      */
-    public String generateRefreshToken() {
+    public String generateRefreshToken(String type) {
         Date now = new Date();
         return JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
+                .withClaim(TYPE_CLAIM, type)
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
@@ -114,7 +117,21 @@ public class JwtService {
                     .asInt());
 
         } catch (Exception e){
-            log.error(" 액세스 토큰이 유효하지 않습니다. ");
+            log.error(" 토큰이 유효하지 않습니다. ");
+            return Optional.empty();
+        }
+    }
+
+    public Optional<String> extractType(String token) {
+        try {
+            return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
+                    .build()
+                    .verify(token)
+                    .getClaim(TYPE_CLAIM)
+                    .asString());
+
+        } catch (Exception e){
+            log.error(" 토큰이 유효하지 않습니다. ");
             return Optional.empty();
         }
     }
