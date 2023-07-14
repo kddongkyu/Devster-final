@@ -8,13 +8,14 @@ import jwt_decode from "jwt-decode";
 
 function JwtTest(props) {
     const navi = useNavigate();
-    let de = jwt_decode(localStorage.getItem('accessToken'));
-
+    if(localStorage.getItem('accessToken')) {
+        let de = jwt_decode(localStorage.getItem('accessToken'));
+    }
     const jwtTest = () => {
         const idx = 69;
         axiosIns.get(`/member/${idx}`)
             .then(res => {
-                console.log(res + "from ins");
+                console.log(res);
             });
     }
 
@@ -29,10 +30,6 @@ function JwtTest(props) {
         <div>
             <button onClick={jwtTest} style={{width: '500px', height: '500px'}}>Jwt - Test</button>
             <button onClick={axiosTest} style={{width: '500px', height: '500px'}}>Axios - Test</button>
-            {
-                de.sub
-
-            }
             <ResizeCrop/>
         </div>
     );
