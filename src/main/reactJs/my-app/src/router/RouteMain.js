@@ -2,13 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
-import {
-  Layout,
-  LoginForm,
-  MemberList,
-  NotFound,
-  ScrollTop,
-} from "../components";
+import { Layout, MemberList, NotFound } from "../components";
 import {
   Bookmarks,
   MyResume,
@@ -27,6 +21,8 @@ import HboardForm from "../pages/hboard/HboardForm";
 import AboardForm from "../pages/aboard/AboardForm";
 import Withdrawal from "../pages/mypage/Withdrawal";
 import { SignIn } from "../pages/signin";
+import { SignUpNorm } from "../pages/signup";
+import JwtTest from "../pages/test/JwtTest";
 
 function RouteMain(props) {
   return (
