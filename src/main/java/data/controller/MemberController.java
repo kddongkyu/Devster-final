@@ -35,6 +35,11 @@ public class MemberController {
         this.jwtService = jwtService;
     }
 
+    @PostMapping("/check")
+    public void check() {
+
+    }
+
     @GetMapping
     public ResponseEntity<List<MemberDto>> getAllMembers(){
         return new ResponseEntity<List<MemberDto>>(memberService.getAllMembers(),HttpStatus.OK);
@@ -43,6 +48,11 @@ public class MemberController {
     @GetMapping("/{idx}")
     public ResponseEntity<MemberDto> getOneMember(@PathVariable int idx){
         return new ResponseEntity<MemberDto>(memberService.getOneMember(idx),HttpStatus.OK);
+    }
+
+    @PostMapping("/sign-up/photo/tmpt")
+    public ResponseEntity<String> uploadPhotoTemp(@RequestBody MultipartFile upload) {
+        return new ResponseEntity<String>(memberService.uploadPhotoTemp(upload),HttpStatus.OK);
     }
 
     @PostMapping("/sign-up/photo")

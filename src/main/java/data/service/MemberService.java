@@ -45,10 +45,21 @@ public class MemberService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public String uploadPhotoTemp(MultipartFile upload){
+        if(photo != null) {
+            storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
+        }
+        photo = storageService.uploadFile(bucketName,"devster/member/tmpt",upload);
+        logger.info("일반회원 임시사진 업로드 완료");
+        return photo;
+    }
+
     public String uploadPhoto(MultipartFile upload){
         if(photo != null) {
+            storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
             storageService.deleteFile(bucketName,"devster/member",photo);
         }
+
         photo = storageService.uploadFile(bucketName,"devster/member",upload);
         logger.info("일반회원 사진 업로드 완료");
         return photo;
