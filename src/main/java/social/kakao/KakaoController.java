@@ -105,8 +105,8 @@ public class KakaoController {
 
         int m_idx = returnMember.getMIdx();
 
-        String accessTokenKakao = jwtService.generateAccessToken(m_idx);
-        String refreshTokenKakao = jwtService.generateRefreshToken();
+        String accessTokenKakao = jwtService.generateAccessToken(m_idx,"normal");
+        String refreshTokenKakao = jwtService.generateRefreshToken("normal");
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Authorization", "Bearer " + accessTokenKakao);
