@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -35,6 +36,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
+    private String refreshToken;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -48,18 +51,19 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             String uri = request.getRequestURI();
             String[] uriParts = uri.split("/");
 
+            // 사용자 요청 헤더에서 RefreshToken 추출
+            // -> RefreshToken이 없거나 유효하지 않다면(DB에 저장된 RefreshToken과 다르다면) null을 반환
+            // 사용자의 요청 헤더에 RefreshToken이 있는 경우는, AccessToken이 만료되어 요청한 경우밖에 없다.
+            // 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
+            String refreshToken = jwtService.extractRefreshToken(request)
+                    .filter(jwtService::isTokenValid)
+                    .orElse(null);
+
             if (uriParts.length > 1) {
                 String prefix = uriParts[1];
 
                 if (prefix.equals("member")) {
                     // member에 대한 처리
-                    // 사용자 요청 헤더에서 RefreshToken 추출
-                    // -> RefreshToken이 없거나 유효하지 않다면(DB에 저장된 RefreshToken과 다르다면) null을 반환
-                    // 사용자의 요청 헤더에 RefreshToken이 있는 경우는, AccessToken이 만료되어 요청한 경우밖에 없다.
-                    // 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
-                    String refreshToken = jwtService.extractRefreshToken(request)
-                            .filter(jwtService::isTokenValid)
-                            .orElse(null);
 
                     // 리프레시 토큰이 요청 헤더에 존재했다면, 사용자가 AccessToken이 만료되어서
                     // RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
@@ -78,14 +82,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                 } else if (prefix.equals("compmember")) {
                     // compmember에 대한 처리
 
-                    // 사용자 요청 헤더에서 RefreshToken 추출
-                    // -> RefreshToken이 없거나 유효하지 않다면(DB에 저장된 RefreshToken과 다르다면) null을 반환
-                    // 사용자의 요청 헤더에 RefreshToken이 있는 경우는, AccessToken이 만료되어 요청한 경우밖에 없다.
-                    // 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
-                    String refreshToken = jwtService.extractRefreshToken(request)
-                            .filter(jwtService::isTokenValid)
-                            .orElse(null);
-
                     // 리프레시 토큰이 요청 헤더에 존재했다면, 사용자가 AccessToken이 만료되어서
                     // RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
                     // 일치한다면 AccessToken을 재발급해준다.
@@ -101,10 +97,32 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                         checkAccessTokenAndAuthenticationComp(request, response, filterChain);
                     }
                 } else {
-                    // 그 외의 경우에 대한 처리
+                    if (refreshToken != null) {
+                        if(jwtService.extractType(refreshToken).get().equals("company")) {
+                            checkRefreshTokenAndReIssueAccessTokenComp(response, refreshToken);
+                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
+                        } else {
+                            checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
+                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
+                        }
+                    }
+
+                    // RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행
+                    // AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
+                    // AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
+                    if (refreshToken == null) {
+                        String type = jwtService.extractAccessToken(request)
+                                                .filter(jwtService::isTokenValid)
+                                                .orElse(null).toString();
+                        if(type.equals("company")){
+                            checkAccessTokenAndAuthenticationComp(request, response, filterChain);
+                        } else {
+                            checkAccessTokenAndAuthentication(request,response,filterChain);
+                        }
+                    }
                 }
             } else {
-                // URI가 예상한 형식이 아닐 때의 처리
+
             }
         }
     }
@@ -115,7 +133,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             String reIssuedRefreshToken = reIssueRefreshToken(memberEntity);
-            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(memberEntity.getMIdx()),
+            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(memberEntity.getMIdx(),"normal"),
                     reIssuedRefreshToken);
         } else {
             try {
@@ -132,7 +150,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (optionalCompanyMemberEntity.isPresent()) {
             CompanyMemberEntity companyMemberEntity = optionalCompanyMemberEntity.get();
             String reIssuedRefreshToken = reIssueRefreshTokenComp(companyMemberEntity);
-            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(companyMemberEntity.getCMidx()),
+            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(companyMemberEntity.getCMidx(),"company"),
                     reIssuedRefreshToken);
         } else {
             try {
@@ -145,14 +163,14 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
 
     private String reIssueRefreshToken(MemberEntity member) {
-        String reIssuedRefreshToken = jwtService.generateRefreshToken();
+        String reIssuedRefreshToken = jwtService.generateRefreshToken("normal");
         member.setMRefreshtoken(reIssuedRefreshToken);
         memberRepository.saveAndFlush(member);
         return reIssuedRefreshToken;
     }
 
     private String reIssueRefreshTokenComp(CompanyMemberEntity companyMember) {
-        String reIssuedRefreshToken = jwtService.generateRefreshToken();
+        String reIssuedRefreshToken = jwtService.generateRefreshToken("company");
         companyMember.setCMrefreshtoken(reIssuedRefreshToken);
         companyMemberRepository.saveAndFlush(companyMember);
         return reIssuedRefreshToken;
