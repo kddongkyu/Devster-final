@@ -95,8 +95,8 @@ public class NaverController {
 
         int m_idx = returnMember.getMIdx();
 
-        String accessTokenNaver = jwtService.generateAccessToken(m_idx);
-        String refreshTokenNaver = jwtService.generateRefreshToken();
+        String accessTokenNaver = jwtService.generateAccessToken(m_idx,"normal");
+        String refreshTokenNaver = jwtService.generateRefreshToken("normal");
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Authorization", "Bearer " + accessTokenNaver);

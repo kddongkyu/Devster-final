@@ -94,7 +94,7 @@ public class HireBoardService {
         no = totalCount - startNum;
         Pageable pageable = PageRequest.of(startNum, perPage, Sort.by(Sort.Direction.DESC, "hbIdx"));
         Map<String,Object> map = new HashMap<>(); 
-        map.put("list",hireBoardRepository.findAll(pageable).getContent());
+        // map.put("list",hireBoardRepository.findAll(pageable).getContent());
         map.put("currentPage",currentPage);
         map.put("totalCount",totalCount);
         map.put("no",no);

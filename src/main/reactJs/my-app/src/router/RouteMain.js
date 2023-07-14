@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
@@ -45,8 +44,6 @@ function RouteMain(props) {
         <Route path="/qboard/form" element={<QboardForm />} />ㄱ
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
-        {/* <Route path="/notice/form" element={<Noticeform />} /> */}
-        {/* <Route path="/notice/detail" element={<Noticedetail />} /> */}
         <Route path="/aboard" element={<Aboard />} />
         <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />

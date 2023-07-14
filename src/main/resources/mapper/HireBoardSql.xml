@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.HireBoardMapper">
+    <select id="getTotalCount" resultType="int">
+        select count(*) from hireboard
+    </select>
+    <select id="getPagingList" parameterType="Map" resultType="HireBoardDto">
+        select * from hireboard order by hb_idx desc limit #{start},#{perpage}
+    </select>
+</mapper>
