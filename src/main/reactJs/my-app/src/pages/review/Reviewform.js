@@ -1,19 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import './style/Reviewform.css';
 import {ReviewModal} from "./index";
-import axios from "axios";
-import jwt_Decode from "jwt-decode";
+import axiosIns from "../../api/JwtConfig";
+import jwt_decode from "jwt-decode";
 
 
 function Reviewform(props) {
+    let de = jwt_decode(localStorage.getItem('accessToken'));
     const [isReviewOpen,setIsReviewOpen] =useState(false);
     const openReviewModal = () => {
         setIsReviewOpen(true);
     };
 
-    const decodedToken = jwt_Decode(localStorage.jwtToken);
-    const m_idx = decodedToken.m_idx;
-    console.log(m_idx);
 
 
     const [selectedCompany,setSelectedCompany] =useState("");
@@ -24,7 +22,7 @@ function Reviewform(props) {
         rb_content: '',
         rb_star:'',
         rb_type: '',
-        m_idx: decodedToken.m_idx,
+        m_idx: de.idx,
     });
     useEffect(() => {
         setFormData((prevData) => ({
@@ -53,14 +51,14 @@ function Reviewform(props) {
         const apiUrl = '/review'; // 서버의 API 엔드포인트 주소
 
         try {
-            // const response = await axiosIns.post(apiUrl, formData);
-            const response = await axios.post(apiUrl, formData);
+             const response = await axiosIns.post(apiUrl, formData);
+           // const response = await axios.post(apiUrl, formData);
             console.log(response.data);
             // 서버의 응답을 처리합니다.
-            window.location.replace('/notice');
+            window.location.replace('/review');
 
         } catch (error) {
-            console.error(error);
+            console.error("reviewforminsertreact"+error);
             // 에러 처리
         }
     };

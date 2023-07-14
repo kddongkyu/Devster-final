@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './style/ReviewModal.css';
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import axiosIns from "../../api/JwtConfig";
 
 const Star = ({ filled }) => <span>{filled ? "★" : "☆"}&nbsp;</span>;
 function ReviewModal({ isReviewOpen, setIsReviewOpen ,setSelectedCompany, setSelectedCompanyIdx}) {
 
     const [keyword, setKeyword] = useState('');
     const [companies, setCompanies] = useState([]);
+
 
     const closeFindCo = () => {
         setIsReviewOpen(false);
@@ -18,11 +21,9 @@ function ReviewModal({ isReviewOpen, setIsReviewOpen ,setSelectedCompany, setSel
 
     const handleSearch = async () => {
         const listUrl = "/review/search"; // Adjust this if your server runs on a different port or URL
-        const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsIm1faWR4Ijo2OSwiZXhwIjoxNjg5MzM5ODYwfQ.YbksJU8ZyOfJ9TC4_3pCPqVy31dMXO3TroXFCHyT2jSZKXxBEnlnYJgpoLEjSPwy6NYuVu6H2Ine_nFwiLMdFA'; // Add your actual token here
-
+      //  let de = jwt_decode(localStorage.getItem('accessToken'));
         try {
-            const response = await axios.get(listUrl, {
-                headers: { Authorization: `Bearer ${token}` },
+            const response = await axiosIns.get(listUrl, {
                 params: { keyword: keyword }
             });
             console.log(response.data);

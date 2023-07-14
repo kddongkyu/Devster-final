@@ -88,6 +88,7 @@
     left: 1rem;
     width: 1.4rem;
     height: 1.43rem;
+
 }
 .review-headerbar-btn {
     position: absolute;
@@ -97,6 +98,7 @@
     height: 3.5rem;
     font-size: 1.3rem;
     color: #fff;
+    background-color: #721ea6;
     font-family: "Roboto Serif";
 }
 .review-headerbar-function-sort1 {
@@ -160,6 +162,7 @@
     border: 1px solid #721ea6;
     box-sizing: border-box;
     height: 3.5rem;
+    padding-left: 5rem;
 }
 .review-function-search-icon {
     position: absolute;
@@ -176,24 +179,10 @@
     left: 1.5rem;
     height: 3.5rem;
 }
-.review-pages-child,
-.review-pages-item {
-    position: absolute;
-    width: calc(100% - 3.08px);
-    top: -0.05rem;
-    right: 0;
-    left: 0.31rem;
-    max-width: 100%;
-    overflow: hidden;
-    height: 0.1rem;
-}
-.review-pages-item {
-    top: 5.65rem;
-}
 .review-pages-reload-icon {
     position: absolute;
-    top: 1.37rem;
-    left: -0.1rem;
+    top: 39.97rem;
+    left: 1.79rem;
     width: 2.04rem;
     height: 1.99rem;
 }
@@ -220,18 +209,10 @@
 }
 .review-pages-paging {
     position: absolute;
-    top: 1.47rem;
-    right: 0.4rem;
+    top: 40.07rem;
+    right: 2.6rem;
     width: 15.2rem;
     height: 4.13rem;
-}
-.review-pages {
-    position: absolute;
-    width: calc(100% - 40.92px);
-    top: 38.6rem;
-    right: 2.2rem;
-    left: 1.89rem;
-    height: 5.7rem;
     color: #626567;
 }
 .review-list-box-child {
@@ -423,6 +404,19 @@
     left: 2.2rem;
     height: 28.4rem;
     font-size: 1.1rem;
+}
+.review-child,
+.review-item {
+    position: absolute;
+    width: calc(100% - 49px);
+    top: 44.2rem;
+    right: 2.4rem;
+    left: 2.5rem;
+    background-color: #d9d9d9;
+    height: 0.1rem;
+}
+.review-item {
+    top: 37.8rem;
 }
 .review {
     position: relative;

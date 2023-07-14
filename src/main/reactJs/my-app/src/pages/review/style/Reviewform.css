@@ -76,6 +76,7 @@
     max-width: 100%;
     overflow: hidden;
     height: 3.9rem;
+    padding-left: 1.5rem;
 }
 .review-write-select-box-icon {
     position: absolute;
@@ -84,6 +85,7 @@
     border-radius: 5px;
     width: 8.3rem;
     height: 3.9rem;
+    padding-left: 1.5rem;
 }
 .review-write-subject {
     position: absolute;
@@ -148,6 +150,8 @@
     max-width: 100%;
     overflow: hidden;
     height: 19.4rem;
+    padding-left: 2rem;
+    padding-top: 2rem;
 }
 .review-content-text {
     position: absolute;
