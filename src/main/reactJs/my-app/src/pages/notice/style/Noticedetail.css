@@ -1,0 +1,337 @@
+.advertise-main {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 11.2rem;
+}
+.advertise-text {
+    position: absolute;
+    top: 4.2rem;
+    left: calc(50% - 17.5px);
+    letter-spacing: -0.24px;
+}
+.advertise-box {
+    position: absolute;
+    width: calc(100% - 53px);
+    top: 7.6rem;
+    right: 2.6rem;
+    left: 2.7rem;
+    height: 11.2rem;
+    color: #000;
+}
+.notice-detail-line-child,
+.notice-detail-line-item {
+    position: absolute;
+    top: 0.75rem;
+    max-width: 100%;
+    overflow: hidden;
+    height: 0.1rem;
+}
+.notice-detail-line-child {
+    width: calc(100% - 202px);
+    right: 20.2rem;
+    left: 0;
+}
+.notice-detail-line-item {
+    width: calc(100% - 200px);
+    right: 0;
+    left: 20rem;
+}
+.notice-line-text {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 29px);
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 5.1rem;
+}
+.notice-detail-line {
+    position: absolute;
+    width: calc(100% - 54px);
+    top: 23.6rem;
+    right: 2.7rem;
+    left: 2.7rem;
+    height: 2rem;
+    font-size: 1.4rem;
+}
+.notice-detail-header-function-icon {
+    position: absolute;
+    top: 27.1rem;
+    right: 2.48rem;
+    width: 1.92rem;
+    height: 2.4rem;
+}
+.notice-detail-info-profile-img-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    width: 4.3rem;
+    height: 4.3rem;
+    object-fit: cover;
+}
+.notice-detail-info-nickname {
+    position: absolute;
+    top: 0.2rem;
+    left: 5.3rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #1c1c1c;
+    display: inline-block;
+    width: 13.3rem;
+    height: 1.7rem;
+}
+.span {
+    color: #721ea6;
+}
+.notice-detail-info-status-text,
+.notice-detail-info-status-text1 {
+    position: absolute;
+    top: 2.3rem;
+    left: 11.1rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 7.7rem;
+}
+.notice-detail-info-status-text1 {
+    left: 5.4rem;
+    width: 4.1rem;
+}
+.notice-detail-info-status-view-icon {
+    position: absolute;
+    top: 2.75rem;
+    left: 9.65rem;
+    width: 1.4rem;
+    height: 0.94rem;
+}
+.notice-detail-info {
+    position: absolute;
+    top: 29rem;
+    left: 2.1rem;
+    width: 18.8rem;
+    height: 4.3rem;
+    font-size: 1.2rem;
+}
+.board-detail-header-btn-like-i-icon {
+    position: absolute;
+    top: 0.45rem;
+    right: 2.4rem;
+    width: 1.1rem;
+    height: 0.9rem;
+}
+.board-detail-header-btn-like-t {
+    position: absolute;
+    top: 0;
+    right: 0;
+    letter-spacing: -0.24px;
+}
+.notice-detail-header-btn-like {
+    position: absolute;
+    top: 0;
+    right: 3.7rem;
+    width: 3.5rem;
+    height: 1.7rem;
+}
+.board-detail-header-btn-dislik-icon {
+    position: absolute;
+    top: 0.55rem;
+    right: 1.8rem;
+    width: 1.1rem;
+    height: 0.9rem;
+}
+.notice-detail-header-btn-disli {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.9rem;
+    height: 1.7rem;
+}
+.notice-detail-header-btn {
+    position: absolute;
+    top: 31.3rem;
+    right: 2.2rem;
+    width: 7.2rem;
+    height: 1.7rem;
+    font-size: 1.2rem;
+}
+.p {
+    margin: 0;
+}
+.notice-detail-content,
+.notice-detail-subject {
+    position: absolute;
+    left: 0;
+    letter-spacing: -0.24px;
+    display: inline-block;
+}
+.notice-detail-content {
+    width: 100%;
+    top: 6.7rem;
+    height: 43.1rem;
+}
+.notice-detail-subject {
+    width: calc(100% - 74px);
+    top: 0;
+    font-size: 1.8rem;
+    color: #000;
+    height: 2.6rem;
+}
+.notice-detail-box {
+    position: absolute;
+    width: calc(100% - 97px);
+    top: 35.7rem;
+    right: 4.9rem;
+    left: 4.8rem;
+    height: 49.8rem;
+    font-size: 1.3rem;
+}
+.notice-like-countbox-child {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 5.6rem;
+    height: 3.8rem;
+    line-height: 35px;
+}
+.div {
+    position: absolute;
+    top: 1rem;
+    right: 1.7rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+}
+.group-child,
+.notice-like-countbox {
+    position: absolute;
+    top: 0;
+    height: 3.8rem;
+}
+.notice-like-countbox {
+    right: 3.3rem;
+    width: 5.6rem;
+}
+.group-child {
+    right: 0;
+    border-radius: 0 5px 5px 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 3.4rem;
+}
+.rectangle-wrapper {
+    right: 0;
+}
+.group-item,
+.rectangle-container,
+.rectangle-wrapper {
+    position: absolute;
+    top: 0;
+    width: 3.4rem;
+    height: 3.8rem;
+}
+.group-item {
+    right: 0;
+    border-radius: 5px 0 0 5px;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+}
+.rectangle-container {
+    right: 8.8rem;
+}
+.notice-like-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12.2rem;
+    height: 3.8rem;
+}
+.notice-dislike-icon,
+.notice-like,
+.notice-like-icon {
+    position: absolute;
+    top: 1.56rem;
+    right: 9.76rem;
+    width: 1.38rem;
+    height: 0.83rem;
+}
+.notice-dislike-icon,
+.notice-like {
+    right: 0.96rem;
+}
+.notice-like {
+    top: 86.3rem;
+    right: 4.8rem;
+    width: 12.2rem;
+    height: 3.8rem;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+}
+.advertise-text1 {
+    position: absolute;
+    top: 4.2rem;
+    left: calc(50% - 27px);
+    letter-spacing: -0.24px;
+}
+.advertise-box1 {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 93.7rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 11.2rem;
+    color: #000;
+}
+.notice-detail {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 104.9rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 2rem;
+    color: #626567;
+    font-family: "Noto Sans KR";
+}
+.notice-line-box {
+    position: absolute;
+    width: calc(100% - 61px);
+    top: 24.6rem;
+    right: 3rem;
+    left: 3.1rem;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 0.1rem;
+}
+.notice-detail-headline-box {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 40px);
+    background-color: #fff;
+    width: 8rem;
+    height: 2rem;
+}
+.notice-detail-headline-text {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 26px);
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 5.1rem;
+}
+.notice-detail-headline {
+    position: absolute;
+    top: 23.6rem;
+    left: calc(50% - 40.5px);
+    width: 8rem;
+    height: 2rem;
+    font-size: 1.4rem;
+}

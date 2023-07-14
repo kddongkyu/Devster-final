@@ -1,6 +1,7 @@
 package jwt.setting.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import data.repository.CompanyMemberRepository;
 import data.repository.MemberRepository;
 import data.service.LoginService;
 import jwt.setting.filter.CustomJsonUsernamePasswordAuthenticationFilter;
@@ -10,6 +11,7 @@ import jwt.setting.handler.LoginFailureHandler;
 import jwt.setting.handler.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,6 +21,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -33,12 +36,14 @@ public class SecurityConfig {
     private final LoginService loginService;
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
+    private final CompanyMemberRepository companyMemberRepository;
     private final ObjectMapper objectMapper;
 
-    public SecurityConfig(LoginService loginService, JwtService jwtService, MemberRepository memberRepository, ObjectMapper objectMapper) {
+    public SecurityConfig(LoginService loginService, JwtService jwtService, MemberRepository memberRepository, CompanyMemberRepository companyMemberRepository, ObjectMapper objectMapper) {
         this.loginService = loginService;
         this.jwtService = jwtService;
         this.memberRepository = memberRepository;
+        this.companyMemberRepository = companyMemberRepository;
         this.objectMapper = objectMapper;
     }
 
@@ -65,7 +70,7 @@ public class SecurityConfig {
                 // 아이콘, css, js 관련
                 // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
                 .antMatchers("/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**").permitAll()
-                .antMatchers("/member/sign-up/**","/oauth2/callback/**").permitAll() // 회원가입 접근 가능
+                .antMatchers("/member/sign-up/**","/oauth2/callback/**","/compmember/sign-up/**").permitAll() // 회원가입 접근 가능
                 .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
 
@@ -79,8 +84,12 @@ public class SecurityConfig {
         // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
         // 따라서, LogoutFilter 이후에 우리가 만든 필터 동작하도록 설정
         // 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
-        http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
-        http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
+                http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
+                http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class)
+
+                // 인증되지 않은 사용자 접근 시 HTTP 401 에러 반환 설정
+                .exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
         return http.build();
     }
@@ -111,7 +120,7 @@ public class SecurityConfig {
      */
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler(jwtService, memberRepository);
+        return new LoginSuccessHandler(jwtService, memberRepository, companyMemberRepository);
     }
 
     /**
@@ -119,7 +128,7 @@ public class SecurityConfig {
      */
     @Bean
     public LoginFailureHandler loginFailureHandler() {
-        return new LoginFailureHandler();
+        return new LoginFailureHandler(jwtService);
     }
 
     /**
@@ -140,7 +149,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
-        JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, memberRepository);
+        JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, memberRepository, companyMemberRepository);
         return jwtAuthenticationFilter;
     }
 
