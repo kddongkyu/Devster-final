@@ -60,6 +60,7 @@ public class MemberService {
             storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
             storageService.deleteFile(bucketName,"devster/member",photo);
         }
+
         photo = storageService.uploadFile(bucketName,"devster/member",upload);
         logger.info("일반회원 사진 업로드 완료");
         return photo;

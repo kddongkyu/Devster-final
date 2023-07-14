@@ -33,6 +33,11 @@ public class MemberController {
         this.jwtService = jwtService;
     }
 
+    @PostMapping("/check")
+    public void check() {
+
+    }
+
     @GetMapping
     public ResponseEntity<List<MemberDto>> getAllMembers(){
         return new ResponseEntity<List<MemberDto>>(memberService.getAllMembers(),HttpStatus.OK);
