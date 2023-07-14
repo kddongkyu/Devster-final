@@ -26,6 +26,7 @@ public class FreeBoardService {
 
     @Autowired
     public FreeBoardService(FreeBoardRepository freeBoardRepository) {
+
         this.freeBoardRepository = freeBoardRepository;
     }
 

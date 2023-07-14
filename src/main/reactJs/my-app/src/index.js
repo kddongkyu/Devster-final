@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Root from './router/Root';
-import setAuthorizationToken from "./setAuthorizationToken";
-import jwt_Decode from "jwt-decode";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

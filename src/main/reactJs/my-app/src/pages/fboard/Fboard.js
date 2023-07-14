@@ -12,52 +12,6 @@ function Fboard(props) {
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [freeBoard, setFreeBoard] = useState([]);
 
-  // const list = async () => {
-  //     const listUrl = "/fboard";
-  //     const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsIm1faWR4Ijo2NSwiZXhwIjoxNjg5MTcxNzY0fQ.gflhIqTDuHQvsYvxRrgKs1JlPq8oh0AtacLoYPB2whr5XB6t-LACsXiO3sibe7idCU5m0QTf8xbOassS-Ep3UA`;
-  //     try {
-  //         const response = await Axios.get(listUrl, {
-
-  //             headers: {
-  //                 Authorization: `Bearer ${token}`,
-  //             },
-  //         });
-  //         setFreeBoardList(response.data);
-  //         console.log(freeBoardList);
-  //         //console.log(response.data);
-  //     } catch (e) {
-  //         console.log(e);
-  //     }
-  // };
-  //
-  //
-  //     const getMember = async (idx) => {
-  //       const fboardUrl = `/fboard/${fb_idx}`;
-  //       const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsIm1faWR4Ijo2NSwiZXhwIjoxNjg5MTcxNzY0fQ.gflhIqTDuHQvsYvxRrgKs1JlPq8oh0AtacLoYPB2whr5XB6t-LACsXiO3sibe7idCU5m0QTf8xbOassS-Ep3UA`;
-  //
-  //       try {
-  //         const response = await Axios.get(fboardUrl, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //
-  //         // sessionStorage.setItem("m_name", response.data.m_name);
-  //         // sessionStorage.setItem("m_email", response.data.m_email);
-  //         // sessionStorage.setItem("ai_name", response.data.ai_name);
-  //         // sessionStorage.setItem("m_nickname", response.data.m_nickname);
-  //         // sessionStorage.setItem("m_photo", response.data.m_photo);
-  //         // console.log(sessionStorage.getItem("m_email"));
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     };
-  //
-  //   //처음 시작시 목록 가져오기
-  //     useEffect(() => {
-  //       list();
-  //       // getMember(65);
-  //     }, []);
 
   return (
     <div className="fboard">

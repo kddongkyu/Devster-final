@@ -3,17 +3,17 @@ import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import jwt_Decode from "jwt-decode";
+import axiosIns from "../../api/JwtConfig";
+import jwt_decode from "jwt-decode";
 function FboardForm (props)  {
 
     const [fbSubject,setFbSubject]=useState('');
     const [fbPhoto,setFbPhoto]=useState('');
     const [fbContent,setFbContent]=useState('');
-
     const navi=useNavigate();
 
-    const decodedToken = jwt_Decode(localStorage.jwtToken);
-    const m_idx = decodedToken.m_idx;
-    console.log(m_idx);
+    let de = jwt_decode(localStorage.getItem('accessToken'));
+    console.log(de.idx);
 
     const onSubmitEvent = (e) => {
         e.preventDefault();
@@ -22,10 +22,10 @@ function FboardForm (props)  {
             fb_subject: fbSubject,
             fb_photo: fbPhoto,
             fb_content: fbContent,
-            m_idx: decodedToken.m_idx
+            m_idx: de.idx
         };
 
-        Axios.post("/fboard", dto)
+        axiosIns.post("/fboard", dto)
             .then(res => {
                 // 성공적으로 등록된 경우, 목록으로 이동
                 navi("/fboard");
@@ -40,7 +40,7 @@ function FboardForm (props)  {
     const onUploadEvent=(e)=>{
         const uploadPhoto=new FormData();
         uploadPhoto.append("upload",e.target.files[0]);
-        Axios({
+        axiosIns({
             method:'post',
             url:'/fboard/photo/upload',
             data:uploadPhoto,

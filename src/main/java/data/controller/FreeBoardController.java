@@ -36,6 +36,7 @@ public class FreeBoardController {
 
     @PostMapping("/photo/upload")
     public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
+        System.out.println(upload);
         return new ResponseEntity<String>(freeBoardService.uploadPhoto(upload),HttpStatus.OK);
     }
 
