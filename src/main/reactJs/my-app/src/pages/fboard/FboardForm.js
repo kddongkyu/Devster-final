@@ -1,7 +1,58 @@
 import "./style/FboardForm.css";
-const FboardForm = () => {
+import {useState} from "react";
+import { useNavigate } from 'react-router-dom';
+import Axios from 'axios';
+import jwt_Decode from "jwt-decode";
+function FboardForm (props)  {
+
+    const [fbSubject,setFbSubject]=useState('');
+    const [fbPhoto,setFbPhoto]=useState('');
+    const [fbContent,setFbContent]=useState('');
+
+    const navi=useNavigate();
+
+    const decodedToken = jwt_Decode(localStorage.jwtToken);
+    const m_idx = decodedToken.m_idx;
+    console.log(m_idx);
+
+    const onSubmitEvent = (e) => {
+        e.preventDefault();
+
+        const dto = {
+            fb_subject: fbSubject,
+            fb_photo: fbPhoto,
+            fb_content: fbContent,
+            m_idx: decodedToken.m_idx
+        };
+
+        Axios.post("/fboard", dto)
+            .then(res => {
+                // 성공적으로 등록된 경우, 목록으로 이동
+                navi("/fboard");
+            })
+            .catch(error => {
+                // 등록 실패 시 에러 처리
+                console.error(error);
+            });
+    }
+
+    //파일 업로드
+    const onUploadEvent=(e)=>{
+        const uploadPhoto=new FormData();
+        uploadPhoto.append("upload",e.target.files[0]);
+        Axios({
+            method:'post',
+            url:'/fboard/photo/upload',
+            data:uploadPhoto,
+            headers:{'Content-Type':'multipart/form-data'}
+        }).then(res=>{
+            setFbPhoto(res.data);
+        });
+    }
+
   return (
-    <div className="fboard-form">
+      <div>
+    <form className="fboard-form" onSubmit={onSubmitEvent}>
       <div className="advertise-box">
         <div className="advertise-main" />
         <b className="advertise-text">광고</b>
@@ -16,27 +67,36 @@ const FboardForm = () => {
         </div>
       </div>
       <div className="qboard-form-subject">
-        <input type="text" className="qboard-form-subject-rec" placeholder="제목을 입력해주세요."/>
+        <input type="text" className="qboard-form-subject-rec" placeholder="제목을 입력해주세요."
+               required
+               onChange={(e)=>setFbSubject(e.target.value)} value={fbSubject}/>
        
       </div>
       <div className="qboard-form-content">
-        <textarea className="qboard-form-content-rec" placeholder="내용을 입력해주세요."></textarea>
+        <textarea className="qboard-form-content-rec"
+                  placeholder="내용을 입력해주세요."
+                  required value={fbContent}
+                  onChange={(e)=>setFbContent(e.target.value)}
+        ></textarea>
       </div>
       <div className="qboard-form-fileupload">
-        <div className="qboard-form-subject-rec" />
-        <div className="qboard-form-fileupload-placeho">
-          첨부 사진을 올려주세요.
-        </div>
-        <img
-          className="qboard-form-fileupload-icon"
-          alt=""
-          src={require("./assets/qboard_form_fileupload_icon.svg").default}
-        />
+        <input type="file" className="qboard-form-subject-rec"
+                placeholder="첨부 사진을 올려주세요."
+               onChange={onUploadEvent}/>
+        {/*<div className="qboard-form-fileupload-placeho">*/}
+        {/*  첨부 사진을 올려주세요.*/}
+        {/*</div>*/}
+
         <div className="qboard-form-fileupload-cnt-tex">
-          사진 3장이 등록되었습니다.
+            <img
+                // className="qboard-form-fileupload-icon"
+                alt=""
+                src={require("./assets/qboard_form_fileupload_icon.svg").default}
+            />
+          &nbsp;&nbsp;사진 3장이 등록되었습니다.
         </div>
       </div>
-      <div className="qboard-form-btn">
+      <button type='submit' className="qboard-form-btn">
         <div className="qboard-form-btn-child" />
         <div className="qboard-form-btn-text">게시글등록</div>
         <img
@@ -44,9 +104,11 @@ const FboardForm = () => {
           alt=""
           src={require("./assets/qboard_form_btn_icon.svg").default}
         />
-      </div>
+      </button>
       <div className="moblie" />
-    </div>
+    </form>
+          {/*<img alt='' src={`${photoUrl}${photo}`}/>*/}
+      </div>
   );
 };
 

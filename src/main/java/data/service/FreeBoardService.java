@@ -2,10 +2,14 @@ package data.service;
 
 import data.dto.FreeBoardDto;
 import data.entity.FreeBoardEntity;
+import data.entity.MemberEntity;
 import data.repository.FreeBoardRepository;
 import lombok.extern.slf4j.Slf4j;
+import naver.cloud.NcpObjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -16,7 +20,6 @@ import java.util.Optional;
 @Slf4j
 public class FreeBoardService {
 
- 
 
     @Autowired
     private final FreeBoardRepository freeBoardRepository;
@@ -25,6 +28,14 @@ public class FreeBoardService {
     public FreeBoardService(FreeBoardRepository freeBoardRepository) {
         this.freeBoardRepository = freeBoardRepository;
     }
+
+    @Autowired
+    private NcpObjectStorageService storageService;
+
+    @Value("${aws.s3.bucketName}")
+    private String bucketName;
+
+    String photo = null;
 
     public FreeBoardDto insertFreeBoard(FreeBoardDto dto){
         try {
@@ -35,6 +46,20 @@ public class FreeBoardService {
             log.error("insert FreeBoard Error",e);
             throw  e;
         }
+    }
+
+    public String uploadPhoto(MultipartFile upload){
+        if(photo != null) {
+            storageService.deleteFile(bucketName,"devster/fboard",photo);
+        }
+        photo = storageService.uploadFile(bucketName,"devster/fboard",upload);
+        log.info("FreeBoard 사진 업로드 완료");
+        return photo;
+    }
+
+    public void resetPhoto(String photo) {
+        storageService.deleteFile(bucketName,"devster/fboard",photo);
+        log.info("FreeBoard 사진 초기화 완료");
     }
 
     public List<FreeBoardDto> getAllFboard(){
@@ -82,7 +107,7 @@ public class FreeBoardService {
                 FreeBoardEntity existingEntity = e.get();
                 existingEntity.setFBsubject(dto.getFb_subject());
                 existingEntity.setFBcontent(dto.getFb_content());
-                existingEntity.setFBphoto(dto.getFb_photo());
+//                existingEntity.setFBphoto(dto.getFb_photo());
                 freeBoardRepository.save(existingEntity);
             }
 
@@ -90,6 +115,15 @@ public class FreeBoardService {
             log.error("update FreeBoard Error", e);
             throw e;
         }
+    }
+
+    public void updatePhoto(Integer fb_idx , MultipartFile upload ) {
+        Optional<FreeBoardEntity> entity = freeBoardRepository.findById(fb_idx);
+        storageService.deleteFile(bucketName,"devster/fboard",entity.get().getFBphoto());
+        entity.get().setFBphoto(storageService.uploadFile(bucketName,"devster/fboard",upload));
+        freeBoardRepository.save(entity.get());
+
+        log.info(fb_idx+" FreeBoard 사진업데이트 완료");
     }
 
 }

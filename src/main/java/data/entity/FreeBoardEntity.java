@@ -42,7 +42,7 @@ public class FreeBoardEntity {
     @Column(name = "fb_dislike")
     private int FBdislikeCount;
 
-    @Column(name = "fb_writeday")
+    @Column(name = "fb_writeday", insertable = false)
     private Timestamp FBwriteDay;
 
     public static FreeBoardEntity toFreeBoardEntity(FreeBoardDto dto) {
