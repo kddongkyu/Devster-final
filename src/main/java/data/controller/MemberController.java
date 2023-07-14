@@ -24,14 +24,12 @@ public class MemberController {
 
     private final MailService mailService;
 
-    private final LoginService loginService;
 
     private final JwtService jwtService;
 
     public MemberController(MemberService memberservice, MailService mailService, LoginService loginService, JwtService jwtService){
         this.memberService = memberservice;
         this.mailService = mailService;
-        this.loginService = loginService;
         this.jwtService = jwtService;
     }
 
@@ -43,6 +41,11 @@ public class MemberController {
     @GetMapping("/{idx}")
     public ResponseEntity<MemberDto> getOneMember(@PathVariable int idx){
         return new ResponseEntity<MemberDto>(memberService.getOneMember(idx),HttpStatus.OK);
+    }
+
+    @PostMapping("/sign-up/photo/tmpt")
+    public ResponseEntity<String> uploadPhotoTemp(@RequestBody MultipartFile upload) {
+        return new ResponseEntity<String>(memberService.uploadPhotoTemp(upload),HttpStatus.OK);
     }
 
     @PostMapping("/sign-up/photo")
@@ -100,12 +103,12 @@ public class MemberController {
     @PostMapping("/sign-up")
     public String signUp(@RequestBody MemberDto dto) throws Exception {
         memberService.registerMember(dto);
-        return "회원가입 성공";
+        return "일반회원 회원가입 성공";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logOut(@RequestHeader(name = "Authorization")String token) {
-        jwtService.removeRefreshToken(token);
+        memberService.logout(token);
 
         return "로그아웃 성공";
     }

@@ -28,17 +28,30 @@ public class MailService{
         message.setSubject("이메일 인증 테스트");//제목
 
         String msgg="";
-        msgg+= "<div style='margin:20px;'>";
-        msgg+= "<h1> DevSter 이메일 인증입니다. </h1>";
-        msgg+= "<br>";
-        msgg+= "<p>아래 코드를 복사해 입력해주세요<p>";
-        msgg+= "<br>";
-        msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
-        msgg+= "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
-        msgg+= "<div style='font-size:130%'>";
-        msgg+= "CODE : <strong>";
-        msgg+= ePw+"</strong><div><br/> ";
+        msgg+= "<div style='margin:20px; width:555px; height:800px; background: white; border: 10px #721EA6 solid; position: relative; text-align : center'>";
+
+// 로고
+        msgg+= "<div style='width: 202px; height: 145px; left: 299px; top: 127px; position: absolute; background: #721EA6'>";
+        msgg+= "<div style='width: 175.07px; height: 118.64px; left: 13.47px; top: 13.18px; position: absolute; background: white'></div>";
         msgg+= "</div>";
+
+// 메세지
+        msgg+= "<div style='width: 555px; height: 160px; left: 121px; top: 351px; position: absolute; text-align: center'>";
+        msgg+= "<span style='color: black; font-size: 30px; font-family: Inter; font-weight: 700; word-wrap: break-word'>Devster<br/></span>";
+        msgg+= "<span style='color: black; font-size: 20px; font-family: Inter; font-weight: 700; word-wrap: break-word'>환영합니다! </span>";
+        msgg+= "<span style='color: #721EA6; font-size: 20px; font-family: Inter; font-weight: 700; word-wrap: break-word'>이메일 주소</span>";
+        msgg+= "<span style='color: black; font-size: 20px; font-family: Inter; font-weight: 700; word-wrap: break-word'>를 인증해 주세요.<br/><br/>해당 인증번호를 인증번호 입력창에 입력해주세요!<br/><br/><br/></span>";
+        msgg+= "</div>";
+
+// 인증코드
+        msgg+= "<div style='width: 451px; height: 140px; left: 175px; top: 577px; position: absolute; background: #721EA6'>";
+        msgg+= "<div style='width: 391px; left: 205px; top: 610px; position: absolute; text-align: center; color: white; font-size: 60px; font-family: Inter; font-weight: 700; word-wrap: break-word'>";
+        msgg+= ePw;
+        msgg+= "</div>";
+        msgg+= "</div>";
+
+        msgg+= "</div>";
+
         message.setText(msgg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress("devstermailservice@gmail.com","Devster"));//보내는 사람
 
