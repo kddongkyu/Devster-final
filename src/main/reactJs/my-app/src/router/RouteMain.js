@@ -25,6 +25,8 @@ import Withdrawal from "../pages/mypage/Withdrawal";
 import LoginForm from "../components/LoginForm";
 import { SignIn } from "../pages/signin";
 import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
+import {Reviewform, Reviewlist} from "../pages/review";
+import Reviewdetail from "../pages/review/Reviewdetail";
 
 
 function RouteMain(props) {
@@ -39,15 +41,17 @@ function RouteMain(props) {
         <Route path='/qboard' element={<Qboard/>}/>
         <Route path='/hboard' element={<Hboard/>}/>
         <Route path='/aboard' element={<Aboard/>}/>
+        <Route path='/review' element={<Reviewlist/>}/>
         <Route path='/notice' element={<Noticelist/>}/>
 
         <Route path='/fboard/form' element={<FboardForm/>}/>
-        <Route path='/qboard/form' element={<QboardForm/>}/>ㄱ
+        <Route path='/qboard/form' element={<QboardForm/>}/>
         <Route path='/hboard/form' element={<HboardForm/>}/>
         <Route path='/aboard/form' element={<AboardForm/>}/>
+        <Route path='/review/form' element={<Reviewform/>}/>
        <Route path='/notice/form' element={<Noticeform/>}/>
 
-
+        <Route path='/review/detail' element={<Reviewdetail/>}/>
         <Route path='/notice/detail' element={<Noticedetail/>}/>
 
         <Route element={<MypageList />}>

@@ -1,0 +1,437 @@
+.review-advertise-main {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 11.2rem;
+}
+.review-advertise-text {
+    position: absolute;
+    top: 4.2rem;
+    left: calc(50% - 18px);
+    letter-spacing: -0.24px;
+}
+.review-advertise {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 7.6rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 11.2rem;
+    font-size: 2rem;
+}
+.review-name-rec {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 10px;
+    background-color: #eaeff3;
+    height: 6.5rem;
+}
+.div,
+.goat {
+    position: absolute;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+.goat {
+    top: 0;
+}
+.div {
+    top: 2.4rem;
+    font-size: 1.3rem;
+}
+.review-name-text {
+    position: absolute;
+    top: 1.3rem;
+    left: 2.7rem;
+    width: 19.3rem;
+    height: 3.9rem;
+}
+.review-name {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 20.4rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 6.5rem;
+    font-size: 1.8rem;
+    font-family: Roboto;
+}
+.review-headerbar-rec {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #721ea6;
+    width: 9.1rem;
+    height: 3.5rem;
+}
+.div1 {
+    position: absolute;
+    top: 0.97rem;
+    left: 3.1rem;
+    letter-spacing: -0.24px;
+    font-weight: 600;
+    display: inline-block;
+    width: 4.8rem;
+    height: 1.46rem;
+}
+.review-headerbar-btn-icon {
+    position: absolute;
+    top: 1.07rem;
+    left: 1rem;
+    width: 1.4rem;
+    height: 1.43rem;
+}
+.review-headerbar-btn {
+    position: absolute;
+    top: 29rem;
+    left: 1.5rem;
+    width: 9.1rem;
+    height: 3.5rem;
+    font-size: 1.3rem;
+    color: #fff;
+    font-family: "Roboto Serif";
+}
+.review-headerbar-function-sort1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 10rem;
+    height: 3.5rem;
+}
+.div2,
+.review-headerbar-function-sort-child {
+    position: absolute;
+    top: 0.1rem;
+    right: 4.95rem;
+    width: 0.1rem;
+    height: 3.31rem;
+}
+.div2 {
+    top: 1.17rem;
+    right: 6.2rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+    width: 2.2rem;
+    height: 1.36rem;
+}
+.review-headerbar-function-sort-icon {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.6rem;
+    width: 2rem;
+    height: 1.32rem;
+}
+.review-headerbar-function-sort {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10rem;
+    height: 3.5rem;
+}
+.review-headerbar-function {
+    position: absolute;
+    top: 29rem;
+    right: 1.5rem;
+    width: 10rem;
+    height: 3.5rem;
+    font-family: Roboto;
+}
+.review-function-search-input1 {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #721ea6;
+    box-sizing: border-box;
+    height: 3.5rem;
+}
+.review-function-search-icon {
+    position: absolute;
+    top: 1rem;
+    left: 1.3rem;
+    width: 1.6rem;
+    height: 1.5rem;
+}
+.review-function-search-input {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 33.8rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 3.5rem;
+}
+.review-pages-child,
+.review-pages-item {
+    position: absolute;
+    width: calc(100% - 3.08px);
+    top: -0.05rem;
+    right: 0;
+    left: 0.31rem;
+    max-width: 100%;
+    overflow: hidden;
+    height: 0.1rem;
+}
+.review-pages-item {
+    top: 5.65rem;
+}
+.review-pages-reload-icon {
+    position: absolute;
+    top: 1.37rem;
+    left: -0.1rem;
+    width: 2.04rem;
+    height: 1.99rem;
+}
+.div3 {
+    position: absolute;
+    top: 0;
+    right: 4.8rem;
+    letter-spacing: 0.5px;
+    line-height: 2.1rem;
+    display: inline-block;
+    width: 10.4rem;
+    height: 4.13rem;
+}
+.review-pages-paging-backwardic-icon,
+.review-pages-paging-forwardico-icon {
+    position: absolute;
+    top: 0.43rem;
+    right: 3.12rem;
+    width: 1.3rem;
+    height: 1.21rem;
+}
+.review-pages-paging-forwardico-icon {
+    right: -0.06rem;
+}
+.review-pages-paging {
+    position: absolute;
+    top: 1.47rem;
+    right: 0.4rem;
+    width: 15.2rem;
+    height: 4.13rem;
+}
+.review-pages {
+    position: absolute;
+    width: calc(100% - 40.92px);
+    top: 38.6rem;
+    right: 2.2rem;
+    left: 1.89rem;
+    height: 5.7rem;
+    color: #626567;
+}
+.review-list-box-child {
+    position: absolute;
+    width: calc(100% - 127px);
+    top: 28.1rem;
+    right: 9.8rem;
+    left: 2.9rem;
+    max-width: 100%;
+    overflow: hidden;
+    height: 0.26rem;
+}
+.review-list-box-rec {
+    position: absolute;
+    width: calc(100% - 70px);
+    top: 0;
+    right: 7rem;
+    left: 0;
+    background-color: rgba(114, 30, 166, 0.07);
+    height: 28.1rem;
+}
+.review-list-box-img-icon {
+    position: absolute;
+    top: 1.8rem;
+    left: 1.2rem;
+    width: 10.8rem;
+    height: 7.1rem;
+    object-fit: cover;
+}
+.p {
+    margin-block-start: 0;
+    margin-block-end: 10px;
+}
+.p4 {
+    margin: 0;
+}
+.div4 {
+    position: absolute;
+    top: 14rem;
+    left: 3.4rem;
+    letter-spacing: -0.24px;
+    white-space: pre-wrap;
+    display: inline-block;
+    width: 27.8rem;
+    height: 11.6rem;
+}
+.logo-icon {
+    position: absolute;
+    top: 0.21rem;
+    left: 0;
+    width: 1.6rem;
+    height: 1.36rem;
+}
+.user-01234 {
+    position: absolute;
+    top: 0;
+    left: 1.9rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 17.6rem;
+    height: 1.7rem;
+}
+.review-list-box-title-user {
+    position: absolute;
+    top: 4.4rem;
+    left: 0;
+    width: 19.5rem;
+    height: 1.7rem;
+    color: #626567;
+}
+.b,
+.div5 {
+    position: absolute;
+    left: 0;
+    letter-spacing: 1px;
+    line-height: 2.1rem;
+    display: inline-block;
+}
+.div5 {
+    top: 2.4rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    width: 21.7rem;
+    height: 1.7rem;
+}
+.b {
+    top: 0;
+    font-size: 1.5rem;
+    width: 11.6rem;
+}
+.review-list-box-title {
+    position: absolute;
+    top: 2.8rem;
+    left: 14.1rem;
+    width: 21.7rem;
+    height: 6.1rem;
+}
+.div6 {
+    position: absolute;
+    top: 0;
+    left: 0.2rem;
+    letter-spacing: 1.5px;
+    line-height: 2.1rem;
+    font-weight: 500;
+}
+.review-list-box-star-icons {
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    width: 6.5rem;
+    height: 1.2rem;
+}
+.review-list-box-star {
+    position: absolute;
+    top: 9.3rem;
+    left: 1.3rem;
+    width: 6.5rem;
+    height: 3.2rem;
+    font-size: 1.2rem;
+}
+.review-list-box-header-likes-t {
+    position: absolute;
+    top: 0;
+    right: 0;
+    letter-spacing: -0.24px;
+    opacity: 0.9;
+}
+.review-list-box-header-likes-i-icon {
+    position: absolute;
+    top: 0.53rem;
+    right: 1.02rem;
+    width: 1.05rem;
+    height: 0.95rem;
+}
+.review-list-box-header-likes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2rem;
+    height: 1.7rem;
+}
+.review-list-box-header-comment-icon {
+    position: relative;
+    border-radius: 1px;
+    width: 1.15rem;
+    height: 1.05rem;
+}
+.review-list-box-header-comment {
+    position: absolute;
+    top: 0;
+    right: 3.1rem;
+    width: 2.9rem;
+    height: 1.7rem;
+}
+.review-list-box-header-views-t {
+    position: absolute;
+    top: 0;
+    right: 0;
+    letter-spacing: -0.24px;
+}
+.review-list-box-header-views-i-icon {
+    position: absolute;
+    top: 0.53rem;
+    right: 2.42rem;
+    width: 1.25rem;
+    height: 0.95rem;
+}
+.review-list-box-header-views {
+    position: absolute;
+    top: 0;
+    right: 7.4rem;
+    width: 3.6rem;
+    height: 1.7rem;
+}
+.review-list-box-header {
+    position: absolute;
+    top: 0.6rem;
+    right: 8rem;
+    width: 11rem;
+    height: 1.7rem;
+    font-size: 1.2rem;
+    color: #626567;
+}
+.review-list-box {
+    position: absolute;
+    width: calc(100% + 26px);
+    top: 44.6rem;
+    right: -4.8rem;
+    left: 2.2rem;
+    height: 28.4rem;
+    font-size: 1.1rem;
+}
+.review {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 73rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.2rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}

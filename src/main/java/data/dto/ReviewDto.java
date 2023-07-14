@@ -19,7 +19,7 @@ public class ReviewDto {
     private String rb_content;
     private int rb_like;
     private int rb_dislike;
-    private int rb_star;
+    private Integer rb_star;
     private Timestamp rb_writeday;
 
     public static ReviewDto toReviewDto(ReviewEntity entity) {

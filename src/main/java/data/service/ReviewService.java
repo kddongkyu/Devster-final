@@ -1,22 +1,24 @@
 package data.service;
 
+import data.dto.CompanyInfoDto;
 import data.dto.ReviewDto;
+import data.entity.CompanyInfoEntity;
 import data.entity.ReviewEntity;
 import data.entity.ReviewlikeEntity;
+import data.mapper.ReviewMapper;
+import data.repository.CompanyInfoRepository;
 import data.repository.ReviewRepository;
 import data.repository.ReviewlikeRepository;
 import org.springframework.stereotype.Service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +29,17 @@ public class ReviewService {
     @Autowired
     private final ReviewRepository reviewRepository;
     private final ReviewlikeRepository ReviewlikeRepository;
+    private final CompanyInfoRepository CompanyInfoRepository;
 
-    public ReviewService(ReviewRepository reviewRepository, ReviewlikeRepository ReviewlikeRepository)  {
+    private final ReviewMapper reviewMapper;
+
+
+
+    public ReviewService(ReviewRepository reviewRepository, ReviewlikeRepository ReviewlikeRepository, CompanyInfoRepository companyInfoRepository, ReviewMapper reviewMapper)  {
         this.reviewRepository = reviewRepository;
         this.ReviewlikeRepository=ReviewlikeRepository;
+        this.CompanyInfoRepository=companyInfoRepository;
+        this.reviewMapper = reviewMapper;
     }
 
     public ReviewDto insertReview(ReviewDto dto) {
@@ -38,12 +47,34 @@ public class ReviewService {
             ReviewEntity review = ReviewEntity.toReviewEntity(dto);
             reviewRepository.save(review);
 
+            CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(dto.getCi_idx()).orElse(null);
+
+            if (companyInfo == null) {
+                // Create new company info
+                CompanyInfoEntity newCompanyInfo = new CompanyInfoEntity();
+                newCompanyInfo.setCIidx(dto.getCi_idx());
+                newCompanyInfo.setCIstar((double) dto.getRb_star());
+                // Set other fields if required
+                CompanyInfoRepository.save(newCompanyInfo);
+            } else {
+                // Update existing company info
+                Double averageRating = reviewMapper.calculateAverageRatingByCIIdx(dto.getCi_idx());
+                if (averageRating != null) {
+                    companyInfo.setCIstar(averageRating);
+                } else {
+                    companyInfo.setCIstar((double) dto.getRb_star());
+                }
+                // Set other fields if required
+                CompanyInfoRepository.save(companyInfo);
+            }
+
             return dto;
         } catch (Exception e) {
             logger.error("insert review Error", e);
             throw e;
         }
     }
+
 
     public List<ReviewDto> getAllReviews(){
         try {
@@ -186,5 +217,24 @@ public class ReviewService {
             logger.error("review like Error(Exce)", e);
         }
     }
+
+    public List<CompanyInfoDto> getsearchCompanyname(String keyword){
+        try {
+            List<CompanyInfoEntity>entityList=CompanyInfoRepository.findByCInameContaining(keyword);
+            List<CompanyInfoDto>dtoList=new ArrayList<>();
+
+//            logger.info("Keyword: " + keyword);
+            for(CompanyInfoEntity entity:entityList){
+                dtoList.add(CompanyInfoDto.toCompanyInfoDto(entity));
+            }
+            return dtoList;
+        }catch(Exception e){
+            logger.error("search company name",e);
+            throw e;
+        }
+    }
+
+
+
 
 }
