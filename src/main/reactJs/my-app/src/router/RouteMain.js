@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
@@ -11,6 +12,19 @@ import {
   Resumeform,
   UserInfo,
   Notice,
+=======
+import {Route, Routes} from "react-router-dom";
+import {Main} from "../pages/main";
+import {DevChat} from "../pages/test";
+import {Layout, NotFound} from "../components";
+import {
+    Bookmarks,
+    MyResume,
+    MypageList,
+    Resumeform,
+    UserInfo,
+    Notice
+>>>>>>> 7b7a75428dd1380475ef5cb9bb65651acabac07e
 } from "../pages/mypage";
 import Fboard from "../pages/fboard/Fboard";
 import Qboard from "../pages/qboard/Board";
@@ -22,6 +36,7 @@ import HboardForm from "../pages/hboard/HboardForm";
 import AboardForm from "../pages/aboard/AboardForm";
 import Withdrawal from "../pages/mypage/Withdrawal";
 import LoginForm from "../components/LoginForm";
+<<<<<<< HEAD
 import { SignIn } from "../pages/signin";
 
 function RouteMain(props) {
@@ -36,6 +51,35 @@ function RouteMain(props) {
 
         <Route path="/hboard" element={<Hboard />} />
         <Route path="/hboard/list/:currentPage" element={<Hboard />} />
+=======
+import {SignIn} from "../pages/signin";
+import {SignUpNorm} from "../pages/signup";
+import JwtTest from "../pages/test/JwtTest";
+import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
+
+function RouteMain(props) {
+    return (
+        <Routes>
+            <Route element={<Layout/>}>
+                <Route path="/" element={<Main/>}/>
+                <Route path="/home" element={<Main/>}/>
+                <Route path="/login" element={<LoginForm/>}/>
+
+        <Route path='/fboard' element={<Fboard/>}/>
+        <Route path='/qboard' element={<Qboard/>}/>
+        <Route path='/hboard' element={<Hboard/>}/>
+        <Route path='/aboard' element={<Aboard/>}/>
+        <Route path='/notice' element={<Noticelist/>}/>
+
+        <Route path='/fboard/form' element={<FboardForm/>}/>
+        <Route path='/qboard/form' element={<QboardForm/>}/>ㄱ
+        <Route path='/hboard/form' element={<HboardForm/>}/>
+        <Route path='/aboard/form' element={<AboardForm/>}/>
+       <Route path='/notice/form' element={<Noticeform/>}/>
+
+
+        <Route path='/notice/detail' element={<Noticedetail/>}/>
+>>>>>>> 7b7a75428dd1380475ef5cb9bb65651acabac07e
 
         <Route path="/aboard" element={<Aboard />} />
         <Route path="/fboard/form" element={<FboardForm />} />
@@ -49,6 +93,7 @@ function RouteMain(props) {
           <Route path="/withdrawal" element={<Withdrawal />} />
           <Route path="/notice" element={<Notice />} />
         </Route>
+<<<<<<< HEAD
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
         </Route>
@@ -60,6 +105,24 @@ function RouteMain(props) {
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
+=======
+
+                <Route>
+                    <Route path="/myresume/form" element={<Resumeform/>}/>
+                </Route>
+
+                <Route path='/jwttest' element={<JwtTest/>}/>
+            </Route>
+
+            <Route path='/signin' element={<SignIn/>}/>
+            <Route path='/signup' element={<SignUpNorm/>}/>
+            <Route path='/devchat/:ai_idx' element={<DevChat/>}/>
+            <Route path="*" element={<NotFound/>}/>
+
+        </Routes>
+    );
+
+>>>>>>> 7b7a75428dd1380475ef5cb9bb65651acabac07e
 }
 
 export default RouteMain;

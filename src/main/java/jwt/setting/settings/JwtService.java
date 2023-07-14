@@ -2,6 +2,7 @@ package jwt.setting.settings;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import data.repository.CompanyMemberRepository;
 import data.repository.MemberRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -37,17 +38,18 @@ public class JwtService {
 
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String IDX_CLAIM = "m_idx";
+    private static final String IDX_CLAIM = "idx";
     private static final String BEARER = "Bearer ";
 
     private final MemberRepository memberRepository;
+    private final CompanyMemberRepository companyMemberRepository;
 
-    public String generateAccessToken(int m_idx) {
+    public String generateAccessToken(int idx) {
         Date now = new Date();
             return JWT.create()
                     .withSubject(ACCESS_TOKEN_SUBJECT)
                     .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
-                    .withClaim(IDX_CLAIM, m_idx)
+                    .withClaim(IDX_CLAIM, idx)
                     .sign(Algorithm.HMAC512(secretKey));
     }
 
@@ -142,12 +144,37 @@ public class JwtService {
     public void removeRefreshToken(String accessToken) {
         Optional<Integer> m_idx = extractIdx(accessToken);
 
-        memberRepository.findById(Integer.parseInt(m_idx.toString()))
-                .ifPresentOrElse(
-                        member -> member.setMRefreshtoken(""),
-                        () -> new Exception(" 일치하는 회원이 없습니다. ")
-                );
+        if (m_idx.isPresent()) {
+            memberRepository.findById(m_idx.get())
+                    .ifPresentOrElse(
+                            member -> {
+                                member.setMRefreshtoken(null);
+                                memberRepository.save(member); // 변경 사항 저장
+                            },
+                            () -> new Exception(" 일치하는 회원이 없습니다. ")
+                    );
+        } else {
+            new Exception(" 일치하는 회원이 없습니다. ");
+        }
     }
+
+    public void removeRefreshTokenComp(String accessToken) {
+        Optional<Integer> cm_idx = extractIdx(accessToken);
+
+        if (cm_idx.isPresent()) {
+            companyMemberRepository.findById(cm_idx.get())
+                    .ifPresentOrElse(
+                            companyMember -> {
+                                companyMember.setCMrefreshtoken(null);
+                                companyMemberRepository.save(companyMember); // 변경 사항 저장
+                            },
+                            () -> new Exception(" 일치하는 회원이 없습니다. ")
+                    );
+        } else {
+            new Exception(" 일치하는 회원이 없습니다. ");
+        }
+    }
+
 
     public boolean isTokenValid(String token) {
         try {

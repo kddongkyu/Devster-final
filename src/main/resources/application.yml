@@ -42,11 +42,15 @@ jwt:
   secretKey: HellOImFakerIAgrreLGBTIlikeTeaMC0OKYoUKMowWhatImsaYinGIdONtKnowHAHeHaaaCutEMeaRonGGGG12312TQLVKFKasd
 
   access:
+<<<<<<< HEAD
     expiration: 43200000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+=======
+    expiration: 600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+>>>>>>> 7b7a75428dd1380475ef5cb9bb65651acabac07e
     header: Authorization
 
   refresh:
-    expiration: 86400000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
+    expiration: 21600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
     header: Authorization-refresh
 
 naver:

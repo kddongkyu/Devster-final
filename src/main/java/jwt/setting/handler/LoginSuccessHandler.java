@@ -1,5 +1,6 @@
 package jwt.setting.handler;
 
+import data.repository.CompanyMemberRepository;
 import data.repository.MemberRepository;
 import jwt.setting.settings.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,30 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
+    private final CompanyMemberRepository companyMemberRepository;
 
     @Value("${jwt.access.expiration}")
     private String accessTokenExpiration;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        String uri = request.getRequestURI();
+        String[] uriParts = uri.split("/");
+
+        if (uriParts.length > 1) {
+            String prefix = uriParts[1];
+
+            if (prefix.equals("member")) {
+                isNormalMember(request, response, authentication);
+            } else if (prefix.equals("compmember")) {
+                isCompanyMember(request, response, authentication);
+            } else {
+                log.info(" 로그인 타입 오류 ");
+            }
+        }
+    }
+
+    private void isNormalMember(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String id = extractUsername(authentication);
         int m_idx = memberRepository.findByMId(id).get().getMIdx();
         String accessToken = jwtService.generateAccessToken(m_idx);
@@ -34,10 +53,28 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
         memberRepository.findByMId(id)
                 .ifPresent(member -> {
-                    member.setMRefreshtoken(refreshToken);
+                    member.updateRefreshToken(refreshToken);
                     memberRepository.saveAndFlush(member);
                 });
         log.info("로그인에 성공하였습니다. 회원 인덱스 번호 : {}", m_idx);
+        log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);
+        log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
+    }
+
+    private void isCompanyMember(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        String id = extractUsername(authentication);
+        int cm_idx = companyMemberRepository.findByCMemail(id).get().getCMidx();
+        String accessToken = jwtService.generateAccessToken(cm_idx);
+        String refreshToken = jwtService.generateRefreshToken();
+
+        jwtService.sendAccessAndRefreshToken(response,accessToken,refreshToken);
+
+        companyMemberRepository.findByCMemail(id)
+                .ifPresent(companyMember -> {
+                    companyMember.setCMrefreshtoken(refreshToken);
+                    companyMemberRepository.saveAndFlush(companyMember);
+                });
+        log.info("로그인에 성공하였습니다. 회원 인덱스 번호 : {}", cm_idx);
         log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);
         log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
     }
@@ -46,5 +83,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userDetails.getUsername();
     }
+
 
 }
