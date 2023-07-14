@@ -7,6 +7,7 @@
     overflow: hidden;
     display: none;
 }
+
 .login-logo-img-icon {
     position: absolute;
     top: 0;
@@ -14,6 +15,7 @@
     width: 8.7rem;
     height: 5.1rem;
 }
+
 .login-logo-text {
     position: absolute;
     top: 3.9rem;
@@ -21,6 +23,7 @@
     display: inline-block;
     width: 17.2rem;
 }
+
 .login-logo-slogan {
     position: absolute;
     top: 9rem;
@@ -29,6 +32,7 @@
     letter-spacing: 7.5px;
     color: #721ea6;
 }
+
 .login-logo-img {
     position: absolute;
     top: 6.4rem;
@@ -38,9 +42,11 @@
     font-size: 4.8rem;
     font-family: Lalezar;
 }
+
 .devster {
     margin: 0;
 }
+
 .login-logo-slogan1 {
     position: absolute;
     top: 19rem;
@@ -56,7 +62,7 @@
     letter-spacing: 0.01em;
     font-weight: bold;
     color: #721ea6;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .login-type-select-norm-false {
@@ -65,7 +71,7 @@
     left: calc(50% - 67.5px);
     letter-spacing: 0.01em;
     font-weight: 500;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .login-type-select-bar-icon {
@@ -75,6 +81,7 @@
     width: 0.12rem;
     height: 1.9rem;
 }
+
 .login-type-select-comp {
     position: absolute;
     top: 0;
@@ -82,7 +89,7 @@
     letter-spacing: 0.01em;
     font-weight: bold;
     color: #721ea6;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .login-type-select-comp-false {
@@ -92,7 +99,7 @@
     letter-spacing: 0.01em;
     font-weight: 500;
     color: #000;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .login-type-select {
@@ -103,12 +110,14 @@
     height: 2.2rem;
     font-size: 1.5rem;
 }
+
 .login-sns-text {
     position: absolute;
     top: 30.4rem;
     left: 2.4rem;
     letter-spacing: 0.01em;
 }
+
 .login-sns-kakao,
 .login-sns-naver {
     position: absolute;
@@ -120,10 +129,12 @@
     background-color: #f7fc01;
     height: 3.9rem;
 }
+
 .login-sns-naver {
     top: 38.6rem;
     background-color: #16fc01;
 }
+
 .login-devster-hr {
     position: absolute;
     width: 100%;
@@ -134,6 +145,7 @@
     box-sizing: border-box;
     height: 0.1rem;
 }
+
 .login-devster-id-text,
 .login-devster-text {
     position: absolute;
@@ -141,11 +153,13 @@
     left: 2.3rem;
     letter-spacing: 0.01em;
 }
+
 .login-devster-id-text {
     top: 51.3rem;
     left: 5.6rem;
     font-weight: 500;
 }
+
 .login-devster-id-remember-text {
     position: absolute;
     top: 0;
@@ -153,6 +167,7 @@
     letter-spacing: 0.01em;
     font-weight: 500;
 }
+
 .login-devster-id-remember-ck {
     position: absolute;
     top: 0.3rem;
@@ -164,6 +179,7 @@
     width: 1.1rem;
     height: 1.1rem;
 }
+
 .login-devster-id-remember {
     position: absolute;
     top: 51.5rem;
@@ -173,6 +189,7 @@
     font-size: 1.1rem;
     color: #626567;
 }
+
 .login-devster-id-box-input {
     position: absolute;
     width: calc(100% - 112px);
@@ -184,6 +201,7 @@
     box-sizing: border-box;
     height: 3.9rem;
 }
+
 .login-devster-pw-text {
     position: absolute;
     top: 59.3rem;
@@ -191,6 +209,7 @@
     letter-spacing: 0.01em;
     font-weight: 500;
 }
+
 .login-devster-pw-input {
     position: absolute;
     width: calc(100% - 112px);
@@ -202,6 +221,7 @@
     box-sizing: border-box;
     height: 3.9rem;
 }
+
 .login-devster-finder {
     position: absolute;
     top: 67.3rem;
@@ -210,6 +230,7 @@
     font-weight: 500;
     color: #721ea6;
 }
+
 .login-loginbtn-box {
     position: absolute;
     width: 100%;
@@ -220,6 +241,7 @@
     background-color: #721ea6;
     height: 3.9rem;
 }
+
 .login-loginbtn-text {
     position: absolute;
     top: 1rem;
@@ -227,6 +249,7 @@
     letter-spacing: 0.03em;
     font-weight: 500;
 }
+
 .login-loginbtn {
     position: absolute;
     width: calc(100% - 112px);
@@ -235,7 +258,10 @@
     left: 5.6rem;
     height: 3.9rem;
     color: #fff;
+    border:none;
+    cursor:pointer;
 }
+
 .login-signuplink-signup,
 .login-signuplink-text {
     position: absolute;
@@ -244,18 +270,21 @@
     letter-spacing: 0.01em;
     font-weight: 500;
 }
+
 .login-signuplink-signup {
     left: calc(50% + 44.5px);
     text-decoration: underline;
     color: #721ea6;
 }
+
 .login-signuplink {
     position: absolute;
-    top: 76.7rem;
+    top: 77.3rem;
     left: calc(50% - 94px);
     width: 18.7rem;
     height: 1.9rem;
 }
+
 .login {
     position: relative;
     background-color: #fff;
@@ -274,20 +303,24 @@
     left: 2.3rem;
     letter-spacing: 0.01em;
 }
+
 .login-company-email,
 .login-company-email-remember-t {
     position: absolute;
     letter-spacing: 0.01em;
     font-weight: 500;
 }
+
 .login-company-email {
     top: 34.1rem;
     left: 5.6rem;
 }
+
 .login-company-email-remember-t {
     top: 0;
     right: 0;
 }
+
 .login-company-email-remember-c {
     position: absolute;
     top: 0.3rem;
@@ -299,6 +332,7 @@
     width: 1.1rem;
     height: 1.1rem;
 }
+
 .login-company-email-remember {
     position: absolute;
     top: 34.3rem;
@@ -308,6 +342,7 @@
     font-size: 1.1rem;
     color: #626567;
 }
+
 .login-company-email-input {
     position: absolute;
     width: calc(100% - 112px);
@@ -319,6 +354,7 @@
     box-sizing: border-box;
     height: 3.9rem;
 }
+
 .login-company-pw-text {
     position: absolute;
     top: 42.1rem;
@@ -326,6 +362,7 @@
     letter-spacing: 0.01em;
     font-weight: 500;
 }
+
 .login-company-pw-input {
     position: absolute;
     width: calc(100% - 112px);
@@ -337,6 +374,7 @@
     box-sizing: border-box;
     height: 3.9rem;
 }
+
 .login-company-finder {
     position: absolute;
     top: 50.1rem;
@@ -345,6 +383,7 @@
     font-weight: 500;
     color: #721ea6;
 }
+
 .login-loginbtn-box {
     position: absolute;
     width: 100%;
@@ -355,6 +394,7 @@
     background-color: #721ea6;
     height: 3.9rem;
 }
+
 .login-loginbtn-text {
     position: absolute;
     top: 1rem;
@@ -362,6 +402,7 @@
     letter-spacing: 0.03em;
     font-weight: 500;
 }
+
 .login-company-loginbtn {
     position: absolute;
     width: calc(100% - 112px);
@@ -374,7 +415,7 @@
 
 .login-signuplink-comp {
     position: absolute;
-    top: 59.5rem;
+    top: 60.1rem;
     left: calc(50% - 94px);
     width: 18.7rem;
     height: 1.9rem;

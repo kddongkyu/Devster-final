@@ -3,18 +3,19 @@ package data.service;
 import data.dto.CompanyMemberDto;
 import data.entity.CompanyMemberEntity;
 import data.repository.CompanyMemberRepository;
+import jwt.setting.settings.JwtService;
 import naver.cloud.NcpObjectStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -24,9 +25,15 @@ public class CompanyMemberService {
     private final Logger logger = LoggerFactory.getLogger(CompanyMemberService.class);
 
     private final CompanyMemberRepository companyMemberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public CompanyMemberService(CompanyMemberRepository companyMemberRepository) {
+    private final JwtService jwtService;
+
+
+    public CompanyMemberService(CompanyMemberRepository companyMemberRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.companyMemberRepository = companyMemberRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     @Autowired
@@ -51,20 +58,16 @@ public class CompanyMemberService {
         logger.info("기업회원 사진 초기화 완료");
     }
 
-    public CompanyMemberDto insertCompanyMember(CompanyMemberDto dto) {
+    public void registerCompanymember(CompanyMemberDto dto) throws Exception {
+        if(companyMemberRepository.existsByCMemail(dto.getCm_email())) {
+            throw new Exception("이미 존재하는 이메일입니다.");
+        }
 
-        dto.setCm_filename(photo);
-//        Map<String,String> map = encryptPass(dto.getCm_pass());
-//        dto.setCm_pass(map.get("password"));
-//        dto.setSalt(map.get("salt"));
+        CompanyMemberEntity companyMember = CompanyMemberEntity.toCompanyMemberEntity(dto);
+        companyMember.passwordEncode(passwordEncoder);
+        companyMemberRepository.save(companyMember);
 
-        CompanyMemberEntity companyMemberEntity = CompanyMemberEntity.toCompanyMemberEntity(dto);
-        companyMemberRepository.save(companyMemberEntity);
-        photo = null;
-        logger.info("기업회원 가입 완료.");
-        return dto;
     }
-
     public List<CompanyMemberDto> getAllCompanyMembers() {
         List<CompanyMemberDto> list = new ArrayList<>();
         for (CompanyMemberEntity companyMemberEntity : companyMemberRepository.findAll()) {
@@ -94,14 +97,16 @@ public class CompanyMemberService {
             entityForUpdate.setCMname(dto.getCm_name());
             entityForUpdate.setCMcp(dto.getCm_cp());
 
-            //비밀번호 암호화후 재 삽입
-//            Map<String,String> encryptedMap = encryptPass(dto.getCm_pass());
-//            entityForUpdate.setCMpass(encryptedMap.get("password"));
-//            entityForUpdate.setSalt(encryptedMap.get("salt"));
             companyMemberRepository.save(entityForUpdate);
 
             logger.info("기업회원정보 업데이트 완료");
         }
+    }
+
+    public boolean isDuplicatedCompName(String companyName) {
+        boolean isDuplicate = companyMemberRepository.existsByCMcompname(companyName);
+        logger.info("기업회원 기업명 중복확인 완료");
+        return isDuplicate;
     }
 
     public boolean isDuplicateEmail(String cm_email) {
@@ -109,5 +114,11 @@ public class CompanyMemberService {
         logger.info("기업회원 이메일 중복확인 완료");
         return isDuplicate;
     }
+
+    public void logout(String token) {
+        jwtService.removeRefreshTokenComp(token.substring(7));
+    }
+
+
 
 }

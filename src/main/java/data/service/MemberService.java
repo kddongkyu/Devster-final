@@ -5,6 +5,7 @@ import data.entity.AcademyInfoEntity;
 import data.entity.MemberEntity;
 import data.repository.AcademyInfoRepository;
 import data.repository.MemberRepository;
+import jwt.setting.settings.JwtService;
 import naver.cloud.NcpObjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,9 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.*;
 
 import org.slf4j.Logger;
@@ -31,6 +29,8 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtService jwtService;
+
     @Autowired
     private NcpObjectStorageService storageService;
 
@@ -39,16 +39,28 @@ public class MemberService {
 
     String photo = null;
 
-    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.memberRepository = memberRepository;
         this.academyInfoRepository = academyInfoRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+    }
+
+    public String uploadPhotoTemp(MultipartFile upload){
+        if(photo != null) {
+            storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
+        }
+        photo = storageService.uploadFile(bucketName,"devster/member/tmpt",upload);
+        logger.info("일반회원 임시사진 업로드 완료");
+        return photo;
     }
 
     public String uploadPhoto(MultipartFile upload){
         if(photo != null) {
+            storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
             storageService.deleteFile(bucketName,"devster/member",photo);
         }
+
         photo = storageService.uploadFile(bucketName,"devster/member",upload);
         logger.info("일반회원 사진 업로드 완료");
         return photo;
@@ -106,12 +118,9 @@ public class MemberService {
         if(entity.isPresent()){
             MemberEntity entityForUpdate = entity.get();
             entityForUpdate.setMNickname(dto.getM_nickname());
-
             //비밀번호 암호화후 재 삽입
+            entityForUpdate.setMEmail(dto.getM_email());
             entityForUpdate.passwordEncode(passwordEncoder);
-
-            entityForUpdate.setAIidx(dto.getAi_idx());
-            entityForUpdate.setAIname(dto.getAi_name());
             memberRepository.save(entityForUpdate);
 
             logger.info("일반회원정보 업데이트 완료");
@@ -145,6 +154,10 @@ public class MemberService {
     public boolean isDuplicateNickname(String nickname) {
         logger.info("일반회원 닉네임 중복확인 완료");
         return memberRepository.existsByMNickname(nickname);
+    }
+
+    public void logout(String token) {
+        jwtService.removeRefreshToken(token.substring(7));
     }
 
 }

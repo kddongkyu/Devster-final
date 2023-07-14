@@ -2,6 +2,7 @@ package data.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import data.dto.CompanyMemberDto;
+import data.dto.MemberDto;
 import data.service.CompanyMemberService;
 import data.service.MailService;
 import org.apache.commons.text.StringEscapeUtils;
@@ -37,18 +38,17 @@ public class CompanyMemberController {
         return new ResponseEntity<CompanyMemberDto>(companyMemberDto,HttpStatus.OK);
     }
 
-
-    @PostMapping
-    public ResponseEntity<CompanyMemberDto> insert(@RequestBody CompanyMemberDto dto) {
-        return new ResponseEntity<CompanyMemberDto>(companyMemberService.insertCompanyMember(escapeDto(dto)), HttpStatus.OK);
+    @PostMapping("/sign-up")
+    public String signUp(@RequestBody CompanyMemberDto dto) throws Exception {
+        companyMemberService.registerCompanymember(dto);
+        return "기업회원 회원가입 성공";
     }
-
-    @PostMapping("/photo")
+    @PostMapping("/sign-up/photo")
     public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
         return new ResponseEntity<String>(companyMemberService.uploadPhoto(upload),HttpStatus.OK);
     }
 
-    @PutMapping("/photo/reset")
+    @PutMapping("/sign-up/photo/reset")
     public ResponseEntity<Void> resetPhoto(String photo){
         companyMemberService.resetPhoto(photo);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -60,17 +60,32 @@ public class CompanyMemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/email")
+    @PostMapping("/sign-up/email")
     public boolean isDuplicateEmail(@RequestBody JsonNode jsonNode) {
         String safeEmail = StringEscapeUtils.escapeHtml4(jsonNode.get("cm_email").asText());
         return companyMemberService.isDuplicateEmail(safeEmail);
     }
 
-    @PostMapping("/email/validation")
+    @PostMapping("/sign-up/email/validation")
     public ResponseEntity<String> emailValidation(@RequestBody JsonNode jsonNode) throws Exception {
         String safeEmail = StringEscapeUtils.escapeHtml4(jsonNode.get("m_email").asText());
         return new ResponseEntity<String>(mailService.sendSimpleMessage(safeEmail),HttpStatus.OK);
     }
+
+    @PostMapping("/sign-up/compname")
+    public boolean isDuplicatedCompName(@RequestBody JsonNode jsonNode) throws Exception {
+        String safeCompName = StringEscapeUtils.escapeHtml4(jsonNode.get("companyName").asText());
+        return companyMemberService.isDuplicatedCompName(safeCompName);
+    }
+
+    @GetMapping("/logout")
+    public String logOut(@RequestHeader(name = "Authorization")String token) {
+        companyMemberService.logout(token);
+
+        return "로그아웃 성공";
+    }
+
+
 
     public CompanyMemberDto escapeDto(CompanyMemberDto dto) {
 
