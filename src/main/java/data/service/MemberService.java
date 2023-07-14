@@ -55,15 +55,6 @@ public class MemberService {
         return photo;
     }
 
-    public String uploadPhotoTemp(MultipartFile upload){
-        if(photo != null) {
-            storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
-        }
-        photo = storageService.uploadFile(bucketName,"devster/member/tmpt",upload);
-        logger.info("일반회원 임시사진 업로드 완료");
-        return photo;
-    }
-
     public String uploadPhoto(MultipartFile upload){
         if(photo != null) {
             storageService.deleteFile(bucketName,"devster/member/tmpt",photo);

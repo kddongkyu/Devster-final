@@ -8,39 +8,39 @@ function isTokenExpired(token) {
     const currentTime = Math.floor(Date.now() / 1000);
     const expTime = jwt_decode(token).exp;
 
-    return currentTime >= expTime;
-    // return currentTime >= expTime-300;  //5분 여유시간
+    // return currentTime >= expTime;
+    return currentTime >= expTime - 30;  //5분 여유시간
 }
 
 async function refreshAccessToken(refreshToken) {
     try {
-        await axios({
+        const res = await axios({
             method: 'post',
             url: '/member/check',
             headers: {'Authorization-refresh': `Bearer ${refreshToken}`},
         })
-            .then(res => {
-                if (res.status === 200) {
-                    const newAccessToken = res.headers.authorization;
-                    const newRefreshToken = res.headers['authorization-refresh'];
-                    const newExpiredTime = jwt_decode(newAccessToken);
 
-                    localStorage.setItem('accessToken', newAccessToken);
-                    localStorage.setItem('refreshToken', newRefreshToken);
-                    localStorage.setItem('expiredTime', newExpiredTime.exp);
+        if (res.status === 200) {
+            const newAccessToken = res.headers.authorization;
+            const newRefreshToken = res.headers['authorization-refresh'];
+            const newExpiredTime = jwt_decode(newAccessToken);
 
-                    return newAccessToken;
-                } else {
-                    switch (res.status) {
-                        case 401:
-                            throw new Error('로그인이 필요한 서비스 입니다.');
-                        case 403:
-                            throw new Error('세션이 만료되었습니다.');
-                        default:
-                            throw new Error('An unexpected error has occurred');
-                    }
-                }
-            });
+            localStorage.setItem('accessToken', newAccessToken);
+            localStorage.setItem('refreshToken', newRefreshToken);
+            localStorage.setItem('expiredTime', newExpiredTime.exp);
+
+            return newAccessToken;
+        } else {
+            switch (res.status) {
+                case 401:
+                    throw new Error('로그인이 필요한 서비스 입니다.');
+                case 403:
+                    throw new Error('세션이 만료되었습니다.');
+                default:
+                    throw new Error('An unexpected error has occurred');
+            }
+        }
+
     } catch (error) {
         console.error(error);
         throw error;
