@@ -6,14 +6,14 @@ import ResizeCrop from "../../api/ResizeCrop";
 import jwt_decode from "jwt-decode";
 
 function JwtTest(props) {
-<<<<<<< HEAD
   const navi = useNavigate();
-  let de = jwt_decode(localStorage.getItem("accessToken"));
-
+  if (localStorage.getItem("accessToken")) {
+    let de = jwt_decode(localStorage.getItem("accessToken"));
+  }
   const jwtTest = () => {
     const idx = 69;
     axiosIns.get(`/member/${idx}`).then((res) => {
-      console.log(res + "from ins");
+      console.log(res);
     });
   };
 
@@ -31,38 +31,9 @@ function JwtTest(props) {
       <button onClick={axiosTest} style={{ width: "500px", height: "500px" }}>
         Axios - Test
       </button>
-      {de.idx}
       <ResizeCrop />
     </div>
   );
-=======
-    const navi = useNavigate();
-    if(localStorage.getItem('accessToken')) {
-        let de = jwt_decode(localStorage.getItem('accessToken'));
-    }
-    const jwtTest = () => {
-        const idx = 69;
-        axiosIns.get(`/member/${idx}`)
-            .then(res => {
-                console.log(res);
-            });
-    }
-
-    const axiosTest=() =>{
-        const idx = 69;
-        axios.get(`/member/${idx}`)
-            .then(res =>{
-                console.log(res + "from axios")
-            })
-    }
-    return (
-        <div>
-            <button onClick={jwtTest} style={{width: '500px', height: '500px'}}>Jwt - Test</button>
-            <button onClick={axiosTest} style={{width: '500px', height: '500px'}}>Axios - Test</button>
-            <ResizeCrop/>
-        </div>
-    );
->>>>>>> 6970148441e0c9b0667171cc35a64498800d229c
 }
 
 export default JwtTest;

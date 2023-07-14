@@ -33,6 +33,7 @@ const HboardForm = () => {
       data: uploadFile,
       headers: { "Content-type": "multipart/form-data" },
     }).then((res) => {
+      console.log(res.data);
       setHb_photo(res.data);
     });
   };

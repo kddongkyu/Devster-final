@@ -17,9 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 
 
@@ -54,6 +55,7 @@ public class HireBoardController {
 
     @PostMapping("/insert")
     public void insert(@RequestBody HireBoardDto dto){
+
         dto.setHb_photo(photo);
         photo=null;
         hireBoardService.insertHireBoard(escapeDto(dto));
@@ -72,10 +74,15 @@ public class HireBoardController {
     //     return new ResponseEntity<List<HireBoardDto>>(hireBoardService.getAllData(), HttpStatus.OK);
     // }
 
+    // @GetMapping("/list")
+    // public Map<String,Object> list(int currentPage){
+    //     return hireBoardService.list(currentPage);
+    // }
+
     @GetMapping("/list")
-    public Map<String,Object> list(int currentPage){
+    public Map<String,Object> list(@RequestParam(defaultValue = "1") int currentPage){
         return hireBoardService.list(currentPage);
-    }
+    }    
 
     @GetMapping("/{idx}")
     public ResponseEntity<HireBoardDto> getDetailPage(@PathVariable Integer idx){
