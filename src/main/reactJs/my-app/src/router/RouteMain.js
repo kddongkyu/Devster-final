@@ -35,7 +35,7 @@ function RouteMain(props) {
       <Route element={<Layout />}>
         <Route path="/" element={<Main />} />
         <Route path="/home" element={<Main />} />
-        {/* <Route path="/memberlist" element={<MemberList />} /> */}
+        <Route path="/memberlist" element={<MemberList />} />
 
         <Route path="/fboard" element={<Fboard />} />
         <Route path="/qboard" element={<Qboard />} />

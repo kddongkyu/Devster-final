@@ -108,10 +108,10 @@ public class MemberService {
             entityForUpdate.setMNickname(dto.getM_nickname());
 
             //비밀번호 암호화후 재 삽입
-            entityForUpdate.passwordEncode(passwordEncoder);
-
-            entityForUpdate.setAIidx(dto.getAi_idx());
-            entityForUpdate.setAIname(dto.getAi_name());
+//            entityForUpdate.passwordEncode(passwordEncoder);
+//
+//            entityForUpdate.setAIidx(dto.getAi_idx());
+//            entityForUpdate.setAIname(dto.getAi_name());
             memberRepository.save(entityForUpdate);
 
             logger.info("일반회원정보 업데이트 완료");

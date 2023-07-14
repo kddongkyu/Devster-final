@@ -42,7 +42,7 @@ jwt:
   secretKey: HellOImFakerIAgrreLGBTIlikeTeaMC0OKYoUKMowWhatImsaYinGIdONtKnowHAHeHaaaCutEMeaRonGGGG12312TQLVKFKasd
 
   access:
-    expiration: 3600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    expiration: 43200000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
     header: Authorization
 
   refresh:

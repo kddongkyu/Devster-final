@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.ResumeMapper">
+     <select id="getDataresume" parameterType="int" resultType="resumeDto">
+        select * from resume where m_idx=#{m_idx}
+    </select>
+    <select id="getDatare_lic" parameterType="int" resultType="re_licDto">
+        select * from re_lic where m_idx=#{m_idx}
+    </select>
+    <select id="getDatare_car" parameterType="int" resultType="re_carDto">
+        select * from re_car where m_idx=#{m_idx}
+    </select>
+    <select id="getFullData" parameterType="int" resultType="java.util.Map">
+        SELECT r.*, l.*, c.*
+        FROM resume r
+                 LEFT JOIN re_lic l ON r.m_idx = l.m_idx
+                 LEFT JOIN re_car c ON r.m_idx = c.m_idx
+        WHERE r.m_idx = #{m_idx}
+    </select>
+</mapper>

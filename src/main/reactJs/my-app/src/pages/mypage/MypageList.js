@@ -80,7 +80,7 @@ function MypageList(props) {
         </div>
         <div className="menu-notice">
           <NavLink
-            to={"/notice"}
+            to={"/memberlist"}
             className="menulist-userinfo-box"
             style={({ isActive }) => {
               return isActive ? activeStyle : deactiveStyle;

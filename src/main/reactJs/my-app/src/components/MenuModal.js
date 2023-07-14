@@ -45,7 +45,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
             <b className="menu-modal-options_mypage">
               마이페이지{" "}
               <span style={{ fontSize: "1.6rem" }}>
-                {sessionStorage.myname}님 반갑습니다!
+                {sessionStorage.m_nickname}님 반갑습니다!
               </span>
             </b>
           </NavLink>
