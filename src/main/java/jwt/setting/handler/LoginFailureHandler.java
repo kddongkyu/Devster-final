@@ -24,14 +24,14 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/plain;charset=UTF-8");
 
-        Optional<String> accessTokenOpt = jwtService.extractAccessToken(request);
+        Optional<String> refreshTokenOpt = jwtService.extractRefreshToken(request);
 
-        if (accessTokenOpt.isPresent()) {
-            String accessToken = accessTokenOpt.get();
-            if (!jwtService.isTokenValid(accessToken)) {
+        if (refreshTokenOpt.isPresent()) {
+            String refreshToken = refreshTokenOpt.get();
+            if (!jwtService.isTokenValid(refreshToken)) {
                 // When the token is expired
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response.getWriter().write("토큰이 만료되었습니다. refreshToken을 사용해주세요.");
+                response.getWriter().write("세션이 만료되었습니다. 다시 로그인해주세요!");
                 return;  // Only exit here if there is an invalid token
             }
         }
