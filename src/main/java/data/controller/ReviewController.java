@@ -1,6 +1,7 @@
 package data.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import data.dto.CompanyInfoDto;
 import data.dto.ReviewDto;
@@ -26,10 +27,18 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<ReviewDto>> getAllReviews() {
+//        return new ResponseEntity<List<ReviewDto>>(reviewService.getAllReviews(), HttpStatus.OK);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<ReviewDto>> getAllReviews() {
-        return new ResponseEntity<List<ReviewDto>>(reviewService.getAllReviews(), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getPagedReviews(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size) {
+        return new ResponseEntity<>(reviewService.getPagedReviews(page, size), HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<ReviewDto> insertReview(@RequestBody ReviewDto dto) {
         return new ResponseEntity<ReviewDto>(reviewService.insertReview(dto),HttpStatus.OK);

@@ -9,14 +9,15 @@ import data.mapper.ReviewMapper;
 import data.repository.CompanyInfoRepository;
 import data.repository.ReviewRepository;
 import data.repository.ReviewlikeRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -76,20 +77,40 @@ public class ReviewService {
     }
 
 
-    public List<ReviewDto> getAllReviews(){
-        try {
-            List<ReviewEntity> entityList = reviewRepository.findAll();
-            List<ReviewDto> dtoList = new ArrayList<>();
+//    public List<ReviewDto> getAllReviews(){
+//        try {
+//            List<ReviewEntity> entityList = reviewRepository.findAll();
+//            List<ReviewDto> dtoList = new ArrayList<>();
+//
+//            for (ReviewEntity entity : entityList) {
+//                dtoList.add(ReviewDto.toReviewDto(entity));
+//            }
+//            return dtoList;
+//        } catch (Exception e) {
+//            logger.error("find All review Error", e);
+//            throw e;
+//        }
+//    }
+public Map<String, Object> getPagedReviews(int page, int size) {
+    Pageable pageable = PageRequest.of(page, size, Sort.by("RBwriteday").descending());
+    Page<ReviewEntity> result = reviewRepository.findAll(pageable);
 
-            for (ReviewEntity entity : entityList) {
-                dtoList.add(ReviewDto.toReviewDto(entity));
-            }
-            return dtoList;
-        } catch (Exception e) {
-            logger.error("find All review Error", e);
-            throw e;
-        }
-    }
+    List<ReviewDto> reviews = result
+            .getContent()
+            .stream()
+            .map(ReviewDto::toReviewDto)
+            .collect(Collectors.toList());
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("reviews", reviews);  // 페이징된 리뷰들의 DTO 리스트를 추가합니다.
+    response.put("totalElements", result.getTotalElements());
+    response.put("totalPages", result.getTotalPages());
+    response.put("currentPage", result.getNumber() + 1);
+    response.put("hasNext", result.hasNext());
+
+    return response;
+}
+
 
     public ReviewDto getOneReview(Integer rb_idx){
         try {

@@ -1,6 +1,52 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './style/Reviewlist.css';
+import axios from "axios";
+import axiosIns from "../../api/JwtConfig";
 function Reviewlist(props) {
+    const [reviews, setReviews] = useState([]);
+    const [currentPage,setCurrentPage] = useState(1);
+    const [totalPages,setTotalPages]=useState(1);
+
+    useEffect(()=>{
+        fetchReviews(currentPage);
+    },[currentPage]);
+
+    const fetchReviews = (page) => {
+        axiosIns.get('/review', { params: { page } })
+            .then(response => {
+                setReviews(response.data.reviews);
+                setTotalPages(response.data.totalPages);
+            })
+            .catch(error => {
+                console.error('Error fetching reviews:', error);
+            });
+    };
+
+    const goToPreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const goToNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+
+    useEffect(() => {
+        // JPA로부터 데이터 가져오는 API 호출
+        axiosIns.get('/review')
+            .then(response => {
+                setReviews(response.data.reviews); // 리뷰 데이터 설정
+            })
+            .catch(error => {
+                console.error('Error fetching reviews:', error);
+            });
+    }, []);
+
+
     return (
         <div className="review">
             <div className="review-advertise">
@@ -53,35 +99,37 @@ function Reviewlist(props) {
                 src={require('./assets/review_pages_reload_icon.svg').default}
             />
             <div className="review-pages-paging">
-                <div className="div3">1 / 12345 페이지</div>
+                <div className="div3">{`${currentPage} / ${totalPages} 페이지`}</div>
+                {/*1 / 12345 페이지*/}
                 <img
                     className="review-pages-paging-backwardic-icon"
                     alt=""
                     src={require('./assets/review_pages_paging_backwardicon.svg').default}
+                    onClick={goToPreviousPage}
                 />
                 <img
                     className="review-pages-paging-forwardico-icon"
                     alt=""
                     src={require('./assets/review_pages_paging_forwardicon.svg').default}
+                    onClick={goToNextPage}
                 />
             </div>
+
             <div className="review-list-box">
                 <img className="review-list-box-child" alt=""
 
                      src="/vector-179.svg" />
-                <div className="review-list-box-rec" />
+
+                <div className="review-list-box-rec">
+
+                    {reviews.map((review)=>(
+                        <div className="list-ee">
                 <img
                     className="review-list-box-img-icon"
                     alt=""
                     src={require('./assets/review_list_box_img.png').default}
                 />
-                <div className="div4">
-                    <p className="p">{`▶ 지원 시기 : `}</p>
-                    <p className="p">{`▶ 지원 회사와 부서 : `}</p>
-                    <p className="p">{`▶ 나의 합격 스펙 : `}</p>
-                    <p className="p">▶ 면접 일자 :</p>
-                    <p className="p4">{`▶ 면접 형태 :  `}</p>
-                </div>
+
                 <div className="review-list-box-title">
                     <div className="review-list-box-title-user">
                         <img className="logo-icon" alt=""
@@ -91,7 +139,7 @@ function Reviewlist(props) {
                     <div className="div5">
                         <p className="p4">{`리뷰 종류 : 면접 `}</p>
                     </div>
-                    <b className="b">삼성전자</b>
+                    <b className="b">{review.ci_idx}</b>
                 </div>
                 <div className="review-list-box-star">
                     <div className="div6">3.0</div>
@@ -127,7 +175,13 @@ function Reviewlist(props) {
                         />
                     </div>
                 </div>
+                        </div>
+
+                    ))}
+
             </div>
+            </div>
+
             <div className="review-child" />
             <div className="review-item" />
         </div>
