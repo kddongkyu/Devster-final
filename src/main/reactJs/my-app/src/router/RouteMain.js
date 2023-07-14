@@ -36,6 +36,7 @@ function RouteMain(props) {
                 <Route path="/home" element={<Main/>}/>
                 <Route path="/login" element={<LoginForm/>}/>
 
+
         <Route path='/fboard' element={<Fboard/>}/>
         <Route path='/qboard' element={<Qboard/>}/>
         <Route path='/hboard' element={<Hboard/>}/>
@@ -53,13 +54,14 @@ function RouteMain(props) {
         <Route path='/review/detail' element={<Reviewdetail/>}/>
         <Route path='/notice/detail' element={<Noticedetail/>}/>
 
-        <Route element={<MypageList />}>
-          <Route path="/userinfo" element={<UserInfo />} />
-          <Route path="/bookmarks" element={<Bookmarks />} />
-          <Route path="/myresume" element={<MyResume />} />
-          <Route path="/withdrawal" element={<Withdrawal />} />
-          <Route path="/notice" element={<Notice/>} />
-        </Route>
+
+                <Route element={<MypageList/>}>
+                    <Route path="/userinfo" element={<UserInfo/>}/>
+                    <Route path="/bookmarks" element={<Bookmarks/>}/>
+                    <Route path="/myresume" element={<MyResume/>}/>
+                    <Route path="/withdrawal" element={<Withdrawal/>}/>
+                    <Route path="/notice" element={<Notice/>}/>
+                </Route>s
 
                 <Route>
                     <Route path="/myresume/form" element={<Resumeform/>}/>

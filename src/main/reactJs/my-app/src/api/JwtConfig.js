@@ -1,5 +1,6 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import {jwtHandleError} from "./JwtHandleError";
 
 function isTokenExpired(token) {
     if (!token) {
@@ -9,7 +10,7 @@ function isTokenExpired(token) {
     const expTime = jwt_decode(token).exp;
 
     // return currentTime >= expTime;
-    return currentTime >= expTime - 30;  //5분 여유시간
+    return currentTime >= expTime - 300;
 }
 
 async function refreshAccessToken(refreshToken) {
@@ -18,7 +19,7 @@ async function refreshAccessToken(refreshToken) {
             method: 'post',
             url: '/member/check',
             headers: {'Authorization-refresh': `Bearer ${refreshToken}`},
-        })
+        });
 
         if (res.status === 200) {
             const newAccessToken = res.headers.authorization;
@@ -30,19 +31,9 @@ async function refreshAccessToken(refreshToken) {
             localStorage.setItem('expiredTime', newExpiredTime.exp);
 
             return newAccessToken;
-        } else {
-            switch (res.status) {
-                case 401:
-                    throw new Error('로그인이 필요한 서비스 입니다.');
-                case 403:
-                    throw new Error('세션이 만료되었습니다.');
-                default:
-                    throw new Error('An unexpected error has occurred');
-            }
         }
-
     } catch (error) {
-        console.error(error);
+        jwtHandleError(error);
         throw error;
     }
 }
@@ -60,7 +51,7 @@ axiosIns.interceptors.request.use(
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
                 alert('New Token => accessToken + refreshToken');
             } catch (error) {
-                console.error(error);
+                jwtHandleError(error);
             }
         } else if (accessToken) {
             config.headers['Authorization'] = `Bearer ${accessToken}`;
@@ -69,19 +60,22 @@ axiosIns.interceptors.request.use(
         return config;
     },
     (error) => {
-        return Promise.reject(error);
+        jwtHandleError(error);
     }
 );
 
 axiosIns.interceptors.response.use(
     response => response,
     error => {
-        // if(error.response.status === 401) {
-        //     alert('로그인이 필요한 서비스입니다.')
-        // }
-        alert('로그인이 필요한 서비스입니다');
-        return Promise.reject(error);
+        jwtHandleError(error);
     }
 );
+
+axios.interceptors.response.use(
+    res=>res,
+    error => {
+        jwtHandleError(error);
+    }
+)
 
 export default axiosIns;
