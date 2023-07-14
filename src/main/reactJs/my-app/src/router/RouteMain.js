@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
-
 import {
   Layout,
   LoginForm,
@@ -58,12 +57,12 @@ function RouteMain(props) {
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
         </Route>
+
+        <Route path="/jwttest" element={<JwtTest />} />
       </Route>
 
       <Route path="/signin" element={<SignIn />} />
-
-      <Route path="/loginform" element={<LoginForm />} />
-
+      <Route path="/signup" element={<SignUpNorm />} />
       <Route path="/devchat/:ai_idx" element={<DevChat />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

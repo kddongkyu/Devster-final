@@ -1,7 +1,9 @@
 package data.entity;
 
 import data.dto.CompanyMemberDto;
+import jwt.setting.config.Role;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -35,11 +37,15 @@ public class CompanyMemberEntity {
     @Column(name = "cm_filename", insertable = false)
     private String CMfilename;
 
-    @Column(name = "cm_new")
-    private int CMnew;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "cm_role", insertable = false)
+    private Role CMrole;
 
     @Column(name = "cm_post")
     private String CMpost;
+
+    @Column(name = "cm_refreshtoken")
+    private String CMrefreshtoken;
 
     @Column(name = "cm_name")
     private String CMname;
@@ -47,13 +53,28 @@ public class CompanyMemberEntity {
     @Column(name = "cm_cp")
     private String CMcp;
 
-    private String salt;
-
     @Column(name = "cm_date", insertable = false)
     private Timestamp CMdate;
 
     @Column(name = "cm_reg")
     private String CMreg;
+
+    public void authorizeUser() {
+        this.CMrole = Role.USER;
+    }
+
+    public void passwordEncode(PasswordEncoder passwordEncoder) {
+        this.CMpass = passwordEncoder.encode(this.CMpass);
+    }
+
+    public void updatePassword(String updatePassword, PasswordEncoder passwordEncoder) {
+        this.CMpass = passwordEncoder.encode(updatePassword);
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.CMrefreshtoken = updateRefreshToken;
+    }
+
 
     public static CompanyMemberEntity toCompanyMemberEntity(CompanyMemberDto dto){
         return CompanyMemberEntity.builder()
@@ -64,11 +85,9 @@ public class CompanyMemberEntity {
                 .CMaddr(dto.getCm_addr())
                 .CMcompname(dto.getCm_compname())
                 .CMfilename(dto.getCm_filename())
-                .CMnew(dto.getCm_new())
                 .CMpost(dto.getCm_post())
                 .CMname(dto.getCm_name())
                 .CMcp(dto.getCm_cp())
-                .salt(dto.getSalt())
                 .CMdate(dto.getCm_date())
                 .CMreg(dto.getCm_reg())
                 .build();
