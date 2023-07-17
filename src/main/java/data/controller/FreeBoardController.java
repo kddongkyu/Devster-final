@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -24,10 +25,18 @@ public class FreeBoardController {
         this.freeBoardService = freeBoardService;
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<FreeBoardDto>> getAllFboard(){
+//        return new ResponseEntity<List<FreeBoardDto>>(freeBoardService.getAllFboard(), HttpStatus.OK);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<FreeBoardDto>> getAllFboard(){
-        return new ResponseEntity<List<FreeBoardDto>>(freeBoardService.getAllFboard(), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getPagedFboard(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return new ResponseEntity<>(freeBoardService.getPagedFboard(page, size), HttpStatus.OK);
     }
+
 
     @PostMapping
     public ResponseEntity<FreeBoardDto> insertFreeBoard(@RequestBody FreeBoardDto dto){
@@ -46,9 +55,13 @@ public class FreeBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    @GetMapping("/{fb_idx}")
+//    public ResponseEntity<FreeBoardDto> getOneFboard(@PathVariable int fb_idx) {
+//        return new ResponseEntity<FreeBoardDto>(freeBoardService.getOneFboard(fb_idx), HttpStatus.OK);
+//    }
     @GetMapping("/{fb_idx}")
-    public ResponseEntity<FreeBoardDto> getOneFboard(@PathVariable int fb_idx) {
-        return new ResponseEntity<FreeBoardDto>(freeBoardService.getOneFboard(fb_idx), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getOneFboard(@PathVariable int fb_idx) {
+        return new ResponseEntity<>(freeBoardService.getOneFboard(fb_idx), HttpStatus.OK);
     }
 
     @DeleteMapping("/{fb_idx}")

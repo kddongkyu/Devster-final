@@ -316,6 +316,7 @@
     width: 1.3rem;
     height: 1.23rem;
   }
+
   .fboard-pages,
   .fboard-pages-forward-icon {
     right: -0.06rem;
@@ -624,7 +625,7 @@
     height: 2.3rem;
   }
   .fboard-preview {
-    position: absolute;
+    position: relative;
     width: calc(100% - 44px);
     top: 61.3rem;
     right: 2.3rem;
@@ -636,11 +637,20 @@
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 83.6rem;
+    height: 230rem;
     overflow: hidden;
     text-align: left;
     font-size: 1.2rem;
     color: #626567;
     font-family: "Noto Sans KR";
+  }
+
+  .fboard-pages2{
+    position: absolute;
+    top: 226rem;
+    right: 2.79rem;
+    width: 30.91rem;
+    height: 2.1rem;
+    text-align: right;
   }
   

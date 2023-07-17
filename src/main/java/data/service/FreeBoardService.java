@@ -4,17 +4,21 @@ import data.dto.FreeBoardDto;
 import data.entity.FreeBoardEntity;
 import data.entity.MemberEntity;
 import data.repository.FreeBoardRepository;
+import data.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -23,11 +27,13 @@ public class FreeBoardService {
 
     @Autowired
     private final FreeBoardRepository freeBoardRepository;
+    @Autowired
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public FreeBoardService(FreeBoardRepository freeBoardRepository) {
-
+    public FreeBoardService(FreeBoardRepository freeBoardRepository,  MemberRepository memberRepository) {
         this.freeBoardRepository = freeBoardRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Autowired
@@ -63,34 +69,79 @@ public class FreeBoardService {
         log.info("FreeBoard 사진 초기화 완료");
     }
 
-    public List<FreeBoardDto> getAllFboard(){
-        try {
-            List<FreeBoardEntity>  entityList = freeBoardRepository.findAll();
-            List<FreeBoardDto> dtoList = new ArrayList<>();
+//    public List<FreeBoardDto> getAllFboard(){
+//        try {
+//            List<FreeBoardEntity>  entityList = freeBoardRepository.findAll();
+//            List<FreeBoardDto> dtoList = new ArrayList<>();
+//
+//            for(FreeBoardEntity entity : entityList) {
+//                dtoList.add(FreeBoardDto.toFreeBoardDto(entity));
+//            }
+//
+//            return dtoList;
+//        } catch (Exception e){
+//            log.error("findAll FreeBoardList Error", e);
+//            throw e;
+//        }
+//    }
 
-            for(FreeBoardEntity entity : entityList) {
-                dtoList.add(FreeBoardDto.toFreeBoardDto(entity));
+    public Map<String, Object> getPagedFboard(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("FBwriteDay").descending());
+        Page<FreeBoardEntity> result = freeBoardRepository.findAll(pageable);
+
+        List<FreeBoardDto> freeBoardList = result
+                .getContent()
+                .stream()
+                .map(FreeBoardDto::toFreeBoardDto)
+                .collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("freeBoardList", freeBoardList);
+        response.put("totalElements", result.getTotalElements());
+        response.put("totalPages", result.getTotalPages());
+        response.put("currentPage", result.getNumber() + 1);
+        response.put("hasNext", result.hasNext());
+
+        return response;
+    }
+
+
+//    public FreeBoardDto getOneFboard(Integer fb_idx){
+//        try {
+//            FreeBoardEntity freeBoard = freeBoardRepository.findById((Integer) fb_idx)
+//                    .orElseThrow(()->new EntityNotFoundException("존재하지 않는 fb_idx : " + fb_idx));
+//
+//            return  FreeBoardDto.toFreeBoardDto(freeBoard);
+//        } catch (Exception e){
+//            log.error("findById getOneFreeBoard Error", e);
+//            throw e;
+//        }
+//    }
+
+    public Map<String, Object> getOneFboard(Integer fb_idx) {
+        try {
+            FreeBoardEntity fboard = freeBoardRepository.findById(fb_idx)
+                    .orElseThrow(() -> new EntityNotFoundException("해당 fb_idx 는 없습니다: " + fb_idx));
+            fboard.setFBreadCount(fboard.getFBreadCount() +1);
+            freeBoardRepository.save(fboard);
+
+            MemberEntity memberInfo = memberRepository.findById(fboard.getMIdx()).orElse(null);
+
+            Map<String, Object> fboardWithAdditionalInfo = new HashMap<>();
+            fboardWithAdditionalInfo.put("fboard", FreeBoardDto.toFreeBoardDto(fboard));
+
+            if (memberInfo != null) {
+                fboardWithAdditionalInfo.put("mPhoto", memberInfo.getMPhoto());
+                fboardWithAdditionalInfo.put("mNicname", memberInfo.getMNickname());
             }
 
-            return dtoList;
-        } catch (Exception e){
-            log.error("findAll FreeBoardList Error", e);
+            return fboardWithAdditionalInfo;
+
+        } catch (Exception e) {
+            log.error("Error finding one fboard", e);
             throw e;
         }
     }
-
-    public FreeBoardDto getOneFboard(Integer fb_idx){
-        try {
-            FreeBoardEntity freeBoard = freeBoardRepository.findById((Integer) fb_idx)
-                    .orElseThrow(()->new EntityNotFoundException("존재하지 않는 fb_idx : " + fb_idx));
-
-            return  FreeBoardDto.toFreeBoardDto(freeBoard);
-        } catch (Exception e){
-            log.error("findById getOneFreeBoard Error", e);
-            throw e;
-        }
-    }
-
     public void deleteById(int fb_idx){
         try {
             freeBoardRepository.deleteById(fb_idx);
