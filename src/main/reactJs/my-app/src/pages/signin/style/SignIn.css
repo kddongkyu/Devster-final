@@ -116,6 +116,7 @@
     top: 30.4rem;
     left: 2.4rem;
     letter-spacing: 0.01em;
+    font-weight: 600;
 }
 
 .login-sns-kakao,
@@ -152,6 +153,10 @@
     top: 47.6rem;
     left: 2.3rem;
     letter-spacing: 0.01em;
+}
+
+.login-devster-text {
+    font-weight: 600;
 }
 
 .login-devster-id-text {
@@ -302,6 +307,7 @@
     top: 30.4rem;
     left: 2.3rem;
     letter-spacing: 0.01em;
+    font-weight: 600;
 }
 
 .login-company-email,
