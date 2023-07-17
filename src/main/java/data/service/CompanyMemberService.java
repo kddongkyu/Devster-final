@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,13 +43,19 @@ public class CompanyMemberService {
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    String photo = null;
+    public String uploadPhoto(MultipartFile upload, HttpSession session, int cm_idx){
+        String photo = storageService.uploadFile(bucketName,"devster/companymember",upload);
 
-    public String uploadPhoto(MultipartFile upload){
-        if(photo != null) {
-            storageService.deleteFile(bucketName,"devster/companymember",photo);
+        if(session.getAttribute("photo") != null) {
+            storageService.deleteFile(bucketName,"devster/companymember",session.getAttribute("photo").toString());
         }
-        photo = storageService.uploadFile(bucketName,"devster/companymember",upload);
+
+        session.setAttribute("photo",photo);
+
+        CompanyMemberEntity companyMember = companyMemberRepository.findById(cm_idx).orElseThrow(() -> new EntityNotFoundException("해당 idx 는 존재하지 않습니다. " + cm_idx));
+        companyMember.setCMfilename(photo);
+        companyMemberRepository.save(companyMember);
+
         logger.info(" 기업회원 사진 업로드 완료");
         return photo;
     }
@@ -117,6 +124,25 @@ public class CompanyMemberService {
 
     public void logout(String token) {
         jwtService.removeRefreshTokenComp(token.substring(7));
+    }
+
+    public String confirmRole(int cm_idx, boolean sign) {
+        CompanyMemberEntity companyMember = companyMemberRepository.findById(cm_idx).orElseThrow(()-> new EntityNotFoundException("해당 cm_idx 는 존재하지않습니다. " + cm_idx));
+
+        if(sign) {
+            storageService.deleteFile(bucketName,"devster/companymember",companyMember.getCMfilename());
+            companyMember.authorizeUser();
+            companyMember.setCMfilename("");
+            companyMemberRepository.save(companyMember);
+            logger.info("기업 회원 USER 승급 승인");
+            return "기업 회원 USER 승급 승인";
+        } else {
+            storageService.deleteFile(bucketName,"devster/companymember",companyMember.getCMfilename());
+            companyMember.setCMfilename("");
+            companyMemberRepository.save(companyMember);
+            logger.info("기업 회원 USER 승급 반려");
+            return "기업 회원 USER 승급 반려";
+        }
     }
 
 

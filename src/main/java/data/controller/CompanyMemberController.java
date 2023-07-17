@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -43,12 +44,12 @@ public class CompanyMemberController {
         companyMemberService.registerCompanymember(dto);
         return "기업회원 회원가입 성공";
     }
-    @PostMapping("/sign-up/photo")
-    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
-        return new ResponseEntity<String>(companyMemberService.uploadPhoto(upload),HttpStatus.OK);
+    @PostMapping("/photo/{cm_idx}")
+    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload, HttpSession session, @PathVariable int cm_idx) {
+        return new ResponseEntity<String>(companyMemberService.uploadPhoto(upload, session, cm_idx),HttpStatus.OK);
     }
 
-    @PutMapping("/sign-up/photo/reset")
+    @PutMapping("/photo/reset")
     public ResponseEntity<Void> resetPhoto(String photo){
         companyMemberService.resetPhoto(photo);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -83,6 +84,11 @@ public class CompanyMemberController {
         companyMemberService.logout(token);
 
         return "로그아웃 성공";
+    }
+
+    @PatchMapping("/{cm_idx}")
+    public ResponseEntity<String> confirmRole(@PathVariable int cm_idx,@RequestBody JsonNode jsonNode) {
+        return new ResponseEntity<String>(companyMemberService.confirmRole(cm_idx,jsonNode.get("sign").asBoolean()),HttpStatus.OK);
     }
 
 

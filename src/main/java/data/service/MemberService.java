@@ -155,5 +155,35 @@ public class MemberService {
         jwtService.removeRefreshToken(token.substring(7));
     }
 
+    public String checkPhoto(MultipartFile upload, Integer m_idx){
+        Optional<MemberEntity> entity = memberRepository.findById(m_idx);
+
+        String photo = storageService.uploadFile(bucketName,"devster/member/checkphoto",upload);
+
+        entity.get().setMFilename(photo);
+        memberRepository.save(entity.get());
+        logger.info("일반회원 인증사진 업로드 완료");
+        return photo;
+    }
+
+    public String confirmRole(int m_idx, boolean sign) {
+        MemberEntity member = memberRepository.findById(m_idx).get();
+
+        if(sign) {
+            storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
+            member.authorizeUser();
+            member.setMFilename("");
+            memberRepository.save(member);
+            logger.info("일반 회원 USER 승급 승인");
+            return "일반 회원 USER 승급 승인";
+        } else {
+            storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
+            member.setMFilename("");
+            memberRepository.save(member);
+            logger.info("일반 회원 USER 승급 반려");
+            return "일반 회원 USER 승급 반려";
+        }
+    }
+
 }
 

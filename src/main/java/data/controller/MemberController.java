@@ -8,6 +8,7 @@ import data.service.MailService;
 import data.service.MemberService;
 import jwt.setting.settings.JwtService;
 import org.apache.commons.text.StringEscapeUtils;
+import org.hibernate.annotations.Fetch;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -111,6 +112,17 @@ public class MemberController {
         memberService.logout(token);
 
         return "로그아웃 성공";
+    }
+
+    @PostMapping("/checkphoto/{m_idx}")
+    public ResponseEntity<Void> checkPhoto(@PathVariable Integer m_idx, @RequestBody MultipartFile upload) {
+        memberService.checkPhoto(upload,m_idx);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/{m_idx}")
+    public ResponseEntity<String> confirmRole(@PathVariable int m_idx,@RequestBody JsonNode jsonNode) {
+        return new ResponseEntity<String>(memberService.confirmRole(m_idx,jsonNode.get("sign").asBoolean()),HttpStatus.OK);
     }
 
     public MemberDto escapeDto(MemberDto dto) {
