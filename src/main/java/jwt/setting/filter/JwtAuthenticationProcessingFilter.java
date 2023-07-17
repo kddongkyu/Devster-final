@@ -111,9 +111,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     // AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
                     // AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
                     if (refreshToken == null) {
-                        String type = jwtService.extractAccessToken(request)
-                                                .filter(jwtService::isTokenValid)
-                                                .orElse(null).toString();
+                        String accessToken = jwtService.extractAccessToken(request)
+                                .filter(jwtService::isTokenValid)
+                                .orElse(null);
+                        String type = jwtService.extractType(accessToken).toString();
                         if(type.equals("company")){
                             checkAccessTokenAndAuthenticationComp(request, response, filterChain);
                         } else {

@@ -35,7 +35,6 @@ public class MemberController {
 
     @PostMapping("/check")
     public void check() {
-
     }
 
     @GetMapping
