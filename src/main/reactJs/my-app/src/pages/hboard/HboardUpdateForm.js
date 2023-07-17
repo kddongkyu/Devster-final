@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axiosIns from "../../api/JwtConfig";
 
-const HboardForm = () => {
+const HboardUpdateForm = () => {
   const [hb_subject, setHb_subject] = useState("");
   const [hb_photo, setHb_photo] = useState("");
   const [hb_content, setHb_content] = useState("");
@@ -12,12 +12,14 @@ const HboardForm = () => {
   const navi = useNavigate();
 
   const cm_idx = 14;
+  const hb_idx = 44;
 
   const onSubmitEvent = (e) => {
     e.preventDefault();
     axiosIns
-      .post("/hboard/insert", {
+      .post("/hboard/hireupdate", {
         cm_idx,
+        hb_idx,
         hb_subject,
         hb_content,
         hb_photo,
@@ -118,4 +120,4 @@ const HboardForm = () => {
   );
 };
 
-export default HboardForm;
+export default HboardUpdateForm;

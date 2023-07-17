@@ -56,13 +56,15 @@ public class HireBoardService {
         this.hireBookmarkRepository = hireBoardBookmarkRepository;
     }
 
+
     public void insertHireBoard(HireBoardDto dto){ 
         HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
             hireBoardRepository.save(entity);
-
     }
 
+
     public Map<String,Object> list(int currentPage){
+    
         //페이징처리
         int totalCount;//총갯수
         int perPage=10;//한페이지당 출력할 글갯수
@@ -91,7 +93,20 @@ public class HireBoardService {
         Map<String, Integer> map=new HashMap<>();
         map.put("start", startNum);
         map.put("perpage", perPage);
+        List<Map<String,Object>> fullList = new ArrayList<>();
         List<HireBoardDto> list = hireBoardMapper.getPagingList(map);
+        
+        for(HireBoardDto dto : list){
+            Map<String,Object> dmap = new HashMap<>();
+            dmap.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
+            dmap.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
+            dmap.put("hb_subject",dto.getHb_subject());
+            dmap.put("hb_content",dto.getHb_content());
+            dmap.put("hb_readcount",dto.getHb_readcount());
+            dmap.put("hb_writeday",dto.getHb_writeday());
+            dmap.put("hb_photo",dto.getHb_photo());
+            fullList.add(dmap);
+        }
 
         //출력할 페이지번호들을 Vector에 담아서 보내기
         Vector<Integer> parr=new Vector<>();
@@ -102,7 +117,7 @@ public class HireBoardService {
         //필요한 변수들을 Map 에 담아서 보낸다
         Map<String,Object> smap=new HashMap<>();
         smap.put("totalCount",totalCount);
-        smap.put("list",list);
+        smap.put("list",fullList);
         smap.put("parr",parr);
         smap.put("startPage",startPage);
         smap.put("endPage",endPage);
@@ -111,52 +126,8 @@ public class HireBoardService {
 
         System.out.println(smap);
         return  smap;
-    }
+    } 
 
-    // public HireBoardDto insertHireBoard(HireBoardDto dto){ 
-        
-    //     HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
-    //         hireBoardRepository.save(entity);
-
-    //         return dto;
-    
-    // }
-
-
-
-    // public List<HireBoardDto> getAllData(){
-    //     try{
-    //         List<HireBoardDto> list = new ArrayList<>();
-    //         for(HireBoardEntity entity : hireBoardRepository.findAll()){
-    //             list.add(HireBoardDto.toHireBoardDto(entity));
-    //         }
-    //         return list;
-    //     } catch(Exception e){
-    //         logger.error("Error occurred while getting all hireboard data", e);
-    //         throw e;
-    //     }
-    // }    
-
-
-    // public Map<String,Object> list(int currentPage){
-    //     int totalCount = hireBoardRepository.countBy().intValue();
-    //     int perPage = 10;
-    //     int startNum;
-    //     int no;
-    //     startNum = (currentPage - 1) * perPage;
-    //     no = totalCount - startNum;
-    //     Pageable pageable = PageRequest.of(startNum, perPage, Sort.by(Sort.Direction.DESC, "hbIdx"));
-    //     Map<String,Object> map = new HashMap<>(); 
-    //     // map.put("list",hireBoardRepository.findAll(pageable).getContent());
-    //     map.put("currentPage",currentPage);
-    //     map.put("totalCount",totalCount);
-    //     map.put("no",no);
-    //     return map;
-    // }
-
-    // public int getTotalCount(){
-    //     return (int)hireBoardRepository.count();
-    // }    
 
     public List<HireBoardDto> getPagingList(int start, int perpage) {
         Map<String, Integer> map=new HashMap<>();
@@ -178,7 +149,50 @@ public class HireBoardService {
             logger.error("Error occurred while getting a entity", e);
             throw e;
         }
-    } 
+    }
+    
+
+
+
+    public Map<String,Object> getDetailPage(int hb_idx, int m_idx){
+        
+        //readcount 추가 
+        hireBoardMapper.updateReadCount(hb_idx);
+
+        HireBoardEntity entity = hireBoardRepository.findById((Integer)hb_idx)
+            .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + hb_idx));
+        HireBoardDto dto = HireBoardDto.toHireBoardDto(entity);    
+
+        //필요한 변수들을 Map 에 담아서 보낸다
+        Map<String,Object> map=new HashMap<>();
+        map.put("hb_subject",dto.getHb_subject());
+        map.put("hb_content",dto.getHb_content());
+        map.put("hb_readcount",dto.getHb_readcount());
+        map.put("hb_photo",dto.getHb_photo());
+        map.put("hb_writeday",dto.getHb_writeday());
+        map.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
+        map.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
+
+
+        //북마크 추가 여부 확인 및 역시 map 에 담기 
+        boolean isAlreadyAddBkmk = false;
+        Map<String,Integer> bmap = new HashMap<>();
+        bmap.put("m_idx",m_idx);
+        bmap.put("hb_idx",hb_idx);
+        Integer getBkmkPointTypeCodeBym_idx = hireBoardMapper.getBkmkInfoBym_idx(bmap);
+        if(getBkmkPointTypeCodeBym_idx==null){
+            getBkmkPointTypeCodeBym_idx =0;
+        }
+        if(getBkmkPointTypeCodeBym_idx ==1){
+            isAlreadyAddBkmk = true;
+        }
+        map.put("isAlreadyAddBkmk",isAlreadyAddBkmk);
+
+        return map;
+    }
+
+
+
 
 
     public void deleteHireBoard(int idx){
@@ -190,38 +204,35 @@ public class HireBoardService {
     }
 
 
-    public void updateHireBoard(HireBoardDto dto,MultipartFile upload,int currentPage){
+    // public void updateHireBoard(HireBoardDto dto,MultipartFile upload){
 
-        String filename="";
-        HireBoardEntity entity = hireBoardRepository.findById(dto.getHb_idx())
-                .orElseThrow(() -> new EntityNotFoundException("해당 idx의 게시물이 존재하지 않습니다:" +dto.getHb_idx()));
-        if(!upload.getOriginalFilename().equals("")) {
-            filename= entity.getHBphoto();
-            storageService.deleteFile(bucketName,"devster/hireboard",filename);
-            filename=storageService.uploadFile(bucketName, "devster/hireboard", upload);
-        }
+    //     String filename="";
+    //     HireBoardEntity entity = hireBoardRepository.findById(dto.getHb_idx())
+    //             .orElseThrow(() -> new EntityNotFoundException("해당 idx의 게시물이 존재하지 않습니다:" +dto.getHb_idx()));
+    //     try {
+    //         if(!upload.getOriginalFilename().equals("")) {
+    //         filename= entity.getHBphoto();
+    //         storageService.deleteFile(bucketName,"devster/hireboard",filename);
+    //         filename=storageService.uploadFile(bucketName, "devster/hireboard", upload);
+    //         }
+    //         entity.setHBphoto(filename);
+    //         hireBoardRepository.save(entity);
+    //     } catch (Exception e) {
+    //         logger.error("Error occurred while inserting hireboard",e);
+    //         throw e;
+    //     }
+    // }
+
+    public void updateHireBoard(HireBoardDto dto){
         try {
-            entity.setHBphoto(filename);
+            HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
             hireBoardRepository.save(entity);
         } catch (Exception e) {
-            // TODO: handle exception
-            logger.error("Error occurred while inserting hireboard",e);
+            logger.error("Error occurred while updating hireboard",e);
             throw e;
         }
     }
 
-    // public int getHireTotalCount(){
-    //     return hireBoardRepository.countBy().intValue();
-    // }
-
-
-
-
-
-    // public List<HireBoardEntity> getHirePagingList(int start, int perPage){
-    //     Pageable pageable = PageRequest.of(start, perPage, Sort.by(Sort.Direction.DESC, "hbIdx"));
-    //     return hireBoardRepository.findAll(pageable).getContent();
-    // }
  
 
     @Transactional
@@ -246,6 +257,8 @@ public class HireBoardService {
             logger.error("Error occurred while inserting hirebookmark",e);
         }
     }    
+
 }
+
 
 

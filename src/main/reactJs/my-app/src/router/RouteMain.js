@@ -25,6 +25,7 @@ import LoginForm from "../components/LoginForm";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
+import HboardUpdateForm from "../pages/hboard/HboardUpdateForm";
 // import { Noticedetail, Noticeform, Noticelist } from "../pages/notice";
 
 function RouteMain(props) {
@@ -48,6 +49,7 @@ function RouteMain(props) {
         <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
+        <Route path="/hboard/updateform" element={<HboardUpdateForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />

@@ -47,19 +47,18 @@ public class HireBoardController {
     public String photoUpload(MultipartFile upload)
     {
         if(photo!=null){
-            storageService.deleteFile(bucketName,"hboard",photo);
+            storageService.deleteFile(bucketName,"devster/hboard",photo);
         }
-        photo=storageService.uploadFile(bucketName,"hboard",upload);
+        photo=storageService.uploadFile(bucketName,"devster/hboard",upload);
         return photo;
     }
 
     @PostMapping("/insert")
     public void insert(@RequestBody HireBoardDto dto){
-
-        dto.setHb_photo(photo);
-        photo=null;
         hireBoardService.insertHireBoard(escapeDto(dto));
     }
+
+
 
     // @PostMapping
     // public ResponseEntity<HireBoardDto> insert(@RequestBody HireBoardDto dto){
@@ -100,13 +99,17 @@ public class HireBoardController {
         return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<Void> update(@RequestBody HireBoardDto dto, MultipartFile upload, int currentPage){
-        hireBoardService.updateHireBoard(escapeDto(dto),upload,currentPage);
-        return new ResponseEntity<>(HttpStatus.OK);
+    // @PostMapping
+    // public ResponseEntity<Void> update(@RequestBody HireBoardDto dto, MultipartFile upload){
+    //     hireBoardService.updateHireBoard(escapeDto(dto),upload);
+    //     return new ResponseEntity<>(HttpStatus.OK);
+    // }
+
+    @PutMapping("/hireupdate")
+    public void update(@RequestBody HireBoardDto dto){
+        hireBoardService.updateHireBoard(escapeDto(dto));
     }
-
-
+    
 
     @GetMapping("/increaseBkmk")
     public void increaseBkmk(Integer hb_idx, Integer m_idx){
