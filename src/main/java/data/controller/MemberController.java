@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -47,14 +48,9 @@ public class MemberController {
         return new ResponseEntity<MemberDto>(memberService.getOneMember(idx),HttpStatus.OK);
     }
 
-    @PostMapping("/sign-up/photo/tmpt")
-    public ResponseEntity<String> uploadPhotoTemp(@RequestBody MultipartFile upload) {
-        return new ResponseEntity<String>(memberService.uploadPhotoTemp(upload),HttpStatus.OK);
-    }
-
     @PostMapping("/sign-up/photo")
-    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
-        return new ResponseEntity<String>(memberService.uploadPhoto(upload),HttpStatus.OK);
+    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload, HttpSession session) {
+        return new ResponseEntity<String>(memberService.uploadPhoto(upload,session),HttpStatus.OK);
     }
 
     @PutMapping("/sign-up/photo/reset")
@@ -105,8 +101,8 @@ public class MemberController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@RequestBody MemberDto dto) throws Exception {
-        memberService.registerMember(dto);
+    public String signUp(@RequestBody MemberDto dto,HttpSession session) throws Exception {
+        memberService.registerMember(dto,session);
         return "일반회원 회원가입 성공";
     }
 
