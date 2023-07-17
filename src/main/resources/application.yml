@@ -48,7 +48,7 @@ jwt:
     header: Authorization
 
   refresh:
-    expiration: 21600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
+    expiration: 1200000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
     header: Authorization-refresh
 
 naver:
