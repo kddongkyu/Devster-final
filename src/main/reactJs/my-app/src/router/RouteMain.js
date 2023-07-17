@@ -51,7 +51,7 @@ function RouteMain(props) {
         <Route path='/review/form' element={<Reviewform/>}/>
        <Route path='/notice/form' element={<Noticeform/>}/>
 
-        <Route path='/review/detail' element={<Reviewdetail/>}/>
+        <Route path='/review/detail/:rb_idx/:currentPage' element={<Reviewdetail/>}/>
         <Route path='/notice/detail' element={<Noticedetail/>}/>
 
 

@@ -110,13 +110,19 @@ function Reviewform(props) {
                     value={formData.rb_subject}
                     onChange={handleInputChange}
                 />
-                <select className="review-write-select-box-icon"
-                value={formData.rb_type}
-                onChange={handleInputChange}>
+                <select
+                    className="review-write-select-box-icon"
+                    name="rb_type"
+                    value={formData.rb_type}
+                    onChange={handleInputChange}
+                    required
+                >
+                    <option value="" disabled hidden>선택하세요</option>
                     <option value="1">면접</option>
                     <option value="2">코딩</option>
                     <option value="3">합격</option>
                 </select>
+
             </div>
 
             <div className="review-write-company">

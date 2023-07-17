@@ -3,10 +3,12 @@ package data.service;
 import data.dto.CompanyInfoDto;
 import data.dto.ReviewDto;
 import data.entity.CompanyInfoEntity;
+import data.entity.MemberEntity;
 import data.entity.ReviewEntity;
 import data.entity.ReviewlikeEntity;
 import data.mapper.ReviewMapper;
 import data.repository.CompanyInfoRepository;
+import data.repository.MemberRepository;
 import data.repository.ReviewRepository;
 import data.repository.ReviewlikeRepository;
 import org.springframework.data.domain.*;
@@ -31,16 +33,18 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewlikeRepository ReviewlikeRepository;
     private final CompanyInfoRepository CompanyInfoRepository;
-
     private final ReviewMapper reviewMapper;
+    private final MemberRepository memberRepository;
 
 
-
-    public ReviewService(ReviewRepository reviewRepository, ReviewlikeRepository ReviewlikeRepository, CompanyInfoRepository companyInfoRepository, ReviewMapper reviewMapper)  {
+    public ReviewService(ReviewRepository reviewRepository, ReviewlikeRepository ReviewlikeRepository, CompanyInfoRepository companyInfoRepository,
+                         ReviewMapper reviewMapper,MemberRepository memberRepository)  {
         this.reviewRepository = reviewRepository;
         this.ReviewlikeRepository=ReviewlikeRepository;
         this.CompanyInfoRepository=companyInfoRepository;
         this.reviewMapper = reviewMapper;
+        this.memberRepository = memberRepository;
+
     }
 
     public ReviewDto insertReview(ReviewDto dto) {
@@ -77,55 +81,81 @@ public class ReviewService {
     }
 
 
-//    public List<ReviewDto> getAllReviews(){
-//        try {
-//            List<ReviewEntity> entityList = reviewRepository.findAll();
-//            List<ReviewDto> dtoList = new ArrayList<>();
-//
-//            for (ReviewEntity entity : entityList) {
-//                dtoList.add(ReviewDto.toReviewDto(entity));
-//            }
-//            return dtoList;
-//        } catch (Exception e) {
-//            logger.error("find All review Error", e);
-//            throw e;
-//        }
-//    }
-public Map<String, Object> getPagedReviews(int page, int size) {
-    Pageable pageable = PageRequest.of(page, size, Sort.by("RBwriteday").descending());
-    Page<ReviewEntity> result = reviewRepository.findAll(pageable);
+    public Map<String, Object> getPagedReviews(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("RBwriteday").descending());
+        Page<ReviewEntity> result = reviewRepository.findAll(pageable);
 
-    List<ReviewDto> reviews = result
-            .getContent()
-            .stream()
-            .map(ReviewDto::toReviewDto)
-            .collect(Collectors.toList());
+        List<Map<String, Object>> reviewsWithCompanyInfo = result
+                .getContent()
+                .stream()
+                .map(reviewEntity -> {
+                    CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(reviewEntity.getCIidx()).orElse(null);
+                    MemberEntity memberInfo = memberRepository.findById(reviewEntity.getMIdx()).orElse(null);
+                    Map<String, Object> reviewWithCompanyInfo = new HashMap<>();
+                    reviewWithCompanyInfo.put("review", ReviewDto.toReviewDto(reviewEntity));
+                    if (memberInfo != null) {
+                        reviewWithCompanyInfo.put("mPhoto", memberInfo.getMPhoto());
+                        reviewWithCompanyInfo.put("mNicname", memberInfo.getMNickname());
+                    }
+                    if (companyInfo != null) {
+                        reviewWithCompanyInfo.put("ciName", companyInfo.getCIname());
+                        reviewWithCompanyInfo.put("ciStar", companyInfo.getCIstar());
+                        reviewWithCompanyInfo.put("ciPhoto", companyInfo.getCIphoto());
+                    }
+                    return reviewWithCompanyInfo;
+                })
+                .collect(Collectors.toList());
 
-    Map<String, Object> response = new HashMap<>();
-    response.put("reviews", reviews);  // 페이징된 리뷰들의 DTO 리스트를 추가합니다.
-    response.put("totalElements", result.getTotalElements());
-    response.put("totalPages", result.getTotalPages());
-    response.put("currentPage", result.getNumber() + 1);
-    response.put("hasNext", result.hasNext());
+        Map<String, Object> response = new HashMap<>();
+        response.put("reviews", reviewsWithCompanyInfo);
+        response.put("totalElements", result.getTotalElements());
+        response.put("totalPages", result.getTotalPages());
+        response.put("currentPage", result.getNumber() + 1);
+        response.put("hasNext", result.hasNext());
 
-    return response;
-}
+        return response;
+    }
 
 
-    public ReviewDto getOneReview(Integer rb_idx){
+    public Map<String, Object> getOneReview(Integer rb_idx) {
         try {
-            ReviewEntity review = reviewRepository.findById((Integer)rb_idx)
+            ReviewEntity review = reviewRepository.findById(rb_idx)
                     .orElseThrow(() -> new EntityNotFoundException("해당 rb_idx 는 없습니다: " + rb_idx));
-            return ReviewDto.toReviewDto(review);
+            review.setRBreadcount(review.getRBreadcount() +1);
+            reviewRepository.save(review);
+
+            CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(review.getCIidx()).orElse(null);
+            MemberEntity memberInfo = memberRepository.findById(review.getMIdx()).orElse(null);
+
+            Map<String, Object> reviewWithAdditionalInfo = new HashMap<>();
+            reviewWithAdditionalInfo.put("review", ReviewDto.toReviewDto(review));
+
+            if (memberInfo != null) {
+                reviewWithAdditionalInfo.put("mPhoto", memberInfo.getMPhoto());
+                reviewWithAdditionalInfo.put("mNicname", memberInfo.getMNickname());
+            }
+            if (companyInfo != null) {
+                reviewWithAdditionalInfo.put("ciName", companyInfo.getCIname());
+                reviewWithAdditionalInfo.put("ciStar", companyInfo.getCIstar());
+                reviewWithAdditionalInfo.put("ciPhoto", companyInfo.getCIphoto());
+                reviewWithAdditionalInfo.put("ciPpl",companyInfo.getCIppl());
+                reviewWithAdditionalInfo.put("ciSal",companyInfo.getCIsal());
+                reviewWithAdditionalInfo.put("ciSale",companyInfo.getCIsale());
+            }
+
+            return reviewWithAdditionalInfo;
+
         } catch (Exception e) {
-            logger.error("find one review Error", e);
+            logger.error("Error finding one review", e);
             throw e;
         }
     }
 
+
     public void deleteById(int rb_idx){
         try {
             reviewRepository.deleteById(rb_idx);
+            ReviewlikeRepository.deleteById(rb_idx);
         } catch (Exception e) {
             logger.error("delete review Error", e);
             throw e;
@@ -160,15 +190,15 @@ public Map<String, Object> getPagedReviews(int page, int size) {
     }
 
 //현재 로직에선 필요가 없는데 출력하는 로직에서 필요한지 고민 필요
-// public boolean isAlreadyAddGoodRp(int MIdx, int RBidx){
-//     RboardlikeEntity rboardlikeEntity=findOrCreateRBoardLike(MIdx, RBidx);
-//     return rboardlikeEntity.getLikestatus()==1;
-// }
+ public boolean isAlreadyAddGoodRp(int MIdx, int RBidx){
+     ReviewlikeEntity rboardlikeEntity=findOrCreateRBoardLike(MIdx, RBidx);
+     return rboardlikeEntity.getLikestatus()==1;
+ }
 
-// public boolean isAlreadyAddBadRp(int MIdx, int RBidx){
-//     RboardlikeEntity rboardlikeEntity=findOrCreateRBoardLike(MIdx, RBidx);
-//     return rboardlikeEntity.getLikestatus()==2;
-// }
+ public boolean isAlreadyAddBadRp(int MIdx, int RBidx){
+     ReviewlikeEntity rboardlikeEntity=findOrCreateRBoardLike(MIdx, RBidx);
+     return rboardlikeEntity.getLikestatus()==2;
+ }
 
 
     public void like(int MIdx, int RBidx) {

@@ -36,7 +36,7 @@
     left: 0;
     width: 10.9rem;
     height: 7.1rem;
-    object-fit: cover;
+    object-fit: fill;
 }
 .b {
     position: absolute;
@@ -62,7 +62,7 @@
     height: 10.7rem;
 }
 .li {
-    margin-bottom: false;
+    /*margin-bottom: false;*/
 }
 .ul {
     margin: 0;
@@ -113,12 +113,12 @@
     left: 0;
     letter-spacing: -0.24px;
     display: inline-block;
-    width: 4.3rem;
+    width: 16.3rem;
 }
 .review-detail-info-status-view-icon {
     position: absolute;
     top: 0.45rem;
-    left: 4.35rem;
+    left: 7.2rem;
     width: 1.4rem;
     height: 0.94rem;
 }
@@ -150,10 +150,24 @@
 }
 .review-detail-header-function-icon {
     position: absolute;
-    top: 41.3rem;
-    right: 3.48rem;
-    width: 1.92rem;
+    top: 43.03rem;
+    right: 3.1rem;
+    width: 1.87rem;
+    height: 2.35rem;
+}
+.review-edit-icon,
+.review-trash-icon {
+    position: absolute;
+    top: 43.1rem;
+    right: 6.4rem;
+    width: 2.4rem;
     height: 2.4rem;
+    overflow: hidden;
+}
+.review-trash-icon {
+    right: 9.9rem;
+    width: 2.3rem;
+    height: 2.3rem;
 }
 .p {
     margin: 0;
@@ -224,7 +238,7 @@
 .review-detail-counter-num-text {
     position: absolute;
     top: 1rem;
-    right: 1.7rem;
+    right: 2.5rem;
     letter-spacing: -0.24px;
     font-weight: 500;
 }
@@ -240,6 +254,7 @@
     background-color: #fff;
     border: 1px solid #bdc0c4;
     box-sizing: border-box;
+
 }
 .review-detail-counter-dislike,
 .review-detail-counter-dislike- {
@@ -637,4 +652,24 @@
     font-size: 1.4rem;
     color: #000;
     font-family: "Noto Sans KR";
+}
+.cisale_li{
+    width: 15rem;
+}
+.cisal_li{
+    width: 19rem;
+ }
+.rview-readcount{
+    /*left: 9rem;*/
+    padding-left: 3rem;
+    padding-left: 3rem;
+}
+.ci_name_b{
+    position: absolute;
+    top: 7.3rem;
+    left: 0.1rem;
+    letter-spacing: 1px;
+    line-height: 2.1rem;
+    display: inline-block;
+    width: 9.96rem;
 }

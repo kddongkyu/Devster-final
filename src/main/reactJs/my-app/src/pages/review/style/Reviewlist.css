@@ -232,7 +232,7 @@
     right: 7rem;
     left: 0;
     background-color: rgba(114, 30, 166, 0.07);
-    height: 44rem;
+    height: 95rem;
 }
 .review-list-box-img-icon {
     position: absolute;
@@ -240,7 +240,7 @@
     left: 1.2rem;
     width: 10.8rem;
     height: 7.1rem;
-    object-fit: cover;
+    object-fit: fill;
 }
 .p {
     margin-block-start: 0;
@@ -272,7 +272,7 @@
     left: 1.9rem;
     letter-spacing: -0.24px;
     display: inline-block;
-    width: 17.6rem;
+    width: 19.6rem;
     height: 1.7rem;
 }
 .review-list-box-title-user {
@@ -422,7 +422,7 @@
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 90rem;
+    height: 129rem;
     overflow: hidden;
     text-align: left;
     font-size: 1.2rem;
@@ -432,4 +432,20 @@
 .list-ee{
     height: 15rem;
     position: relative;
+}
+.review-list-subject-text {
+    position: absolute;
+    top: 14rem;
+    left: 3.4rem;
+    letter-spacing: -0.24px;
+    white-space: pre-wrap;
+    display: inline-block;
+    width: 27.8rem;
+    height: 11.6rem;
+}
+.review-rectangle{
+    width: 90%;
+    margin-left: 2rem;
+    color: #6e727f;
+    height: 1px;
 }

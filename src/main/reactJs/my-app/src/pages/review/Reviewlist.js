@@ -1,19 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import './style/Reviewlist.css';
-import axios from "axios";
 import axiosIns from "../../api/JwtConfig";
+import {Link} from "react-router-dom";
+import StarRating from "./StarRating";
 function Reviewlist(props) {
     const [reviews, setReviews] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
     const [totalPages,setTotalPages]=useState(1);
+
+    const handleClick = () => {
+        window.location.href = '/review/form';
+    };
+
 
     useEffect(()=>{
         fetchReviews(currentPage);
     },[currentPage]);
 
     const fetchReviews = (page) => {
-        axiosIns.get('/review', { params: { page } })
+        axiosIns.get('/review', { params: { page: page - 1 } })
             .then(response => {
+              //  console.log(response.data+"date 제발 주세여ㅛ");
                 setReviews(response.data.reviews);
                 setTotalPages(response.data.totalPages);
             })
@@ -34,17 +41,56 @@ function Reviewlist(props) {
         }
     };
 
+    const reviewTypes = {
+        1: '면접',
+        2: '합격',
+        3: '코딩',
+    };
 
-    useEffect(() => {
-        // JPA로부터 데이터 가져오는 API 호출
-        axiosIns.get('/review')
-            .then(response => {
-                setReviews(response.data.reviews); // 리뷰 데이터 설정
-            })
-            .catch(error => {
-                console.error('Error fetching reviews:', error);
-            });
-    }, []);
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
+    const timeForToday = (value) => {
+        if (!value) {
+            return '';
+        }
+
+        const valueConv = value.slice(0, -10);
+        const today = new Date();
+        const timeValue = new Date(valueConv);
+
+        // timeValue를 한국 시간대로 변환
+        const timeValueUTC = new Date(timeValue.toISOString());
+        const offset = timeValue.getTimezoneOffset() * 60 * 1000; // 분 단위를 밀리초 단위로 변환
+        const timeValueKST = new Date(timeValueUTC.getTime() - offset);
+
+
+        const betweenTime = Math.floor((today.getTime() - timeValueKST.getTime()) / 1000 / 60);
+        if (betweenTime < 1) return '방금 전';
+        if (betweenTime < 60) {
+            return `${betweenTime}분 전`;
+        }
+        console.log(betweenTime);
+
+        const betweenTimeHour = Math.floor(betweenTime / 60);
+        if (betweenTimeHour < 24) {
+            return `${betweenTimeHour}시간 전`;
+        }
+
+        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        if (betweenTimeDay < 8) {
+            return `${betweenTimeDay}일 전`;
+        }
+
+        const year = String(timeValue.getFullYear()).slice(0, 4);
+        const month = String(timeValue.getMonth() + 1).padStart(2, '0');
+        const day = String(timeValue.getDate()).padStart(2, '0');
+
+        const formattedDateWithoutTime = `${year}-${month}-${day}`;
+
+        return formattedDateWithoutTime;
+    };
 
 
     return (
@@ -60,7 +106,7 @@ function Reviewlist(props) {
                     <div className="div">코딩테스트 / 면접 / 합격 후기 게시판</div>
                 </div>
             </div>
-            <button className="review-headerbar-btn">
+            <button className="review-headerbar-btn"  onClick={handleClick}>
                 {/*<div className="review-headerbar-rec" />*/}
                 <div className="div1">{`후기작성 `}</div>
                 <img
@@ -97,6 +143,7 @@ function Reviewlist(props) {
                 className="review-pages-reload-icon"
                 alt=""
                 src={require('./assets/review_pages_reload_icon.svg').default}
+                onClick={handleRefresh}
             />
             <div className="review-pages-paging">
                 <div className="div3">{`${currentPage} / ${totalPages} 페이지`}</div>
@@ -116,42 +163,55 @@ function Reviewlist(props) {
             </div>
 
             <div className="review-list-box">
-                <img className="review-list-box-child" alt=""
-
-                     src="/vector-179.svg" />
-
                 <div className="review-list-box-rec">
 
                     {reviews.map((review)=>(
-                        <div className="list-ee">
+                        <Link to={`/review/detail/${review.review.rb_idx}/${currentPage}`} key={review.review.rb_idx}>
+
+                            <div className="list-ee" >
                 <img
                     className="review-list-box-img-icon"
                     alt=""
-                    src={require('./assets/review_list_box_img.png').default}
+                    src={review.ciPhoto}
                 />
-
+                            <div className="review-list-subject-text">
+                                {review.review.rb_subject}
+                            </div>
                 <div className="review-list-box-title">
                     <div className="review-list-box-title-user">
                         <img className="logo-icon" alt=""
-                             src={require('./assets/logo.svg').default} />
-                        <div className="user-01234">User_01234 · 약 4시간 전</div>
+                             src={review.mPhoto} />
+                        <div className="user-01234">{review.mNicname} ·
+                            {/*{*/}
+                            {/*    (() => {*/}
+                            {/*        const date = new Date(review.review.rb_writeday);*/}
+                            {/*        return date.toISOString().split('T')[0];*/}
+                            {/*    })()*/}
+                            {/*}*/}
+                            {timeForToday(review.review.rb_writeday)}
+                        </div>
                     </div>
                     <div className="div5">
-                        <p className="p4">{`리뷰 종류 : 면접 `}</p>
+                        <p className="p4">{`리뷰 종류 : `}{reviewTypes[review.review.rb_type]}</p>
                     </div>
-                    <b className="b">{review.ci_idx}</b>
+                    <div className="review-list-companyname">{review.ciName}</div>
                 </div>
                 <div className="review-list-box-star">
-                    <div className="div6">3.0</div>
-                    <img
-                        className="review-list-box-star-icons"
-                        alt=""
-                        src={require('./assets/review-stars_icons.svg').default}
-                    />
+                    <div className="div6">{review.review.rb_star}</div>
+                    <div className="review-list-box-star-icons">
+                        <StarRating rating={review.review.rb_star} />
+                    </div>
+
+                    {/*<img*/}
+                    {/*   */}
+                    {/*    alt=""*/}
+                    {/*    */}
+                    {/*    src={require('./assets/review-stars_icons.svg').default}*/}
+                    {/*/>*/}
                 </div>
                 <div className="review-list-box-header">
                     <div className="review-list-box-header-likes">
-                        <div className="review-list-box-header-likes-t">9</div>
+                        <div className="review-list-box-header-likes-t">{review.review.rb_like}</div>
                         <img
                             className="review-list-box-header-likes-i-icon"
                             alt=""
@@ -167,7 +227,7 @@ function Reviewlist(props) {
                         />
                     </div>
                     <div className="review-list-box-header-views">
-                        <div className="review-list-box-header-views-t">800</div>
+                        <div className="review-list-box-header-views-t">{review.review.rb_readcount}</div>
                         <img
                             src={require('./assets/review_list_box_header_views_icon.svg').default}
                             className="review-list-box-header-views-i-icon"
@@ -175,8 +235,9 @@ function Reviewlist(props) {
                         />
                     </div>
                 </div>
+                    <hr className="review-rectangle"/>
                         </div>
-
+                        </Link>
                     ))}
 
             </div>
