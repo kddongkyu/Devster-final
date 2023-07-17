@@ -1,30 +1,29 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
-export const userSignIn= async (userSignInInfo) => {
+export const userSignIn = async (userSignInInfo) => {
     try {
         const res = await axios({
-            method:'post',
-            url:'/member/login',
-            data:JSON.stringify(userSignInInfo),
-            headers:{'Content-type':'application/json'}
-        })
-            .then(res => {
-                if(res.status === 200) {
-                    let decodedToken = jwt_decode(res.headers.authorization);
+            method: 'post',
+            url: '/member/login',
+            data: JSON.stringify(userSignInInfo),
+            headers: {'Content-type': 'application/json'}
+        });
 
-                    localStorage.setItem('accessToken',res.headers.authorization);
-                    localStorage.setItem('refreshToken',res.headers['authorization-refresh']);
-                    localStorage.setItem('expiredTime',decodedToken.exp);
+        if (res.status === 200) {
+            let decodedToken = jwt_decode(res.headers.authorization);
 
-                    console.log(decodedToken.exp);
-                    console.log(Date.now()/1000);
+            localStorage.setItem('accessToken', res.headers.authorization);
+            localStorage.setItem('refreshToken', res.headers['authorization-refresh']);
+            localStorage.setItem('expiredTime', decodedToken.exp);
 
-                    // axios.defaults.headers.common['Authorization']=`Bearer ${localStorage.getItem('accessToken')}`;
+            console.log(decodedToken.exp);
+            console.log(Date.now() / 1000);
 
-                    return res;
-                }
-            });
+            // axios.defaults.headers.common['Authorization']=`Bearer ${localStorage.getItem('accessToken')}`;
+
+            return res;
+        }
     } catch (error) {
         throw error;
     }
