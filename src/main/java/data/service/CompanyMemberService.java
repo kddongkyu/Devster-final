@@ -132,13 +132,13 @@ public class CompanyMemberService {
         if(sign) {
             storageService.deleteFile(bucketName,"devster/companymember",companyMember.getCMfilename());
             companyMember.authorizeUser();
-            companyMember.setCMfilename("");
+            companyMember.setCMfilename("no");
             companyMemberRepository.save(companyMember);
             logger.info("기업 회원 USER 승급 승인");
             return "기업 회원 USER 승급 승인";
         } else {
             storageService.deleteFile(bucketName,"devster/companymember",companyMember.getCMfilename());
-            companyMember.setCMfilename("");
+            companyMember.setCMfilename("no");
             companyMemberRepository.save(companyMember);
             logger.info("기업 회원 USER 승급 반려");
             return "기업 회원 USER 승급 반려";
