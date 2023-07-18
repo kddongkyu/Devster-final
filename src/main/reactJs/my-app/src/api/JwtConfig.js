@@ -33,7 +33,6 @@ async function refreshAccessToken(refreshToken) {
       return newAccessToken;
     }
   } catch (error) {
-    jwtHandleError(error);
     throw error;
   }
 }
@@ -49,13 +48,13 @@ axiosIns.interceptors.request.use(
       try {
         accessToken = await refreshAccessToken(refreshToken);
         config.headers["Authorization"] = `Bearer ${accessToken}`;
-        //alert('New Token => accessToken + refreshToken');
+        //alert("New Token => accessToken + refreshToken");
       } catch (error) {
-        jwtHandleError(error);
+        throw error;
       }
     } else if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
-      //alert('Token available');
+      //alert("Token available");
     }
     return config;
   },

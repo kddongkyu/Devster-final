@@ -8,11 +8,13 @@ import data.service.MailService;
 import data.service.MemberService;
 import jwt.setting.settings.JwtService;
 import org.apache.commons.text.StringEscapeUtils;
+import org.hibernate.annotations.Fetch;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -35,7 +37,6 @@ public class MemberController {
 
     @PostMapping("/check")
     public void check() {
-
     }
 
     @GetMapping
@@ -48,14 +49,9 @@ public class MemberController {
         return new ResponseEntity<MemberDto>(memberService.getOneMember(idx),HttpStatus.OK);
     }
 
-    @PostMapping("/sign-up/photo/tmpt")
-    public ResponseEntity<String> uploadPhotoTemp(@RequestBody MultipartFile upload) {
-        return new ResponseEntity<String>(memberService.uploadPhotoTemp(upload),HttpStatus.OK);
-    }
-
     @PostMapping("/sign-up/photo")
-    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
-        return new ResponseEntity<String>(memberService.uploadPhoto(upload),HttpStatus.OK);
+    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload, HttpSession session) {
+        return new ResponseEntity<String>(memberService.uploadPhoto(upload,session),HttpStatus.OK);
     }
 
     @PutMapping("/sign-up/photo/reset")
@@ -106,8 +102,8 @@ public class MemberController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@RequestBody MemberDto dto) throws Exception {
-        memberService.registerMember(dto);
+    public String signUp(@RequestBody MemberDto dto,HttpSession session) throws Exception {
+        memberService.registerMember(dto,session);
         return "일반회원 회원가입 성공";
     }
 
@@ -116,6 +112,17 @@ public class MemberController {
         memberService.logout(token);
 
         return "로그아웃 성공";
+    }
+
+    @PostMapping("/checkphoto/{m_idx}")
+    public ResponseEntity<Void> checkPhoto(@PathVariable Integer m_idx, @RequestBody MultipartFile upload) {
+        memberService.checkPhoto(upload,m_idx);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/{m_idx}")
+    public ResponseEntity<String> confirmRole(@PathVariable int m_idx,@RequestBody JsonNode jsonNode) {
+        return new ResponseEntity<String>(memberService.confirmRole(m_idx,jsonNode.get("sign").asBoolean()),HttpStatus.OK);
     }
 
     public MemberDto escapeDto(MemberDto dto) {

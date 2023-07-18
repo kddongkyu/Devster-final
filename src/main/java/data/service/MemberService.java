@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 import org.slf4j.Logger;
@@ -37,8 +38,6 @@ public class MemberService {
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    String photo = null;
-
     public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.memberRepository = memberRepository;
         this.academyInfoRepository = academyInfoRepository;
@@ -46,23 +45,13 @@ public class MemberService {
         this.jwtService = jwtService;
     }
 
-    public String uploadPhotoTemp(MultipartFile upload){
-        if(photo != null) {
-            storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
+    public String uploadPhoto(MultipartFile upload, HttpSession session){
+        String photo = storageService.uploadFile(bucketName,"devster/member",upload);
+        if(session.getAttribute("photo") != null) {
+            storageService.deleteFile(bucketName,"devster/member",session.getAttribute("photo").toString());
         }
-        photo = storageService.uploadFile(bucketName,"devster/member/tmpt",upload);
-        logger.info("일반회원 임시사진 업로드 완료");
-        return photo;
-    }
-
-    public String uploadPhoto(MultipartFile upload){
-        if(photo != null) {
-            storageService.deleteFile(bucketName,"devster/member/tmpt",photo);
-            storageService.deleteFile(bucketName,"devster/member",photo);
-        }
-
-        photo = storageService.uploadFile(bucketName,"devster/member",upload);
-        logger.info("일반회원 사진 업로드 완료");
+        session.setAttribute("photo", photo);
+        logger.info("일반회원 업로드 완료");
         return photo;
     }
 
@@ -71,7 +60,7 @@ public class MemberService {
         logger.info("일반회원 사진 초기화 완료");
     }
 
-    public void registerMember(MemberDto dto) throws Exception {
+    public void registerMember(MemberDto dto,HttpSession session) throws Exception {
         if(memberRepository.existsByMEmail(dto.getM_email())) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
@@ -84,11 +73,17 @@ public class MemberService {
             throw new Exception("이미 존재하는 닉네임 입니다.");
         }
 
-        dto.setM_photo(photo);
+        String photo = (String) session.getAttribute("photo");
+        if(photo != null) {
+            dto.setM_photo(photo);
+        }
+
         MemberEntity member = MemberEntity.toMemberEntity(dto);
         member.passwordEncode(passwordEncoder);
         memberRepository.save(member);
+        logger.info("일반회원 회원가입 완료");
 
+        session.removeAttribute("photo");
     }
 
 
@@ -158,6 +153,36 @@ public class MemberService {
 
     public void logout(String token) {
         jwtService.removeRefreshToken(token.substring(7));
+    }
+
+    public String checkPhoto(MultipartFile upload, Integer m_idx){
+        Optional<MemberEntity> entity = memberRepository.findById(m_idx);
+
+        String photo = storageService.uploadFile(bucketName,"devster/member/checkphoto",upload);
+
+        entity.get().setMFilename(photo);
+        memberRepository.save(entity.get());
+        logger.info("일반회원 인증사진 업로드 완료");
+        return photo;
+    }
+
+    public String confirmRole(int m_idx, boolean sign) {
+        MemberEntity member = memberRepository.findById(m_idx).get();
+
+        if(sign) {
+            storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
+            member.authorizeUser();
+            member.setMFilename("no");
+            memberRepository.save(member);
+            logger.info("일반 회원 USER 승급 승인");
+            return "일반 회원 USER 승급 승인";
+        } else {
+            storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
+            member.setMFilename("no");
+            memberRepository.save(member);
+            logger.info("일반 회원 USER 승급 반려");
+            return "일반 회원 USER 승급 반려";
+        }
     }
 
 }

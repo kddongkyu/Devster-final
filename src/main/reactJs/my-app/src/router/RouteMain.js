@@ -19,12 +19,16 @@ import FboardForm from "../pages/fboard/FboardForm";
 import QboardForm from "../pages/qboard/QboardForm";
 import HboardForm from "../pages/hboard/HboardForm";
 import AboardForm from "../pages/aboard/AboardForm";
+import FboardDetail from "../pages/fboard/FboardDetail";
 import Withdrawal from "../pages/mypage/Withdrawal";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
 import NoticeAdmin from "../pages/mypage/NoticeAdmin";
 import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
+import Noticelist from "../pages/notice/Noticelist";
+import Noticeform from "../pages/notice/Noticeform";
+import Noticedetail from "../pages/notice/Noticedetail";
 
 function RouteMain(props) {
   return (
@@ -37,11 +41,16 @@ function RouteMain(props) {
         <Route path="/qboard" element={<Qboard />} />
         <Route path="/hboard" element={<Hboard />} />
         <Route path="/aboard" element={<Aboard />} />
+        <Route path="/notice" element={<Noticelist />} />
 
         <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
+        <Route path="/notice/form" element={<Noticeform />} />
+
+        <Route path="/fboard/detail" element={<FboardDetail />} />
+        <Route path="/notice/detail" element={<Noticedetail />} />
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />

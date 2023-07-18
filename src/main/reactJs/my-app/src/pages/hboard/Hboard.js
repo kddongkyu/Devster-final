@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom";
 import "./style/Hboard.css";
 const Hboard = () => {
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="hboard">
       <div className="advertise-box">
@@ -58,7 +63,7 @@ const Hboard = () => {
         />
       </div>
       <div className="hboard-function-search-input">
-        <div className="hboard-function-search-input1" />
+        <input type="text" className="hboard-function-search-input1" />
         <img
           className="hboard-function-search-icon"
           alt=""
@@ -69,6 +74,7 @@ const Hboard = () => {
         className="hboard-pages-reset-icon"
         alt=""
         src={require("./assets/board_pages_reset.svg").default}
+        onClick={handleRefresh}
       />
       <div className="hboard-pages">
         <div className="hboard-pages-current">12345 / 12345 페이지</div>

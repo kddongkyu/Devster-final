@@ -11,25 +11,12 @@ const QboardForm = () => {
         <b className="qboard-form-header-name">{`Q&A`}</b>
         <div className="qboard-form-header-detail">질문 및 답변 게시판</div>
       </div>
-      <div className="qboard-form-content">
-        <div className="qboard-form-content-rec" />
-        <div className="qboard-form-content-text">
-          질문 내용을 입력해주세요.
-        </div>
+      <div className="qboard-form-subject">
+        <input type="text" className="qboard-form-subject-rec" placeholder="제목을 입력해주세요."/>
+       
       </div>
       <div className="qboard-form-content">
-        <div className="qboard-form-content-rec" />
-        <div className="qboard-form-content-text">
-          질문 내용을 입력해주세요.
-        </div>
-      </div>
-      <div className="qboard-form-subject">
-        <div className="qboard-form-subject-rec" />
-        <div className="div">제목을 입력해주세요.</div>
-      </div>
-      <div className="qboard-form-subject">
-        <div className="qboard-form-subject-rec" />
-        <div className="div">제목을 입력해주세요.</div>
+        <textarea className="qboard-form-content-rec" placeholder="질문 내용을 입력해주세요."></textarea>
       </div>
       <div className="qboard-form-fileupload">
         <div className="qboard-form-subject-rec" />

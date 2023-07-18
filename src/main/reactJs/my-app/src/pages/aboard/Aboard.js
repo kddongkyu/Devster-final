@@ -1,6 +1,11 @@
 import { NavLink } from "react-router-dom";
 import "./style/Aboard.css";
 const Aboard = () => {
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="aboard">
       <div className="advertise-box">
@@ -60,7 +65,7 @@ const Aboard = () => {
         />
       </div>
       <div className="aboard-function-search-input">
-        <div className="aboard-function-search-input1" />
+        <input type="text" className="aboard-function-search-input1" />
         <img
           className="aboard-function-search-icon"
           alt=""
@@ -72,6 +77,7 @@ const Aboard = () => {
         className="aboard-pages-reset-icon"
         alt=""
         src={require("./assets/board_pages_reset.svg").default}
+        onClick={handleRefresh}
       />
       <div className="aboard-pages">
         <div className="aboard-pages-current">12345 / 12345 페이지</div>
