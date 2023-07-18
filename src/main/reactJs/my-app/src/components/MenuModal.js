@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style/MenuModal.css";
 import { NavLink } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import axiosIns from "../api/JwtConfig";
 
 function MenuModal({ isMenuOpen, setIsMenuOpen }) {
   const closeMenuBar = () => {
     setIsMenuOpen(false);
   };
+
+  const [member, setMember] = useState({
+    m_nickname: "",
+    m_email: "",
+    m_role: "",
+  });
+
+  const decodedToken = jwt_decode(localStorage.accessToken);
+  const photoUrl = process.env.REACT_APP_MEMBERURL;
+  const imageUrl = `${photoUrl}${member.m_photo}`;
+
+  //console.log("url: " + imageUrl);
+
+  const getMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/member/${idx}`);
+      setMember(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // Effects
+  useEffect(() => {
+    getMemberData(decodedToken.idx);
+  }, []);
 
   if (!isMenuOpen) {
     return null;
@@ -41,22 +69,39 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
         </div>
 
         <div className="menu-mypage">
-          <NavLink to={"/userinfo"} onClick={closeMenuBar}>
-            <b className="menu-modal-options_mypage">
-              마이페이지{" "}
-              <span style={{ fontSize: "1.6rem" }}>
-                {sessionStorage.m_nickname}님 반갑습니다!
-              </span>
-            </b>
-          </NavLink>
+          <div className="menu-mypage-box">
+            <div className="menu-mypage-userinfo">
+              <div className="menu-mypage-userinfo-img">
+                <img alt="" src={imageUrl} />
+              </div>
+              <div className="menu-mypage-userinfo-contents">
+                <div className="menu-mypage-userinfo-nickname">
+                  {member.m_nickname}
+                </div>
+                <div className="menu-mypage-userinfo-email">
+                  {member.m_email}
+                </div>
+              </div>
+            </div>
+            <NavLink
+              // to={member.m_role === "GUEST" ? "/userinfo" : "/bookmarks"}
+              to={member.m_role === "GUEST" ? "/notice/admin" : "/userinfo"}
+              onClick={closeMenuBar}
+            >
+              <b className="menu-modal-options_mypage">
+                <div style={{ marginTop: "1rem" }}>마이페이지</div>
+              </b>
+            </NavLink>
+          </div>
         </div>
 
         <div className="menu-account">
           <div className="menu-account-box" />
-          <div className="menu-account-signin">
-            <div className="menu-account-signin-box" />
-            <b className="menu-account-signin-text">로그인</b>
-          </div>
+          <NavLink to={"/signin"}>
+            <div className="menu-account-signin">
+              <button className="menu-account-signin-box">로그인</button>
+            </div>
+          </NavLink>
           <div className="menu-account-signup">
             <div className="menu-account-signup-box" />
             <b className="menu-account-signup-text">회원가입</b>

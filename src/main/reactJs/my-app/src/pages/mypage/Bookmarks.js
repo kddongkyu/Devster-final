@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./style/Bookmarks.css";
-import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 
@@ -11,11 +10,10 @@ function Bookmarks(props) {
     const fetchBookmarks = async () => {
       const decodedToken = jwt_decode(localStorage.accessToken);
       const m_idx = decodedToken.idx;
-      // console.log(decodedToken.idx);
 
       try {
         const response = await axiosIns.get(`/bookmarks/${m_idx}`);
-        console.log(response.data);
+        //console.log(response.data);
         setBookmark(response.data);
       } catch (error) {
         console.error("Failed to fetch bookmarks: ", error);

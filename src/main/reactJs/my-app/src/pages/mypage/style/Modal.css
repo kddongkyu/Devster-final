@@ -188,6 +188,7 @@
     position: absolute;
     left:50%;
     transform:translate(-50%,2%);
+    z-index: 1000;
 }
 
 @keyframes modal-fadein {

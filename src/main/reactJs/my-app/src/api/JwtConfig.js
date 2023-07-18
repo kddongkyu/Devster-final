@@ -1,81 +1,81 @@
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import {jwtHandleError} from "./JwtHandleError";
+import { jwtHandleError } from "./JwtHandleError";
 
 function isTokenExpired(token) {
-    if (!token) {
-        return true;
-    }
-    const currentTime = Math.floor(Date.now() / 1000);
-    const expTime = jwt_decode(token).exp;
+  if (!token) {
+    return true;
+  }
+  const currentTime = Math.floor(Date.now() / 1000);
+  const expTime = jwt_decode(token).exp;
 
-    // return currentTime >= expTime;
-    return currentTime >= expTime - 300;
+  // return currentTime >= expTime;
+  return currentTime >= expTime - 300;
 }
 
 async function refreshAccessToken(refreshToken) {
-    try {
-        const res = await axios({
-            method: 'post',
-            url: '/member/check',
-            headers: {'Authorization-refresh': `Bearer ${refreshToken}`},
-        });
+  try {
+    const res = await axios({
+      method: "post",
+      url: "/member/check",
+      headers: { "Authorization-refresh": `Bearer ${refreshToken}` },
+    });
 
-        if (res.status === 200) {
-            const newAccessToken = res.headers.authorization;
-            const newRefreshToken = res.headers['authorization-refresh'];
-            const newExpiredTime = jwt_decode(newAccessToken);
+    if (res.status === 200) {
+      const newAccessToken = res.headers.authorization;
+      const newRefreshToken = res.headers["authorization-refresh"];
+      const newExpiredTime = jwt_decode(newAccessToken);
 
-            localStorage.setItem('accessToken', newAccessToken);
-            localStorage.setItem('refreshToken', newRefreshToken);
-            localStorage.setItem('expiredTime', newExpiredTime.exp);
+      localStorage.setItem("accessToken", newAccessToken);
+      localStorage.setItem("refreshToken", newRefreshToken);
+      localStorage.setItem("expiredTime", newExpiredTime.exp);
 
-            return newAccessToken;
-        }
-    } catch (error) {
-        jwtHandleError(error);
-        throw error;
+      return newAccessToken;
     }
+  } catch (error) {
+    jwtHandleError(error);
+    throw error;
+  }
 }
 
 const axiosIns = axios.create();
 
 axiosIns.interceptors.request.use(
-    async (config) => {
-        let accessToken = localStorage.getItem('accessToken');
-        const refreshToken = localStorage.getItem('refreshToken');
+  async (config) => {
+    let accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
 
-        if (isTokenExpired(accessToken) && refreshToken) {
-            try {
-                accessToken = await refreshAccessToken(refreshToken);
-                config.headers['Authorization'] = `Bearer ${accessToken}`;
-                alert('New Token => accessToken + refreshToken');
-            } catch (error) {
-                jwtHandleError(error);
-            }
-        } else if (accessToken) {
-            config.headers['Authorization'] = `Bearer ${accessToken}`;
-            alert('Token available');
-        }
-        return config;
-    },
-    (error) => {
+    if (isTokenExpired(accessToken) && refreshToken) {
+      try {
+        accessToken = await refreshAccessToken(refreshToken);
+        config.headers["Authorization"] = `Bearer ${accessToken}`;
+        //alert('New Token => accessToken + refreshToken');
+      } catch (error) {
         jwtHandleError(error);
+      }
+    } else if (accessToken) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+      //alert('Token available');
     }
+    return config;
+  },
+  (error) => {
+    jwtHandleError(error);
+  }
 );
 
 axiosIns.interceptors.response.use(
-    response => response,
-    error => {
-        jwtHandleError(error);
-    }
+  (response) => response,
+  (error) => {
+    jwtHandleError(error);
+  }
 );
 
 axios.interceptors.response.use(
-    res=>res,
-    error => {
-        jwtHandleError(error);
-    }
-)
+  (res) => res,
+  (error) => {
+    jwtHandleError(error);
+  }
+);
 
 export default axiosIns;

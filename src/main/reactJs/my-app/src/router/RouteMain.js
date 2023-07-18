@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
-import { Layout, MemberList, NotFound } from "../components";
+import { Layout, NotFound } from "../components";
 import {
   Bookmarks,
   MyResume,
@@ -23,6 +23,8 @@ import Withdrawal from "../pages/mypage/Withdrawal";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
+import NoticeAdmin from "../pages/mypage/NoticeAdmin";
+import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
 
 function RouteMain(props) {
   return (
@@ -30,7 +32,6 @@ function RouteMain(props) {
       <Route element={<Layout />}>
         <Route path="/" element={<Main />} />
         <Route path="/home" element={<Main />} />
-        <Route path="/memberlist" element={<MemberList />} />
 
         <Route path="/fboard" element={<Fboard />} />
         <Route path="/qboard" element={<Qboard />} />
@@ -48,6 +49,8 @@ function RouteMain(props) {
           <Route path="/myresume" element={<MyResume />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
           <Route path="/notice" element={<Notice />} />
+          <Route path="/notice/admin" element={<NoticeAdmin />} />
+          <Route path="/member/approval" element={<MemberSignupApproval />} />
         </Route>
 
         <Route>

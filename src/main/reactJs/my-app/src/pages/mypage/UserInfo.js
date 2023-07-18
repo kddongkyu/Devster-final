@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import "./style/UserInfo.css";
+import axiosIns from "../../api/JwtConfig";
 import noimage from "./assets/noimage.png";
 
 function UserInfo(props) {
@@ -13,23 +13,20 @@ function UserInfo(props) {
     ai_name: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
+  //console.log("previewImage: " + previewImage);
   const navigate = useNavigate();
-  const decodedToken = jwt_decode(localStorage.jwtToken);
-  const photoUrl =
-    "https://kr.object.ncloudstorage.com/bit701.bucket.102/devster/member/";
+  const decodedToken = jwt_decode(localStorage.accessToken);
+  const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${previewImage}`;
-  const m_idx = decodedToken.m_idx;
-
-  // 이미지 URL 결정
-  // const imageUrl = member.m_photo
-  //   ? `${photoUrl}${member.m_photo}`
-  //   : noimage;
+  const m_idx = decodedToken.idx;
+  //console.log("idx" + m_idx);
 
   // Functions
   const getMemberData = async (idx) => {
     try {
-      const response = await Axios.get(`/member/${idx}`);
+      const response = await axiosIns.get(`/member/${idx}`);
       setMember(response.data);
+      //console.log(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -40,10 +37,10 @@ function UserInfo(props) {
     const formData = new FormData();
     formData.append("upload", file);
     try {
-      await Axios.post(`/member/photo/${m_idx}`, formData, {
+      await axiosIns.post(`/member/photo/${m_idx}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      const userInfoResponse = await Axios.get(`/member/${m_idx}`);
+      const userInfoResponse = await axiosIns.get(`/member/${m_idx}`);
       setPreviewImage(userInfoResponse.data.m_photo);
     } catch (error) {
       console.error("Failed to upload image: ", error);
@@ -53,7 +50,7 @@ function UserInfo(props) {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await Axios.put("/member", member);
+      const response = await axiosIns.put("/member", member);
       if (response.status === 200) {
         alert("수정되었습니다");
         navigate(`/userinfo`);
@@ -67,13 +64,13 @@ function UserInfo(props) {
 
   // Effects
   useEffect(() => {
-    getMemberData(decodedToken.m_idx);
+    getMemberData(decodedToken.idx);
   }, []);
 
   useEffect(() => {
     const fetchProfileImage = async () => {
       try {
-        const userInfoResponse = await Axios.get(`/member/${m_idx}`);
+        const userInfoResponse = await axiosIns.get(`/member/${m_idx}`);
         setPreviewImage(userInfoResponse.data.m_photo);
       } catch (error) {
         console.error("Failed to fetch profile image: ", error);
@@ -124,10 +121,6 @@ function UserInfo(props) {
             }
           />
         </div>
-        {/* <div className="text-hp">전화번호</div>
-        <div className="userinfo-hp">
-          <input className="userinfo-name-box" />
-        </div> */}
         <div className="text-belong">소속</div>
         <div className="userinfo-belong">
           <input
@@ -170,16 +163,13 @@ function UserInfo(props) {
             변경
           </button>
           <div className="profile-picture">
-            {/* <img alt="" src={imageUrl} /> */}
-            {imageUrl && <img src={imageUrl} alt="Preview" />}
+            <img
+              src={previewImage ? imageUrl : require("./assets/noimage.png")}
+              alt="Preview"
+            />
           </div>
         </div>
 
-        <img
-          className="userinfo-line-01-icon"
-          alt=""
-          src="/userinfo-line-01.svg"
-        />
         <div className="button-userinfo-save">
           <button type="submit" className="button-userinfo-save-box">
             <b className="text-save" style={{ color: "#fff" }}>

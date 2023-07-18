@@ -1,45 +1,54 @@
 import React, { useEffect, useState } from "react";
 import "./style/MyResume.css";
 import { NavLink } from "react-router-dom";
-import Axios from "axios";
+import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
 
 function MyResume(props) {
   const [resume, setResume] = useState(null);
+  const [resumeLic, setResumeLic] = useState(null);
+  const [resumeCar, setResumeCar] = useState(null);
 
   const [member, setMember] = useState({
-    m_name: "정우영우영우기러기토마토별똥별우영우",
+    m_name: "",
     m_email: "",
     m_nickname: "",
     ai_name: "",
   });
-  const [previewImage, setPreviewImage] = useState(null);
-  const photoUrl =
-    "https://kr.object.ncloudstorage.com/bit701.bucket.102/devster/member/";
-  const imageUrl = `${photoUrl}${previewImage}`;
-  const decodedToken = jwt_decode(localStorage.jwtToken);
-  const m_idx = decodedToken.m_idx;
+
+  //console.log(member);
+
+  const [isLoadingMemberData, setIsLoadingMemberData] = useState(true); // 초기값은 true
+  // const [previewImage, setPreviewImage] = useState("noimage.png");
+  const photoUrl = process.env.REACT_APP_MEMBERURL;
+  const imageUrl = `${photoUrl}${member.m_photo}`;
+  const decodedToken = jwt_decode(localStorage.accessToken);
+  const m_idx = decodedToken.idx;
 
   // Functions
   const getMemberData = async (idx) => {
     try {
-      const response = await Axios.get(`/member/${idx}`);
+      setIsLoadingMemberData(true); // 데이터를 불러오기 시작하면 로딩 상태를 true로 설정
+      const response = await axiosIns.get(`/member/${idx}`);
       setMember(response.data);
+      //console.log("사진: " + response.data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoadingMemberData(false); // 데이터를 모두 불러왔으면 로딩 상태를 false로 설정
     }
   };
 
   useEffect(() => {
-    getMemberData(decodedToken.m_idx);
+    getMemberData(decodedToken.idx);
   }, []);
 
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        const response = await Axios.get(`/resume/${m_idx}`);
+        const response = await axiosIns.get(`/resume/${m_idx}`);
         setResume(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
         console.error("Failed to fetch resume: ", error);
       }
@@ -49,16 +58,50 @@ function MyResume(props) {
   }, []);
 
   useEffect(() => {
-    const fetchProfileImage = async () => {
+    const fetchResumeLic = async () => {
       try {
-        const userInfoResponse = await Axios.get(`/member/${m_idx}`);
-        setPreviewImage(userInfoResponse.data.m_photo);
+        const response = await axiosIns.get(`/resumelic/${m_idx}`);
+        setResumeLic(response.data);
+        //console.log(response.data);
       } catch (error) {
-        console.error("Failed to fetch profile image: ", error);
+        console.error("Failed to fetch resumelic: ", error);
       }
     };
-    fetchProfileImage();
-  }, [m_idx]);
+
+    fetchResumeLic();
+  }, []);
+
+  useEffect(() => {
+    const fetchResumeCar = async () => {
+      try {
+        const response = await axiosIns.get(`/resumecar/${m_idx}`);
+        setResumeCar(response.data);
+        //console.log(response.data);
+      } catch (error) {
+        console.error("Failed to fetch resumecar: ", error);
+      }
+    };
+
+    fetchResumeCar();
+  }, []);
+
+  // useEffect(() => {
+  //   const fetchProfileImage = async () => {
+  //     try {
+  //       const userInfoResponse = await axiosIns.get(`/member/${m_idx}`);
+  //       if (userInfoResponse.data.m_photo) {
+  //         // m_photo 값이 존재하는 경우에만 setPreviewImage를 호출
+  //         setPreviewImage(userInfoResponse.data.m_photo);
+  //       } else {
+  //         console.log("No profile image for user:", m_idx);
+  //         setPreviewImage("noimage.png"); // 기본 이미지 이름을 사용
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch profile image: ", error);
+  //     }
+  //   };
+  //   fetchProfileImage();
+  // }, [m_idx]);
 
   return (
     <div className="resume-none">
@@ -88,17 +131,82 @@ function MyResume(props) {
                 </div>
               </div>
               <div className="member_info_box_userphoto">
-                <img alt="" src={imageUrl} />
+                {!isLoadingMemberData && <img alt="" src={imageUrl} />}
               </div>
             </div>
 
             <div className="resume_info_box_01">
               <div className="resume_info_box_title">희망직무</div>
-              <span className="resume_info_box_content">웹개발자</span>
+              <span className="resume_info_box_content">{resume.r_pos}</span>
             </div>
-            <div className="resume_info_box_02">테스트</div>
-            <div className="resume_info_box_03">테스트</div>
-            <div className="resume_info_box_04">테스트</div>
+            <div className="resume_info_box_02">
+              <div className="resume_info_box_title">
+                기술스택<span>(업무 툴 / 스킬)</span>
+              </div>
+              {resume.r_skill.split(",").map((item, index) => (
+                <div
+                  key={index}
+                  className="resume_info_box_content"
+                  style={{ display: "inline-block", marginRight: "0.5rem" }}
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div className="resume_info_box_03">
+              <div className="resume_info_box_title">
+                링크 업로드<span>(웹페이지 및 블로그)</span>
+              </div>
+              <span className="resume_info_box_content">{resume.r_link}</span>
+            </div>
+            <div className="resume_info_box_04">
+              <div className="resume_info_box_title">학력</div>
+              <span className="resume_info_box_content">
+                {resume.r_gradecom}
+              </span>
+            </div>
+            <div className="resume_info_box_05">
+              <div className="resume_info_box_title">경력</div>
+
+              {resumeCar &&
+                resumeCar.map((item, idx) => (
+                  <span
+                    key={idx}
+                    className="resume_info_box_content"
+                    style={{
+                      marginRight: "0.5rem",
+                      display: idx >= 2 ? "inline-block" : "inline", // 조건 추가
+                    }}
+                  >
+                    {item.r_company}
+                  </span>
+                ))}
+            </div>
+            <div className="resume_info_box_06">
+              <div className="resume_info_box_title">자격증</div>
+
+              {resumeLic &&
+                resumeLic.map((item, idx) => (
+                  <span
+                    key={idx}
+                    className="resume_info_box_content"
+                    style={{
+                      marginRight: "0.5rem",
+                      display: idx >= 2 ? "inline-block" : "inline", // 조건 추가
+                    }}
+                  >
+                    {item.r_licname}
+                  </span>
+                ))}
+            </div>
+            <div className="resume_info_box_07">
+              <div className="resume_info_box_title">간단 자기소개</div>
+              <span className="resume_info_box_content">{resume.r_self}</span>
+            </div>
+            <div className="resume_info_box_08">
+              <div className="resume_info_box_title">첨부파일 업로드</div>
+              <span className="resume_info_box_content"></span>
+            </div>
           </div>
         ) : (
           <div>
@@ -109,6 +217,7 @@ function MyResume(props) {
                 alt=""
                 src={require("./assets/resume-add-button.svg").default}
               />
+              <div className="text-add-newresume">이력서 추가 플리즈</div>
             </NavLink>
           </div>
         )}

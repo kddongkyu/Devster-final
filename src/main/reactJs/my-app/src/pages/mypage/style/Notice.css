@@ -252,4 +252,11 @@
     color: #000;
     font-family: Roboto;
   }
-  
+  .notice-content-box-admin{
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 32.5rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 25.82rem;
+  }

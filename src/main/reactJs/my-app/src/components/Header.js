@@ -11,14 +11,6 @@ function Header(props) {
 
   return (
     <div className="header-box">
-      <NavLink to={"/signin"}>
-        <button
-          type="button"
-          className="test-login-button btn btn-lg btn-success"
-        >
-          로그인&nbsp;&nbsp;(테스트)
-        </button>
-      </NavLink>
       <img
         className="header-icon-list"
         alt=""
