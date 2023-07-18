@@ -44,7 +44,6 @@ jwt:
   access:
 
     expiration: 600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
-
     header: Authorization
 
   refresh:
@@ -52,8 +51,12 @@ jwt:
     header: Authorization-refresh
 
 naver:
-  client_id: qwQJi2mXut9egJr1uiFj
-  client_secret: v3n11rGdRW
+  login:
+    client_id: qwQJi2mXut9egJr1uiFj
+    client_secret: v3n11rGdRW
+  translate:
+    client_id: aaullc5zyk
+    client_secret: Ad6GvUB4CSZS0ilyxUo9tUGWN7ZXQSBb8dp5gyf0
 
 kakao:
   client_id: 168ba1a4e0e55db8af46e892ae6c7b82
