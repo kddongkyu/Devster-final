@@ -18,7 +18,7 @@ function FboardDetail(props) {
     const navi = useNavigate();
 
     const fetchFboard = useCallback((fb_idx, currentPage = null) => {
-        const url=`/fboard/${fb_idx}`;
+        const url=`/api/fboard/D0/${fb_idx}`;
         axiosIns.get(url)
             .then(response => {
                 console.log(response.data);
@@ -26,7 +26,7 @@ function FboardDetail(props) {
                 setIsLoading(false);
 
                 if (m_idx && fb_idx) {
-                    axiosIns.get(`/fboard/${m_idx}/checkGood/${fb_idx}`)
+                    axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
                         .then(response => {
                             setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
                         })
@@ -34,7 +34,7 @@ function FboardDetail(props) {
                             console.error('Error checking good status:', error);
                         });
 
-                    axiosIns.get(`/fboard/${m_idx}/checkBad/${fb_idx}`)
+                    axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
                         .then(response => {
                             setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
                         })
@@ -64,10 +64,11 @@ function FboardDetail(props) {
         return <div>Loading...</div>;
     }
 
+
     // 좋아요 싫어요
     const handlelike = (m_idx, fb_idx) => {
             // 먼저 좋아요 상태를 체크합니다.
-            axiosIns.get(`/fboard/${m_idx}/checkBad/${fb_idx}`)
+            axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
                 .then(response => {
                     if (response.data === 2) {
                         // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
@@ -75,12 +76,12 @@ function FboardDetail(props) {
                         window.location.reload();
                     } else {
                         // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                        axiosIns.get(`/fboard/${m_idx}/checkGood/${fb_idx}`)
+                        axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
                             .then(response => {
                                 if (response.data === 1) {
                                     // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
                                     alert("이미 좋아요가 눌려 있습니다");
-                                    axiosIns.post(`/fboard/${m_idx}/like/${fb_idx}`)
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
                                         .then(response => {
                                             window.location.reload();
                                         })
@@ -90,7 +91,7 @@ function FboardDetail(props) {
                                         });
                                 } else {
                                     // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                    axiosIns.post(`/fboard/${m_idx}/like/${fb_idx}`)
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
                                         .then(response => {
                                             alert("좋아요를 눌렀습니다");
                                             console.log('좋아요 요청 성공:', response.data);
@@ -115,7 +116,7 @@ function FboardDetail(props) {
 
         const handleDislike = (m_idx, fb_idx) => {
             // 먼저 좋아요 상태를 체크합니다.
-            axiosIns.get(`/fboard/${m_idx}/checkGood/${fb_idx}`)
+            axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
                 .then(response => {
                     if (response.data === 1) {
                         // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
@@ -123,12 +124,12 @@ function FboardDetail(props) {
                         window.location.reload();
                     } else {
                         // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                        axiosIns.get(`/fboard/${m_idx}/checkBad/${fb_idx}`)
+                        axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
                             .then(response => {
                                 if (response.data === 2) {
                                     // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
                                     alert("이미 싫어요가 눌려 있습니다");
-                                    axiosIns.post(`/fboard/${m_idx}/dislike/${fb_idx}`)
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
                                         .then(response => {
                                             window.location.reload();
                                         })
@@ -138,7 +139,7 @@ function FboardDetail(props) {
                                         });
                                 } else {
                                     // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                    axiosIns.post(`/fboard/${m_idx}/dislike/${fb_idx}`)
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
                                         .then(response => {
                                             alert("싫어요를 눌렀습니다");
                                             console.log('싫어요 요청 성공:', response.data);
@@ -160,6 +161,63 @@ function FboardDetail(props) {
                 });
         };
 
+
+    // const handlelike = (m_idx, fb_idx) => {
+    //     axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
+    //         .then(response => {
+    //             const isLiked = response.data === 1;
+    //
+    //             if (isLiked) {
+    //                 alert("이미 좋아요가 눌려 있습니다");
+    //                 return; // 작업을 중단합니다.
+    //             }
+    //
+    //             // 좋아요 상태를 체크한 뒤, 좋아요 API를 호출합니다.
+    //             axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
+    //                 .then(response => {
+    //                     alert("좋아요를 눌렀습니다");
+    //                     console.log('좋아요 요청 성공:', response.data);
+    //                     // 페이지를 새로고침하지 않고 업데이트합니다.
+    //                     setIsGood(true); // 좋아요 상태를 true로 업데이트합니다.
+    //                 })
+    //                 .catch(error => {
+    //                     alert("좋아요 요청 실패");
+    //                     console.error('좋아요 요청 실패:', error);
+    //                 });
+    //         })
+    //         .catch(error => {
+    //             console.error('좋아요 상태 체크 실패:', error);
+    //         });
+    // };
+    //
+    // const handleDislike = (m_idx, fb_idx) => {
+    //     axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
+    //         .then(response => {
+    //             const isDisliked = response.data === 2;
+    //
+    //             if (isDisliked) {
+    //                 alert("이미 싫어요가 눌려 있습니다");
+    //                 return; // 작업을 중단합니다.
+    //             }
+    //
+    //             // 싫어요 상태를 체크한 뒤, 싫어요 API를 호출합니다.
+    //             axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
+    //                 .then(response => {
+    //                     alert("싫어요를 눌렀습니다");
+    //                     console.log('싫어요 요청 성공:', response.data);
+    //                     // 페이지를 새로고침하지 않고 업데이트합니다.
+    //                     setIsBad(true); // 싫어요 상태를 true로 업데이트합니다.
+    //                 })
+    //                 .catch(error => {
+    //                     alert("싫어요 요청 실패");
+    //                     console.error('싫어요 요청 실패:', error);
+    //                 });
+    //         })
+    //         .catch(error => {
+    //             console.error('싫어요 상태 체크 실패:', error);
+    //         });
+    // };
+
     let result = fboardData.fboard.rb_like - fboardData.fboard.rb_dislike;
 
         if (fboardData.fboard.rb_like <= fboardData.fboard.rb_dislike) {
@@ -168,7 +226,7 @@ function FboardDetail(props) {
 
     const deleteFboard = (fb_idx) => {
             if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
-                axiosIns.delete(`/fboard/${fb_idx}`)
+                axiosIns.delete(`/api/fboard/D1/${fb_idx}`)
                     .then(response => {
                         console.log('FreeBoard deleted successfully');
                         window.location.href="/fboard";

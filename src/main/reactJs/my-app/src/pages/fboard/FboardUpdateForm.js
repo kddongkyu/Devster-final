@@ -33,7 +33,7 @@ function FboardUpdateForm({ fboardData }) {
         };
 
         axiosIns
-            .put(`/fboard/${fb_idx}`, dto)
+            .put(`/api/fboard/D1/${fb_idx}`, dto)
             .then((res) => {
                 // 성공적으로 업데이트된 경우, 상세 페이지로 이동
                 navi(`/fboard/detail/${fb_idx}/${currentPage}`);
@@ -50,7 +50,7 @@ function FboardUpdateForm({ fboardData }) {
         uploadPhoto.append("upload", e.target.files[0]);
         axiosIns({
             method: "post",
-            url: `/fboard/photo/${fb_idx}`,
+            url: `/api/fboard/D1/photo/${fb_idx}`,
             data: uploadPhoto,
             headers: { "Content-Type": "multipart/form-data" },
         })

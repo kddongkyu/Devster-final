@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/fboard")
+@RequestMapping("/api/fboard")
 public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
@@ -49,10 +49,6 @@ public class FreeBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping("/{fb_idx}")
-//    public ResponseEntity<FreeBoardDto> getOneFboard(@PathVariable int fb_idx) {
-//        return new ResponseEntity<FreeBoardDto>(freeBoardService.getOneFboard(fb_idx), HttpStatus.OK);
-//    }
     @GetMapping("/D0/{fb_idx}")
     public ResponseEntity<Map<String, Object>> getOneFboard(@PathVariable int fb_idx) {
         return new ResponseEntity<>(freeBoardService.getOneFboard(fb_idx), HttpStatus.OK);
