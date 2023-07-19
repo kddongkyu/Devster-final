@@ -19,7 +19,7 @@ function InputEmail(props) {
         try {
             const res = await axios({
                 method: 'post',
-                url: '/member/sign-up/email',
+                url: '/api/member/D0/email',
                 data: JSON.stringify({m_email: m_email}),
                 headers: {'Content-Type': 'application/json'}
             })

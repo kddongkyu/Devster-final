@@ -26,7 +26,7 @@ function InputUpload(props) {
 
         axios({
             method: 'post',
-            url: '/member/sign-up/photo',
+            url: '/api/member/D0/photo',
             data: formData,
             headers: {'Content-type': 'multipart/form-data'}
         })
@@ -45,7 +45,7 @@ function InputUpload(props) {
         } else {
             axios({
                 method: 'put',
-                url: '/member/sign-up/photo/reset',
+                url: '/api/member/D0/photo/reset',
                 data: {'photo': savedImg},
                 headers: {'Content-type': 'application/json'}
             })

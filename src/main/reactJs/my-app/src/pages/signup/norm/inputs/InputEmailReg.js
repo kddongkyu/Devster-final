@@ -22,7 +22,7 @@ function InputEmailReg(props) {
         try {
             const res = await axios({
                 method: 'post',
-                url: '/member/sign-up/email/validation',
+                url: '/api/member/D0/email/validation',
                 data: JSON.stringify({m_email: m_email}),
                 headers: {'Content-Type': 'application/json'}
             });

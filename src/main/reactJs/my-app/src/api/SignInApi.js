@@ -5,7 +5,7 @@ export const userSignIn = async (userSignInInfo) => {
     try {
         const res = await axios({
             method: 'post',
-            url: '/member/login',
+            url: 'api/member/login',
             data: JSON.stringify(userSignInInfo),
             headers: {'Content-Type': 'application/json'}
         });

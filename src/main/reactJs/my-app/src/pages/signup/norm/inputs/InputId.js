@@ -14,7 +14,7 @@ function InputId(props) {
 
     const checkId = useCallback(async () => {
         try {
-            const res = await axios.get(`/member/sign-up/id/${m_id}`)
+            const res = await axios.get(`/api/member/D0/id/${m_id}`)
             if (res?.status === 200) {
                 if (res.data === false) {
                     dispatch(setIdIsValid(true));
