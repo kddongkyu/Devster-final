@@ -45,11 +45,11 @@ public class AcademyCommentEntity {
     @Column(name="abc_like")
     private int ABclike;
 
-    @Column(name="abc_depth")
-    private int ABcdepth;
-
     @Column(name="abc_writeday",insertable = false)
     private Timestamp ABcwriteday;
+
+    @Column(name="abc_ref")
+    private int ABcref;
 
     public static AcademyCommentEntity toAcademyCommentEntity(AcademyCommentDto dto){
         return AcademyCommentEntity.builder()
@@ -58,8 +58,8 @@ public class AcademyCommentEntity {
             .MIdx(dto.getM_idx())
             .ABccontent(dto.getAbc_content())
             .ABclike(dto.getAbc_like())
-            .ABcdepth(dto.getAbc_depth())
             .ABcwriteday(dto.getAbc_writeday())
+            .ABcref(dto.getAbc_ref())
             .build();
     }
 }

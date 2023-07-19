@@ -19,10 +19,18 @@ import data.service.AcademyBoardService;
 import naver.cloud.NcpObjectStorageService;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+//academyboard CRUD 테스트 및 댓글, 좋아요, 사진 수정 필요 (230717, 12:28)
+//우선적으로 댓글과 사진 수정 필요 
+// (230719, 10:25) insert 에서 사진 어떻게할거야..   
+// (230719, 11:16) login 필요한것과 필요없는것들 api 맵핑 맞춰주기.. 일단 다 짜고.! 
+
 
 @RestController
 @CrossOrigin
@@ -46,9 +54,9 @@ public class AcademyBoardController {
         return new ResponseEntity<List<AcademyBoardDto>>(academyBoardService.getAllData(), HttpStatus.OK);
     }
     
-    @GetMapping("/{idx}")
-    public ResponseEntity<AcademyBoardDto> getDetailPage(@PathVariable Integer idx){
-        return new ResponseEntity<AcademyBoardDto>(academyBoardService.findByAbIdx(idx),HttpStatus.OK);
+    @GetMapping("/{ab_idx}")
+    public Map<String,Object> getDetailPage(@PathVariable int ab_idx, int m_idx){
+        return academyBoardService.getDetailPage(ab_idx,m_idx);
     }
 
     @DeleteMapping("/{idx}")
@@ -57,10 +65,11 @@ public class AcademyBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/form/{idx}")
-    public ResponseEntity<AcademyBoardDto> updateAcademyBoardForm(@PathVariable Integer idx){
-        return new ResponseEntity<AcademyBoardDto>(academyBoardService.findByAbIdx(idx),HttpStatus.OK);
-    }
+    // @GetMapping("/form/{idx}")
+    // public ResponseEntity<AcademyBoardDto> updateAcademyBoardForm(@PathVariable Integer idx){
+    //     return new ResponseEntity<AcademyBoardDto>(academyBoardService.findByAbIdx(idx),HttpStatus.OK);
+    // }
+
 
     @PutMapping
     public ResponseEntity<Void> update(@RequestBody AcademyBoardDto dto, MultipartFile upload, int currentPage){
@@ -69,7 +78,7 @@ public class AcademyBoardController {
     }
 
 
-    @PostMapping("/like")
+    @PostMapping("/like")   
     public ResponseEntity<Void> likeAcademyBoard(int ab_idx, int m_idx){
         academyBoardService.like(ab_idx,m_idx);
         return new ResponseEntity<>(HttpStatus.OK);

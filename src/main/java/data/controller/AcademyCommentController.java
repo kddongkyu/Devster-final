@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,13 +27,15 @@ import org.slf4j.LoggerFactory;
 
 
 /* 
-    댓글은 그냥 보이는거고.
-    대댓글은 버튼 누르면 뜨는거고.
-    ref 는 그냥 abc_idx로 불러오면 되고 
-    depth는 0 이 댓글, 1이 대댓글 
-    step은 필요 없음 
+    230718, 화요일 
+    1.Comment 테스트 돌리고   -> ok 
+    2.Comment에 좋아요 추가  -> ok 
+    3.Academyboard도 테스트 돌리고  
+    4.동규씨 코드 보고 리팩토링  (json 값 하나로 wrapping)  
+    5.(aboard, hboard) 프론트  
 */  
     
+
 @RestController
 @CrossOrigin
 @RequestMapping("/academycomment")
@@ -42,11 +45,10 @@ public class AcademyCommentController {
     @Autowired
     AcademyCommentService academyCommentService;
   
-    // @GetMapping
-    // public List<Map<String,Object>> list(@RequestParam int ab_idx){
-    //     // Entity 정보 fetch
-    //     return academyCommentService.getAllCommentList(ab_idx);
-    // }
+    @GetMapping
+    public List<Map<String,Object>> list(@RequestParam int ab_idx){
+        return academyCommentService.getAllCommentList(ab_idx);
+    }
 
     @PostMapping
     public ResponseEntity<AcademyCommentDto> insert(@RequestBody AcademyCommentDto dto){
@@ -54,39 +56,50 @@ public class AcademyCommentController {
     }
 
 
-    @DeleteMapping("/{idx}")
-    public ResponseEntity<Void> delete(@PathVariable Integer idx){
-        academyCommentService.deleteAcademyComment(idx);
+    @DeleteMapping("/{abc_idx}")
+    public ResponseEntity<Void> delete(@PathVariable Integer abc_idx){
+        academyCommentService.deleteAcademyComment(abc_idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/updateform")
-    public ResponseEntity<AcademyCommentDto> updateform(int abc_idx){
-        return new ResponseEntity<AcademyCommentDto>(academyCommentService.getAcademyComment(abc_idx),HttpStatus.OK);
-    }
+    // @GetMapping("/updateform")
+    // public ResponseEntity<AcademyCommentDto> updateform(int abc_idx){
+    //     return new ResponseEntity<AcademyCommentDto>(academyCommentService.getAcademyComment(abc_idx),HttpStatus.OK);
+    // }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Void> update(@RequestBody AcademyCommentDto dto){
         academyCommentService.updateAcademyComment(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/recommentlist")
-    public List<Map<String,Object>> replylist(@RequestParam int abc_idx){
-        return academyCommentService.getReplyOfAbcIdx(abc_idx);
-    }
 
     @PostMapping("/insertreply")
     public ResponseEntity<AcademyCommentDto> insertreply(@RequestBody AcademyCommentDto dto){
         return new ResponseEntity<AcademyCommentDto>(academyCommentService.insertAcademyReply(escapeDto(dto)),HttpStatus.OK);
     }
 
+
+    @GetMapping("/recommentlist")
+    public List<Map<String,Object>> replylist(@RequestParam int abc_idx){
+        return academyCommentService.getReplyOfAbcIdx(abc_idx);
+    }
+
     public AcademyCommentDto escapeDto(AcademyCommentDto dto){
         dto.setAbc_content(StringEscapeUtils.escapeHtml4(dto.getAbc_content()));
-
         return dto;
     }
 
+    @PostMapping("/like")   
+    public ResponseEntity<Void> likeAcademyComment(int abc_idx, int m_idx){
+        academyCommentService.like(abc_idx,m_idx);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    // @PostMapping("/dislike")   
+    // public ResponseEntity<Void> dislikeAcademyComment(int abc_idx, int m_idx){
+    //     academyCommentService.dislike(abc_idx,m_idx);
+    //     return new ResponseEntity<>(HttpStatus.OK);
+    // }
 
 }

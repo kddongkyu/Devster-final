@@ -12,5 +12,8 @@ public interface HireBoardMapper {
 
     public int getTotalCount();
     public List<HireBoardDto> getPagingList(Map<String, Integer> map);
-    
+    public String getCompName(int hb_idx);
+    public String getCmFileName(int hb_idx);
+    public void updateReadCount(int hb_idx);
+    public Integer getBkmkInfoBym_idx(Map<String,Integer> map);
 }

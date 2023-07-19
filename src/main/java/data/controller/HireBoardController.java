@@ -83,10 +83,17 @@ public class HireBoardController {
         return hireBoardService.list(currentPage);
     }    
 
-    @GetMapping("/{idx}")
-    public ResponseEntity<HireBoardDto> getDetailPage(@PathVariable Integer idx){
-        return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
+    // @GetMapping("/{idx}")
+    // public ResponseEntity<HireBoardDto> getDetailPage(@PathVariable Integer idx){
+    //     return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
+    // }
+
+    @GetMapping("/{hb_idx}")
+    public Map<String,Object> getDetailPage(@PathVariable int hb_idx, int m_idx){
+        return hireBoardService.getDetailPage(hb_idx,m_idx);
     }
+
+
 
     @DeleteMapping("/{idx}")
     public ResponseEntity<Void> deleteHireBoard(@PathVariable Integer idx){

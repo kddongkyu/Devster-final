@@ -22,6 +22,11 @@
     <update id="updateReadCount" parameterType="int">
         update hireboard set hb_readcount=hb_readcount+1 where hb_idx=#{hb_idx}
     </update>
+    <select id="getBkmkInfoBym_idx" resultType="integer">
+        SELECT bookmarkStatus
+        FROM hirebookmark
+        WHERE m_idx = #{m_idx} AND hb_idx = #{hb_idx};
+    </select>
 
 
 

@@ -22,6 +22,8 @@ import AboardForm from "../pages/aboard/AboardForm";
 import Withdrawal from "../pages/mypage/Withdrawal";
 import LoginForm from "../components/LoginForm";
 
+import HboardDetail from "../pages/hboard/HboardDetail";
+
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
@@ -50,6 +52,11 @@ function RouteMain(props) {
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/hboard/updateform" element={<HboardUpdateForm />} />
+        <Route path="/hboard/:currentPage" element={<Hboard />} />
+        <Route
+          path="/hboard/detail/:num/:currentPage"
+          element={<HboardDetail />}
+        />
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />

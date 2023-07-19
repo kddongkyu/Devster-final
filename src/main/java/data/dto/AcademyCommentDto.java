@@ -17,8 +17,8 @@ public class AcademyCommentDto {
     private int m_idx;
     private String abc_content;
     private int abc_like;
-    private int abc_depth;
     private Timestamp abc_writeday;
+    private int abc_ref;
 
     public static AcademyCommentDto toAcademyCommentDto(AcademyCommentEntity entity){
 
@@ -28,8 +28,8 @@ public class AcademyCommentDto {
         .m_idx(entity.getMIdx())
         .abc_content(entity.getABccontent())
         .abc_like(entity.getABclike())
-        .abc_depth(entity.getABcdepth())
         .abc_writeday(entity.getABcwriteday())
+        .abc_ref(entity.getABcref())
         .build();
     }
 }
