@@ -1,5 +1,5 @@
 import "./style/Fboard.css";
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import Axios from "axios";
 import axiosIns from "../../api/JwtConfig";
@@ -48,7 +48,7 @@ function Fboard(props) {
     }, [currentPage]);
 
     const fetchFboards = (page) => {
-        axiosIns.get('/fboard', {params: {page: page-1}})
+        axiosIns.get('/api/fboard/D0', {params: {page: page-1}})
             .then(response => {
                 setFreeBoardList(response.data.freeBoardList);
                 setTotalPages(response.data.totalPages);
@@ -60,7 +60,7 @@ function Fboard(props) {
 
     useEffect(() => {
         // JPA로부터 데이터 가져오는 API 호출
-        axiosIns.get('/fboard')
+        axiosIns.get('/api/fboard/D0')
             .then(response => {
                 setFreeBoardList(response.data.freeBoardList);
             })
@@ -168,18 +168,21 @@ function Fboard(props) {
                 />
                 <div className="fboard-write-text">글쓰기</div>
             </NavLink>
+
             <div className="fboard-function-sort">
-                <div className="fboard-function-sort-box"/>
-                <div className="fboard-function-sort-reset">전체</div>
+                <div className="fboard-function-sort-box" />
+                <div className="fboard-function-sort-time">최신순</div>
+                <div className="fboard-function-sort-view">조회순</div>
+                <div className="fboard-function-sort-like">인기순</div>
+                <img
+                    className="fboard-function-sort-bar2-icon"
+                    alt=""
+                    src={require("./assets/fboard_function_sort_bar.svg").default}
+                />
                 <img
                     className="fboard-function-sort-bar-icon"
                     alt=""
-                    src={require("./assets/board_function_sort_bar.svg").default}
-                />
-                <img
-                    className="fboard-function-sort-by-icon"
-                    alt=""
-                    src={require("./assets/board_function_sort_by.svg").default}
+                    src={require("./assets/fboard_function_sort_bar2.svg").default}
                 />
             </div>
 
@@ -268,23 +271,32 @@ function Fboard(props) {
 
             <div className="fboard_list">
                 {freeBoardList && freeBoardList.map((fboard) => (
-                    <div key={fboard.fb_idx} className="fboard-preview">
+                    <div key={fboard.fboard.fb_idx} className="fboard-preview">
                         <div className="fboard-preview-box"/>
-                        <div className="fboard-preview-img-profile"/>
+                        <div className="fboard-preview-img-profile">
+                            <img alt=""
+                            src={fboard.mPhoto}/>
+                        </div>
                         <div className="fboard-preview-type">
                             <b className="fboard-preview-type-text">자유게시판</b>
-                            <div className="fboard-preview-type-date">{timeForToday(fboard.fb_writeday)}</div>
+                            <div className="fboard-preview-type-date">{timeForToday(fboard.fboard.fb_writeday)}</div>
                         </div>
                         <div className="fboard-preview-id">
-                            <div className="fboard-preview-type-text">{fboard.m_idx}</div>
+                            <div className="fboard-preview-type-text">{fboard.mNicname}</div>
                         </div>
-                        <b className="fboard-preview-subject">{fboard.fb_subject}</b>
+                        <NavLink to={`/fboard/detail/${fboard.fboard.fb_idx}/${currentPage}`}>
+                        <b className="fboard-preview-subject">{fboard.fboard.fb_subject}</b>
                         <div className="fboard-preview-contents">
-                            {(fboard.fb_content).slice(0, contentCount)}
+                            {(fboard.fboard.fb_content).slice(0, contentCount)}
                         </div>
-                        <div className="fboard-preview-img-preview"/>
+                            <div className="fboard-preview-img-preview">
+                                <img alt=""
+                                src={fboard.fboard.fb_photo}/>
+                            </div>
+                        </NavLink>
+
                         <div className="fboard-preview-likes">
-                            <div className="fboard-preview-likes-text">99.9k</div>
+                            <div className="fboard-preview-likes-text">{fboard.fboard.fb_like - fboard.fboard.fb_dislike}</div>
                             <img
                                 className="fboard-preview-likes-icon"
                                 alt=""
@@ -292,7 +304,7 @@ function Fboard(props) {
                             />
                         </div>
                         <div className="fboard-preview-comments">
-                            <div className="fboard-preview-likes-text">99.9k</div>
+                            <div className="fboard-preview-likes-text">99</div>
                             <img
                                 className="fboard-preview-comments-icon"
                                 alt=""
@@ -300,7 +312,7 @@ function Fboard(props) {
                             />
                         </div>
                         <div className="fboard-preview-views">
-                            <div className="fboard-preview-views-text">99.9k</div>
+                            <div className="fboard-preview-views-text">{fboard.fboard.fb_readcount}</div>
                             <img
                                 className="fboard-preview-views-icon"
                                 alt=""

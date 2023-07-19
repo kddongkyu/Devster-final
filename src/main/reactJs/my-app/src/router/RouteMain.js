@@ -53,6 +53,9 @@ import Withdrawal from "../pages/mypage/Withdrawal";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
+
+import {FboardUpdateForm} from "../pages/fboard";
+
 import NoticeAdmin from "../pages/mypage/NoticeAdmin";
 import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
 import Noticelist from "../pages/notice/Noticelist";
@@ -118,8 +121,10 @@ function RouteMain(props) {
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route path="/notice/form" element={<Noticeform />} />
 
-        <Route path="/fboard/detail" element={<FboardDetail />} />
-        <Route path="/notice/detail" element={<Noticedetail />} />
+
+        <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
+        <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
+
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
