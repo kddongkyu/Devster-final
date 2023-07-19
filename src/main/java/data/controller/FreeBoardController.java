@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/fboard")
+@RequestMapping("api/fboard")
 public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
@@ -25,7 +25,7 @@ public class FreeBoardController {
         this.freeBoardService = freeBoardService;
     }
 
-    @GetMapping
+    @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedFboard(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -33,17 +33,17 @@ public class FreeBoardController {
     }
 
 
-    @PostMapping
+    @PostMapping("/D1")
     public ResponseEntity<FreeBoardDto> insertFreeBoard(@RequestBody FreeBoardDto dto, HttpSession session){
         return new ResponseEntity<FreeBoardDto>(freeBoardService.insertFreeBoard(dto,session), HttpStatus.OK);
     }
 
-    @PostMapping("/photo/upload")
+    @PostMapping("/D1/photo/upload")
     public ResponseEntity<List<String>> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
         return new ResponseEntity<List<String>>(freeBoardService.uploadPhoto(upload, session),HttpStatus.OK);
     }
 
-    @PutMapping("/photo/reset")
+    @PutMapping("/D1/photo/reset")
     public ResponseEntity<Void> resetPhoto(String photo){
         freeBoardService.resetPhoto(photo);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -53,38 +53,38 @@ public class FreeBoardController {
 //    public ResponseEntity<FreeBoardDto> getOneFboard(@PathVariable int fb_idx) {
 //        return new ResponseEntity<FreeBoardDto>(freeBoardService.getOneFboard(fb_idx), HttpStatus.OK);
 //    }
-    @GetMapping("/{fb_idx}")
+    @GetMapping("/D0/{fb_idx}")
     public ResponseEntity<Map<String, Object>> getOneFboard(@PathVariable int fb_idx) {
         return new ResponseEntity<>(freeBoardService.getOneFboard(fb_idx), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{fb_idx}")
+    @DeleteMapping("/D1/{fb_idx}")
     public ResponseEntity<Void> deleteById(@PathVariable int fb_idx){
         freeBoardService.deleteById(fb_idx);
         return  new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/{fb_idx}")
+    @PutMapping("/D1/{fb_idx}")
     public ResponseEntity<FreeBoardDto> updateFreeBoard(@PathVariable int fb_idx, @RequestBody FreeBoardDto dto) {
         freeBoardService.updateFreeBoard(fb_idx, dto);
         return new ResponseEntity<FreeBoardDto>(HttpStatus.OK);
     }
 
-    @PostMapping("/photo/{fb_idx}")
+    @PostMapping("/D1/photo/{fb_idx}")
     public ResponseEntity<Void> updatePhoto(@PathVariable Integer fb_idx, @RequestBody MultipartFile upload) {
         freeBoardService.updatePhoto(fb_idx,upload);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 좋아요 싫어요 관련 controller
-    @PostMapping("/{m_idx}/like/{fb_idx}")
+    @PostMapping("/D1/{m_idx}/like/{fb_idx}")
     public ResponseEntity<FreeBoardDto> likeFboard(@PathVariable int fb_idx, @PathVariable int m_idx) {
         freeBoardService.like(m_idx, fb_idx);
         FreeBoardDto dto = new FreeBoardDto();
         return ResponseEntity.ok(dto);
     }
 
-    @PostMapping("/{m_idx}/dislike/{fb_idx}")
+    @PostMapping("/D1/{m_idx}/dislike/{fb_idx}")
     public ResponseEntity<FreeBoardDto> dislikeFboard(@PathVariable int fb_idx, @PathVariable int m_idx) {
         freeBoardService.dislike(m_idx, fb_idx);
         FreeBoardDto dto = new FreeBoardDto();
@@ -92,13 +92,13 @@ public class FreeBoardController {
 
     }
 
-    @GetMapping("/{m_idx}/checkGood/{fb_idx}")
+    @GetMapping("/D1/{m_idx}/checkGood/{fb_idx}")
     public ResponseEntity<Boolean> checkGood(@PathVariable int m_idx, @PathVariable int fb_idx) {
         boolean isGood = freeBoardService.isAlreadyAddGoodRp(m_idx, fb_idx);
         return ResponseEntity.ok(isGood);
     }
 
-    @GetMapping("/{m_idx}/checkBad/{fb_idx}")
+    @GetMapping("/D1/{m_idx}/checkBad/{fb_idx}")
     public ResponseEntity<Boolean> checkBad(@PathVariable int m_idx, @PathVariable int fb_idx) {
         boolean isBad = freeBoardService.isAlreadyAddBadRp(m_idx, fb_idx);
         return ResponseEntity.ok(isBad);

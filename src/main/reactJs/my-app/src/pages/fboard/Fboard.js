@@ -48,7 +48,7 @@ function Fboard(props) {
     }, [currentPage]);
 
     const fetchFboards = (page) => {
-        axiosIns.get('/fboard', {params: {page: page-1}})
+        axiosIns.get('api/fboard/D0', {params: {page: page-1}})
             .then(response => {
                 setFreeBoardList(response.data.freeBoardList);
                 setTotalPages(response.data.totalPages);
@@ -60,7 +60,7 @@ function Fboard(props) {
 
     useEffect(() => {
         // JPA로부터 데이터 가져오는 API 호출
-        axiosIns.get('/fboard')
+        axiosIns.get('api/fboard/D0')
             .then(response => {
                 setFreeBoardList(response.data.freeBoardList);
             })
@@ -159,7 +159,7 @@ function Fboard(props) {
             </div>
 
 
-            <NavLink to="/fboard/form" activeClassName="active" className="fboard-write">
+            <NavLink to="api/fboard/D1/form" activeClassName="active" className="fboard-write">
                 <div className="fboard-write-box"/>
                 <img
                     className="fboard-write-icon"
@@ -284,7 +284,7 @@ function Fboard(props) {
                         <div className="fboard-preview-id">
                             <div className="fboard-preview-type-text">{fboard.mNicname}</div>
                         </div>
-                        <Link to={`/fboard/detail/${fboard.fboard.fb_idx}/${currentPage}`}>
+                        <Link to={`/api/fboard/D0/detail/${fboard.fboard.fb_idx}/${currentPage}`}>
                         <b className="fboard-preview-subject">{fboard.fboard.fb_subject}</b>
                         <div className="fboard-preview-contents">
                             {(fboard.fboard.fb_content).slice(0, contentCount)}
