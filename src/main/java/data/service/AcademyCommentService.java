@@ -5,19 +5,29 @@ import org.springframework.stereotype.Service;
 
 import data.dto.AcademyCommentDto;
 import data.entity.AcademyCommentEntity;
+import data.entity.AcademyCommentLikeEntity;
 import data.entity.MemberEntity;
+import data.mapper.AcademyCommentMapper;
+import data.repository.AcademyCommentLikeRepository;
 import data.repository.AcademyCommentRepository;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+
+
 
 @Service
 public class AcademyCommentService {
@@ -26,58 +36,51 @@ public class AcademyCommentService {
     @Autowired 
     private AcademyCommentRepository academyCommentRepository;
 
+
+
+    @Autowired
+    private AcademyCommentMapper academyCommentMapper;
+
     // @Autowired
     // private AcademyCommentEntity academyCommentEntity;
     
-    // public List<Map<String,Object>> getAllCommentList(int ab_idx){
-    //     List<AcademyCommentDto> list = new ArrayList<>(); 
-    //     List<Map<String,Object>> fullList = new ArrayList<>(); 
-    //     List<AcademyCommentEntity> entity = new ArrayList<>();
-    //     int totalCount = academyCommentRepository.countBy();
-    //     int replyCnt=0;
-    //     try{
-        
-    //         for(AcademyCommentEntity sc : entity){
-    //             Map<String, Object> map = new HashMap<>();
-    //             SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
-    //             String formattedDate = sdf.format(sc.getABcwriteday());
-                
-    //             // map.put("m_photo",selectPhotoOfAbc_idx(dto.getAbc_idx()))
-    //                 //member 통합 후 추가할 항목 
-    //             // map.put("nickname",selectNickNameOfAbc_idx(dto.getAbc_idx()))
-    //                 //member 통합 후 추가할 항목 
-                
-    //             MemberEntity memberEntity = academyCommentEntity.getMemberEntity();
-    //             String mphoto = memberEntity.getMphoto();
-    //             map.put("m_photo", sc.getMemberEntity().getMphoto());
 
-    //             for(AcademyCommentDto adto : list){
-    //                 if(adto.getAbc_depth()==1)
-    //                     replyCnt+=1;
-    //             }
-    //             map.put("replyCnt",replyCnt);
-    //             map.put("abc_content",sc.getABccontent());
-    //             map.put("abc_idx",sc.getABcidx());
-    //             map.put("m_idx",sc.getMIdx());
-    //             map.put("abc_depth",sc.getABcdepth());
-    //             map.put("abc_like",sc.getABclike());
-    //             map.put("abc_writeday",formattedDate);
-    //             map.put("totalCount",totalCount);
+    @Autowired
+    private AcademyCommentLikeRepository academyCommentLikeRepository;
 
-    //             fullList.add(map);
-                
-    //         }
-    //         return fullList;
-    //     } catch(Exception e){
-    //         logger.error("Error occurred while getting all academyComment data", e);
-    //         throw e;
-    //     }
-    // }   
+
+
+   public List<Map<String,Object>> getAllCommentList(int ab_idx){
+        List<AcademyCommentDto> list = academyCommentMapper.getAllCommentList(ab_idx);
+        List<Map<String,Object>> fullList = new ArrayList<>();
+        int totalCount = academyCommentMapper.getTotalComment(ab_idx);
+
+        for(AcademyCommentDto dto : list){
+            Map<String,Object>map = new HashMap<>();
+            SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
+            String formattedDate = sdf.format(dto.getAbc_writeday());
+
+            map.put("m_photo",academyCommentMapper.selectPhotoOfAbc_idx(dto.getAbc_idx()));
+            map.put("nickname",academyCommentMapper.selectNickNameOfAbc_idx(dto.getAbc_idx()));
+            map.put("replyCnt", academyCommentMapper.countReply(dto.getAbc_idx()));
+
+            map.put("abc_content",dto.getAbc_content());
+            map.put("abc_idx",dto.getAbc_idx());
+            map.put("m_idx",dto.getM_idx());
+            map.put("abc_ref",dto.getAbc_ref());
+            map.put("abc_writeday",formattedDate);
+            map.put("totalCount",totalCount);
+
+            fullList.add(map);
+        }
+        System.out.println(fullList);
+        return fullList;
+   }     
+
 
 
     public AcademyCommentDto insertAcademyComment(AcademyCommentDto dto){  
         try {
-            dto.setAbc_depth(0);
             AcademyCommentEntity entity = AcademyCommentEntity.toAcademyCommentEntity(dto);
             academyCommentRepository.save(entity);
             return dto;
@@ -97,21 +100,20 @@ public class AcademyCommentService {
     }
 
 
-    public AcademyCommentDto getAcademyComment(int abc_idx){
-        try {
-            AcademyCommentEntity entity = academyCommentRepository.findById(abc_idx)
-                .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + abc_idx));
-            return AcademyCommentDto.toAcademyCommentDto(entity);    
-        } catch (EntityNotFoundException e) {
-            logger.error("Error occurred while getting a entity", e);
-            throw e;
-        }
-    } 
+    // public AcademyCommentDto getAcademyComment(int abc_idx){
+    //         return academyCommentMapper.getAcademyComment(abc_idx);    
+    // } 
 
 
     public void updateAcademyComment(AcademyCommentDto dto){
         try {
             AcademyCommentEntity entity = AcademyCommentEntity.toAcademyCommentEntity(dto);
+            
+            //수정 시간 업데이트 
+            Date date = new Date();
+            Timestamp timestamp = new Timestamp(date.getTime());
+            entity.setABcwriteday(timestamp);
+
             academyCommentRepository.save(entity);
         } catch (Exception e) {
             logger.error("Error occurred while updating academyBoardComment",e);
@@ -120,10 +122,23 @@ public class AcademyCommentService {
     }
 
 
+    public AcademyCommentDto insertAcademyReply(AcademyCommentDto dto){  
+        try {
+            AcademyCommentEntity entity = AcademyCommentEntity.toAcademyCommentEntity(dto);
+            academyCommentRepository.save(entity);
+            return dto;
+        } catch (Exception e) {
+            logger.error("Error occurred while inserting academyBoardComment",e);
+            throw e;
+        }
+    }
+
+
     public List<Map<String,Object>> getReplyOfAbcIdx(int abc_idx){
-        List<AcademyCommentDto> list = new ArrayList<>(); 
+        List<AcademyCommentDto> list = academyCommentMapper.getAllReplyComment(abc_idx);
+
         List<Map<String,Object>> fullList = new ArrayList<>(); 
-        List<AcademyCommentEntity> entity = new ArrayList<>();
+
         try{
             for(AcademyCommentDto dto : list){
                 Map<String, Object> map = new HashMap<>();
@@ -131,16 +146,12 @@ public class AcademyCommentService {
                 SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
                 String formattedDate = sdf.format(dto.getAbc_writeday());
 
-                if(dto.getAbc_depth()==1){
-                // map.put("m_photo",selectPhotoOfAbc_idx(dto.getAbc_idx()))
-                    //member 통합 후 추가할 항목 
-                // map.put("nickname",selectNickNameOfAbc_idx(dto.getAbc_idx()))
-                    //member 통합 후 추가할 항목 
-
+                {
+                map.put("m_photo",academyCommentMapper.selectPhotoOfAbc_idx(dto.getAbc_idx()));
+                map.put("nickname",academyCommentMapper.selectNickNameOfAbc_idx(dto.getAbc_idx()));
                 map.put("abc_content",dto.getAbc_content());
                 map.put("abc_idx",dto.getAbc_idx());
                 map.put("m_idx",dto.getM_idx());
-                map.put("abc_depth",dto.getAbc_depth());
                 map.put("abc_like",dto.getAbc_like());
                 map.put("abc_writeday",formattedDate);
 
@@ -152,20 +163,80 @@ public class AcademyCommentService {
             logger.error("Error occurred while getting all academyComment data", e);
             throw e;
         }
-    }   
+    } 
 
+    
+    
+    
+    @Transactional
+    private AcademyCommentLikeEntity findOrCreateABoardCommentLike(int ABcidx,int MIdx){
+            return academyCommentLikeRepository.findByABcidxAndMIdx(ABcidx,MIdx)
+                .orElse(new AcademyCommentLikeEntity(ABcidx,MIdx));
+    }  
+    
+    
+    public void like(int ABcidx, int MIdx){
+        try {           
+            AcademyCommentLikeEntity academyCommentLikeEntity = findOrCreateABoardCommentLike(ABcidx,MIdx);
+            
+            if (academyCommentLikeEntity.getLikestatus() == 1) {
 
-    public AcademyCommentDto insertAcademyReply(AcademyCommentDto dto){  
-        try {
-            dto.setAbc_depth(1);
-            AcademyCommentEntity entity = AcademyCommentEntity.toAcademyCommentEntity(dto);
-            academyCommentRepository.save(entity);
-            return dto;
+                academyCommentLikeEntity.setLikestatus(0);
+                academyCommentLikeRepository.save(academyCommentLikeEntity);
+    
+                AcademyCommentEntity academyCommentEntity = academyCommentRepository.findById(ABcidx)
+                    .orElseThrow(()-> new IllegalArgumentException("해당하는 댓글을 찾지 못했습니다(ab_like-1)"));
+                academyCommentEntity.setABclike(academyCommentEntity.getABclike() - 1);
+                academyCommentRepository.save(academyCommentEntity);
+    
+            } else {
+                academyCommentLikeEntity.setLikestatus(1);
+                academyCommentLikeRepository.save(academyCommentLikeEntity);
+    
+                // AcademyCommentEntity의 abc_like 필드 업데이트
+                AcademyCommentEntity academyCommentEntity = academyCommentRepository.findById(ABcidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 댓글을 찾지 못했습니다(ab_like+1): " + ABcidx));
+                academyCommentEntity.setABclike(academyCommentEntity.getABclike() + 1);
+                academyCommentRepository.save(academyCommentEntity);
+            }
+        } catch (IllegalArgumentException e) {
+            logger.error("review like Error(Ill)", e);
         } catch (Exception e) {
-            logger.error("Error occurred while inserting academyBoardComment",e);
-            throw e;
+         logger.error("review like Error(Exce)", e);
         }
     }
+
+    public void dislike(int ABcidx, int MIdx) {
+        try {
+            AcademyCommentLikeEntity academyCommentLikeEntity = findOrCreateABoardCommentLike(ABcidx, MIdx);
+            
+             if (academyCommentLikeEntity.getLikestatus() == 2) {
+
+                academyCommentLikeEntity.setLikestatus(0);
+                academyCommentLikeRepository.save(academyCommentLikeEntity);
+    
+                AcademyCommentEntity academyCommentEntity = academyCommentRepository.findById(ABcidx)
+                    .orElseThrow(()-> new IllegalArgumentException("해당하는 Comment를 찾지 못했습니다(ab_dislike-1)"));
+                academyCommentEntity.setABcdislike(academyCommentEntity.getABcdislike()-1);
+                academyCommentRepository.save(academyCommentEntity);
+    
+            } else {
+                academyCommentLikeEntity.setLikestatus(2);
+                academyCommentLikeRepository.save(academyCommentLikeEntity);
+    
+                // AcademyCommentEntity의 ab_like 필드 업데이트
+                AcademyCommentEntity academyCommentEntity = academyCommentRepository.findById(ABcidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 Comment를 찾지 못했습니다(rb_dislike+1): " + ABcidx));
+                academyCommentEntity.setABcdislike(academyCommentEntity.getABcdislike() + 1);
+                academyCommentRepository.save(academyCommentEntity);
+            }
+        } catch (IllegalArgumentException e) {
+            logger.error("review like Error(Ill)", e);
+        } catch (Exception e) {
+         logger.error("review like Error(Exce)", e);
+        }
+    }
+
 
 }
 

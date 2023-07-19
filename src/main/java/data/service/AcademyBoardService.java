@@ -8,18 +8,24 @@ import org.springframework.web.multipart.MultipartFile;
 import data.dto.AcademyBoardDto;
 import data.entity.AcademyBoardEntity;
 import data.entity.AcademylikeEntity;
+import data.mapper.AcademyBoardMapper;
 import data.repository.AcademyBoardRepository;
 import data.repository.AcademylikeRepository;
 import naver.cloud.NcpObjectStorageService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+//사진처리와,  댓글대댓글 처리 로직 우선적으로 개발 필요 (230717, 12:25)
 
 
 @Service
@@ -34,6 +40,9 @@ public class AcademyBoardService {
 
     @Autowired
     private NcpObjectStorageService storageService;
+
+    @Autowired
+    AcademyBoardMapper academyBoardMapper;
     
     @Value("${aws.s3.bucketName}")
     private String bucketName;
@@ -88,6 +97,34 @@ public class AcademyBoardService {
         }
     } 
 
+    public Map<String,Object> getDetailPage(int ab_idx, int m_idx){
+         //readcount 추가 
+         academyBoardMapper.updateReadCount(ab_idx);
+
+        AcademyBoardEntity entity = academyBoardRepository.findById((Integer)ab_idx)
+            .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + ab_idx));
+        AcademyBoardDto dto = AcademyBoardDto.toAcademyBoardDto(entity);  
+
+         //필요한 변수들을 Map 에 담아서 보낸다
+         Map<String,Object> map=new HashMap<>();
+         map.put("ab_subject",dto.getAb_subject());
+         map.put("ab_content",dto.getAb_content());
+         map.put("ab_readcount",dto.getAb_readcount());
+         map.put("ab_photo",dto.getAb_photo());
+         map.put("ab_writeday",dto.getAb_writeday());
+         map.put("ab_like",dto.getAb_like());
+         map.put("ab_dislike",dto.getAb_dislike());
+         map.put("ai_idx",dto.getAi_idx());
+
+         map.put("cm_compname",academyBoardMapper.selectNickNameOfMidx(m_idx));
+         map.put("cm_filename",academyBoardMapper.selectPhotoOfMidx(m_idx));
+
+
+
+        return map;
+    }
+
+
 
 
     public void deleteAcademyBoard(Integer idx){
@@ -122,11 +159,8 @@ public class AcademyBoardService {
 
     @Transactional
     private AcademylikeEntity findOrCreateABoardLike(int ABidx,int MIdx){
-            System.out.println(academylikeRepository.findByABidxAndMIdx(ABidx,MIdx));
-            System.out.println(new AcademylikeEntity(ABidx,MIdx));
             return academylikeRepository.findByABidxAndMIdx(ABidx,MIdx)
                 .orElse(new AcademylikeEntity(ABidx,MIdx));
-
     }    
 
     public void like(int ABidx, int MIdx){
@@ -134,7 +168,6 @@ public class AcademyBoardService {
             AcademylikeEntity academylikeEntity = findOrCreateABoardLike(ABidx,MIdx);
             
             if (academylikeEntity.getLikestatus() == 1) {
-                //throw new IllegalArgumentException("이미 좋아요가 눌려 있습니다");
                 academylikeEntity.setLikestatus(0);
                 academylikeRepository.save(academylikeEntity);
     

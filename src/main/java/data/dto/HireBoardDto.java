@@ -1,16 +1,28 @@
 package data.dto;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> HO
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> HO
 import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> HO
 import data.entity.HireBoardEntity;
 
 @Data
@@ -20,6 +32,10 @@ import data.entity.HireBoardEntity;
 @AllArgsConstructor
 public class HireBoardDto {
     private int cm_idx;
+<<<<<<< HEAD
+=======
+
+>>>>>>> HO
     private int hb_idx;
     private String hb_subject;
     private String hb_content;
@@ -27,6 +43,10 @@ public class HireBoardDto {
     private int hb_readcount;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
     private Timestamp hb_writeday;
+<<<<<<< HEAD
+=======
+
+>>>>>>> HO
 
     public static HireBoardDto toHireBoardDto(HireBoardEntity entity){
         return HireBoardDto.builder()
@@ -41,3 +61,7 @@ public class HireBoardDto {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> HO
