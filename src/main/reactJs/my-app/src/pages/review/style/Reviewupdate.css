@@ -1,0 +1,315 @@
+.advertise-main {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 10.8rem;
+}
+.advertise-text {
+    position: absolute;
+    top: 4.05rem;
+    left: calc(50% - 19px);
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 3.7rem;
+    height: 2.8rem;
+}
+.advertise-box {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 8.3rem;
+    right: 1.3rem;
+    left: 1.7rem;
+    height: 10.8rem;
+    font-size: 2rem;
+}
+.reviewupdate-write-scolum-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 10px;
+    background-color: #eaeff3;
+    height: 6.5rem;
+}
+.reviewupdate-write-lcolumn,
+.reviewupdate-write-scolumn {
+    position: absolute;
+    top: 1.3rem;
+    left: 2.7rem;
+    letter-spacing: -0.24px;
+}
+.reviewupdate-write-scolumn {
+    top: 3.7rem;
+    font-size: 1.3rem;
+}
+.reviewupdate-write {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 20.2rem;
+    right: 1.2rem;
+    left: 1.8rem;
+    height: 6.5rem;
+    font-size: 1.8rem;
+    font-family: Roboto;
+}
+.reviewupdate-write-subject-tex {
+    position: absolute;
+    width: calc(100% - 259.94px);
+    top: 0;
+    left: 0;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+}
+.reviewupdate-write-subject-box-icon {
+    position: absolute;
+    width: calc(100% - 83px);
+    top: 2.9rem;
+    right: 0;
+    left: 8.3rem;
+    border-radius: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    height: 3.9rem;
+}
+.reviewupdate-write-select-box-icon {
+    position: absolute;
+    top: 2.9rem;
+    left: 0;
+    border-radius: 5px;
+    width: 8.3rem;
+    height: 3.9rem;
+}
+.reviewupdate-write-subject {
+    position: absolute;
+    width: calc(100% - 80px);
+    top: 28.6rem;
+    right: 4.3rem;
+    left: 3.7rem;
+    height: 6.8rem;
+    font-size: 1.5rem;
+}
+.reviewupdate-write-company-tex {
+    position: absolute;
+    width: calc(100% - 233px);
+    top: 0;
+    left: 0;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+}
+.reviewupdate-write-company-box-icon {
+    position: absolute;
+    width: 100%;
+    top: 2.9rem;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    height: 3.9rem;
+}
+.reviewupdate-write-company {
+    position: absolute;
+    width: calc(100% - 80px);
+    top: 36.5rem;
+    right: 4.3rem;
+    left: 3.7rem;
+    height: 6.8rem;
+    font-size: 1.5rem;
+}
+.reviewupdate-search-icon {
+    position: absolute;
+    top: 40rem;
+    right: 5.4rem;
+    width: 2rem;
+    height: 2.1rem;
+}
+.reviewupdate-stars-icons {
+    position: absolute;
+    top: -5.6rem;
+    right: 0.3rem;
+    width: 12.3rem;
+    height: 2.26rem;
+}
+.reviewupdate-content-box-icon {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    height: 19.4rem;
+    padding-left: 2rem;
+    padding-top: 2rem;
+}
+.reviewupdate-content-text {
+    position: absolute;
+    top: 1.1rem;
+    left: 1.6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 14.6rem;
+    height: 2.2rem;
+}
+.reviewupdate-content {
+    position: absolute;
+    width: calc(100% - 80px);
+    top: 52.4rem;
+    right: 4rem;
+    left: 4rem;
+    height: 19.4rem;
+    color: #626567;
+}
+.notice-like-countbox-child {
+    position: absolute;
+    top: -0.05rem;
+    left: -0.05rem;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 4.23rem;
+    height: 3.32rem;
+}
+.notice-like-countbox {
+    position: absolute;
+    top: 0;
+    left: 2.44rem;
+    width: 4.13rem;
+    height: 3.22rem;
+}
+.group-child {
+    position: absolute;
+    top: -0.05rem;
+    left: -0.05rem;
+    border-radius: 0 5px 5px 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 2.61rem;
+    height: 3.32rem;
+}
+.rectangle-wrapper {
+    position: absolute;
+    top: 0;
+    left: 6.49rem;
+    width: 2.51rem;
+    height: 3.22rem;
+}
+.group-item {
+    position: absolute;
+    top: -0.05rem;
+    left: -0.05rem;
+    border-radius: 5px 0 0 5px;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 2.61rem;
+    height: 3.32rem;
+}
+.rectangle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.51rem;
+    height: 3.22rem;
+}
+.notice-like-count-input {
+    position: absolute;
+    top: 0.75rem;
+    left: 4.31rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+    width: 0.59rem;
+    height: 1.61rem;
+    opacity: 0.5;
+}
+.reviewupdate-like {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 9rem;
+    height: 3.22rem;
+}
+.review-update-add-icon {
+    position: absolute;
+    height: 49.85%;
+    top: 25.44%;
+    bottom: 24.7%;
+    left: 0.52rem;
+    max-height: 100%;
+    width: 1.61rem;
+}
+.review-update-minus-icon {
+    position: absolute;
+    top: 1.53rem;
+    left: 7.13rem;
+    width: 1.35rem;
+    height: 0.15rem;
+}
+.reviewupdate-stars {
+    position: absolute;
+    top: 46.1rem;
+    left: 4.2rem;
+    width: 9rem;
+    height: 3.22rem;
+    text-align: center;
+}
+.reviewupdate-form-btn-rec-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 5px;
+    width: 10rem;
+    height: 3.3rem;
+}
+.reviewupdate-form-btn-text {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.5rem;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: inline-block;
+    width: 7.2rem;
+    height: 1.6rem;
+}
+.reviewupdate-vecter-icon {
+    position: absolute;
+    height: 34.85%;
+    top: 34.09%;
+    right: 7.33rem;
+    bottom: 31.06%;
+    max-height: 100%;
+    width: 1.55rem;
+}
+.reviewupdate-form-btn {
+    position: absolute;
+    top: 74.7rem;
+    right: 4.3rem;
+    width: 10rem;
+    height: 3.3rem;
+    text-align: center;
+    color: #fff;
+    background-color: #721ea6;
+    border: none;
+}
+.review-update-form {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 78.4rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.3rem;
+    /*color: #000;*/
+    font-family: "Noto Sans KR";
+}

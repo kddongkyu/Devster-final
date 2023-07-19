@@ -16,7 +16,11 @@ import {
 =======
   ResumeUpdateform,
 } from "../pages/mypage";
+<<<<<<< HEAD
 >>>>>>> a5b8dd57d05ab43c0dbad67e9314cac840d9062f
+=======
+
+>>>>>>> 3d29b9ca1d11034d17623d7e99aa148f18f7a639
 import Fboard from "../pages/fboard/Fboard";
 import Qboard from "../pages/qboard/Board";
 import Hboard from "../pages/hboard/Hboard";
@@ -25,6 +29,7 @@ import FboardForm from "../pages/fboard/FboardForm";
 import QboardForm from "../pages/qboard/QboardForm";
 import HboardForm from "../pages/hboard/HboardForm";
 import AboardForm from "../pages/aboard/AboardForm";
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 import Fboard from "../pages/fboard/Fboard"
@@ -49,18 +54,24 @@ function RouteMain(props) {
 <<<<<<< HEAD
 =======
 import FboardDetail from "../pages/fboard/FboardDetail";
+=======
+
+>>>>>>> 3d29b9ca1d11034d17623d7e99aa148f18f7a639
 import Withdrawal from "../pages/mypage/Withdrawal";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
 
-import {FboardUpdateForm} from "../pages/fboard";
+
+import {Noticeform, Noticelist} from "../pages/notice";
+import {Reviewform, Reviewlist, Reviewupdate,Reviewdetail} from "../pages/review";
+
+import {FboardDetail, FboardUpdateForm} from "../pages/fboard";
 
 import NoticeAdmin from "../pages/mypage/NoticeAdmin";
 import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
-import Noticelist from "../pages/notice/Noticelist";
-import Noticeform from "../pages/notice/Noticeform";
-import Noticedetail from "../pages/notice/Noticedetail";
+
+
 
 function RouteMain(props) {
 >>>>>>> a5b8dd57d05ab43c0dbad67e9314cac840d9062f
@@ -109,20 +120,25 @@ function RouteMain(props) {
 =======
 >>>>>>> a5b8dd57d05ab43c0dbad67e9314cac840d9062f
 
-        <Route path="/fboard" element={<Fboard />} />
-        <Route path="/qboard" element={<Qboard />} />
-        <Route path="/hboard" element={<Hboard />} />
-        <Route path="/aboard" element={<Aboard />} />
-        <Route path="/notice" element={<Noticelist />} />
-
-        <Route path="/fboard/form" element={<FboardForm />} />
-        <Route path="/qboard/form" element={<QboardForm />} />
-        <Route path="/hboard/form" element={<HboardForm />} />
-        <Route path="/aboard/form" element={<AboardForm />} />
-        <Route path="/notice/form" element={<Noticeform />} />
+        <Route path='/fboard' element={<Fboard/>}/>
+        <Route path='/qboard' element={<Qboard/>}/>
+        <Route path='/hboard' element={<Hboard/>}/>
+        <Route path='/aboard' element={<Aboard/>}/>
+        <Route path='/review' element={<Reviewlist/>}/>
+        <Route path='/notice' element={<Noticelist/>}/>
 
 
+        <Route path='/fboard/form' element={<FboardForm/>}/>
+        <Route path='/qboard/form' element={<QboardForm/>}/>
+        <Route path='/hboard/form' element={<HboardForm/>}/>
+        <Route path='/aboard/form' element={<AboardForm/>}/>
+        <Route path='/review/form' element={<Reviewform/>}/>
+       <Route path='/notice/form' element={<Noticeform/>}/>
+
+        <Route path='/review/detail/:rb_idx/:currentPage' element={<Reviewdetail/>}/>
         <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
+
+        <Route path='/review/update/:rb_idx' element={<Reviewupdate/>}/>
         <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
 
 
@@ -169,6 +185,7 @@ function RouteMain(props) {
         <Route path="/jwttest" element={<JwtTest />} />
       </Route>
 >>>>>>> a5b8dd57d05ab43c0dbad67e9314cac840d9062f
+
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />
