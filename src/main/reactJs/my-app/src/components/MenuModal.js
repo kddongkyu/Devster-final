@@ -15,7 +15,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
     m_role: "",
   });
 
-  const decodedToken = jwt_decode(localStorage.accessToken);
+  //const decodedToken = jwt_decode(localStorage.accessToken);
   const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${member.m_photo}`;
 
@@ -32,7 +32,10 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
 
   // Effects
   useEffect(() => {
-    getMemberData(decodedToken.idx);
+    if (localStorage.accessToken && localStorage.refreshToken) {
+      const decodedToken = jwt_decode(localStorage.accessToken);
+      getMemberData(decodedToken.idx);
+    }
   }, []);
 
   if (!isMenuOpen) {
@@ -61,7 +64,9 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           />
         </div>
         <div className="menu-modal-options">
-          <b className="menu-modal-options-fb">일반게시판</b>
+          <NavLink to={"/"}>
+            <b className="menu-modal-options-fb">일반게시판</b>
+          </NavLink>
           <div className="menu-modal-options-qna">Q&A</div>
           <b className="menu-modal-options-hire">채용정보</b>
           <b className="menu-modal-options-aca">학원별게시판</b>
@@ -72,7 +77,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           <div className="menu-mypage-box">
             <div className="menu-mypage-userinfo">
               <div className="menu-mypage-userinfo-img">
-                <img alt="" src={imageUrl} />
+                {member.m_photo ? <img alt="" src={imageUrl} /> : null}
               </div>
               <div className="menu-mypage-userinfo-contents">
                 <div className="menu-mypage-userinfo-nickname">
