@@ -10,26 +10,16 @@ import {
   Resumeform,
   UserInfo,
   Notice,
-  ResumeUpdateform,
+  ResumeUpdateform, Withdrawal, NoticeAdmin, MemberSignupApproval,
 } from "../pages/mypage";
-import Fboard from "../pages/fboard/Fboard";
-import Qboard from "../pages/qboard/Board";
-import Hboard from "../pages/hboard/Hboard";
-import Aboard from "../pages/aboard/Aboard";
-import FboardForm from "../pages/fboard/FboardForm";
-import QboardForm from "../pages/qboard/QboardForm";
-import HboardForm from "../pages/hboard/HboardForm";
-import AboardForm from "../pages/aboard/AboardForm";
-import FboardDetail from "../pages/fboard/FboardDetail";
-import Withdrawal from "../pages/mypage/Withdrawal";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
+import {Fboard, FboardDetail, FboardForm} from "../pages/fboard";
+import {Qboard, QboardForm} from "../pages/qboard";
+import {Hboard, HboardForm} from "../pages/hboard";
+import {Aboard, AboardForm} from "../pages/aboard";
+import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
 import JwtTest from "../pages/test/JwtTest";
-import NoticeAdmin from "../pages/mypage/NoticeAdmin";
-import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
-import Noticelist from "../pages/notice/Noticelist";
-import Noticeform from "../pages/notice/Noticeform";
-import Noticedetail from "../pages/notice/Noticedetail";
 
 function RouteMain(props) {
   return (

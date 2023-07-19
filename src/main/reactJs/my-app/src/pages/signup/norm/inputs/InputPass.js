@@ -14,8 +14,8 @@ function InputPass(props) {
     useEffect(() => {
         if (isPassTouched) {
             const timer = setTimeout(() => {
-                console.log(m_pass);
-                const isPassValid=passStrengthChk(m_pass);
+                const passPattern = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,14}$/.test(m_pass);
+                const isPassValid=passStrengthChk(m_pass) && passPattern;
                 dispatch(setPassIsValid(isPassValid));
                 console.log(isPassValid);
             },400);
