@@ -10,6 +10,7 @@ import data.entity.resume.ResumeLicenseEntity;
 import data.repository.resume.ResumeCareerRepository;
 import data.repository.resume.ResumeLicenseRepository;
 import data.repository.resume.ResumeRepository;
+import jwt.setting.settings.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 import org.json.JSONObject;
@@ -18,11 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -37,6 +36,7 @@ public class ResumeService {
     private final ResumeCareerRepository resumeCareerRepository;
     private final ResumeLicenseRepository resumeLicenseRepository;
     private final NcpObjectStorageService storageService;
+    private final JwtService jwtService;
 
 
     @Value("${aws.s3.bucketName}")
@@ -48,11 +48,12 @@ public class ResumeService {
     @Value("${naver.translate.client_secret}")
     private String client_secret;
 
-    public ResumeService(ResumeRepository resumeRepository, NcpObjectStorageService storageService, ResumeCareerRepository resumeCareerRepository, ResumeLicenseRepository resumeLicenseRepository) {
+    public ResumeService(ResumeRepository resumeRepository, NcpObjectStorageService storageService, ResumeCareerRepository resumeCareerRepository, ResumeLicenseRepository resumeLicenseRepository, JwtService jwtService) {
         this.resumeRepository = resumeRepository;
         this.storageService = storageService;
         this.resumeCareerRepository = resumeCareerRepository;
         this.resumeLicenseRepository = resumeLicenseRepository;
+        this.jwtService = jwtService;
     }
 
     public String insertResume(ResumeDto dto, List<ResumeCareerDto> resumeCareerDtoList, List<ResumeLicenseDto> resumeLicenseDtoList ,HttpSession session) {
@@ -153,7 +154,9 @@ public class ResumeService {
     }
 
     @Transactional
-    public String deleteResume(int m_idx) {
+    public String deleteResume(HttpServletRequest request) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+
         ResumeEntity entity = resumeRepository.findByMIdx(m_idx).get();
         storageService.deleteFile(bucketName,"devster/resume/file", entity.getRFile());
         log.info("이력서 파일 삭제완료");
