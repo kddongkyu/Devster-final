@@ -86,6 +86,7 @@
   border: 1px solid #d9d9d9;
   box-sizing: border-box;
   height: 3.9rem;
+  padding-left: 1.5rem;
 }
 .div {
   position: absolute;
@@ -115,6 +116,8 @@
   border: 1px solid #d9d9d9;
   box-sizing: border-box;
   height: 19.4rem;
+  padding-left: 1.5rem;
+  padding-top: 1rem;
 }
 .qboard-form-content-text {
   position: absolute;

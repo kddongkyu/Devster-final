@@ -19,6 +19,7 @@ import FboardForm from "../pages/fboard/FboardForm"
 import QboardForm from "../pages/qboard/QboardForm"
 import HboardForm from "../pages/hboard/HboardForm"
 import AboardForm from "../pages/aboard/AboardForm"
+import FboardDetail from "../pages/fboard/FboardDetail"
 import Withdrawal from "../pages/mypage/Withdrawal";
 import LoginForm from "../components/LoginForm";
 import {SignIn} from "../pages/signin";
@@ -41,10 +42,12 @@ function RouteMain(props) {
                 <Route path='/notice' element={<Noticelist/>}/>
 
                 <Route path='/fboard/form' element={<FboardForm/>}/>
-                <Route path='/qboard/form' element={<QboardForm/>}/>ㄱ
+                <Route path='/qboard/form' element={<QboardForm/>}/>
                 <Route path='/hboard/form' element={<HboardForm/>}/>
                 <Route path='/aboard/form' element={<AboardForm/>}/>
                 <Route path='/notice/form' element={<Noticeform/>}/>
+
+                <Route path='/fboard/detail' element={<FboardDetail/>}/>
 
 
                 <Route path='/notice/detail' element={<Noticedetail/>}/>

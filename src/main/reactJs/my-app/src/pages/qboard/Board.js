@@ -4,10 +4,8 @@ import { NavLink } from 'react-router-dom';
 
 const Board = () => {
 
-  const [isShown, setIsShown] = useState(false);
-
-  const toggleSlide = () => {
-    setIsShown(!isShown);
+  const handleRefresh = () => {
+    window.location.reload();
   };
 
   return (
@@ -61,7 +59,7 @@ const Board = () => {
       />
     </div>
     <div className="board-function-search-input">
-      <div className="board-function-search-input1" />
+      <input type="text" className="board-function-search-input1" />
       <img
         className="board-function-search-icon"
         alt=""
@@ -73,6 +71,7 @@ const Board = () => {
       className="board-pages-reset-icon"
       alt=""
       src={require("./assets/board_pages_reset.svg").default}
+      onClick={handleRefresh}
     />
     <div className="board-pages">
       <div className="board-pages-current">12345 / 12345 페이지</div>

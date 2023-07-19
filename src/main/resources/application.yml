@@ -25,6 +25,9 @@ spring:
         use_sql_comments: true
   profiles:
     include: oauth
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 logging:
   level:
@@ -50,8 +53,17 @@ jwt:
     header: Authorization-refresh
 
 naver:
-  client_id: qwQJi2mXut9egJr1uiFj
-  client_secret: v3n11rGdRW
+  login:
+    client_id: qwQJi2mXut9egJr1uiFj
+    client_secret: v3n11rGdRW
+  translate:
+    client_id: aaullc5zyk
+    client_secret: Ad6GvUB4CSZS0ilyxUo9tUGWN7ZXQSBb8dp5gyf0
+  sens:
+    service_id: ncp:sms:kr:305197781446:devster-sms
+    accessKey : tDdcJbDAJB2SiRYiC0vD
+    secretKey : AxkRbXwgsDv4Dl5ypWleAdSSOLZ8SDFh8iLUQxtY
+    number : "01044854249"
 
 kakao:
   client_id: 168ba1a4e0e55db8af46e892ae6c7b82

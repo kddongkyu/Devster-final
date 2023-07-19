@@ -10,17 +10,22 @@ import data.entity.resume.ResumeLicenseEntity;
 import data.repository.resume.ResumeCareerRepository;
 import data.repository.resume.ResumeLicenseRepository;
 import data.repository.resume.ResumeRepository;
+import jwt.setting.settings.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,15 +36,24 @@ public class ResumeService {
     private final ResumeCareerRepository resumeCareerRepository;
     private final ResumeLicenseRepository resumeLicenseRepository;
     private final NcpObjectStorageService storageService;
+    private final JwtService jwtService;
+
 
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    public ResumeService(ResumeRepository resumeRepository, NcpObjectStorageService storageService, ResumeCareerRepository resumeCareerRepository, ResumeLicenseRepository resumeLicenseRepository) {
+    @Value("${naver.translate.client_id}")
+    private String client_id;
+
+    @Value("${naver.translate.client_secret}")
+    private String client_secret;
+
+    public ResumeService(ResumeRepository resumeRepository, NcpObjectStorageService storageService, ResumeCareerRepository resumeCareerRepository, ResumeLicenseRepository resumeLicenseRepository, JwtService jwtService) {
         this.resumeRepository = resumeRepository;
         this.storageService = storageService;
         this.resumeCareerRepository = resumeCareerRepository;
         this.resumeLicenseRepository = resumeLicenseRepository;
+        this.jwtService = jwtService;
     }
 
     public String insertResume(ResumeDto dto, List<ResumeCareerDto> resumeCareerDtoList, List<ResumeLicenseDto> resumeLicenseDtoList ,HttpSession session) {
@@ -69,7 +83,7 @@ public class ResumeService {
             resumeLicenseRepository.save(resumeLicenseEntity);
         }
         log.info("이력서 자격증 등록완료.");
-        
+
         session.removeAttribute("file");
         session.removeAttribute("refile");
         log.info("이력서 최종 등록완료.");
@@ -84,7 +98,7 @@ public class ResumeService {
         }
         session.setAttribute("file", file);
         log.info("이력서 파일 업로드 완료");
-        
+
         return "이력서 파일 업로드 완료";
     }
 
@@ -98,7 +112,7 @@ public class ResumeService {
 
         return "자격증, 포트폴리오 파일 업로드 완료";
     }
-    
+
     public ResumeWrapper getOneResume(int m_idx) {
         ResumeWrapper resumeWrapper = new ResumeWrapper();
 
@@ -136,12 +150,13 @@ public class ResumeService {
         resumeWrapper.setResumeLicenseDtoList(resumeLicenseDtoList);
         log.info("resumeLicenseDto 값 가져오기 및 삽입 완료");
 
-
         return resumeWrapper;
     }
 
     @Transactional
-    public String deleteResume(int m_idx) {
+    public String deleteResume(HttpServletRequest request) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+
         ResumeEntity entity = resumeRepository.findByMIdx(m_idx).get();
         storageService.deleteFile(bucketName,"devster/resume/file", entity.getRFile());
         log.info("이력서 파일 삭제완료");
@@ -210,6 +225,47 @@ public class ResumeService {
         log.info("이력서 최종 업데이트 완료.");
 
         return "이력서 업데이트 완료.";
+    }
+
+    public String translateResume(String inputText) throws IOException {
+        try {
+            String text = URLEncoder.encode(inputText, "UTF-8");
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", client_id);
+            con.setRequestProperty("X-NCP-APIGW-API-KEY", client_secret);
+            // post request
+            String postParams = "source=ko&target=en&text=" + text;
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(postParams);
+            wr.flush();
+            wr.close();
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 오류 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+
+            String responseJson = response.toString();
+
+            JSONObject obj = new JSONObject(responseJson);
+            String translatedText = obj.getJSONObject("message").getJSONObject("result").getString("translatedText");
+
+            return translatedText;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 }
