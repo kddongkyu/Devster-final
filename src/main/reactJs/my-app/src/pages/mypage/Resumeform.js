@@ -17,7 +17,7 @@ function Resumeform(props) {
 
   const getMemberData = async (idx) => {
     try {
-      const response = await axiosIns.get(`/member/${idx}`);
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
     } catch (e) {
       console.log(e);
@@ -130,7 +130,7 @@ function Resumeform(props) {
     switch (e.target.name) {
       case "r_file":
         try {
-          const response = await axiosIns.post("/resume/file", formData);
+          const response = await axiosIns.post("/api/resume/D1/file", formData);
           url = response.data.url;
           setResumeDto((prevDto) => ({
             ...prevDto,
@@ -142,7 +142,10 @@ function Resumeform(props) {
         break;
       case "r_refile":
         try {
-          const response = await axiosIns.post("/resume/refile", formData);
+          const response = await axiosIns.post(
+            "/api/resume/D1/refile",
+            formData
+          );
           url = response.data.url;
           setResumeDto((prevDto) => ({
             ...prevDto,
@@ -167,7 +170,7 @@ function Resumeform(props) {
     };
 
     try {
-      const response = await axiosIns.post("/resume", resumeWrapper);
+      const response = await axiosIns.post("/api/resume/D1", resumeWrapper);
       console.log(response.data);
       navigate("/myresume"); // after successful post, navigate to /resume
     } catch (error) {

@@ -23,7 +23,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
 
   const getMemberData = async (idx) => {
     try {
-      const response = await axiosIns.get(`/api/member/${idx}`);
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
     } catch (e) {
       console.log(e);

@@ -21,7 +21,7 @@ function ResumeUpdateform(props) {
 
   const getMemberData = async (idx) => {
     try {
-      const response = await axiosIns.get(`/member/${idx}`);
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
     } catch (e) {
       console.log(e);
@@ -30,7 +30,7 @@ function ResumeUpdateform(props) {
 
   const getResume = async (idx) => {
     try {
-      const response = await axiosIns.get(`/resume/${idx}`);
+      const response = await axiosIns.get(`/api/resume/D1/${idx}`);
       setResume(response.data.resumeDto);
       setResumeCareerList(response.data.resumeCareerDtoList);
       setResumeLicenseList(response.data.resumeLicenseDtoList);
@@ -48,7 +48,7 @@ function ResumeUpdateform(props) {
   const updateResume = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosIns.put("/resume", {
+      const response = await axiosIns.put("/api/resume/D1", {
         resumeDto: resume,
         resumeCareerDtoList: resumeCareerList,
         resumeLicenseDtoList: resumeLicenseList,
@@ -76,7 +76,7 @@ function ResumeUpdateform(props) {
     switch (e.target.name) {
       case "r_file":
         try {
-          const response = await axiosIns.post("/resume/file", formData);
+          const response = await axiosIns.post("/api/resume/D1/file", formData);
           url = response.data.url;
           setResume((prevDto) => ({
             ...prevDto,
@@ -88,7 +88,10 @@ function ResumeUpdateform(props) {
         break;
       case "r_refile":
         try {
-          const response = await axiosIns.post("/resume/refile", formData);
+          const response = await axiosIns.post(
+            "/api/resume/D1/refile",
+            formData
+          );
           url = response.data.url;
           setResume((prevDto) => ({
             ...prevDto,

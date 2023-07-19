@@ -27,7 +27,7 @@ function MyResume(props) {
   const getMemberData = async (idx) => {
     try {
       setIsLoadingMemberData(true); // 데이터를 불러오기 시작하면 로딩 상태를 true로 설정
-      const response = await axiosIns.get(`/member/${m_idx}`);
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
       //console.log("사진: " + response.data);
     } catch (e) {
@@ -44,7 +44,7 @@ function MyResume(props) {
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        const response = await axiosIns.get(`/resume/${m_idx}`);
+        const response = await axiosIns.get(`/api/resume/D1/${m_idx}`);
         if (!response || !response.data) {
           //console.log(response.data);
           console.error("No response or data received from the server.");
@@ -63,7 +63,7 @@ function MyResume(props) {
   }, []);
 
   const deleteResume = async () => {
-    const url = `/resume/${m_idx}`;
+    const url = `/api/resume/D1/${m_idx}`;
 
     try {
       const response = await axiosIns.delete(url);

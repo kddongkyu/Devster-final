@@ -24,7 +24,7 @@ function UserInfo(props) {
   // Functions
   const getMemberData = async (idx) => {
     try {
-      const response = await axiosIns.get(`/member/${idx}`);
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
       //console.log(response.data);
     } catch (e) {
@@ -37,10 +37,10 @@ function UserInfo(props) {
     const formData = new FormData();
     formData.append("upload", file);
     try {
-      await axiosIns.post(`/member/photo/${m_idx}`, formData, {
+      await axiosIns.post(`/api/member/D1/photo/${m_idx}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      const userInfoResponse = await axiosIns.get(`/member/${m_idx}`);
+      const userInfoResponse = await axiosIns.get(`/api/member/D1/${m_idx}`);
       setPreviewImage(userInfoResponse.data.m_photo);
     } catch (error) {
       console.error("Failed to upload image: ", error);
@@ -50,7 +50,7 @@ function UserInfo(props) {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosIns.put("/member", member);
+      const response = await axiosIns.put("/api/member/D1", member);
       if (response.status === 200) {
         alert("수정되었습니다");
         navigate(`/userinfo`);
@@ -70,7 +70,7 @@ function UserInfo(props) {
   useEffect(() => {
     const fetchProfileImage = async () => {
       try {
-        const userInfoResponse = await axiosIns.get(`/member/${m_idx}`);
+        const userInfoResponse = await axiosIns.get(`/api/member/D1/${m_idx}`);
         setPreviewImage(userInfoResponse.data.m_photo);
       } catch (error) {
         console.error("Failed to fetch profile image: ", error);
