@@ -22,10 +22,10 @@ import org.springframework.web.client.RestTemplate;
 @CrossOrigin
 public class NaverController {
 
-    @Value("${naver.client_id}")
+    @Value("${naver.login.client_id}")
     private String client_id;
 
-    @Value("${naver.client_secret}")
+    @Value("${naver.login.client_secret}")
     private String client_secret;
 
     private final MemberRepository memberRepository;

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,29 +28,23 @@ import java.util.stream.Collectors;
 public class FreeBoardService {
 
 
-    @Autowired
     private final FreeBoardRepository freeBoardRepository;
-    @Autowired
     private final MemberRepository memberRepository;
-    @Autowired
     private final FreeBoardLikeRepository freeBoardLikeRepository;
+    private final NcpObjectStorageService storageService;
 
     @Autowired
-    public FreeBoardService(FreeBoardRepository freeBoardRepository,  MemberRepository memberRepository, FreeBoardLikeRepository freeBoardLikeRepository) {
+    public FreeBoardService(FreeBoardRepository freeBoardRepository,  MemberRepository memberRepository, FreeBoardLikeRepository freeBoardLikeRepository,NcpObjectStorageService storageService) {
         this.freeBoardRepository = freeBoardRepository;
         this.memberRepository = memberRepository;
         this.freeBoardLikeRepository = freeBoardLikeRepository;
+        this.storageService = storageService;
     }
-
-    @Autowired
-    private NcpObjectStorageService storageService;
 
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    String photo = null;
-
-    public FreeBoardDto insertFreeBoard(FreeBoardDto dto){
+    public FreeBoardDto insertFreeBoard(FreeBoardDto dto, HttpSession session){
         try {
             FreeBoardEntity freeBoard = FreeBoardEntity.toFreeBoardEntity(dto);
             freeBoardRepository.save(freeBoard);
@@ -60,13 +55,20 @@ public class FreeBoardService {
         }
     }
 
-    public String uploadPhoto(MultipartFile upload){
-        if(photo != null) {
-            storageService.deleteFile(bucketName,"devster/fboard",photo);
+    public List<String> uploadPhoto(List<MultipartFile> upload, HttpSession session){
+        List<String> fullPhoto = new ArrayList<>();
+
+        for(MultipartFile photo : upload ) {
+            fullPhoto.add(storageService.uploadFile(bucketName,"devster/fboard",photo));
         }
-        photo = storageService.uploadFile(bucketName,"devster/fboard",upload);
+
+        if(session.getAttribute("photo") != null) {
+            storageService.deleteFile(bucketName,"devster/fboard",session.getAttribute("photo").toString());
+        }
+
+        session.setAttribute("photo",String.join(",",fullPhoto));
         log.info("FreeBoard 사진 업로드 완료");
-        return photo;
+        return fullPhoto;
     }
 
     public void resetPhoto(String photo) {

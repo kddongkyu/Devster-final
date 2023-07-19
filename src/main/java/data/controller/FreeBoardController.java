@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
 
-    @Autowired
     public FreeBoardController(FreeBoardService freeBoardService) {
         this.freeBoardService = freeBoardService;
     }
@@ -34,14 +34,13 @@ public class FreeBoardController {
 
 
     @PostMapping
-    public ResponseEntity<FreeBoardDto> insertFreeBoard(@RequestBody FreeBoardDto dto){
-        return new ResponseEntity<FreeBoardDto>(freeBoardService.insertFreeBoard(dto), HttpStatus.OK);
+    public ResponseEntity<FreeBoardDto> insertFreeBoard(@RequestBody FreeBoardDto dto, HttpSession session){
+        return new ResponseEntity<FreeBoardDto>(freeBoardService.insertFreeBoard(dto,session), HttpStatus.OK);
     }
 
     @PostMapping("/photo/upload")
-    public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload) {
-        System.out.println(upload);
-        return new ResponseEntity<String>(freeBoardService.uploadPhoto(upload),HttpStatus.OK);
+    public ResponseEntity<List<String>> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
+        return new ResponseEntity<List<String>>(freeBoardService.uploadPhoto(upload, session),HttpStatus.OK);
     }
 
     @PutMapping("/photo/reset")
