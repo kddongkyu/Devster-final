@@ -180,7 +180,7 @@ public class AcademyCommentService {
             AcademyCommentLikeEntity academyCommentLikeEntity = findOrCreateABoardCommentLike(ABcidx,MIdx);
             
             if (academyCommentLikeEntity.getLikestatus() == 1) {
-                //throw new IllegalArgumentException("이미 좋아요가 눌려 있습니다");
+
                 academyCommentLikeEntity.setLikestatus(0);
                 academyCommentLikeRepository.save(academyCommentLikeEntity);
     
@@ -197,6 +197,37 @@ public class AcademyCommentService {
                 AcademyCommentEntity academyCommentEntity = academyCommentRepository.findById(ABcidx)
                         .orElseThrow(() -> new IllegalArgumentException("해당하는 댓글을 찾지 못했습니다(ab_like+1): " + ABcidx));
                 academyCommentEntity.setABclike(academyCommentEntity.getABclike() + 1);
+                academyCommentRepository.save(academyCommentEntity);
+            }
+        } catch (IllegalArgumentException e) {
+            logger.error("review like Error(Ill)", e);
+        } catch (Exception e) {
+         logger.error("review like Error(Exce)", e);
+        }
+    }
+
+    public void dislike(int ABcidx, int MIdx) {
+        try {
+            AcademyCommentLikeEntity academyCommentLikeEntity = findOrCreateABoardCommentLike(ABcidx, MIdx);
+            
+             if (academyCommentLikeEntity.getLikestatus() == 2) {
+
+                academyCommentLikeEntity.setLikestatus(0);
+                academyCommentLikeRepository.save(academyCommentLikeEntity);
+    
+                AcademyCommentEntity academyCommentEntity = academyCommentRepository.findById(ABcidx)
+                    .orElseThrow(()-> new IllegalArgumentException("해당하는 Comment를 찾지 못했습니다(ab_dislike-1)"));
+                academyCommentEntity.setABcdislike(academyCommentEntity.getABcdislike()-1);
+                academyCommentRepository.save(academyCommentEntity);
+    
+            } else {
+                academyCommentLikeEntity.setLikestatus(2);
+                academyCommentLikeRepository.save(academyCommentLikeEntity);
+    
+                // AcademyCommentEntity의 ab_like 필드 업데이트
+                AcademyCommentEntity academyCommentEntity = academyCommentRepository.findById(ABcidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 Comment를 찾지 못했습니다(rb_dislike+1): " + ABcidx));
+                academyCommentEntity.setABcdislike(academyCommentEntity.getABcdislike() + 1);
                 academyCommentRepository.save(academyCommentEntity);
             }
         } catch (IllegalArgumentException e) {

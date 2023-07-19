@@ -11,6 +11,7 @@ import {
   UserInfo,
   Notice,
 } from "../pages/mypage";
+
 import Fboard from "../pages/fboard/Fboard";
 import Qboard from "../pages/qboard/Board";
 import Hboard from "../pages/hboard/Hboard";
@@ -19,15 +20,13 @@ import FboardForm from "../pages/fboard/FboardForm";
 import QboardForm from "../pages/qboard/QboardForm";
 import HboardForm from "../pages/hboard/HboardForm";
 import AboardForm from "../pages/aboard/AboardForm";
+import FboardDetail from "../pages/fboard/FboardDetail";
 import Withdrawal from "../pages/mypage/Withdrawal";
 import LoginForm from "../components/LoginForm";
-
-import HboardDetail from "../pages/hboard/HboardDetail";
 
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
-import HboardUpdateForm from "../pages/hboard/HboardUpdateForm";
 // import { Noticedetail, Noticeform, Noticelist } from "../pages/notice";
 
 function RouteMain(props) {
@@ -40,24 +39,15 @@ function RouteMain(props) {
         <Route path="/fboard" element={<Fboard />} />
         <Route path="/qboard" element={<Qboard />} />
         <Route path="/hboard" element={<Hboard />} />
-        <Route path="/hboard/list/:currentPage" element={<Hboard />} />
         <Route path="/aboard" element={<Aboard />} />
         {/* <Route path="/notice" element={<Noticelist />} /> */}
         <Route path="/fboard/form" element={<FboardForm />} />
-        <Route path="/qboard/form" element={<QboardForm />} />ㄱ
-        <Route path="/hboard/form" element={<HboardForm />} />
-        <Route path="/aboard/form" element={<AboardForm />} />
-        <Route path="/aboard" element={<Aboard />} />
-        <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
-        <Route path="/hboard/updateform" element={<HboardUpdateForm />} />
-        <Route path="/hboard/:currentPage" element={<Hboard />} />
-        <Route
-          path="/hboard/detail/:num/:currentPage"
-          element={<HboardDetail />}
-        />
         <Route path="/aboard/form" element={<AboardForm />} />
+        {/* <Route path="/notice/form" element={<Noticeform />} /> */}
+        <Route path="/fboard/detail" element={<FboardDetail />} />
+        {/* <Route path="/notice/detail" element={<Noticedetail />} /> */}
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
@@ -65,6 +55,7 @@ function RouteMain(props) {
           <Route path="/withdrawal" element={<Withdrawal />} />
           {/* <Route path="/notice" element={<Notice />} /> */}
         </Route>
+        s
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
         </Route>

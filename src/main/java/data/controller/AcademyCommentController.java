@@ -38,25 +38,25 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/academycomment")
+@RequestMapping("/api/academycomment")
 public class AcademyCommentController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     AcademyCommentService academyCommentService;
   
-    @GetMapping
+    @GetMapping("/D0")
     public List<Map<String,Object>> list(@RequestParam int ab_idx){
         return academyCommentService.getAllCommentList(ab_idx);
     }
 
-    @PostMapping
+    @PostMapping("/D1")
     public ResponseEntity<AcademyCommentDto> insert(@RequestBody AcademyCommentDto dto){
         return new ResponseEntity<AcademyCommentDto>(academyCommentService.insertAcademyComment(escapeDto(dto)),HttpStatus.OK);
     }
 
 
-    @DeleteMapping("/{abc_idx}")
+    @DeleteMapping("/D1/{abc_idx}")
     public ResponseEntity<Void> delete(@PathVariable Integer abc_idx){
         academyCommentService.deleteAcademyComment(abc_idx);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -67,20 +67,20 @@ public class AcademyCommentController {
     //     return new ResponseEntity<AcademyCommentDto>(academyCommentService.getAcademyComment(abc_idx),HttpStatus.OK);
     // }
 
-    @PutMapping("/update")
+    @PutMapping("/D1/update")
     public ResponseEntity<Void> update(@RequestBody AcademyCommentDto dto){
         academyCommentService.updateAcademyComment(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    @PostMapping("/insertreply")
+    @PostMapping("/D1/insertreply")
     public ResponseEntity<AcademyCommentDto> insertreply(@RequestBody AcademyCommentDto dto){
         return new ResponseEntity<AcademyCommentDto>(academyCommentService.insertAcademyReply(escapeDto(dto)),HttpStatus.OK);
     }
 
 
-    @GetMapping("/recommentlist")
+    @GetMapping("/D0/recommentlist")
     public List<Map<String,Object>> replylist(@RequestParam int abc_idx){
         return academyCommentService.getReplyOfAbcIdx(abc_idx);
     }
@@ -90,7 +90,7 @@ public class AcademyCommentController {
         return dto;
     }
 
-    @PostMapping("/like")   
+    @PostMapping("/D1/like")   
     public ResponseEntity<Void> likeAcademyComment(int abc_idx, int m_idx){
         academyCommentService.like(abc_idx,m_idx);
         return new ResponseEntity<>(HttpStatus.OK);

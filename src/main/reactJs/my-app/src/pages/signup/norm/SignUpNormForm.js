@@ -1,5 +1,6 @@
 import React from 'react';
 import {SignUpNormContract, SignUpNormUpload} from "../index";
+import InputName from "./inputs/InputName";
 
 function SignUpNormForm(props) {
     return (
@@ -13,20 +14,16 @@ function SignUpNormForm(props) {
             <div>
                 <b className='signup-guest-signup-text'>Devster 회원가입</b>
                 <SignUpNormUpload/>
-                <div className='signup-guest-name-text'>
-                    <span>이름</span>
-                    <span className='span'>*</span>
-                </div>
-                <div className='signup-guest-name-inputbox'/>
+                <InputName/>
                 <div className='signup-guest-id-text'>
                     <span>사용자 ID</span>
-                    <span className='span'> *</span>
+                    <span className='signup-guest-input-name'> *</span>
                 </div>
                 <div className='signup-guest-id-exist-text'>중복확인</div>
                 <div className='signup-guest-id-inputbox'/>
                 <div className='signup-guest-email-text'>
                     <span>E-mail</span>
-                    <span className='span'> *</span>
+                    <span className='signup-guest-input-name'> *</span>
                 </div>
                 <div className='signup-guest-email-exist-text'>중복확인</div>
                 <div className='signup-guest-email-inputbox'/>
@@ -40,7 +37,7 @@ function SignUpNormForm(props) {
                 </div>
                 <div className='signup-guest-pass-text'>
                     <span>비밀번호</span>
-                    <span className='span'>*</span>
+                    <span className='signup-guest-input-name'> *</span>
                 </div>
                 <div className='signup-guest-pass-secure'>
                     <div className='signup-guest-pass-secure-text'>보안강도 : 상</div>
@@ -53,7 +50,7 @@ function SignUpNormForm(props) {
                 <div className='signup-guest-pass-inputbox'/>
                 <div className='signup-guest-pass-check-text'>
                     <span>비밀번호 확인</span>
-                    <span className='span'>*</span>
+                    <span className='signup-guest-input-name'> *</span>
                 </div>
                 <div className='signup-guest-pass-check-wanrin'>
                     비밀번호가 일치하지 않습니다.
@@ -61,7 +58,7 @@ function SignUpNormForm(props) {
                 <div className='signup-guest-pass-check-inputb'/>
                 <div className='signup-guest-nickname-text'>
                     <span>닉네임</span>
-                    <span className='span'>*</span>
+                    <span className='signup-guest-input-name'> *</span>
                 </div>
                 <div className='signup-guest-nickname-check-te'>
                     사용 불가능한 닉네임입니다.
@@ -69,7 +66,7 @@ function SignUpNormForm(props) {
                 <div className='signup-guest-nickname-inputbox'/>
                 <div className='signup-guest-academy-text'>
                     <span>기관 선택</span>
-                    <span className='span'>*</span>
+                    <span className='signup-guest-input-name'> *</span>
                 </div>
                 <div className='signup-guest-academy-inputbox'/>
                 <img
@@ -78,10 +75,10 @@ function SignUpNormForm(props) {
                     src={require('../assets/signup_guest_academy_search_icon.svg').default}
                 />
             </div>
-                <div className='signup-guest-hr1'/>
-                <SignUpNormContract/>
-            </div>
-            );
-            }
+            <div className='signup-guest-hr1'/>
+            <SignUpNormContract/>
+        </div>
+    );
+}
 
-            export default SignUpNormForm;
+export default SignUpNormForm;

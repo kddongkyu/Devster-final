@@ -94,7 +94,7 @@ const Hboard = () => {
         />
       </div>
       <div className="hboard-function-search-input">
-        <div className="hboard-function-search-input1" />
+        <input type="text" className="hboard-function-search-input1" />
         <img
           className="hboard-function-search-icon"
           alt=""

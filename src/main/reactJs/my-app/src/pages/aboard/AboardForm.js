@@ -17,12 +17,11 @@ const AboardForm = () => {
         </div>
       </div>
       <div className="qboard-form-subject">
-        <div className="qboard-form-subject-rec" />
-        <div className="div">제목을 입력해주세요.</div>
+        <input type="text" className="qboard-form-subject-rec" placeholder="제목을 입력해주세요."/>
+       
       </div>
       <div className="qboard-form-content">
-        <div className="qboard-form-content-rec" />
-        <div className="qboard-form-content-text">내용을 입력해주세요.</div>
+        <textarea className="qboard-form-content-rec" placeholder="내용을 입력해주세요."></textarea>
       </div>
       <div className="qboard-form-fileupload">
         <div className="qboard-form-subject-rec" />
@@ -45,15 +44,6 @@ const AboardForm = () => {
           className="qboard-form-btn-icon"
           alt=""
           src={require("./assets/qboard_form_btn_icon.svg").default}
-        />
-      </div>
-      <div className="qboard-form-btn1">
-        <div className="qboard-form-btn-child" />
-        <div className="qboard-form-btn-text">게시글등록</div>
-        <img
-          className="qboard-form-btn-icon"
-          alt=""
-          src="/qboard-form-btn-icon1.svg"
         />
       </div>
     </div>

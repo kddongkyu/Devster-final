@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../style/SignUpNorm.css';
 import {SignUpNormForm} from "../index";
+import {useNavigate} from "react-router-dom";
 
 function SignUpNorm(props) {
+    const navi=useNavigate();
     return (
         <div className='signup-guest'>
-            <div className='signup-guest-intro'>
+            <div
+                className='signup-guest-intro'
+                onClick={()=>navi('/home')}
+            >
                 <img
                     className='signup-guest-intro-icon'
                     alt=''
