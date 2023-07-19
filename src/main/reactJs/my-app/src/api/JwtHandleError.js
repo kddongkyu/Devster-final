@@ -31,7 +31,5 @@ export const jwtHandleError = (error) => {
     }
     else if(error.request) {
         alert('서버로부터 응답이 없습니다.\n인터넷 연결을 확인해주세요.');
-    } else {
-        alert('요청을 처리하는 도중 문제가 발생했습니다.');
     }
 }

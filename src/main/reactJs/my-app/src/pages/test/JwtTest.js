@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
-import ResizeCrop from "../../api/ResizeCrop";
 import jwt_decode from "jwt-decode";
 
 function JwtTest(props) {
+<<<<<<< HEAD
 <<<<<<< HEAD
   const navi = useNavigate();
   let de = jwt_decode(localStorage.getItem("accessToken"));
@@ -36,6 +36,9 @@ function JwtTest(props) {
     </div>
   );
 =======
+=======
+
+>>>>>>> 5d8fde681ddff91b994e919ff0ca10d66c3e3867
     const navi = useNavigate();
     if(localStorage.getItem('accessToken')) {
         let de = jwt_decode(localStorage.getItem('accessToken'));
@@ -59,7 +62,6 @@ function JwtTest(props) {
         <div>
             <button onClick={jwtTest} style={{width: '500px', height: '500px'}}>Jwt - Test</button>
             <button onClick={axiosTest} style={{width: '500px', height: '500px'}}>Axios - Test</button>
-            <ResizeCrop/>
         </div>
     );
 >>>>>>> 6970148441e0c9b0667171cc35a64498800d229c

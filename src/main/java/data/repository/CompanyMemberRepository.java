@@ -14,6 +14,7 @@ public interface CompanyMemberRepository extends JpaRepository<CompanyMemberEnti
 
     boolean existsByCMcompname(String cm_compname);
 
+    Optional<CompanyMemberEntity> findByCMcp(String cm_cp);
     Optional<CompanyMemberEntity> findByCMemail(String cm_email);
     Optional<CompanyMemberEntity> findByCMcompname(String cm_compname);
     Optional<CompanyMemberEntity> findByCMrefreshtoken(String cm_refreshtoken);

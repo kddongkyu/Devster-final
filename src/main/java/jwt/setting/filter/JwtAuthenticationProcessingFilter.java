@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,8 +27,8 @@ import java.util.UUID;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String NO_CHECK_URL_MEMBER = "/member/login";
-    private static final String NO_CHECK_URL_COMPANYMEMBER = "/compmember/login";
+    private static final String NO_CHECK_URL_MEMBER = "/api/member/login";
+    private static final String NO_CHECK_URL_COMPANYMEMBER = "/api/compmember/login";
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
     private final CompanyMemberRepository companyMemberRepository;
@@ -41,7 +40,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals(NO_CHECK_URL_MEMBER)) {
+        if (!request.getRequestURI().startsWith("/api")) {
+            filterChain.doFilter(request, response);
+            return;
+        } else if (request.getRequestURI().equals(NO_CHECK_URL_MEMBER)) {
             filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
             return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
         } else if(request.getRequestURI().equals(NO_CHECK_URL_COMPANYMEMBER)) {
@@ -60,7 +62,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     .orElse(null);
 
             if (uriParts.length > 1) {
-                String prefix = uriParts[1];
+                String prefix = uriParts[2];
 
                 if (prefix.equals("member")) {
                     // member에 대한 처리
@@ -111,9 +113,11 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     // AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
                     // AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
                     if (refreshToken == null) {
-                        String type = jwtService.extractAccessToken(request)
-                                                .filter(jwtService::isTokenValid)
-                                                .orElse(null).toString();
+                        String accessToken = jwtService.extractAccessToken(request)
+                                .filter(jwtService::isTokenValid)
+                                .orElse(null);
+
+                        String type = jwtService.extractType(accessToken).toString();
                         if(type.equals("company")){
                             checkAccessTokenAndAuthenticationComp(request, response, filterChain);
                         } else {

@@ -54,6 +54,7 @@ const HboardForm = () => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         <div className="qboard-form-subject">
           <div className="qboard-form-subject-rec" />
           <div className="div">
@@ -96,6 +97,20 @@ const HboardForm = () => {
           <div className="qboard-form-fileupload-cnt-tex">
             사진 3장이 등록되었습니다.
           </div>
+=======
+      </div>
+      <div className="qboard-form-subject">
+        <input type="text" className="qboard-form-subject-rec" placeholder="제목을 입력해주세요."/>
+       
+      </div>
+      <div className="qboard-form-content">
+        <textarea className="qboard-form-content-rec" placeholder="내용을 입력해주세요."></textarea>
+      </div>
+      <div className="qboard-form-fileupload">
+        <div className="qboard-form-subject-rec" />
+        <div className="qboard-form-fileupload-placeho">
+          첨부 사진을 올려주세요.
+>>>>>>> 5d8fde681ddff91b994e919ff0ca10d66c3e3867
         </div>
         <div className="qboard-form-btn">
           <div className="qboard-form-btn-child" />
