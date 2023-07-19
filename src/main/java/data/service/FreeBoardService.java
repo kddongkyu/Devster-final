@@ -2,7 +2,9 @@ package data.service;
 
 import data.dto.FreeBoardDto;
 import data.entity.FreeBoardEntity;
+import data.entity.FreeBoardLikeEntity;
 import data.entity.MemberEntity;
+import data.repository.FreeBoardLikeRepository;
 import data.repository.FreeBoardRepository;
 import data.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -28,13 +30,14 @@ public class FreeBoardService {
 
     private final FreeBoardRepository freeBoardRepository;
     private final MemberRepository memberRepository;
+    private final FreeBoardLikeRepository freeBoardLikeRepository;
     private final NcpObjectStorageService storageService;
 
-
     @Autowired
-    public FreeBoardService(FreeBoardRepository freeBoardRepository, MemberRepository memberRepository, NcpObjectStorageService storageService) {
+    public FreeBoardService(FreeBoardRepository freeBoardRepository,  MemberRepository memberRepository, FreeBoardLikeRepository freeBoardLikeRepository,NcpObjectStorageService storageService) {
         this.freeBoardRepository = freeBoardRepository;
         this.memberRepository = memberRepository;
+        this.freeBoardLikeRepository = freeBoardLikeRepository;
         this.storageService = storageService;
     }
 
@@ -73,31 +76,26 @@ public class FreeBoardService {
         log.info("FreeBoard 사진 초기화 완료");
     }
 
-//    public List<FreeBoardDto> getAllFboard(){
-//        try {
-//            List<FreeBoardEntity>  entityList = freeBoardRepository.findAll();
-//            List<FreeBoardDto> dtoList = new ArrayList<>();
-//
-//            for(FreeBoardEntity entity : entityList) {
-//                dtoList.add(FreeBoardDto.toFreeBoardDto(entity));
-//            }
-//
-//            return dtoList;
-//        } catch (Exception e){
-//            log.error("findAll FreeBoardList Error", e);
-//            throw e;
-//        }
-//    }
-
     public Map<String, Object> getPagedFboard(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("FBwriteDay").descending());
         Page<FreeBoardEntity> result = freeBoardRepository.findAll(pageable);
 
-        List<FreeBoardDto> freeBoardList = result
+        List<Map<String, Object>> freeBoardList = result
                 .getContent()
                 .stream()
-                .map(FreeBoardDto::toFreeBoardDto)
+                .map(freeBoardEntity -> {
+                    MemberEntity memberInfo = memberRepository.findById(freeBoardEntity.getMIdx()).orElse(null);
+                    Map<String, Object> fboardMemberInfo = new HashMap<>();
+                    fboardMemberInfo.put("fboard", FreeBoardDto.toFreeBoardDto(freeBoardEntity));
+
+                    if (memberInfo != null) {
+                        fboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
+                        fboardMemberInfo.put("mNicname", memberInfo.getMNickname());
+                    }
+                    return fboardMemberInfo;
+                })
                 .collect(Collectors.toList());
+
 
         Map<String, Object> response = new HashMap<>();
         response.put("freeBoardList", freeBoardList);
@@ -109,18 +107,6 @@ public class FreeBoardService {
         return response;
     }
 
-
-//    public FreeBoardDto getOneFboard(Integer fb_idx){
-//        try {
-//            FreeBoardEntity freeBoard = freeBoardRepository.findById((Integer) fb_idx)
-//                    .orElseThrow(()->new EntityNotFoundException("존재하지 않는 fb_idx : " + fb_idx));
-//
-//            return  FreeBoardDto.toFreeBoardDto(freeBoard);
-//        } catch (Exception e){
-//            log.error("findById getOneFreeBoard Error", e);
-//            throw e;
-//        }
-//    }
 
     public Map<String, Object> getOneFboard(Integer fb_idx) {
         try {
@@ -181,5 +167,80 @@ public class FreeBoardService {
 
         log.info(fb_idx+" FreeBoard 사진업데이트 완료");
     }
+
+    // 좋아요 싫어요 관련 로직
+    private FreeBoardLikeEntity findOrCreateFBoardLike(int MIdx, int FBidx){
+        return freeBoardLikeRepository.findByMIdxAndFBidx(MIdx,FBidx)
+                .orElse(new FreeBoardLikeEntity(MIdx,FBidx));
+    }
+
+     public boolean isAlreadyAddGoodRp(int MIdx, int FBidx){
+     FreeBoardLikeEntity fboardlikeEntity=findOrCreateFBoardLike(MIdx, FBidx);
+     return fboardlikeEntity.getLikestatus()==1;
+ }
+
+     public boolean isAlreadyAddBadRp(int MIdx, int FBidx){
+         FreeBoardLikeEntity fboardlikeEntity=findOrCreateFBoardLike(MIdx, FBidx);
+         return fboardlikeEntity.getLikestatus()==2;
+     }
+
+    public void like(int MIdx, int FBidx) {
+        try {
+            FreeBoardLikeEntity freeBoardLikeEntity = findOrCreateFBoardLike(MIdx,FBidx);
+            if (freeBoardLikeEntity.getLikestatus() == 1) {
+                freeBoardLikeEntity.setLikestatus(0);
+                freeBoardLikeRepository.save(freeBoardLikeEntity);
+                FreeBoardEntity freeBoardEntity = freeBoardRepository.findById(FBidx)
+                        .orElseThrow(()-> new IllegalArgumentException("해당하는 fbidx를 찾지 못했습니다(fb_like-1)"));
+                freeBoardEntity.setFBlikeCount(freeBoardEntity.getFBlikeCount()-1);
+                freeBoardRepository.save(freeBoardEntity);
+            } else if (freeBoardLikeEntity.getLikestatus() == 2) {
+                throw new IllegalArgumentException("이미 싫어요가 눌려 있습니다");
+            } else {
+                freeBoardLikeEntity.setLikestatus(1);
+                freeBoardLikeRepository.save(freeBoardLikeEntity);
+
+                // FreeBoardEntity의 fb_like 필드 업데이트
+                FreeBoardEntity freeBoardEntity = freeBoardRepository.findById(FBidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 fbidx를 찾지 못했습니다(fb_like+1): " + FBidx));
+                freeBoardEntity.setFBlikeCount(freeBoardEntity.getFBlikeCount() + 1);
+                freeBoardRepository.save(freeBoardEntity);
+            }
+        } catch (IllegalArgumentException e) {
+            log.error("review like Error(Ill)", e);
+        } catch (Exception e) {
+            log.error("review like Error(Exce)", e);
+        }
+    }
+    public void dislike(int MIdx, int FBidx) {
+        try {
+            FreeBoardLikeEntity freeBoardLikeEntity = findOrCreateFBoardLike(MIdx, FBidx);
+
+            if(freeBoardLikeEntity.getLikestatus() == 1) {
+                throw new IllegalArgumentException("이미 좋아요가 눌려 있습니다");
+            } else if (freeBoardLikeEntity.getLikestatus() == 2) {
+                freeBoardLikeEntity.setLikestatus(0);
+                freeBoardLikeRepository.save(freeBoardLikeEntity);
+                FreeBoardEntity freeBoardEntity = freeBoardRepository.findById(FBidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 fbidx를 찾지 못했습니다(fb_dislike-1)"));
+                freeBoardEntity.setFBdislikeCount(freeBoardEntity.getFBdislikeCount()-1);
+                freeBoardRepository.save(freeBoardEntity);
+            } else {
+                freeBoardLikeEntity.setLikestatus(2);
+                freeBoardLikeRepository.save(freeBoardLikeEntity);
+
+                // freeBoardEntity fb_dislike 필드 업데이트
+                FreeBoardEntity freeBoardEntity = freeBoardRepository.findById(FBidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 Fbidx를 찾지 못했습니다(fb_dislike+1): " + FBidx));
+                freeBoardEntity.setFBdislikeCount(freeBoardEntity.getFBdislikeCount() + 1);
+                freeBoardRepository.save(freeBoardEntity);
+            }
+        } catch (IllegalArgumentException e) {
+            log.error("review like Error(Ill)", e);
+        } catch (Exception e) {
+            log.error("review like Error(Exce)", e);
+        }
+            }
+
 
 }

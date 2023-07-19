@@ -21,6 +21,8 @@ import {Aboard, AboardForm} from "../pages/aboard";
 import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
 import JwtTest from "../pages/test/JwtTest";
 
+import {FboardUpdateForm} from "../pages/fboard";
+
 function RouteMain(props) {
   return (
     <Routes>
@@ -40,8 +42,10 @@ function RouteMain(props) {
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route path="/notice/form" element={<Noticeform />} />
 
-        <Route path="/fboard/detail" element={<FboardDetail />} />
-        <Route path="/notice/detail" element={<Noticedetail />} />
+
+        <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
+        <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
+
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
