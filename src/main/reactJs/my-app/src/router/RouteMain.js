@@ -54,8 +54,8 @@ function RouteMain(props) {
         <Route path="/notice/form" element={<Noticeform />} />
 
 
-          <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
-          <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
+        <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
+        <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
 
 
         <Route element={<MypageList />}>
