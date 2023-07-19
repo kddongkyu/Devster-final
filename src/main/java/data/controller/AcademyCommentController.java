@@ -96,10 +96,10 @@ public class AcademyCommentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // @PostMapping("/dislike")   
-    // public ResponseEntity<Void> dislikeAcademyComment(int abc_idx, int m_idx){
-    //     academyCommentService.dislike(abc_idx,m_idx);
-    //     return new ResponseEntity<>(HttpStatus.OK);
-    // }
+    @PostMapping("/dislike")   
+    public ResponseEntity<Void> dislikeAcademyComment(int abc_idx, int m_idx){
+        academyCommentService.dislike(abc_idx,m_idx);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

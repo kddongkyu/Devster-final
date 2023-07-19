@@ -26,7 +26,7 @@ import java.util.Vector;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/hboard")
+@RequestMapping("/api/hboard")
 public class HireBoardController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -43,7 +43,7 @@ public class HireBoardController {
     private String bucketName;
 
 
-    @PostMapping("/upload")
+    @PostMapping("/D1/upload")
     public String photoUpload(MultipartFile upload)
     {
         if(photo!=null){
@@ -53,7 +53,7 @@ public class HireBoardController {
         return photo;
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/D1/insert")
     public void insert(@RequestBody HireBoardDto dto){
         hireBoardService.insertHireBoard(escapeDto(dto));
     }
@@ -78,7 +78,7 @@ public class HireBoardController {
     //     return hireBoardService.list(currentPage);
     // }
 
-    @GetMapping("/list")
+    @GetMapping("/D0/list")
     public Map<String,Object> list(@RequestParam(defaultValue = "1") int currentPage){
         return hireBoardService.list(currentPage);
     }    
@@ -88,20 +88,20 @@ public class HireBoardController {
     //     return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
     // }
 
-    @GetMapping("/{hb_idx}")
+    @GetMapping("/D0/{hb_idx}")
     public Map<String,Object> getDetailPage(@PathVariable int hb_idx, int m_idx){
         return hireBoardService.getDetailPage(hb_idx,m_idx);
     }
 
 
 
-    @DeleteMapping("/{idx}")
+    @DeleteMapping("/D1/{idx}")
     public ResponseEntity<Void> deleteHireBoard(@PathVariable Integer idx){
         hireBoardService.deleteHireBoard(idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/form/{idx}")
+    @GetMapping("/D1/form/{idx}")
     public ResponseEntity<HireBoardDto> updateHireBoardForm(@PathVariable Integer idx){
         return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
     }
@@ -112,13 +112,13 @@ public class HireBoardController {
     //     return new ResponseEntity<>(HttpStatus.OK);
     // }
 
-    @PutMapping("/hireupdate")
+    @PutMapping("/D1/hireupdate")
     public void update(@RequestBody HireBoardDto dto){
         hireBoardService.updateHireBoard(escapeDto(dto));
     }
     
 
-    @GetMapping("/increaseBkmk")
+    @GetMapping("/D1/increaseBkmk")
     public void increaseBkmk(Integer hb_idx, Integer m_idx){
         hireBoardService.addBkmk(hb_idx,m_idx);
     }

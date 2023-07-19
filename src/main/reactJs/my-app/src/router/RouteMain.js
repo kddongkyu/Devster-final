@@ -42,12 +42,16 @@ function RouteMain(props) {
         <Route path="/aboard" element={<Aboard />} />
         {/* <Route path="/notice" element={<Noticelist />} /> */}
         <Route path="/fboard/form" element={<FboardForm />} />
+        <Route path="/qboard/form" element={<QboardForm />} />ㄱ
+        <Route path="/hboard/form" element={<HboardForm />} />
+        <Route path="/aboard/form" element={<AboardForm />} />
+        {/* <Route path="/notice/form" element={<Noticeform />} />
+        <Route path="/notice/detail" element={<Noticedetail />} /> */}
+        <Route path="/aboard" element={<Aboard />} />
+        <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
-        {/* <Route path="/notice/form" element={<Noticeform />} /> */}
-        <Route path="/fboard/detail" element={<FboardDetail />} />
-        {/* <Route path="/notice/detail" element={<Noticedetail />} /> */}
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
@@ -55,7 +59,6 @@ function RouteMain(props) {
           <Route path="/withdrawal" element={<Withdrawal />} />
           {/* <Route path="/notice" element={<Notice />} /> */}
         </Route>
-        s
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
         </Route>

@@ -4,22 +4,9 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 
 const Hboard = () => {
-  const [data, setData] = useState("");
-
-  const { currentPage } = useParams();
-
-  const list = () => {
-    const url =
-      "/hboard/list?currentPage=" + (currentPage == null ? 1 : currentPage);
-    Axios.get(url).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
+  const handleRefresh = () => {
+    window.location.reload();
   };
-
-  useEffect(() => {
-    list();
-  }, [currentPage]);
 
   return (
     <div className="hboard">
@@ -105,6 +92,7 @@ const Hboard = () => {
         className="hboard-pages-reset-icon"
         alt=""
         src={require("./assets/board_pages_reset.svg").default}
+        onClick={handleRefresh}
       />
       <div className="hboard-pages">
         <div className="hboard-pages-current">12345 / 12345 페이지</div>

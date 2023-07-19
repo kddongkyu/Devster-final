@@ -51,6 +51,9 @@ public class AcademyCommentEntity {
     @Column(name="abc_ref")
     private int ABcref;
 
+    @Column(name="abc_dislike")
+    private int ABcdislike;
+
     public static AcademyCommentEntity toAcademyCommentEntity(AcademyCommentDto dto){
         return AcademyCommentEntity.builder()
             .ABcidx(dto.getAbc_idx())
@@ -60,6 +63,7 @@ public class AcademyCommentEntity {
             .ABclike(dto.getAbc_like())
             .ABcwriteday(dto.getAbc_writeday())
             .ABcref(dto.getAbc_ref())
+            .ABcdislike(dto.getAbc_dislike())
             .build();
     }
 }

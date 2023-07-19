@@ -19,6 +19,7 @@ public class AcademyCommentDto {
     private int abc_like;
     private Timestamp abc_writeday;
     private int abc_ref;
+    private int abc_dislike;
 
     public static AcademyCommentDto toAcademyCommentDto(AcademyCommentEntity entity){
 
@@ -30,6 +31,7 @@ public class AcademyCommentDto {
         .abc_like(entity.getABclike())
         .abc_writeday(entity.getABcwriteday())
         .abc_ref(entity.getABcref())
+        .abc_dislike(entity.getABcdislike())
         .build();
     }
 }

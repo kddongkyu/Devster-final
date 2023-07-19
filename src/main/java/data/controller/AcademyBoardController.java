@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/academyboard")
+@RequestMapping("/api/academyboard")
 public class AcademyBoardController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -44,22 +44,22 @@ public class AcademyBoardController {
     @Autowired
     private NcpObjectStorageService storageService;
 
-    @PostMapping
+    @PostMapping("/D1")
     public ResponseEntity<AcademyBoardDto> insert(@RequestBody AcademyBoardDto dto,List<MultipartFile> upload){
         return new ResponseEntity<AcademyBoardDto>(academyBoardService.insertAcademyBoard(escapeDto(dto),upload),HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/D0")
     public ResponseEntity<List<AcademyBoardDto>> getAllData(){
         return new ResponseEntity<List<AcademyBoardDto>>(academyBoardService.getAllData(), HttpStatus.OK);
     }
     
-    @GetMapping("/{ab_idx}")
+    @GetMapping("/D0/{ab_idx}")
     public Map<String,Object> getDetailPage(@PathVariable int ab_idx, int m_idx){
         return academyBoardService.getDetailPage(ab_idx,m_idx);
     }
 
-    @DeleteMapping("/{idx}")
+    @DeleteMapping("/D1/{idx}")
     public ResponseEntity<Void> deleteAcademyBoard(@PathVariable Integer idx){
         academyBoardService.deleteAcademyBoard(idx);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -71,20 +71,20 @@ public class AcademyBoardController {
     // }
 
 
-    @PutMapping
+    @PutMapping("/D1")
     public ResponseEntity<Void> update(@RequestBody AcademyBoardDto dto, MultipartFile upload, int currentPage){
         academyBoardService.updateAcademyBoard(escapeDto(dto),upload,currentPage);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    @PostMapping("/like")   
+    @PostMapping("/D1/like")   
     public ResponseEntity<Void> likeAcademyBoard(int ab_idx, int m_idx){
         academyBoardService.like(ab_idx,m_idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/dislike")
+    @PostMapping("/D1/dislike")
     public ResponseEntity<Void> dislikeAcademyBoard(int ab_idx, int m_idx){
         academyBoardService.dislike(ab_idx,m_idx);
         return new ResponseEntity<>(HttpStatus.OK);
