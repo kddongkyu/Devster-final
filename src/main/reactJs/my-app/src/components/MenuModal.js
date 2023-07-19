@@ -77,7 +77,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           <div className="menu-mypage-box">
             <div className="menu-mypage-userinfo">
               <div className="menu-mypage-userinfo-img">
-                {member.m_photo ? <img alt="" src={imageUrl} /> : null}
+                <img alt="" src={imageUrl} />
               </div>
               <div className="menu-mypage-userinfo-contents">
                 <div className="menu-mypage-userinfo-nickname">

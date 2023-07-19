@@ -19,7 +19,8 @@ public class ReviewDto {
     private String rb_content;
     private int rb_like;
     private int rb_dislike;
-    private int rb_star;
+    private int rb_readcount;
+    private Integer rb_star;
     private Timestamp rb_writeday;
 
     public static ReviewDto toReviewDto(ReviewEntity entity) {
@@ -33,6 +34,7 @@ public class ReviewDto {
                 .rb_like(entity.getRBlike())
                 .rb_dislike(entity.getRBdislike())
                 .rb_writeday(entity.getRBwriteday())
+                .rb_readcount(entity.getRBreadcount())
                 .m_idx(entity.getMIdx())
                 .ci_idx(entity.getCIidx())
                 .build();
