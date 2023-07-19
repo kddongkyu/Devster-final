@@ -1,0 +1,256 @@
+.menu-modal-img-icon {
+    position: absolute;
+    top: 0.8rem;
+    left: 0;
+    width: 3.2rem;
+    height: 2.3rem;
+}
+
+.menu-modal-text {
+    position: absolute;
+    top: 0;
+    left: 3.5rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 17.9rem;
+    height: 3.3rem;
+}
+
+.menu-modal-logo {
+    position: absolute;
+    top: 1.3rem;
+    left: 1.7rem;
+    width: 21.4rem;
+    height: 3.3rem;
+}
+
+.menu-modal-close-icon {
+    position: absolute;
+    top: 2.2rem;
+    right: 2rem;
+    width: 1.9rem;
+    height: 1.9rem;
+}
+
+.menu-modal {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    backdrop-filter: blur(7px);
+    height: 6.4rem;
+    color: #000;
+    font-family: Lalezar;
+}
+
+.menu-modal-options-fb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+
+.menu-modal-options-qna {
+    position: absolute;
+    top: 4.5rem;
+    left: 0;
+    letter-spacing: -0.24px;
+    font-family: Roboto;
+}
+
+.menu-modal-options-hire {
+    position: absolute;
+    top: 8.4rem;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+
+.menu-modal-options-aca,
+.menu-modal-options-review {
+    position: absolute;
+    top: 12.9rem;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+
+.menu-modal-options-review {
+    top: 17.4rem;
+}
+
+.menu-modal-options {
+    position: absolute;
+    top: 8rem;
+    left: 2.2rem;
+    width: 11rem;
+    height: 20.3rem;
+    font-size: 2rem;
+}
+
+.menu-account-box,
+.menu-account-signin-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.menu-account-box {
+    width: 100%;
+    right: 0;
+    border-top: 1px solid #bdc0c4;
+    height: 53.9rem;
+}
+
+.menu-account-signin-box {
+    border-radius: 15px;
+    border: 1px solid #bdc0c4;
+    width: 7.3rem;
+    height: 3.2rem;
+}
+
+.menu-account-signin-text {
+    position: absolute;
+    top: 0.7rem;
+    left: 2rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 3.3rem;
+    height: 1.7rem;
+}
+
+.menu-account-signin {
+    position: absolute;
+    top: 2rem;
+    left: 2.2rem;
+    width: 7.3rem;
+    height: 3.2rem;
+}
+
+.menu-account-signup-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 15px;
+    background-color: #721ea6;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 7.3rem;
+    height: 3.2rem;
+}
+
+.menu-account-signup-text {
+    position: absolute;
+    top: 0.7rem;
+    left: 1.4rem;
+    letter-spacing: -0.24px;
+}
+
+.menu-account-signup {
+    position: absolute;
+    top: 2rem;
+    left: 10.7rem;
+    width: 7.3rem;
+    height: 3.2rem;
+    color: #fff;
+}
+
+.menu-account {
+    position: absolute;
+    width: 100%;
+    top: 43.3rem;
+    right: 0;
+    left: 0;
+    height: 53.9rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.moblie-menu-modal {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: left;
+    font-size: 3rem;
+    color: #626567;
+    font-family: "Noto Sans KR";
+    box-shadow: 0px 0px 100px 1000px rgba(0, 0, 0, .5);
+    border-radius: 10px;
+}
+
+.menu-modal-box {
+    width: 96%;
+    height: 90vh;
+    z-index: 999;
+    position: absolute;
+    left:50%;
+    transform:translate(-50%,2%);
+    z-index: 1000;
+}
+
+@keyframes modal-fadein {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+.menu-modal-box {
+    animation: modal-fadein 0.3s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
+}
+
+.menu-mypage {
+    position: absolute;
+    top: 30rem;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 20.3rem;
+    font-size: 2rem;
+    border-top: 1px solid #bdc0c4;
+}
+
+.menu-mypage-box{
+    position: absolute;
+    left: 2.2rem;
+    top: 3rem;
+}
+
+.menu-mypage-userinfo-img{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+
+.menu-mypage-userinfo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.menu-mypage-userinfo{
+    display: flex;
+}
+
+.menu-mypage-userinfo-contents{
+    margin-left: 1.2rem;
+}
+
+.menu-mypage-userinfo-nickname{
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.5rem;
+    text-overflow: ellipsis;
+}
+
+.menu-mypage-userinfo-email{
+    font-size: 1.4rem;
+    line-height: 1.25rem;
+    text-overflow: ellipsis;
+    margin-top: .8rem;
+}
