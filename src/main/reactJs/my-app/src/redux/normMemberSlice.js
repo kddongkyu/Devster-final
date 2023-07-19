@@ -7,8 +7,21 @@ const initialState = {
     m_pass: '',
     m_nickname: '',
     m_academy: '',
+    seconds: null,
+    emailRegInput: '',
 
-    m_nameIsValid: false,
+    idChk: false,
+    emailChk: false,
+    emailRegChk: false,
+
+    nameIsValid: false,
+    idIsValid: false,
+    emailIsValid: false,
+    passIsValid: false,
+
+    isEmailSent: false,
+
+    isSubmitted: false,
 };
 
 export const normMemberSlice = createSlice({
@@ -33,8 +46,46 @@ export const normMemberSlice = createSlice({
         setM_academy: (state, action) => {
             state.m_academy = action.payload;
         },
-        setM_nameIsValid: (state, action) => {
-            state.m_nameIsValid = action.payload;
+        setSeconds: (state, action) => {
+            state.seconds = action.payload;
+        },
+        setEmailRegInput: (state, action) => {
+            state.emailRegInput = action.payload;
+        },
+
+
+        setIdChk: (state, action) => {
+            state.idChk = action.payload;
+        },
+        setEmailChk: (state, action) => {
+            state.emailChk = action.payload;
+        },
+        setEmailRegChk: (state, action) => {
+            state.emailRegChk = action.payload;
+        },
+
+
+
+        setNameIsValid: (state, action) => {
+            state.nameIsValid = action.payload;
+        },
+        setIdIsValid: (state, action) => {
+            state.idIsValid = action.payload;
+        },
+        setEmailIsValid: (state, action) => {
+            state.emailIsValid = action.payload;
+        },
+        setPassIsValid: (state, action) => {
+            state.passIsValid = action.payload;
+        },
+
+
+
+        setIsEmailSent: (state, action) => {
+            state.isEmailSent = action.payload;
+        },
+        setIsSubmitted: (state, action) => {
+            state.isSubmitted = action.payload;
         },
     },
 });
@@ -46,7 +97,17 @@ export const {
     setM_pass,
     setM_nickname,
     setM_academy,
-    setM_nameIsValid
+    setSeconds,
+    setEmailRegInput,
+    setIdChk,
+    setEmailChk,
+    setEmailRegChk,
+    setNameIsValid,
+    setIdIsValid,
+    setEmailIsValid,
+    setPassIsValid,
+    setIsEmailSent,
+    setIsSubmitted
 } = normMemberSlice.actions;
 
 export default normMemberSlice.reducer;
