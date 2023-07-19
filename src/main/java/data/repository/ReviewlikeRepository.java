@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface ReviewlikeRepository extends JpaRepository<ReviewlikeEntity,Integer> {
-
     Optional<ReviewlikeEntity> findByMIdxAndRBidx(int MIdx, int RBidx);
+
 }
