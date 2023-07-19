@@ -57,7 +57,7 @@ function Reviewupdate(props) {
     }
 
     const fetchReview = useCallback((rb_idx) => {
-        const url = `api/D1/review/${rb_idx}`;
+        const url = `api/review/D1/${rb_idx}`;
         axiosIns.get(url)
             .then(response => {
                 console.log(response.data);
@@ -78,7 +78,7 @@ function Reviewupdate(props) {
     }
 
     const handleUpdateSubmit = async () => {
-        const apiUrl = `/api/D1/review/${rb_idx}`;
+        const apiUrl = `/api/review/D1/${rb_idx}`;
         console.dir(updatedate, "들어가?");
         try {
             const response = await axiosIns.put(apiUrl, updatedate);

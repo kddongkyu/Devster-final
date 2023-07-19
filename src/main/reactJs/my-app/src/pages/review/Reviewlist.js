@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './style/Reviewlist.css';
 import axiosIns from "../../api/JwtConfig";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import StarRating from "./StarRating";
 function Reviewlist(props) {
 
@@ -11,9 +11,7 @@ function Reviewlist(props) {
     const [currentPage,setCurrentPage] = useState(1);
     const [totalPages,setTotalPages]=useState(1);
 
-    const handleClick = () => {
-        window.location.href = '/review/form';
-    };
+
 
     const handleRefresh = () => {
         window.location.reload();
@@ -66,8 +64,8 @@ function Reviewlist(props) {
 
     const reviewTypes = {
         1: '면접',
-        2: '합격',
-        3: '코딩',
+        2: '코딩',
+        3: '합격',
     };
 
 
@@ -127,7 +125,8 @@ function Reviewlist(props) {
                     <div className="div">코딩테스트 / 면접 / 합격 후기 게시판</div>
                 </div>
             </div>
-            <button className="review-headerbar-btn"  onClick={handleClick}>
+            <NavLink to={`/review/form`} >
+            <button className="review-headerbar-btn" >
                 {/*<div className="review-headerbar-rec" />*/}
                 <div className="div1">{`후기작성 `}</div>
                 <img
@@ -136,6 +135,7 @@ function Reviewlist(props) {
                     src={require('./assets/review_headerbar_btn_icon.svg').default}
                 />
             </button>
+            </NavLink>
             <div className="review-headerbar-function">
                 <div className="review-headerbar-function-sort">
                     <div className="review-headerbar-function-sort1" />

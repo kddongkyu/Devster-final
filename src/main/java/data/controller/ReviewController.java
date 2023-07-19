@@ -38,7 +38,7 @@ public class ReviewController {
     
 
 
-    @PostMapping("/D0")
+    @PostMapping("/D1")
     public ResponseEntity<ReviewDto> insertReview(@RequestBody ReviewDto dto) {
         return new ResponseEntity<ReviewDto>(reviewService.insertReview(dto),HttpStatus.OK);
     }
@@ -78,13 +78,13 @@ public class ReviewController {
 
     }
 
-    @GetMapping("/D1/{m_idx}/checkGood/{rb_idx}")
+    @GetMapping("/D0/{m_idx}/checkGood/{rb_idx}")
     public ResponseEntity<Boolean> checkGood(@PathVariable int m_idx, @PathVariable int rb_idx) {
         boolean isGood = reviewService.isAlreadyAddGoodRp(m_idx, rb_idx);
         return ResponseEntity.ok(isGood);
     }
 
-    @GetMapping("/D1/{m_idx}/checkBad/{rb_idx}")
+    @GetMapping("/D0/{m_idx}/checkBad/{rb_idx}")
     public ResponseEntity<Boolean> checkBad(@PathVariable int m_idx, @PathVariable int rb_idx) {
         boolean isBad = reviewService.isAlreadyAddBadRp(m_idx, rb_idx);
         return ResponseEntity.ok(isBad);

@@ -24,7 +24,7 @@ function Reviewdetail() {
 
                 // fetchReview가 성공적으로 완료된 후에 좋아요 상태 조회
                 if (m_idx && rb_idx) {
-                    axiosIns.get(`/api/review/D1/${m_idx}/checkGood/${rb_idx}`)
+                    axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
                         .then(response => {
                             setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
                         })
@@ -33,7 +33,7 @@ function Reviewdetail() {
                         });
 
                     // fetchReview가 성공적으로 완료된 후에 싫어요 상태 조회
-                    axiosIns.get(`/api/review/D1/${m_idx}/checkBad/${rb_idx}`)
+                    axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
                         .then(response => {
                             setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
                         })
@@ -99,22 +99,22 @@ function Reviewdetail() {
 
     const handlelike = (m_idx, rb_idx) => {
         // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/review/D1/${m_idx}/checkBad/${rb_idx}`)
+        axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
             .then(response => {
                 if (response.data === 2) {
                     // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
                     alert("이미 싫어요가 눌려 있습니다");
-                    window.location.reload();
+                    fetchReview(rb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/review/D1/${m_idx}/checkGood/${rb_idx}`)
+                    axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
                         .then(response => {
                             if (response.data === 1) {
                                 // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
                                 alert("이미 좋아요가 눌려 있습니다");
                                 axiosIns.post(`/api/review/D1/${m_idx}/like/${rb_idx}`)
                                     .then(response => {
-                                        window.location.reload();
+                                        fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
                                         alert("좋아요 요청 실패");
@@ -126,7 +126,7 @@ function Reviewdetail() {
                                     .then(response => {
                                         alert("좋아요를 눌렀습니다");
                                         console.log('좋아요 요청 성공:', response.data);
-                                        window.location.reload();
+                                        fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
                                         alert("좋아요 요청 실패");
@@ -147,22 +147,22 @@ function Reviewdetail() {
 
     const handleDislike = (m_idx, rb_idx) => {
         // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/review/D1/${m_idx}/checkGood/${rb_idx}`)
+        axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
             .then(response => {
                 if (response.data === 1) {
                     // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
                     alert("이미 좋아요가 눌려 있습니다");
-                    window.location.reload();
+                    window.location.replace(`/review/detail/${rb_idx}/${currentPage}`);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/review/D1/${m_idx}/checkBad/${rb_idx}`)
+                    axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
                         .then(response => {
                             if (response.data === 2) {
                                 // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
                                 alert("이미 싫어요가 눌려 있습니다");
                                 axiosIns.post(`/api/review/D1/${m_idx}/dislike/${rb_idx}`)
                                     .then(response => {
-                                        window.location.reload();
+                                        window.location.replace(`/review/detail/${rb_idx}/${currentPage}`);
                                     })
                                     .catch(error => {
                                         alert("싫어요 요청 실패");
@@ -174,7 +174,7 @@ function Reviewdetail() {
                                     .then(response => {
                                         alert("싫어요를 눌렀습니다");
                                         console.log('싫어요 요청 성공:', response.data);
-                                        window.location.reload();
+                                        window.location.replace(`/review/detail/${rb_idx}/${currentPage}`);
                                     })
                                     .catch(error => {
                                         alert("싫어요 요청 실패");
@@ -194,7 +194,7 @@ function Reviewdetail() {
 
     const deleteReview = (rb_idx) => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
-            axiosIns.delete(`review/D1/${rb_idx}`)
+            axiosIns.delete(`/api/review/D1/${rb_idx}`)
                 .then(response => {
                     console.log('Review deleted successfully');
                     window.location.href="/review";
