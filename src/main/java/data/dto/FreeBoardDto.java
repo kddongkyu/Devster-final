@@ -4,11 +4,13 @@ import data.entity.FreeBoardEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Builder
 public class FreeBoardDto {
     private int m_idx;

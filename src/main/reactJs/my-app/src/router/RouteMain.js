@@ -26,6 +26,7 @@ import {SignIn} from "../pages/signin";
 import {SignUpNorm} from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
 import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
+import {FboardUpdateForm} from "../pages/fboard";
 
 function RouteMain(props) {
     return (
@@ -42,12 +43,13 @@ function RouteMain(props) {
                 <Route path='/notice' element={<Noticelist/>}/>
 
                 <Route path='/fboard/form' element={<FboardForm/>}/>
-                <Route path='/qboard/form' element={<QboardForm/>}/>ㄱ
+                <Route path='/qboard/form' element={<QboardForm/>}/>
                 <Route path='/hboard/form' element={<HboardForm/>}/>
                 <Route path='/aboard/form' element={<AboardForm/>}/>
                 <Route path='/notice/form' element={<Noticeform/>}/>
 
-                <Route path='/fboard/detail' element={<FboardDetail/>}/>
+                <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
+                <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
 
 
                 <Route path='/notice/detail' element={<Noticedetail/>}/>

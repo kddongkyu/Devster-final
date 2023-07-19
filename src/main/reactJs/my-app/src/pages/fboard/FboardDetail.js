@@ -1,33 +1,259 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './style/FboardDetail.css';
+import jwt_decode from "jwt-decode";
+import axiosIns from "../../api/JwtConfig";
+import {useNavigate, useParams} from "react-router-dom";
+
 
 function FboardDetail(props) {
+
+    let de = jwt_decode(localStorage.getItem('accessToken'));
+    const m_idx = de.idx;
+    const [fboardData, setFboardData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const { fb_idx, currentPage } = useParams();
+    const [isGood, setIsGood] = useState(false);
+    const [isBad, setIsBad] = useState(false);
+
+    const navi = useNavigate();
+
+    const fetchFboard = useCallback((fb_idx, currentPage = null) => {
+        const url=`/fboard/${fb_idx}`;
+        axiosIns.get(url)
+            .then(response => {
+                console.log(response.data);
+                setFboardData(response.data);
+                setIsLoading(false);
+
+                if (m_idx && fb_idx) {
+                    axiosIns.get(`/fboard/${m_idx}/checkGood/${fb_idx}`)
+                        .then(response => {
+                            setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
+                        })
+                        .catch(error => {
+                            console.error('Error checking good status:', error);
+                        });
+
+                    axiosIns.get(`/fboard/${m_idx}/checkBad/${fb_idx}`)
+                        .then(response => {
+                            setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
+                        })
+                        .catch(error => {
+                            console.error('Error checking bad status:', error);
+                        });
+                }
+
+            })
+            .catch(error => {
+                console.error('Error fetching fboard:', error);
+            });
+    }, []);
+
+    // 업데이트 폼으로 이동하는 변수
+    const navigateToPurchase = useCallback((fb_idx, currentPage) => {
+        const updateFormUrl = `/fboard/updateform/${fb_idx}/${currentPage}`;
+        navi(updateFormUrl);
+    }, [fb_idx,currentPage, navi]);
+
+
+    useEffect(() => {
+        fetchFboard(fb_idx, currentPage);
+    }, [fb_idx, currentPage, fetchFboard()]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    // 좋아요 싫어요
+    const handlelike = (m_idx, fb_idx) => {
+            // 먼저 좋아요 상태를 체크합니다.
+            axiosIns.get(`/fboard/${m_idx}/checkBad/${fb_idx}`)
+                .then(response => {
+                    if (response.data === 2) {
+                        // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                        alert("이미 싫어요가 눌려 있습니다");
+                        window.location.reload();
+                    } else {
+                        // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
+                        axiosIns.get(`/fboard/${m_idx}/checkGood/${fb_idx}`)
+                            .then(response => {
+                                if (response.data === 1) {
+                                    // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                                    alert("이미 좋아요가 눌려 있습니다");
+                                    axiosIns.post(`/fboard/${m_idx}/like/${fb_idx}`)
+                                        .then(response => {
+                                            window.location.reload();
+                                        })
+                                        .catch(error => {
+                                            alert("좋아요 요청 실패");
+                                            console.error('좋아요 요청 실패:', error);
+                                        });
+                                } else {
+                                    // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
+                                    axiosIns.post(`/fboard/${m_idx}/like/${fb_idx}`)
+                                        .then(response => {
+                                            alert("좋아요를 눌렀습니다");
+                                            console.log('좋아요 요청 성공:', response.data);
+                                            window.location.reload();
+                                        })
+                                        .catch(error => {
+                                            alert("좋아요 요청 실패");
+                                            console.error('좋아요 요청 실패:', error);
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('좋아요 상태 체크 실패:', error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error('싫어요 상태 체크 실패:', error);
+                });
+        };
+
+
+        const handleDislike = (m_idx, fb_idx) => {
+            // 먼저 좋아요 상태를 체크합니다.
+            axiosIns.get(`/fboard/${m_idx}/checkGood/${fb_idx}`)
+                .then(response => {
+                    if (response.data === 1) {
+                        // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                        alert("이미 좋아요가 눌려 있습니다");
+                        window.location.reload();
+                    } else {
+                        // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
+                        axiosIns.get(`/fboard/${m_idx}/checkBad/${fb_idx}`)
+                            .then(response => {
+                                if (response.data === 2) {
+                                    // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                                    alert("이미 싫어요가 눌려 있습니다");
+                                    axiosIns.post(`/fboard/${m_idx}/dislike/${fb_idx}`)
+                                        .then(response => {
+                                            window.location.reload();
+                                        })
+                                        .catch(error => {
+                                            alert("싫어요 요청 실패");
+                                            console.error('싫어요 요청 실패:', error);
+                                        });
+                                } else {
+                                    // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
+                                    axiosIns.post(`/fboard/${m_idx}/dislike/${fb_idx}`)
+                                        .then(response => {
+                                            alert("싫어요를 눌렀습니다");
+                                            console.log('싫어요 요청 성공:', response.data);
+                                            window.location.reload();
+                                        })
+                                        .catch(error => {
+                                            alert("싫어요 요청 실패");
+                                            console.error('싫어요 요청 실패:', error);
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('싫어요 상태 체크 실패:', error);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error('좋아요 상태 체크 실패:', error);
+                });
+        };
+
+    let result = fboardData.fboard.rb_like - fboardData.fboard.rb_dislike;
+
+        if (fboardData.fboard.rb_like <= fboardData.fboard.rb_dislike) {
+            result = - result;
+        }
+
+    const deleteFboard = (fb_idx) => {
+            if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
+                axiosIns.delete(`/fboard/${fb_idx}`)
+                    .then(response => {
+                        console.log('FreeBoard deleted successfully');
+                        window.location.href="/fboard";
+                    })
+                    .catch(error => {
+                        console.error('Error deleting fboard:', error);
+                    });
+            }
+        };
+
+    const fboardNavigation = () => {
+        const url = "/fboard";
+        window.location.href = url;
+    };
+
+
+    const timeForToday = (value) => {
+        if (!value) {
+            return '';
+        }
+
+        const valueConv = value.slice(0, -10);
+        const today = new Date();
+        const timeValue = new Date(valueConv);
+
+        // timeValue를 한국 시간대로 변환
+        const timeValueUTC = new Date(timeValue.toISOString());
+        const offset = timeValue.getTimezoneOffset() * 60 * 1000; // 분 단위를 밀리초 단위로 변환
+        const timeValueKST = new Date(timeValueUTC.getTime() - offset);
+
+
+        const betweenTime = Math.floor((today.getTime() - timeValueKST.getTime()) / 1000 / 60);
+        if (betweenTime < 1) return '방금 전';
+        if (betweenTime < 60) {
+            return `${betweenTime}분 전`;
+        }
+        console.log(betweenTime);
+
+        const betweenTimeHour = Math.floor(betweenTime / 60);
+        if (betweenTimeHour < 24) {
+            return `${betweenTimeHour}시간 전`;
+        }
+
+        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        if (betweenTimeDay < 8) {
+            return `${betweenTimeDay}일 전`;
+        }
+
+        const year = String(timeValue.getFullYear()).slice(0, 4);
+        const month = String(timeValue.getMonth() + 1).padStart(2, '0');
+        const day = String(timeValue.getDate()).padStart(2, '0');
+
+        const formattedDateWithoutTime = `${year}-${month}-${day}`;
+
+        return formattedDateWithoutTime;
+    };
+
     return (
         <div className="fboard-detail">
             <div className="advertise-box">
                 <div className="advertise-main" />
                 <b className="advertise-text">광고</b>
             </div>
+
             {/*<img*/}
             {/*    className="board-detail-type-hr-icon"*/}
             {/*    alt=""*/}
             {/*    src={require("./assets/boarddetail/board_detail_type_hr.svg").default}*/}
             {/*/>*/}
+
             <div className="board-detail-type-text">자유게시판</div>
-            <div className="notice-detail-info">
+            <div className="fboard-detail-info">
                 <img
-                    className="notice-detail-info-profile-img-icon"
+                    className="fboard-detail-info-profile-img-icon"
                     alt=""
-                    src={require("./assets/boarddetail/notice_detail_info_profile_img.png").default}
+                    src={fboardData.mPhoto}
                 />
-                <div className="notice-detail-info-nickname">닉네임</div>
-                <div className="notice-detail-info-status-text">
-                    <span>{`  400 · `}</span>
-                    <span className="span">{`수정됨 `}</span>
+                <div className="fboard-detail-info-nickname">{fboardData.mNicname}</div>
+                <div className="fboard-detail-info-status-text">
+                    <span>{fboardData.fboard.fb_readcount}</span>
+                    {/*<span className="span">{`수정됨 `}</span>*/}
                 </div>
-                <div className="notice-detail-info-status-text1">{`2일 전 ·         `}</div>
+                <div className="fboard-detail-info-status-text1">{timeForToday(fboardData.fboard.fb_writeday)}</div>
                 <img
-                    className="notice-detail-info-status-view-icon"
+                    className="fboard-detail-info-status-view-icon"
                     alt=""
                     src={require("./assets/boarddetail/notice_detail_info_status_views.svg").default}
                 />
@@ -36,86 +262,94 @@ function FboardDetail(props) {
             <img className="fboard-url-icon" alt=""
                  src={require("./assets/boarddetail/notice_detail_header_function_url.svg").default}
             />
-            <img
-                className="fboard-update-icon"
-                alt=""
-                src={require("./assets/boarddetail/edit.svg").default}
-            />
-            <img
-                className="fboard-delete-icon"
-                alt=""
-                src={require("./assets/boarddetail/trash.svg").default}
-            />
-            <div className="notice-detail-header-btn">
-                <div className="notice-detail-header-btn-like">
+            {/*<img*/}
+            {/*    className="fboard-update-icon"*/}
+            {/*    alt=""*/}
+            {/*    src={require("./assets/boarddetail/edit.svg").default}*/}
+            {/*    onClick={navigateToPurchase}*/}
+            {/*/>*/}
+            {/*<img*/}
+            {/*    className="fboard-delete-icon"*/}
+            {/*    alt=""*/}
+            {/*    src={require("./assets/boarddetail/trash.svg").default}*/}
+            {/*    onClick={() => deleteFboard(fb_idx)}*/}
+            {/*/>*/}
+            {m_idx === fboardData.fboard.m_idx && (
+                <>
+                    <img
+                        className="fboard-update-icon"
+                        alt=""
+                        src={require("./assets/boarddetail/edit.svg").default}
+                        onClick={() => navigateToPurchase(fb_idx, currentPage)}
+                    />
+                    <img
+                        className="fboard-delete-icon"
+                        alt=""
+                        src={require("./assets/boarddetail/trash.svg").default}
+                        onClick={() => deleteFboard(fb_idx)}
+                    />
+                </>
+            )}
+            <div className="fboard-detail-header-btn">
+                <div className="fboard-detail-header-btn-like">
                     <img
                         className="board-detail-header-btn-like-i-icon"
                         alt=""
                         src={require("./assets/boarddetail/board_detail_header_btn_like_icon.svg").default}
                     />
-                    <div className="board-detail-header-btn-like-t">180</div>
+                    <div className="board-detail-header-btn-like-t">{fboardData.fboard.fb_like}</div>
                 </div>
-                <div className="notice-detail-header-btn-disli">
+                <div className="fboard-detail-header-btn-disli">
                     <img
                         className="board-detail-header-btn-dislik-icon"
                         alt=""
                         src={require("./assets/boarddetail/board_detail_header_btn_dislike_icon.svg").default}
                     />
-                    <div className="board-detail-header-btn-like-t">20</div>
+                    <div className="board-detail-header-btn-like-t">{fboardData.fboard.fb_dislike}</div>
                 </div>
             </div>
             <div className="board-detail-textarea">
-                <div className="board-detail-textarea-contents">
-                    <p className="p">
-                        지방자치단체는 주민의 복리에 관한 사무를 처리하고 재산을 관리하며,
-                        법령의 범위안에서 자치에 관한 규정을 제정할 수 있다. 국회에 제출된
-                        법률
-                    </p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">
-                        안 기타의 의안은 회기중에 의결되지 못한 이유로 폐기되지 아니한다.
-                        다만, 국회의원의 임기가 만료된 때에는 그러하지 아니하다. 사법권은
-                        법관으로 구
-                    </p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">성된 법원에 속한다.</p>
-                    <p className="p">헌법재판소에서 법률의 위헌결정</p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">
-                        , 탄핵의 결정, 정당해산의 결정 또는 헌법소원에 관한 인용결정을 할
-                        때에는 재판관 6인 이상의 찬성이 있어야 한다. 탄핵결정은 공직으로부터
-                        파면함에 그친다. 그러나, 이에 의하여 민사상이나 형사상의 책임이
-                        면제되지는 아니한다. 국회의원의 수는 법률로 정하되, 200인 이상으로
-                        한다.
-                    </p>
+                <div className="board-detail-textarea-subject">
+                    {fboardData.fboard.fb_subject}
                 </div>
-                <b className="board-detail-textarea-subject">
-                    지방자치단체는 주민의 복리
-                </b>
+                <div className="board-detail-textarea-contents">
+                   <pre>{fboardData.fboard.fb_content}</pre>
+                </div>
+            </div>
+            <div className="board-detail-listback" onClick={fboardNavigation}>
+                <div className="board-detail-listback-rec" />
+                <div className="board-detail-listback-text">목록</div>
+                <img
+                    className="board-detail-listback-icon"
+                    alt=""
+                    src={require("./assets/boarddetail/board_detail_listback_icon.svg").default}
+                />
             </div>
             <div className="board-detail-counter">
                 <div className="board-detail-counter-like">
-                    <div className="board-detail-counter-like-box" />
+                    <div className="board-detail-counter-like-box"
+                         style={isGood ? { backgroundColor: '#F5EFF9' } : {}}/>
                     <img
                         className="board-detail-counter-like-icon"
                         alt=""
-                        src={require("./assets/boarddetail/board_detail_commnets_all_up.svg").default}
+                        src={require("./assets/boarddetail/review_detail_counter_like_icon.svg").default}
+                        onClick={()=>handlelike(m_idx,fb_idx)}
                     />
                 </div>
                 <div className="board-detail-counter-num">
                     <div className="board-detail-counter-num-box" />
-                    <div className="board-detail-counter-num-text">565</div>
+                    <div className="board-detail-counter-num-text">
+                        {fboardData.fboard.fb_like - fboardData.fboard.fb_dislike}
+                    </div>
                 </div>
                 <div className="board-detail-counter-dislike">
-                    <div className="board-detail-counter-dislike-b" />
+                    <div className="board-detail-counter-dislike-b"
+                         style={isBad ? { backgroundColor: '#F5EFF9' } : {}}/>
                     <img
                         className="board-detail-counter-like-icon"
                         alt=""
-                        src={require("./assets/boarddetail/board_detail_commnets_all_down.svg").default}
+                        src={require("./assets/boarddetail/review_detail_counter_dislike_icon.svg").default}
+                        onClick={()=>handleDislike(m_idx,fb_idx)}
                     />
                 </div>
             </div>

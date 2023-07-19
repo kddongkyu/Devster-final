@@ -1,8 +1,6 @@
 import "./style/FboardForm.css";
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
-import Axios from 'axios';
-import jwt_Decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
 function FboardForm (props)  {

@@ -25,11 +25,6 @@ public class FreeBoardController {
         this.freeBoardService = freeBoardService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<FreeBoardDto>> getAllFboard(){
-//        return new ResponseEntity<List<FreeBoardDto>>(freeBoardService.getAllFboard(), HttpStatus.OK);
-//    }
-
     @GetMapping
     public ResponseEntity<Map<String, Object>> getPagedFboard(
             @RequestParam(defaultValue = "0") int page,
@@ -80,6 +75,34 @@ public class FreeBoardController {
     public ResponseEntity<Void> updatePhoto(@PathVariable Integer fb_idx, @RequestBody MultipartFile upload) {
         freeBoardService.updatePhoto(fb_idx,upload);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 좋아요 싫어요 관련 controller
+    @PostMapping("/{m_idx}/like/{fb_idx}")
+    public ResponseEntity<FreeBoardDto> likeFboard(@PathVariable int fb_idx, @PathVariable int m_idx) {
+        freeBoardService.like(m_idx, fb_idx);
+        FreeBoardDto dto = new FreeBoardDto();
+        return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("/{m_idx}/dislike/{fb_idx}")
+    public ResponseEntity<FreeBoardDto> dislikeFboard(@PathVariable int fb_idx, @PathVariable int m_idx) {
+        freeBoardService.dislike(m_idx, fb_idx);
+        FreeBoardDto dto = new FreeBoardDto();
+        return ResponseEntity.ok(dto);
+
+    }
+
+    @GetMapping("/{m_idx}/checkGood/{fb_idx}")
+    public ResponseEntity<Boolean> checkGood(@PathVariable int m_idx, @PathVariable int fb_idx) {
+        boolean isGood = freeBoardService.isAlreadyAddGoodRp(m_idx, fb_idx);
+        return ResponseEntity.ok(isGood);
+    }
+
+    @GetMapping("/{m_idx}/checkBad/{fb_idx}")
+    public ResponseEntity<Boolean> checkBad(@PathVariable int m_idx, @PathVariable int fb_idx) {
+        boolean isBad = freeBoardService.isAlreadyAddBadRp(m_idx, fb_idx);
+        return ResponseEntity.ok(isBad);
     }
 
 
