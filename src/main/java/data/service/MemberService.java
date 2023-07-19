@@ -6,6 +6,7 @@ import data.entity.MemberEntity;
 import data.repository.AcademyInfoRepository;
 import data.repository.MemberRepository;
 import jwt.setting.settings.JwtService;
+import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,17 +14,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Slf4j
 public class MemberService {
 
-    private final Logger logger = LoggerFactory.getLogger(MemberService.class);
 
     private final MemberRepository memberRepository;
     private final AcademyInfoRepository academyInfoRepository;
@@ -51,13 +51,13 @@ public class MemberService {
             storageService.deleteFile(bucketName,"devster/member",session.getAttribute("photo").toString());
         }
         session.setAttribute("photo", photo);
-        logger.info("일반회원 업로드 완료");
+        log.info("일반회원 업로드 완료");
         return photo;
     }
 
     public void resetPhoto(String photo) {
         storageService.deleteFile(bucketName,"devster/member",photo);
-        logger.info("일반회원 사진 초기화 완료");
+        log.info("일반회원 사진 초기화 완료");
     }
 
     public void registerMember(MemberDto dto,HttpSession session) throws Exception {
@@ -81,7 +81,7 @@ public class MemberService {
         MemberEntity member = MemberEntity.toMemberEntity(dto);
         member.passwordEncode(passwordEncoder);
         memberRepository.save(member);
-        logger.info("일반회원 회원가입 완료");
+        log.info("일반회원 회원가입 완료");
 
         session.removeAttribute("photo");
     }
@@ -94,15 +94,15 @@ public class MemberService {
             list.add(MemberDto.toMemberDto(entity));
         }
 
-        logger.info("일반회원정보 출력 완료");
+        log.info("일반회원정보 출력 완료");
         return list;
     }
 
     public MemberDto getOneMember(int idx) {
-        MemberEntity member = memberRepository.findById((Integer) idx)
+        MemberEntity member = memberRepository.findById(idx)
                 .orElseThrow(() -> new EntityNotFoundException("해당 idx 는 존재하지 않습니다. " + idx));
 
-        logger.info("m_idx " + idx + " 정보 출력 완료");
+        log.info("m_idx " + idx + " 정보 출력 완료");
 
         return MemberDto.toMemberDto(member);
     }
@@ -118,36 +118,38 @@ public class MemberService {
             entityForUpdate.passwordEncode(passwordEncoder);
             memberRepository.save(entityForUpdate);
 
-            logger.info("일반회원정보 업데이트 완료");
+            log.info("일반회원정보 업데이트 완료");
         }
     }
 
-    public void updatePhoto( Integer m_idx , MultipartFile upload ) {
+    public void updatePhoto(MultipartFile upload, HttpServletRequest request) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+
         Optional<MemberEntity> entity = memberRepository.findById(m_idx);
         storageService.deleteFile(bucketName,"devster/member",entity.get().getMPhoto());
         entity.get().setMPhoto(storageService.uploadFile(bucketName,"devster/member",upload));
         memberRepository.save(entity.get());
 
-        logger.info(m_idx+" 회원 프로필 사진 업데이트 완료");
+        log.info(m_idx+" 회원 프로필 사진 업데이트 완료");
     }
 
     public boolean isDuplicateEmail(String m_email) {
-        logger.info("일반회원 이메일 중복확인 완료");
+        log.info("일반회원 이메일 중복확인 완료");
         return memberRepository.existsByMEmail(m_email);
     }
 
     public List<AcademyInfoEntity> academyNameSearch(String name) {
-        logger.info("일반회원 학원명 검색 완료");
+        log.info("일반회원 학원명 검색 완료");
         return academyInfoRepository.findAllByAInameContains(name);
     }
 
     public boolean isDuplicateId(String id) {
-        logger.info("일반회원 아이디 중복확인 완료");
+        log.info("일반회원 아이디 중복확인 완료");
         return memberRepository.existsByMId(id);
     }
     
     public boolean isDuplicateNickname(String nickname) {
-        logger.info("일반회원 닉네임 중복확인 완료");
+        log.info("일반회원 닉네임 중복확인 완료");
         return memberRepository.existsByMNickname(nickname);
     }
 
@@ -155,18 +157,19 @@ public class MemberService {
         jwtService.removeRefreshToken(token.substring(7));
     }
 
-    public String checkPhoto(MultipartFile upload, Integer m_idx){
+    public String checkPhoto(MultipartFile upload, HttpServletRequest request){
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
         Optional<MemberEntity> entity = memberRepository.findById(m_idx);
-
         String photo = storageService.uploadFile(bucketName,"devster/member/checkphoto",upload);
 
         entity.get().setMFilename(photo);
         memberRepository.save(entity.get());
-        logger.info("일반회원 인증사진 업로드 완료");
+        log.info("일반회원 인증사진 업로드 완료");
         return photo;
     }
 
-    public String confirmRole(int m_idx, boolean sign) {
+    public String confirmRole(HttpServletRequest request, boolean sign) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
         MemberEntity member = memberRepository.findById(m_idx).get();
 
         if(sign) {
@@ -174,16 +177,46 @@ public class MemberService {
             member.authorizeUser();
             member.setMFilename("no");
             memberRepository.save(member);
-            logger.info("일반 회원 USER 승급 승인");
+            log.info("일반 회원 USER 승급 승인");
             return "일반 회원 USER 승급 승인";
         } else {
             storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
             member.setMFilename("no");
             memberRepository.save(member);
-            logger.info("일반 회원 USER 승급 반려");
+            log.info("일반 회원 USER 승급 반려");
             return "일반 회원 USER 승급 반려";
         }
     }
+
+    public String findId(String email) {
+        Optional<MemberEntity> optionalMember = memberRepository.findByMEmail(email);
+        if (optionalMember.isPresent()) {
+            return optionalMember.get().getMId(); // 가정: MemberEntity에 getId() 메서드가 존재함
+        } else {
+            log.info("해당 email 로 가입된 회원은 존재하지 않습니다." + email);
+            return "해당 email 로 가입된 회원은 존재하지 않습니다. " + email;
+        }
+    }
+    
+    public String resetPass(String email,String password) {
+        Optional<MemberEntity> optionalMember = memberRepository.findByMEmail(email);
+        if (optionalMember.isPresent()) {
+            optionalMember.get().setMPass(passwordEncoder.encode(password));
+            memberRepository.save(optionalMember.get());
+            log.info("비밀번호 초기화 완료");
+            return "비밀번호 초기화 완료";
+        } else {
+            return "해당 email 로 가입된 회원은 존재하지 않습니다. " + email;
+        }
+    }
+    
+    public String deleteMember(HttpServletRequest request) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+        memberRepository.delete(memberRepository.findById(m_idx).get());
+        log.info("회원 탈퇴 성공");
+        return "회원 탈퇴 성공";
+    }
+
 
 }
 
