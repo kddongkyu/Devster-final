@@ -7,7 +7,7 @@ export const userSignIn = async (userSignInInfo) => {
             method: 'post',
             url: '/member/login',
             data: JSON.stringify(userSignInInfo),
-            headers: {'Content-type': 'application/json'}
+            headers: {'Content-Type': 'application/json'}
         });
 
         if (res.status === 200) {

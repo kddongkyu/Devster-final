@@ -1,6 +1,10 @@
 import React from 'react';
 import {SignUpNormContract, SignUpNormUpload} from "../index";
 import InputName from "./inputs/InputName";
+import InputId from "./inputs/InputId";
+import InputEmail from "./inputs/InputEmail";
+import InputEmailReg from "./inputs/InputEmailReg";
+import InputPass from "./inputs/InputPass";
 
 function SignUpNormForm(props) {
     return (
@@ -15,39 +19,10 @@ function SignUpNormForm(props) {
                 <b className='signup-guest-signup-text'>Devster 회원가입</b>
                 <SignUpNormUpload/>
                 <InputName/>
-                <div className='signup-guest-id-text'>
-                    <span>사용자 ID</span>
-                    <span className='signup-guest-input-name'> *</span>
-                </div>
-                <div className='signup-guest-id-exist-text'>중복확인</div>
-                <div className='signup-guest-id-inputbox'/>
-                <div className='signup-guest-email-text'>
-                    <span>E-mail</span>
-                    <span className='signup-guest-input-name'> *</span>
-                </div>
-                <div className='signup-guest-email-exist-text'>중복확인</div>
-                <div className='signup-guest-email-inputbox'/>
-                <div className='signup-guest-email-reg-send'>
-                    <div className='signup-guest-email-inputbox1'/>
-                    <div className='signup-guest-email-reg-send-te'>인증번호 전송</div>
-                </div>
-                <div className='signup-guest-email-inputbox2'/>
-                <div className='signup-guest-email-reg-timelef'>
-                    남은 인증 시간 3 : 00
-                </div>
-                <div className='signup-guest-pass-text'>
-                    <span>비밀번호</span>
-                    <span className='signup-guest-input-name'> *</span>
-                </div>
-                <div className='signup-guest-pass-secure'>
-                    <div className='signup-guest-pass-secure-text'>보안강도 : 상</div>
-                    <div className='signup-guest-pass-secure-icons'>
-                        <div className='signup-guest-pass-secure-red'/>
-                        <div className='signup-guest-pass-secure-yello'/>
-                        <div className='signup-guest-pass-secure-green'/>
-                    </div>
-                </div>
-                <div className='signup-guest-pass-inputbox'/>
+                <InputId/>
+                <InputEmail/>
+                <InputEmailReg/>
+                <InputPass/>
                 <div className='signup-guest-pass-check-text'>
                     <span>비밀번호 확인</span>
                     <span className='signup-guest-input-name'> *</span>
@@ -74,9 +49,9 @@ function SignUpNormForm(props) {
                     alt=''
                     src={require('../assets/signup_guest_academy_search_icon.svg').default}
                 />
+                <div className='signup-guest-hr1'/>
+                <SignUpNormContract/>
             </div>
-            <div className='signup-guest-hr1'/>
-            <SignUpNormContract/>
         </div>
     );
 }
