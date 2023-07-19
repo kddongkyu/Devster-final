@@ -68,13 +68,6 @@ public class JwtService {
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
-    public void sendAccessToken(HttpServletResponse response, String accessToken) {
-        response.setStatus(HttpServletResponse.SC_OK);
-
-        response.setHeader(accessHeader,accessToken);
-        log.info("발급된 Access Token : {}",accessToken);
-    }
-
     public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
         response.setStatus(HttpServletResponse.SC_OK);
 

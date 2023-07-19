@@ -31,7 +31,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         String[] uriParts = uri.split("/");
 
         if (uriParts.length > 1) {
-            String prefix = uriParts[1];
+            String prefix = uriParts[2];
 
             if (prefix.equals("member")) {
                 isNormalMember(request, response, authentication);
