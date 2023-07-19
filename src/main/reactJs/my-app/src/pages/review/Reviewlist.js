@@ -4,6 +4,9 @@ import axiosIns from "../../api/JwtConfig";
 import {Link} from "react-router-dom";
 import StarRating from "./StarRating";
 function Reviewlist(props) {
+
+    const [inputKeyword, setInputKeyword] = useState(''); // 사용자가 입력하는 검색어
+    const [finalKeyword, setFinalKeyword] = useState(''); // 최종 검색어 (검색 버튼
     const [reviews, setReviews] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
     const [totalPages,setTotalPages]=useState(1);
@@ -12,34 +15,54 @@ function Reviewlist(props) {
         window.location.href = '/review/form';
     };
 
-
-    useEffect(()=>{
-        fetchReviews(currentPage);
-    },[currentPage]);
-
-    const fetchReviews = (page) => {
-        axiosIns.get('/review', { params: { page: page - 1 } })
-            .then(response => {
-              //  console.log(response.data+"date 제발 주세여ㅛ");
-                setReviews(response.data.reviews);
-                setTotalPages(response.data.totalPages);
-            })
-            .catch(error => {
-                console.error('Error fetching reviews:', error);
-            });
+    const handleRefresh = () => {
+        window.location.reload();
     };
 
-    const goToPreviousPage = () => {
+    //검색 기능
+    const handleSearchButtonClick = () => {
+    // 검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
+    const searchKeyword = inputKeyword.trim();
+    setFinalKeyword(searchKeyword);
+    // 첫 페이지의 검색 결과를 가져옵니다.
+    setCurrentPage(1);
+     };
+      
+
+    useEffect(() => {
+        fetchReviews(currentPage,finalKeyword);
+      }, [currentPage, finalKeyword]);
+      
+
+      const fetchReviews = async (currentPage, keyword) => {
+        const searchKeyword = finalKeyword && finalKeyword.trim() !== '' ? finalKeyword.trim() : null;
+      
+        try {
+          const response = await axiosIns.get('/review', { params: { currentPage: currentPage, keyword: searchKeyword } });
+         console.log(finalKeyword);
+          setReviews(response.data.reviews);
+          setTotalPages(response.data.totalPages);
+          console.log(response.data.reviews)
+        } catch (error) {
+          console.error('Error fetching reviews:', error);
+        }
+      };
+      
+
+      const goToPreviousPage = () => {
         if (currentPage > 1) {
+            fetchReviews(currentPage - 1, finalKeyword);
             setCurrentPage(currentPage - 1);
         }
     };
-
+    
     const goToNextPage = () => {
         if (currentPage < totalPages) {
+            fetchReviews(currentPage + 1, finalKeyword);
             setCurrentPage(currentPage + 1);
         }
     };
+    
 
     const reviewTypes = {
         1: '면접',
@@ -47,9 +70,6 @@ function Reviewlist(props) {
         3: '코딩',
     };
 
-    const handleRefresh = () => {
-        window.location.reload();
-    };
 
     const timeForToday = (value) => {
         if (!value) {
@@ -71,7 +91,7 @@ function Reviewlist(props) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        console.log(betweenTime);
+        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -91,6 +111,7 @@ function Reviewlist(props) {
 
         return formattedDateWithoutTime;
     };
+
 
 
     return (
@@ -123,20 +144,32 @@ function Reviewlist(props) {
                         alt=""
                         src={require('./assets/Vector 176.svg').default}
                     />
-                    <div className="div2">전체</div>
+                    <div className="div2"
+                          // onClick={handleSortByDate}
+                        >전체</div>
+                    <button
+                        // onClick={handleSortByRating}
+                    >
                     <img
                         className="review-headerbar-function-sort-icon"
                         alt=""
                         src={require('./assets/review_headerbar_function_sort_icon.svg').default}
+
                     />
+                    </button>
                 </div>
             </div>
             <div className="review-function-search-input">
-                <input className="review-function-search-input1" />
+                <input className="review-function-search-input1" 
+                value={inputKeyword}
+                placeholder='검색어를 입력해주세요'
+                onChange={(e) => setInputKeyword(e.target.value)}
+               />
                 <img
                     className="review-function-search-icon"
                     alt=""
                     src={require('./assets/review-search-icon.svg').default}
+                    onClick={handleSearchButtonClick}
                 />
             </div>
             <img
@@ -152,13 +185,13 @@ function Reviewlist(props) {
                     className="review-pages-paging-backwardic-icon"
                     alt=""
                     src={require('./assets/review_pages_paging_backwardicon.svg').default}
-                    onClick={goToPreviousPage}
+                    onClick={() => goToPreviousPage(finalKeyword)}
                 />
                 <img
                     className="review-pages-paging-forwardico-icon"
                     alt=""
                     src={require('./assets/review_pages_paging_forwardicon.svg').default}
-                    onClick={goToNextPage}
+                    onClick={() => goToNextPage(finalKeyword)}
                 />
             </div>
 
@@ -182,12 +215,6 @@ function Reviewlist(props) {
                         <img className="logo-icon" alt=""
                              src={review.mPhoto} />
                         <div className="user-01234">{review.mNicname} ·
-                            {/*{*/}
-                            {/*    (() => {*/}
-                            {/*        const date = new Date(review.review.rb_writeday);*/}
-                            {/*        return date.toISOString().split('T')[0];*/}
-                            {/*    })()*/}
-                            {/*}*/}
                             {timeForToday(review.review.rb_writeday)}
                         </div>
                     </div>

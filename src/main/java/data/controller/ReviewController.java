@@ -6,6 +6,7 @@ import java.util.Map;
 import data.dto.CompanyInfoDto;
 import data.dto.ReviewDto;
 import data.service.ReviewService;
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,11 @@ public class ReviewController {
     @GetMapping
     public ResponseEntity<Map<String, Object>> getPagedReviews(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
-        return new ResponseEntity<>(reviewService.getPagedReviews(page, size), HttpStatus.OK);
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(required = false) String keyword) {
+        return new ResponseEntity<>(reviewService.getPagedReviews(page, size, keyword), HttpStatus.OK);
     }
+    
 
 
     @PostMapping

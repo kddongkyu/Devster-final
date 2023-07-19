@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './style/Reviewdetail.css';
 import axiosIns from "../../api/JwtConfig";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import StarRating from "./StarRating";
-function Reviewdetail(props) {
+function Reviewdetail() {
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
     const m_idx = de.idx;
@@ -13,21 +13,6 @@ function Reviewdetail(props) {
     const { rb_idx, currentPage } = useParams();
     const [isGood, setIsGood] = useState(false);
     const [isBad, setIsBad] = useState(false);
-
-
-    // const fetchReview = useCallback((rb_idx, currentPage = null) => {
-    //     const url=`/review/${rb_idx}`;
-    //     axiosIns.get(url)
-    //         .then(response => {
-    //             console.log(response.data);
-    //             setReviewData(response.data);
-    //             setIsLoading(false);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching review:', error);
-    //         });
-    // }, []);
-
 
     const fetchReview = useCallback((rb_idx, currentPage = null) => {
         const url=`/review/${rb_idx}`;
@@ -70,6 +55,47 @@ function Reviewdetail(props) {
     if (isLoading) {
         return <div>Loading...</div>;
     }
+
+    const timeForToday = (value) => {
+        if (!value) {
+            return '';
+        }
+
+        const valueConv = value.slice(0, -10);
+        const today = new Date();
+        const timeValue = new Date(valueConv);
+
+        // timeValue를 한국 시간대로 변환
+        const timeValueUTC = new Date(timeValue.toISOString());
+        const offset = timeValue.getTimezoneOffset() * 60 * 1000; // 분 단위를 밀리초 단위로 변환
+        const timeValueKST = new Date(timeValueUTC.getTime() - offset);
+
+
+        const betweenTime = Math.floor((today.getTime() - timeValueKST.getTime()) / 1000 / 60);
+        if (betweenTime < 1) return '방금 전';
+        if (betweenTime < 60) {
+            return `${betweenTime}분 전`;
+        }
+        //console.log(betweenTime);
+
+        const betweenTimeHour = Math.floor(betweenTime / 60);
+        if (betweenTimeHour < 24) {
+            return `${betweenTimeHour}시간 전`;
+        }
+
+        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        if (betweenTimeDay < 8) {
+            return `${betweenTimeDay}일 전`;
+        }
+
+        const year = String(timeValue.getFullYear()).slice(0, 4);
+        const month = String(timeValue.getMonth() + 1).padStart(2, '0');
+        const day = String(timeValue.getDate()).padStart(2, '0');
+
+        const formattedDateWithoutTime = `${year}-${month}-${day}`;
+
+        return formattedDateWithoutTime;
+    };
 
     const handlelike = (m_idx, rb_idx) => {
         // 먼저 좋아요 상태를 체크합니다.
@@ -227,11 +253,9 @@ function Reviewdetail(props) {
                     />
                     <div className="review-detail-info-nickname">{reviewData.mNicname}</div>
                     <div className="review-detail-info-status">
-                        <div className="review-detail-info-status-text"> {
-                            (() => {
-                                const date = new Date(reviewData.review.rb_writeday);
-                                return date.toISOString().split('T')[0];
-                            })()
+                        <div className="review-detail-info-status-text"> 
+                    
+                         {timeForToday(reviewData.review.rb_writeday)
                         }{` ·        `}</div>
                         <img
                             className="review-detail-info-status-view-icon"
@@ -249,8 +273,10 @@ function Reviewdetail(props) {
                     alt=""
                     src={require('./assets/review_detail_header_function_url.svg').default}
                 />
+                <Link to={`/review/update/${reviewData.review.rb_idx}`}>
                 <img className="review-edit-icon" alt=""
                      src={require('./assets/review-edit.svg').default}/>
+                </Link>
                 <img className="review-trash-icon" alt=""
                      src={require('./assets/review-trash.svg').default}
                      onClick={() => deleteReview(rb_idx)} />

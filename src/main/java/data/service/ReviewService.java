@@ -13,9 +13,6 @@ import data.repository.ReviewRepository;
 import data.repository.ReviewlikeRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.PageRequest;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -80,11 +77,17 @@ public class ReviewService {
         }
     }
 
-
-    public Map<String, Object> getPagedReviews(int page, int size) {
+ public Map<String, Object> getPagedReviews(int page, int size,String keyword) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("RBwriteday").descending());
-        Page<ReviewEntity> result = reviewRepository.findAll(pageable);
+        Page<ReviewEntity> result;
 
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            result = reviewRepository.findByRBsubjectContaining(keyword, pageable);
+               logger.info("Keyword: " + keyword);
+        } else {
+            result = reviewRepository.findAll(pageable);
+        }
+        
         List<Map<String, Object>> reviewsWithCompanyInfo = result
                 .getContent()
                 .stream()
@@ -161,6 +164,27 @@ public class ReviewService {
             throw e;
         }
     }
+//    public void updateReview(int rb_idx, ReviewDto dto){
+//        try {
+//            Optional<ReviewEntity> e = reviewRepository.findById(rb_idx);
+//
+//            if(e.isPresent()) {
+//                ReviewEntity existingEntity = e.get();
+//                existingEntity.setCIidx(dto.getCi_idx());
+//                existingEntity.setRBsubject(dto.getRb_subject());
+//                existingEntity.setRBcontent(dto.getRb_content());
+//                existingEntity.setRBstar(dto.getRb_star());
+//                existingEntity.setRBtype(dto.getRb_type());
+//
+//                // Update the existing entity
+//                reviewRepository.save(existingEntity);
+//            }
+//        } catch (Exception e) {
+//            logger.error("update review Error", e);
+//            throw e;
+//        }
+//    }
+
     public void updateReview(int rb_idx, ReviewDto dto){
         try {
             Optional<ReviewEntity> e = reviewRepository.findById(rb_idx);
@@ -175,12 +199,27 @@ public class ReviewService {
 
                 // Update the existing entity
                 reviewRepository.save(existingEntity);
+
+
+                // Update average rating in CompanyInfoEntity
+                CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(dto.getCi_idx()).orElse(null);
+                if (companyInfo != null) {
+                    Double averageRating = reviewMapper.calculateAverageRatingByCIIdx(dto.getCi_idx());
+                    if (averageRating != null) {
+                        companyInfo.setCIstar(averageRating);
+                    } else {
+                        companyInfo.setCIstar((double) dto.getRb_star());
+                    }
+                    CompanyInfoRepository.save(companyInfo);
+                }
             }
         } catch (Exception e) {
             logger.error("update review Error", e);
             throw e;
         }
     }
+
+
 
     // 좋아요 싫어요 기능
 
