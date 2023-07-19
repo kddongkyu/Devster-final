@@ -27,16 +27,25 @@ import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
 
+// import { Noticeform, Noticelist } from "../pages/notice";
+import {
+  Reviewform,
+  Reviewlist,
+  Reviewupdate,
+  Reviewdetail,
+} from "../pages/review";
 
-import {Noticeform, Noticelist} from "../pages/notice";
+<<<<<<< HEAD
+// import {Noticeform, Noticelist} from "../pages/notice";
 import {Reviewform, Reviewlist, Reviewupdate,Reviewdetail} from "../pages/review";
 
 import {FboardDetail, FboardUpdateForm} from "../pages/fboard";
+=======
+import { FboardDetail, FboardUpdateForm } from "../pages/fboard";
+>>>>>>> HO
 
 import NoticeAdmin from "../pages/mypage/NoticeAdmin";
 import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
-
-
 
 function RouteMain(props) {
   return (
@@ -45,12 +54,13 @@ function RouteMain(props) {
         <Route path="/" element={<Main />} />
         <Route path="/home" element={<Main />} />
 
+<<<<<<< HEAD
         <Route path='/fboard' element={<Fboard/>}/>
         <Route path='/qboard' element={<Qboard/>}/>
         <Route path='/hboard' element={<Hboard/>}/>
         <Route path='/aboard' element={<Aboard/>}/>
         <Route path='/review' element={<Reviewlist/>}/>
-        <Route path='/notice' element={<Noticelist/>}/>
+        {/* <Route path='/notice' element={<Noticelist/>}/> */}
 
 
         <Route path='/fboard/form' element={<FboardForm/>}/>
@@ -58,7 +68,7 @@ function RouteMain(props) {
         <Route path='/hboard/form' element={<HboardForm/>}/>
         <Route path='/aboard/form' element={<AboardForm/>}/>
         <Route path='/review/form' element={<Reviewform/>}/>
-       <Route path='/notice/form' element={<Noticeform/>}/>
+       {/* <Route path='/notice/form' element={<Noticeform/>}/> */}
 
         <Route path='/review/detail/:rb_idx/:currentPage' element={<Reviewdetail/>}/>
         <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
@@ -66,6 +76,36 @@ function RouteMain(props) {
         <Route path='/review/update/:rb_idx' element={<Reviewupdate/>}/>
         <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
 
+=======
+        <Route path="/fboard" element={<Fboard />} />
+        <Route path="/qboard" element={<Qboard />} />
+        <Route path="/hboard" element={<Hboard />} />
+        <Route path="/aboard" element={<Aboard />} />
+        <Route path="/review" element={<Reviewlist />} />
+        {/* <Route path="/notice" element={<Noticelist />} /> */}
+
+        <Route path="/fboard/form" element={<FboardForm />} />
+        <Route path="/qboard/form" element={<QboardForm />} />
+        <Route path="/hboard/form" element={<HboardForm />} />
+        <Route path="/aboard/form" element={<AboardForm />} />
+        <Route path="/review/form" element={<Reviewform />} />
+        {/* <Route path="/notice/form" element={<Noticeform />} /> */}
+
+        <Route
+          path="/review/detail/:rb_idx/:currentPage"
+          element={<Reviewdetail />}
+        />
+        <Route
+          path="/fboard/detail/:fb_idx/:currentPage"
+          element={<FboardDetail />}
+        />
+
+        <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
+        <Route
+          path="/fboard/updateform/:fb_idx/:currentPage"
+          element={<FboardUpdateForm />}
+        />
+>>>>>>> HO
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
@@ -84,7 +124,10 @@ function RouteMain(props) {
 
         <Route path="/jwttest" element={<JwtTest />} />
       </Route>
+<<<<<<< HEAD
 
+=======
+>>>>>>> HO
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />
