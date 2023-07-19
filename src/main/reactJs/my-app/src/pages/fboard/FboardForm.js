@@ -1,8 +1,6 @@
 import "./style/FboardForm.css";
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
-import Axios from 'axios';
-import jwt_Decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
 function FboardForm (props)  {
@@ -25,7 +23,7 @@ function FboardForm (props)  {
             m_idx: de.idx
         };
 
-        axiosIns.post("/fboard", dto)
+        axiosIns.post("/api/fboard/D1", dto)
             .then(res => {
                 // 성공적으로 등록된 경우, 목록으로 이동
                 navi("/fboard");
@@ -42,7 +40,7 @@ function FboardForm (props)  {
         uploadPhoto.append("upload",e.target.files[0]);
         axiosIns({
             method:'post',
-            url:'/fboard/photo/upload',
+            url:'/api/fboard/D1/photo/upload',
             data:uploadPhoto,
             headers:{'Content-Type':'multipart/form-data'}
         }).then(res=>{
