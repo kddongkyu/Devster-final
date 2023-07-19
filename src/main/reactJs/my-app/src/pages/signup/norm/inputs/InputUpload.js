@@ -1,9 +1,9 @@
 import React, {useRef, useState} from 'react';
 import axios from 'axios';
-import {jwtHandleError} from '../../../api/JwtHandleError';
-import ResizeCrop from './ResizeCrop';
+import {jwtHandleError} from '../../../../api/JwtHandleError';
+import ResizeCrop from '../ResizeCrop';
 
-function SignUpNormUpload(props) {
+function InputUpload(props) {
     const profileRef = useRef();
     const [savedImg, setSavedImg] = useState(null);
     const [isCropOpen, setIsCropOpen] = useState(false);
@@ -26,7 +26,7 @@ function SignUpNormUpload(props) {
 
         axios({
             method: 'post',
-            url: '/member/sign-up/photo',
+            url: '/api/member/D0/photo',
             data: formData,
             headers: {'Content-type': 'multipart/form-data'}
         })
@@ -45,7 +45,7 @@ function SignUpNormUpload(props) {
         } else {
             axios({
                 method: 'put',
-                url: '/member/sign-up/photo/reset',
+                url: '/api/member/D0/photo/reset',
                 data: {'photo': savedImg},
                 headers: {'Content-type': 'application/json'}
             })
@@ -69,12 +69,12 @@ function SignUpNormUpload(props) {
                 <img
                     className={`${!savedImg ? 'signup-guest-crop-icon-none' : 'signup-guest-crop-icon'}`}
                     alt=''
-                    src={require('../assets/signup_guest_crop_icon.svg').default}
+                    src={require('../../assets/signup_guest_crop_icon.svg').default}
                     onClick={openCropModal}
                 />
                 <div className='signup-guest-profile-img'>
                     <img alt='프로필 이미지'
-                         src={`${!savedImg ? require('../assets/signup_default_img.svg').default : `${photoUrl}${savedImg}`}`}
+                         src={`${!savedImg ? require('../../assets/signup_default_img.svg').default : `${photoUrl}${savedImg}`}`}
                     />
                 </div>
                 <input
@@ -99,7 +99,7 @@ function SignUpNormUpload(props) {
                     <img
                         className='signup-guest-upload-profile-im-icon'
                         alt=''
-                        src={require('../assets/signup_guest_upload_profile_img_icon.svg').default}
+                        src={require('../../assets/signup_guest_upload_profile_img_icon.svg').default}
                     />
                 </div>
                 <div
@@ -113,7 +113,7 @@ function SignUpNormUpload(props) {
                     <img
                         className='signup-guest-upload-profile-de-icon'
                         alt=''
-                        src={require('../assets/signup_guest_upload_profile_default_icon.svg').default}
+                        src={require('../../assets/signup_guest_upload_profile_default_icon.svg').default}
                     />
                 </div>
             </div>
@@ -127,4 +127,4 @@ function SignUpNormUpload(props) {
     );
 }
 
-export default SignUpNormUpload;
+export default InputUpload;

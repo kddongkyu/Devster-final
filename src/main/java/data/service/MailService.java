@@ -17,11 +17,11 @@ public class MailService{
     @Autowired
     JavaMailSender emailSender;
 
-    public static final String ePw = createKey();
+    public String ePw;
 
     private MimeMessage createMessage(String to)throws Exception{
         System.out.println("보내는 대상 : "+ to);
-        System.out.println("인증 번호 : "+ePw);
+        System.out.println("인증 번호 : "+(ePw=createKey()));
         MimeMessage  message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, to);//보내는 대상

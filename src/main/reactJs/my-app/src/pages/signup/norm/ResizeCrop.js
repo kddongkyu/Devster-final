@@ -40,7 +40,7 @@ function ResizeCrop({isCropOpen, setIsCropOpen, cropImg, setSavedImg}) {
             try {
                 let res = await axios({
                     method: 'post',
-                    url: '/member/sign-up/photo',
+                    url: '/api/member/D0/photo',
                     data: formData,
                     headers: {'Content-type': 'multipart/form-data'}
                 });
