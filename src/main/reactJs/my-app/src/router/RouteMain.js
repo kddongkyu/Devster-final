@@ -14,14 +14,13 @@ import {
 } from "../pages/mypage";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
-import {Fboard, FboardDetail, FboardForm} from "../pages/fboard";
+import {Fboard, FboardDetail, FboardForm, FboardUpdateForm} from "../pages/fboard";
 import {Qboard, QboardForm} from "../pages/qboard";
 import {Hboard, HboardForm} from "../pages/hboard";
 import {Aboard, AboardForm} from "../pages/aboard";
-import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
+import {Noticeform, Noticelist} from "../pages/notice";
+import {Reviewform, Reviewlist, Reviewupdate,Reviewdetail} from "../pages/review";
 import JwtTest from "../pages/test/JwtTest";
-
-import {FboardUpdateForm} from "../pages/fboard";
 
 function RouteMain(props) {
   return (
@@ -30,20 +29,25 @@ function RouteMain(props) {
         <Route path="/" element={<Main />} />
         <Route path="/home" element={<Main />} />
 
-        <Route path="/fboard" element={<Fboard />} />
-        <Route path="/qboard" element={<Qboard />} />
-        <Route path="/hboard" element={<Hboard />} />
-        <Route path="/aboard" element={<Aboard />} />
-        <Route path="/notice" element={<Noticelist />} />
-
-        <Route path="/fboard/form" element={<FboardForm />} />
-        <Route path="/qboard/form" element={<QboardForm />} />
-        <Route path="/hboard/form" element={<HboardForm />} />
-        <Route path="/aboard/form" element={<AboardForm />} />
-        <Route path="/notice/form" element={<Noticeform />} />
+        <Route path='/fboard' element={<Fboard/>}/>
+        <Route path='/qboard' element={<Qboard/>}/>
+        <Route path='/hboard' element={<Hboard/>}/>
+        <Route path='/aboard' element={<Aboard/>}/>
+        <Route path='/review' element={<Reviewlist/>}/>
+        <Route path='/notice' element={<Noticelist/>}/>
 
 
+        <Route path='/fboard/form' element={<FboardForm/>}/>
+        <Route path='/qboard/form' element={<QboardForm/>}/>
+        <Route path='/hboard/form' element={<HboardForm/>}/>
+        <Route path='/aboard/form' element={<AboardForm/>}/>
+        <Route path='/review/form' element={<Reviewform/>}/>
+       <Route path='/notice/form' element={<Noticeform/>}/>
+
+        <Route path='/review/detail/:rb_idx/:currentPage' element={<Reviewdetail/>}/>
         <Route path='/fboard/detail/:fb_idx/:currentPage' element={<FboardDetail/>}/>
+
+        <Route path='/review/update/:rb_idx' element={<Reviewupdate/>}/>
         <Route path='/fboard/updateform/:fb_idx/:currentPage' element={<FboardUpdateForm/>}/>
 
 
@@ -64,6 +68,7 @@ function RouteMain(props) {
 
         <Route path="/jwttest" element={<JwtTest />} />
       </Route>
+
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />

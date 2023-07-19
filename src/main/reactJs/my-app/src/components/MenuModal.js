@@ -32,7 +32,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
 
   // Effects
   useEffect(() => {
-    if (localStorage.getItem('accessToken') !== null && localStorage.getItem('refreshToken') !== null) {
+    if (localStorage.accessToken && localStorage.refreshToken) {
       const decodedToken = jwt_decode(localStorage.accessToken);
       getMemberData(decodedToken.idx);
     }

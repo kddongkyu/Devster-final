@@ -1,0 +1,151 @@
+.review-modal-img-icon {
+    position: absolute;
+    top: 0.8rem;
+    left: 0;
+    width: 3.2rem;
+    height: 2.3rem;
+}
+.review-modal-text {
+    position: absolute;
+    top: 0;
+    left: 3.5rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 17.9rem;
+    height: 3.3rem;
+}
+.review-modal-logo {
+    position: absolute;
+    top: 1.3rem;
+    left: 1.7rem;
+    width: 21.4rem;
+    height: 3.3rem;
+}
+.review-modal-close-icon {
+    position: absolute;
+    top: 2.2rem;
+    right: 2rem;
+    width: 1.9rem;
+    height: 1.9rem;
+}
+.review-modal {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    /*backdrop-filter: blur(7px);*/
+    height: 6.4rem;
+    font-family: Lalezar;
+}
+.review-modal-text1 {
+    position: absolute;
+    top: 8.2rem;
+    left: 1.7rem;
+    font-size: 2rem;
+    letter-spacing: -0.24px;
+    color: #626567;
+}
+.review-modal-search-input1 {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #721ea6;
+    box-sizing: border-box;
+    height: 3.5rem;
+}
+.review-modal-search-icon {
+    position: absolute;
+    top: 1rem;
+    right: 0.9rem;
+    width: 1.6rem;
+    height: 1.5rem;
+}
+.review-modal-search-input {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 12.6rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 3.5rem;
+}
+.review-modal-photo-icon {
+    position: absolute;
+    top: 0.3rem;
+    left: 0;
+    width: 7.7rem;
+    height: 4.4rem;
+    object-fit: cover;
+}
+.review-modal-coname {
+    position: absolute;
+    top: 0;
+    left: 9.5rem;
+    letter-spacing: 1px;
+    line-height: 2.1rem;
+}
+.review-modal-star-icon {
+    position: absolute;
+    top: 2.6rem;
+    left: 9.5rem;
+    width: 12.3rem;
+    height: 2.26rem;
+}
+.review-modal-list {
+    position: relative;
+    /*top: 3rem;*/
+    left: 2.5rem;
+    width: 31.8rem;
+    height: 5.87rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #d2d2d2;
+    margin-bottom:2rem;
+}
+.notice-line-box {
+    position: relative;
+    width: calc(100% - 61px);
+    top: 24.4rem;
+    right: 4rem;
+    left: 2.1rem;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 0.1rem;
+}
+.reviewmodal {
+    position: relative;
+    background-color: #fff;
+    width: 60%;
+    height: 60%;
+    /*overflow: hidden;*/
+    text-align: left;
+    font-size: 3rem;
+    /*color: #000;*/
+    font-family: "Noto Sans KR";
+    border: 1px solid black;
+    /*left:50%;*/
+    /*top: 20%;*/
+    margin: auto;
+    /*transform:translate(-50%,2%);*/
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.review-select-company-list{
+  overflow: scroll;
+    position: absolute;
+    top: 17rem;
+    width: 90%;
+    height: 50%;
+}
