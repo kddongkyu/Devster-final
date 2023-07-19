@@ -20,9 +20,11 @@ export const jwtHandleError = (error) => {
         window.location.href = "/notfound";
         break;
 
-      case 500:
-        alert("서버에 문제가 발생했습니다.\n잠시 후 다시 이용해주세요.");
-        break;
+
+            case 500:
+                console.log('서버에 문제가 발생했습니다.\n잠시 후 다시 이용해주세요.')
+                break;
+
 
       case 503:
         alert("현재 서버가 바쁩니다.\n잠시 후 다시 이용해주세요.");

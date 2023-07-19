@@ -210,47 +210,57 @@
     color: #fff;
     font-family: "Roboto Serif";
   }
-  .fboard-function-sort-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 10rem;
-    height: 3.6rem;
-  }
-  .fboard-function-sort-reset {
-    position: absolute;
-    top: 1.2rem;
-    right: 6.2rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-  }
-  .fboard-function-sort-bar-icon {
-    position: absolute;
-    top: 0.1rem;
-    right: 4.95rem;
-    width: 0.1rem;
-    height: 3.4rem;
-  }
-  .fboard-function-sort-by-icon {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.6rem;
-    width: 2rem;
-    height: 1.35rem;
-  }
-  .fboard-function-sort {
-    position: absolute;
-    top: 33.6rem;
-    right: 1.5rem;
-    width: 10rem;
-    height: 3.6rem;
-    color: #000;
-    font-family: Roboto;
-  }
+.fboard-function-sort-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 15rem;
+  height: 3.6rem;
+}
+.fboard-function-sort-like,
+.fboard-function-sort-time,
+.fboard-function-sort-view {
+  position: absolute;
+  top: 1.2rem;
+  right: 10.1rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 4rem;
+}
+.fboard-function-sort-like,
+.fboard-function-sort-view {
+  right: 5.6rem;
+  width: 3.7rem;
+}
+.fboard-function-sort-like {
+  right: 0.3rem;
+  width: 4rem;
+}
+.fboard-function-sort-bar-icon,
+.fboard-function-sort-bar2-icon {
+  position: absolute;
+  top: 0.1rem;
+  right: 4.95rem;
+  width: 0.2rem;
+  height: 3.4rem;
+}
+.fboard-function-sort-bar-icon {
+  right: 9.95rem;
+}
+.fboard-function-sort {
+  position: absolute;
+  top: 33.6rem;
+  right: 1.5rem;
+  width: 15rem;
+  height: 3.6rem;
+  color: #484848;
+  font-family: Roboto;
+  cursor: pointer;
+}
   .fboard-function-search-input1 {
     position: absolute;
     width: 100%;
