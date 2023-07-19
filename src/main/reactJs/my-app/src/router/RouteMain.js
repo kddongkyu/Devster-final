@@ -21,14 +21,13 @@ import FboardForm from "../pages/fboard/FboardForm";
 import QboardForm from "../pages/qboard/QboardForm";
 import HboardForm from "../pages/hboard/HboardForm";
 import AboardForm from "../pages/aboard/AboardForm";
-import FboardDetail from "../pages/fboard/FboardDetail";
 
 import Withdrawal from "../pages/mypage/Withdrawal";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
 
-import {Noticedetail, Noticeform, Noticelist} from "../pages/notice";
+import {Noticeform, Noticelist} from "../pages/notice";
 import {Reviewform, Reviewlist, Reviewupdate,Reviewdetail} from "../pages/review";
 
 import NoticeAdmin from "../pages/mypage/NoticeAdmin";
@@ -59,7 +58,6 @@ function RouteMain(props) {
        <Route path='/notice/form' element={<Noticeform/>}/>
 
         <Route path='/review/detail/:rb_idx/:currentPage' element={<Reviewdetail/>}/>
-        <Route path='/notice/detail' element={<Noticedetail/>}/>
 
          <Route path='/review/update/:rb_idx' element={<Reviewupdate/>}/>
 

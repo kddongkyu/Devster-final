@@ -152,7 +152,7 @@ function Reviewdetail() {
                 if (response.data === 1) {
                     // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
                     alert("이미 좋아요가 눌려 있습니다");
-                    window.location.replace(`/review/detail/${rb_idx}/${currentPage}`);
+                    fetchReview(rb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
                     axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
@@ -162,7 +162,7 @@ function Reviewdetail() {
                                 alert("이미 싫어요가 눌려 있습니다");
                                 axiosIns.post(`/api/review/D1/${m_idx}/dislike/${rb_idx}`)
                                     .then(response => {
-                                        window.location.replace(`/review/detail/${rb_idx}/${currentPage}`);
+                                        fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
                                         alert("싫어요 요청 실패");
@@ -174,7 +174,7 @@ function Reviewdetail() {
                                     .then(response => {
                                         alert("싫어요를 눌렀습니다");
                                         console.log('싫어요 요청 성공:', response.data);
-                                        window.location.replace(`/review/detail/${rb_idx}/${currentPage}`);
+                                        fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
                                         alert("싫어요 요청 실패");
