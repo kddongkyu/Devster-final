@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style/MypageList.css";
 import { NavLink, Outlet } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import axiosIns from "../../api/JwtConfig";
+import MypageListGuest from "./MypageListGuest";
+import MypageListAdmin from "./MypageListAdmin";
 
 function MypageList(props) {
   const activeStyle = {
@@ -10,91 +14,34 @@ function MypageList(props) {
   const deactiveStyle = {
     color: "var(--color-slategray)",
   };
+
+  const [member, setMember] = useState({
+    m_role: "",
+  });
+
+  const decodedToken = jwt_decode(localStorage.accessToken);
+
+  const getMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
+      setMember(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // Effects
+  useEffect(() => {
+    getMemberData(decodedToken.idx);
+  }, []);
+
+  console.log(member.m_role);
+
   return (
     <div className="mypage">
       <div className="mypage-wrapper">
-        <b className="text-myaccount">내 계정</b>
-        <div className="menu-userinfo">
-          <NavLink
-            to={"/userinfo"}
-            className="menulist-userinfo-box"
-            style={({ isActive }) => {
-              return isActive ? activeStyle : deactiveStyle;
-            }}
-          >
-            <div className="text_userinfo">회원정보</div>
-            <img
-              className="icon-userinfo"
-              alt=""
-              src={require("./assets/user-cicrle-light.svg").default}
-            />
-          </NavLink>
-        </div>
-        <div className="menu-bookmarklist">
-          <NavLink
-            to={"/bookmarks"}
-            className="menulist-userinfo-box"
-            style={({ isActive }) => {
-              return isActive ? activeStyle : deactiveStyle;
-            }}
-          >
-            <div className="text-bookmarks">채용정보 북마크</div>
-            <img
-              className="icon-userinfo"
-              alt=""
-              src={require("./assets/bookmark.svg").default}
-            />
-          </NavLink>
-        </div>
-        <div className="menu-myresume">
-          <NavLink
-            to={"/myresume"}
-            className="menulist-userinfo-box"
-            style={({ isActive }) => {
-              return isActive ? activeStyle : deactiveStyle;
-            }}
-          >
-            <div className="text-bookmarks">내 이력서</div>
-            <img
-              className="icon-resume"
-              alt=""
-              src={require("./assets/file-dock.svg").default}
-            />
-          </NavLink>
-        </div>
-        <div className="menu-withdrawal">
-          <NavLink
-            to={"/withdrawal"}
-            className="menulist-userinfo-box"
-            style={({ isActive }) => {
-              return isActive ? activeStyle : deactiveStyle;
-            }}
-          >
-            <div className="text-bookmarks">계정탈퇴</div>
-            <img
-              className="icon-resume"
-              alt=""
-              src={require("./assets/close-ring.svg").default}
-            />
-          </NavLink>
-        </div>
-        <div className="menu-notice">
-          <NavLink
-            to={"/notice"}
-            className="menulist-userinfo-box"
-            style={({ isActive }) => {
-              return isActive ? activeStyle : deactiveStyle;
-            }}
-          >
-            <div className="text-bookmarks">공지사항</div>
-            <img
-              className="icon-resume"
-              alt=""
-              src={require("./assets/info.svg").default}
-            />
-          </NavLink>
-        </div>
-        <div className="line-mypage" />
+        {member.m_role === "GUEST" ? <MypageListGuest /> : <MypageListAdmin />}
+        {/* {member.m_role === "GUEST" ? <MypageListAdmin /> : <MypageListGuest />} */}
       </div>
       <Outlet />
     </div>

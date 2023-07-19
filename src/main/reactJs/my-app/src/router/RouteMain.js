@@ -10,8 +10,8 @@ import {
   Resumeform,
   UserInfo,
   Notice,
+  ResumeUpdateform,
 } from "../pages/mypage";
-
 import Fboard from "../pages/fboard/Fboard";
 import Qboard from "../pages/qboard/Board";
 import Hboard from "../pages/hboard/Hboard";
@@ -22,12 +22,14 @@ import HboardForm from "../pages/hboard/HboardForm";
 import AboardForm from "../pages/aboard/AboardForm";
 import FboardDetail from "../pages/fboard/FboardDetail";
 import Withdrawal from "../pages/mypage/Withdrawal";
-import LoginForm from "../components/LoginForm";
-
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
 import JwtTest from "../pages/test/JwtTest";
-// import { Noticedetail, Noticeform, Noticelist } from "../pages/notice";
+// import NoticeAdmin from "../pages/mypage/NoticeAdmin";
+import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
+// import Noticelist from "../pages/notice/Noticelist";
+// import Noticeform from "../pages/notice/Noticeform";
+// import Noticedetail from "../pages/notice/Noticedetail";
 
 function RouteMain(props) {
   return (
@@ -35,33 +37,37 @@ function RouteMain(props) {
       <Route element={<Layout />}>
         <Route path="/" element={<Main />} />
         <Route path="/home" element={<Main />} />
-        <Route path="/login" element={<LoginForm />} />
+
         <Route path="/fboard" element={<Fboard />} />
         <Route path="/qboard" element={<Qboard />} />
         <Route path="/hboard" element={<Hboard />} />
         <Route path="/aboard" element={<Aboard />} />
         {/* <Route path="/notice" element={<Noticelist />} /> */}
-        <Route path="/fboard/form" element={<FboardForm />} />
-        <Route path="/qboard/form" element={<QboardForm />} />ㄱ
-        <Route path="/hboard/form" element={<HboardForm />} />
-        <Route path="/aboard/form" element={<AboardForm />} />
-        {/* <Route path="/notice/form" element={<Noticeform />} />
-        <Route path="/notice/detail" element={<Noticedetail />} /> */}
-        <Route path="/aboard" element={<Aboard />} />
+
         <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
+        {/* <Route path="/notice/form" element={<Noticeform />} /> */}
+
+        <Route path="/fboard/detail" element={<FboardDetail />} />
+        {/* <Route path="/notice/detail" element={<Noticedetail />} /> */}
+
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/myresume" element={<MyResume />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
           {/* <Route path="/notice" element={<Notice />} /> */}
+          {/* <Route path="/notice/admin" element={<NoticeAdmin />} /> */}
+          <Route path="/member/approval" element={<MemberSignupApproval />} />
         </Route>
+
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
+          <Route path="/updateresume" element={<ResumeUpdateform />} />
         </Route>
+
         <Route path="/jwttest" element={<JwtTest />} />
       </Route>
 
