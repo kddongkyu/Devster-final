@@ -103,4 +103,6 @@ public class MemberEntity {
                 .MSocialType(dto.getM_socialtype())
                 .build();
     }
+
+
 }
