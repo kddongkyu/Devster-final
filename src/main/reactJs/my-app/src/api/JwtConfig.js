@@ -17,7 +17,7 @@ async function refreshAccessToken(refreshToken) {
   try {
     const res = await axios({
       method: "post",
-      url: "/member/check",
+      url: "/api/member/D1/check",
       headers: { "Authorization-refresh": `Bearer ${refreshToken}` },
     });
 
@@ -48,13 +48,11 @@ axiosIns.interceptors.request.use(
       try {
         accessToken = await refreshAccessToken(refreshToken);
         config.headers["Authorization"] = `Bearer ${accessToken}`;
-        //alert("New Token => accessToken + refreshToken");
       } catch (error) {
         throw error;
       }
     } else if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
-      //alert("Token available");
     }
     return config;
   },

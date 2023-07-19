@@ -5,9 +5,9 @@ export const userSignIn = async (userSignInInfo) => {
   try {
     const res = await axios({
       method: "post",
-      url: "/api/member/login",
+      url: "api/member/login",
       data: JSON.stringify(userSignInInfo),
-      headers: { "Content-type": "application/json" },
+      headers: { "Content-Type": "application/json" },
     });
 
     if (res.status === 200) {
