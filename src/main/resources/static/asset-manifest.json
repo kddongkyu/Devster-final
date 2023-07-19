@@ -100,13 +100,5 @@
     "main.41e287a4.js.map": "/static/js/main.41e287a4.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
-<<<<<<< HEAD
-  "entrypoints": [
-    "static/css/main.5b63b27a.css",
-    "static/js/main.41e287a4.js"
-  ]
-}
-=======
   "entrypoints": ["static/css/main.18700ca3.css", "static/js/main.1b26ad50.js"]
 }
->>>>>>> HO

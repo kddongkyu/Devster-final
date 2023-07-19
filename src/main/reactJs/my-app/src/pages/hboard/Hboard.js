@@ -4,11 +4,6 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 
 const Hboard = () => {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> HO
   const handleRefresh = () => {
     window.location.reload();
   };
