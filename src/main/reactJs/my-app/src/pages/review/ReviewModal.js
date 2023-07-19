@@ -20,7 +20,7 @@ function ReviewModal({ isReviewOpen, setIsReviewOpen ,setSelectedCompany, setSel
     }
 
     const handleSearch = async () => {
-        const listUrl = "/review/search"; // Adjust this if your server runs on a different port or URL
+        const listUrl = "api/D1/review/search"; // Adjust this if your server runs on a different port or URL
       //  let de = jwt_decode(localStorage.getItem('accessToken'));
         try {
             const response = await axiosIns.get(listUrl, {

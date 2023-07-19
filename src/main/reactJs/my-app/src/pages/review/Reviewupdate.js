@@ -57,7 +57,7 @@ function Reviewupdate(props) {
     }
 
     const fetchReview = useCallback((rb_idx) => {
-        const url = `/review/${rb_idx}`;
+        const url = `api/D1/review/${rb_idx}`;
         axiosIns.get(url)
             .then(response => {
                 console.log(response.data);
@@ -78,7 +78,7 @@ function Reviewupdate(props) {
     }
 
     const handleUpdateSubmit = async () => {
-        const apiUrl = `/review/${rb_idx}`;
+        const apiUrl = `/api/D1/review/${rb_idx}`;
         console.dir(updatedate, "들어가?");
         try {
             const response = await axiosIns.put(apiUrl, updatedate);
@@ -87,7 +87,7 @@ function Reviewupdate(props) {
 
 
                 // 서버의 응답을 처리합니다.
-                window.location.replace(`/review/${rb_idx}`);
+                window.location.replace(`api/D1/review/${rb_idx}`);
             } else {
                 console.error("Invalid response:", response);
                 // 응답이 유효하지 않은 경우에 대한 처리

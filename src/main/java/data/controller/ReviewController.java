@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/review")
+@RequestMapping("/api/review")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -28,7 +28,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping
+    @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedReviews(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
@@ -38,29 +38,29 @@ public class ReviewController {
     
 
 
-    @PostMapping
+    @PostMapping("/D0")
     public ResponseEntity<ReviewDto> insertReview(@RequestBody ReviewDto dto) {
         return new ResponseEntity<ReviewDto>(reviewService.insertReview(dto),HttpStatus.OK);
     }
 
-    @GetMapping("/{rb_idx}")
+    @GetMapping("/D0/{rb_idx}")
     public ResponseEntity<Map<String, Object>> getOneReview(@PathVariable int rb_idx) {
         return new ResponseEntity<>(reviewService.getOneReview(rb_idx), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{rb_idx}")
+    @DeleteMapping("/D1/{rb_idx}")
     public ResponseEntity<Void> deleteById(@PathVariable int rb_idx) {
         reviewService.deleteById(rb_idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/{rb_idx}")
+    @PutMapping("/D1/{rb_idx}")
     public ResponseEntity<ReviewDto> updateReview(@PathVariable int rb_idx, @RequestBody ReviewDto dto){
         reviewService.updateReview(rb_idx, dto);
         return new ResponseEntity<ReviewDto>(HttpStatus.OK);
     }
 
-    @PostMapping("/{m_idx}/like/{rb_idx}")
+    @PostMapping("/D1/{m_idx}/like/{rb_idx}")
     public ResponseEntity<ReviewDto> likeReview(@PathVariable int rb_idx, @PathVariable int m_idx) {
         reviewService.like(m_idx, rb_idx);
         // 좋아요 처리 후, 필요한 데이터를 ReviewBoardDto로 변환하여 생성
@@ -69,7 +69,7 @@ public class ReviewController {
 
     }
 
-    @PostMapping("/{m_idx}/dislike/{rb_idx}")
+    @PostMapping("/D1/{m_idx}/dislike/{rb_idx}")
     public ResponseEntity<ReviewDto> dislikeReview(@PathVariable int rb_idx, @PathVariable int m_idx) {
         reviewService.dislike(m_idx, rb_idx);
         // 좋아요 처리 후, 필요한 데이터를 ReviewBoardDto로 변환하여 생성
@@ -78,20 +78,20 @@ public class ReviewController {
 
     }
 
-    @GetMapping("/{m_idx}/checkGood/{rb_idx}")
+    @GetMapping("/D1/{m_idx}/checkGood/{rb_idx}")
     public ResponseEntity<Boolean> checkGood(@PathVariable int m_idx, @PathVariable int rb_idx) {
         boolean isGood = reviewService.isAlreadyAddGoodRp(m_idx, rb_idx);
         return ResponseEntity.ok(isGood);
     }
 
-    @GetMapping("/{m_idx}/checkBad/{rb_idx}")
+    @GetMapping("/D1/{m_idx}/checkBad/{rb_idx}")
     public ResponseEntity<Boolean> checkBad(@PathVariable int m_idx, @PathVariable int rb_idx) {
         boolean isBad = reviewService.isAlreadyAddBadRp(m_idx, rb_idx);
         return ResponseEntity.ok(isBad);
     }
 
 
-    @GetMapping("/search")
+    @GetMapping("/D1/search")
     public ResponseEntity<List<CompanyInfoDto>> searchCompany(@RequestParam String keyword) {
 //        System.out.println(keyword+"key");
         return new ResponseEntity<List<CompanyInfoDto>>(reviewService.getsearchCompanyname(keyword),HttpStatus.OK);

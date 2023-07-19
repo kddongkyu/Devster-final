@@ -38,7 +38,7 @@ function Reviewlist(props) {
         const searchKeyword = finalKeyword && finalKeyword.trim() !== '' ? finalKeyword.trim() : null;
       
         try {
-          const response = await axiosIns.get('/review', { params: { currentPage: currentPage, keyword: searchKeyword } });
+          const response = await axiosIns.get('/api/review/D0', { params: { currentPage: currentPage, keyword: searchKeyword } });
          console.log(finalKeyword);
           setReviews(response.data.reviews);
           setTotalPages(response.data.totalPages);

@@ -48,7 +48,7 @@ function Reviewform(props) {
     };
 
     const handleSubmit = async () => {
-        const apiUrl = '/review'; // 서버의 API 엔드포인트 주소
+        const apiUrl = '/api/review/D1'; // 서버의 API 엔드포인트 주소
 
         try {
              const response = await axiosIns.post(apiUrl, formData);
