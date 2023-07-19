@@ -40,7 +40,7 @@
     font-size: 1.4rem;
     letter-spacing: -0.24px;
 }
-.notice-detail-info-profile-img-icon {
+.fboard-detail-info-profile-img-icon {
     position: absolute;
     top: 0;
     left: 0;
@@ -49,7 +49,7 @@
     height: 4.3rem;
     object-fit: cover;
 }
-.notice-detail-info-nickname {
+.fboard-detail-info-nickname {
     position: absolute;
     top: 0.2rem;
     left: 5.3rem;
@@ -63,27 +63,27 @@
 .span {
     color: #721ea6;
 }
-.notice-detail-info-status-text,
-.notice-detail-info-status-text1 {
+.fboard-detail-info-status-text,
+.fboard-detail-info-status-text1 {
     position: absolute;
     top: 2.3rem;
-    left: 11.1rem;
+    left: 12.8rem;
     letter-spacing: -0.24px;
     display: inline-block;
-    width: 7.7rem;
+    width: 10rem;
 }
-.notice-detail-info-status-text1 {
+.fboard-detail-info-status-text1 {
     left: 5.4rem;
-    width: 4.1rem;
+    width: 5rem;
 }
-.notice-detail-info-status-view-icon {
+.fboard-detail-info-status-view-icon {
     position: absolute;
     top: 2.75rem;
-    left: 9.65rem;
+    left: 11rem;
     width: 1.4rem;
     height: 0.94rem;
 }
-.notice-detail-info {
+.fboard-detail-info {
     position: absolute;
     top: 29rem;
     left: 2.7rem;
@@ -96,6 +96,7 @@
     right: 3rem;
     width: 1.87rem;
     height: 2.35rem;
+    cursor: pointer;
 }
 .fboard-delete-icon,
 .fboard-update-icon {
@@ -105,6 +106,7 @@
     width: 2.4rem;
     height: 2.4rem;
     overflow: hidden;
+    cursor: pointer;
 }
 .fboard-delete-icon {
     right: 9.8rem;
@@ -125,7 +127,7 @@
     right: 0;
     letter-spacing: -0.24px;
 }
-.notice-detail-header-btn-like {
+.fboard-detail-header-btn-like {
     position: absolute;
     top: 0;
     right: 3.7rem;
@@ -139,14 +141,14 @@
     width: 1.1rem;
     height: 0.9rem;
 }
-.notice-detail-header-btn-disli {
+.fboard-detail-header-btn-disli {
     position: absolute;
     top: 0;
     right: 0;
     width: 2.9rem;
     height: 1.7rem;
 }
-.notice-detail-header-btn {
+.fboard-detail-header-btn {
     position: absolute;
     top: 31.3rem;
     right: 2.7rem;
@@ -192,6 +194,7 @@
     box-sizing: border-box;
     width: 3.4rem;
     height: 3.8rem;
+    cursor: pointer;
 }
 .board-detail-counter-like-icon {
     position: absolute;
@@ -199,6 +202,7 @@
     right: 0.96rem;
     width: 1.38rem;
     height: 0.83rem;
+    cursor: pointer;
 }
 .board-detail-counter-like {
     position: absolute;
@@ -220,7 +224,7 @@
 .board-detail-counter-num-text {
     position: absolute;
     top: 1rem;
-    right: 1.7rem;
+    right: 2.4rem;
     letter-spacing: -0.24px;
     font-weight: 500;
 }
@@ -236,6 +240,7 @@
     background-color: #fff;
     border: 1px solid #bdc0c4;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .board-detail-counter-dislike,
 .board-detail-counter-dislike-b {
@@ -244,6 +249,7 @@
     right: 0;
     width: 3.4rem;
     height: 3.8rem;
+    cursor: pointer;
 }
 .board-detail-counter {
     position: absolute;
@@ -577,4 +583,42 @@
     font-size: 1.2rem;
     color: #626567;
     font-family: "Noto Sans KR";
+}
+.board-detail-listback-rec {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 6.8rem;
+    height: 3.5rem;
+}
+.board-detail-listback-text {
+    position: absolute;
+    top: 0.8rem;
+    left: 3.1rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+    width: 3.8rem;
+}
+.board-detail-listback-icon {
+    position: absolute;
+    top: 0.95rem;
+    left: 1rem;
+    width: 1.6rem;
+    height: 1.69rem;
+    overflow: hidden;
+}
+.board-detail-listback {
+    position: absolute;
+    top: 86.3rem;
+    left: 4.1rem;
+    width: 6.9rem;
+    height: 3.5rem;
+    font-size: 1.3rem;
+    color: #747474;
+    cursor: pointer;
 }
