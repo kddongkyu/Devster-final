@@ -4,31 +4,12 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 
 const Hboard = () => {
-<<<<<<< HEAD
-  const [data, setData] = useState("");
 
-  const { currentPage } = useParams();
-
-  const list = () => {
-    const url =
-      "/hboard/list?currentPage=" + (currentPage == null ? 1 : currentPage);
-    Axios.get(url).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
-  };
-
-  useEffect(() => {
-    list();
-  }, [currentPage]);
-
-=======
 
   const handleRefresh = () => {
     window.location.reload();
   };
 
->>>>>>> 5d8fde681ddff91b994e919ff0ca10d66c3e3867
   return (
     <div className="hboard">
       <div className="advertise-box">
