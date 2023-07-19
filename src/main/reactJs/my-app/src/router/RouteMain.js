@@ -10,6 +10,7 @@ import {
   Resumeform,
   UserInfo,
   Notice,
+  ResumeUpdateform,
 } from "../pages/mypage";
 import Fboard from "../pages/fboard/Fboard";
 import Qboard from "../pages/qboard/Board";
@@ -64,6 +65,7 @@ function RouteMain(props) {
 
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
+          <Route path="/updateresume" element={<ResumeUpdateform />} />
         </Route>
 
         <Route path="/jwttest" element={<JwtTest />} />

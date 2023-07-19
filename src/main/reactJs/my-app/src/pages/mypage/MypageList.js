@@ -40,8 +40,8 @@ function MypageList(props) {
   return (
     <div className="mypage">
       <div className="mypage-wrapper">
-        {/* {member.m_role === "GUEST" ? <MypageListGuest /> : <MypageListAdmin />} */}
-        {member.m_role === "GUEST" ? <MypageListAdmin /> : <MypageListGuest />}
+        {member.m_role === "GUEST" ? <MypageListGuest /> : <MypageListAdmin />}
+        {/* {member.m_role === "GUEST" ? <MypageListAdmin /> : <MypageListGuest />} */}
       </div>
       <Outlet />
     </div>

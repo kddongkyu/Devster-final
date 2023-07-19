@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
-import "./style/Resumeform.css";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-function Resumeform(props) {
+function ResumeUpdateform(props) {
   const decodedToken = jwt_decode(localStorage.accessToken);
   const m_idx = decodedToken.idx;
 
   const navigate = useNavigate();
 
   const [member, setMember] = useState({
-    m_email: "",
     m_name: "",
+    m_email: "",
   });
+
+  const [resume, setResume] = useState({});
+
+  const [resumeCareerList, setResumeCareerList] = useState([]);
+  const [resumeLicenseList, setResumeLicenseList] = useState([]);
 
   const getMemberData = async (idx) => {
     try {
@@ -24,101 +28,43 @@ function Resumeform(props) {
     }
   };
 
-  // Effects
+  const getResume = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/resume/${idx}`);
+      setResume(response.data.resumeDto);
+      setResumeCareerList(response.data.resumeCareerDtoList);
+      setResumeLicenseList(response.data.resumeLicenseDtoList);
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     getMemberData(m_idx);
+    getResume(m_idx);
   }, []);
 
-  const [resumeDto, setResumeDto] = useState({
-    //r_idx: 1,
-    m_idx: m_idx,
-    r_self: "",
-    r_pos: "",
-    r_skill: "",
-    r_link: "",
-    r_gradestart: "",
-    r_gradeend: "",
-    r_gradecom: "",
-    r_sta: "",
-    r_file: "",
-    r_refile: "",
-    r_status: 1,
-    r_ldate: "",
-  });
+  const updateResume = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosIns.put("/resume", {
+        resumeDto: resume,
+        resumeCareerDtoList: resumeCareerList,
+        resumeLicenseDtoList: resumeLicenseList,
+      });
 
-  console.log(resumeDto);
+      if (response.status === 200) {
+        // 요청이 성공하면 /myresume로 이동합니다.
+        navigate("/myresume");
+      } else {
+        console.error("An error occurred while updating the resume");
+      }
 
-  const [resumeCareerDtoList, setResumeCareerDtoList] = useState([
-    {
-      //recar_idx: 1,
-      m_idx: m_idx,
-      r_carstartdate: "",
-      r_carenddate: "",
-      r_company: "",
-      r_department: "",
-      r_position: "",
-    },
-  ]);
-
-  const addCareer = () => {
-    const newCareerList = [
-      ...resumeCareerDtoList,
-      {
-        m_idx: m_idx,
-        r_carstartdate: "",
-        r_carenddate: "",
-        r_company: "",
-        r_department: "",
-        r_position: "",
-      },
-    ];
-    console.log(newCareerList); // 이 부분을 추가했습니다.
-    setResumeCareerDtoList(newCareerList);
-  };
-
-  // const handleChangeCareer = (e) => {
-  //   setResumeCareerDtoList([
-  //     {
-  //       ...resumeCareerDtoList[0],
-  //       [e.target.name]: e.target.value,
-  //     },
-  //   ]);
-  // };
-
-  const handleChangeCareer = (e, index) => {
-    const updatedCareerList = resumeCareerDtoList.map((career, idx) =>
-      idx === index ? { ...career, [e.target.name]: e.target.value } : career
-    );
-    setResumeCareerDtoList(updatedCareerList);
-  };
-
-  // useEffect(() => {
-  //   console.log(resumeCareerDtoList);
-  // }, [resumeCareerDtoList]);
-
-  const [resumeLicenseDtoList, setResumeLicenseDtoList] = useState([
-    {
-      // relic_idx: 1,
-      m_idx: m_idx,
-      r_licdate: "",
-      r_licname: "",
-    },
-  ]);
-
-  const handleChange = (e) => {
-    setResumeDto({
-      ...resumeDto,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleChangeLic = (e) => {
-    setResumeLicenseDtoList([
-      {
-        ...resumeLicenseDtoList[0],
-        [e.target.name]: e.target.value,
-      },
-    ]);
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleFileChange = async (e) => {
@@ -132,7 +78,7 @@ function Resumeform(props) {
         try {
           const response = await axiosIns.post("/resume/file", formData);
           url = response.data.url;
-          setResumeDto((prevDto) => ({
+          setResume((prevDto) => ({
             ...prevDto,
             resumeFileUrl: url,
           }));
@@ -144,7 +90,7 @@ function Resumeform(props) {
         try {
           const response = await axiosIns.post("/resume/refile", formData);
           url = response.data.url;
-          setResumeDto((prevDto) => ({
+          setResume((prevDto) => ({
             ...prevDto,
             reFileUrl: url,
           }));
@@ -157,26 +103,8 @@ function Resumeform(props) {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const resumeWrapper = {
-      resumeDto,
-      resumeCareerDtoList,
-      resumeLicenseDtoList,
-    };
-
-    try {
-      const response = await axiosIns.post("/resume", resumeWrapper);
-      console.log(response.data);
-      navigate("/myresume"); // after successful post, navigate to /resume
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   return (
-    <form className="resumeform" onSubmit={handleSubmit}>
+    <form className="resumeform" onSubmit={updateResume}>
       <div className="resumeform-wrapper">
         <div className="resumeform-header">
           <b className="resumeform-header-name">{member.m_name}</b>
@@ -207,8 +135,8 @@ function Resumeform(props) {
               className="resumeform-job-box-rec"
               type="text"
               name="r_pos"
-              value={resumeDto.r_pos}
-              onChange={handleChange}
+              value={resume.r_pos || ""}
+              onChange={(e) => setResume({ ...resume, r_pos: e.target.value })}
             />
           </div>
         </div>
@@ -224,8 +152,10 @@ function Resumeform(props) {
               className="resumeform-job-box-rec"
               type="text"
               name="r_skill"
-              value={resumeDto.r_skill}
-              onChange={handleChange}
+              value={resume.r_skill || ""}
+              onChange={(e) =>
+                setResume({ ...resume, r_skill: e.target.value })
+              }
             />
           </div>
         </div>
@@ -241,8 +171,8 @@ function Resumeform(props) {
               className="resumeform-job-box-rec"
               type="text"
               name="r_link"
-              value={resumeDto.r_link}
-              onChange={handleChange}
+              value={resume.r_link || ""}
+              onChange={(e) => setResume({ ...resume, r_link: e.target.value })}
             />
           </div>
         </div>
@@ -258,8 +188,15 @@ function Resumeform(props) {
               className="resumeform-school-entrance-rec"
               type="date"
               name="r_gradestart"
-              value={resumeDto.r_gradestart}
-              onChange={handleChange}
+              value={
+                (resume.r_gradestart &&
+                  !isNaN(Date.parse(resume.r_gradestart)) &&
+                  new Date(resume.r_gradestart).toISOString().split("T")[0]) ||
+                ""
+              }
+              onChange={(e) =>
+                setResume({ ...resume, r_gradestart: e.target.value })
+              }
             />
           </div>
           <div className="resumeform-school-graduation">
@@ -267,8 +204,15 @@ function Resumeform(props) {
               className="resumeform-school-entrance-rec"
               type="date"
               name="r_gradeend"
-              value={resumeDto.r_gradeend}
-              onChange={handleChange}
+              value={
+                (resume.r_gradeend &&
+                  !isNaN(Date.parse(resume.r_gradeend)) &&
+                  new Date(resume.r_gradeend).toISOString().split("T")[0]) ||
+                ""
+              }
+              onChange={(e) =>
+                setResume({ ...resume, r_gradeend: e.target.value })
+              }
             />
           </div>
           <div className="resumeform-school-inputname">
@@ -276,8 +220,10 @@ function Resumeform(props) {
               className="resumeform-school-entrance-rec"
               type="text"
               name="r_gradecom"
-              value={resumeDto.r_gradecom}
-              onChange={handleChange}
+              value={resume.r_gradecom || ""}
+              onChange={(e) =>
+                setResume({ ...resume, r_gradecom: e.target.value })
+              }
             />
           </div>
         </div>
@@ -288,18 +234,28 @@ function Resumeform(props) {
               className="icon-add-circle-outline"
               alt=""
               src={require("./assets/icon _add_circle_outline.svg").default}
-              onClick={addCareer}
             />
           </div>
-          {resumeCareerDtoList.map((career, index) => (
-            <div className="resumeform-career-group-02" key={index}>
+          {resumeCareerList.map((career, index) => (
+            <div key={index} className="resumeform-career-group-02">
               <div className="resumeform-career-group-02-gro">
                 <input
                   className="resumeform-school-entrance-rec"
                   type="date"
-                  name="r_carstartdate"
-                  value={career.r_carstartdate}
-                  onChange={(e) => handleChangeCareer(e, index)}
+                  name={`r_carstartdate${index}`}
+                  value={
+                    (career.r_carstartdate &&
+                      !isNaN(Date.parse(career.r_carstartdate)) &&
+                      new Date(career.r_carstartdate)
+                        .toISOString()
+                        .split("T")[0]) ||
+                    ""
+                  }
+                  onChange={(e) => {
+                    const updatedCareerList = [...resumeCareerList];
+                    updatedCareerList[index].r_carstartdate = e.target.value;
+                    setResumeCareerList(updatedCareerList);
+                  }}
                 />
               </div>
               <div className="resumeform-career-group-02-gro2">
@@ -307,8 +263,19 @@ function Resumeform(props) {
                   className="resumeform-school-entrance-rec"
                   type="date"
                   name="r_carenddate"
-                  value={career.r_carenddate}
-                  onChange={(e) => handleChangeCareer(e, index)}
+                  value={
+                    (career.r_carenddate &&
+                      !isNaN(Date.parse(career.r_carenddate)) &&
+                      new Date(career.r_carenddate)
+                        .toISOString()
+                        .split("T")[0]) ||
+                    ""
+                  }
+                  onChange={(e) => {
+                    const updatedCareerList = [...resumeCareerList];
+                    updatedCareerList[index].r_carenddate = e.target.value;
+                    setResumeCareerList(updatedCareerList);
+                  }}
                 />
               </div>
               <div className="resumeform-career-group-02-gro4">
@@ -316,8 +283,16 @@ function Resumeform(props) {
                   className="resumeform-school-entrance-rec"
                   type="text"
                   name="r_company"
-                  value={career.r_company}
-                  onChange={(e) => handleChangeCareer(e, index)}
+                  value={resumeCareerList[0]?.r_company || ""}
+                  onChange={(e) =>
+                    setResumeCareerList([
+                      {
+                        ...resumeCareerList[0],
+                        r_company: e.target.value,
+                      },
+                      ...resumeCareerList.slice(1),
+                    ])
+                  }
                 />
               </div>
               <div className="resumeform-career-group-02-gro6">
@@ -325,8 +300,16 @@ function Resumeform(props) {
                   className="resumeform-school-entrance-rec"
                   type="text"
                   name="r_department"
-                  value={career.r_department}
-                  onChange={(e) => handleChangeCareer(e, index)}
+                  value={resumeCareerList[0]?.r_department || ""}
+                  onChange={(e) =>
+                    setResumeCareerList([
+                      {
+                        ...resumeCareerList[0],
+                        r_department: e.target.value,
+                      },
+                      ...resumeCareerList.slice(1),
+                    ])
+                  }
                 />
               </div>
               <div className="resumeform-career-group-02-gro8">
@@ -334,13 +317,22 @@ function Resumeform(props) {
                   className="resumeform-school-entrance-rec"
                   type="text"
                   name="r_position"
-                  value={career.r_position}
-                  onChange={(e) => handleChangeCareer(e, index)}
+                  value={resumeCareerList[0]?.r_position || ""}
+                  onChange={(e) =>
+                    setResumeCareerList([
+                      {
+                        ...resumeCareerList[0],
+                        r_position: e.target.value,
+                      },
+                      ...resumeCareerList.slice(1),
+                    ])
+                  }
                 />
               </div>
             </div>
           ))}
         </div>
+
         <div className="resumeform-certificate">
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">자격증</b>
@@ -350,24 +342,45 @@ function Resumeform(props) {
               src={require("./assets/resume_certificate_plusicon.svg").default}
             />
           </div>
-          <div className="resumeform-certificate-box">
-            <div className="resumeform-certificate-box-dat">
+          {resumeLicenseList.map((license, index) => (
+            <div className="resumeform-certificate-box" key={index}>
+              <div className="resumeform-certificate-box-dat">
+                <input
+                  className="resumeform-school-entrance-rec"
+                  type="date"
+                  name="r_licdate"
+                  value={
+                    (license.r_licdate &&
+                      !isNaN(Date.parse(license.r_licdate)) &&
+                      new Date(license.r_licdate)
+                        .toISOString()
+                        .split("T")[0]) ||
+                    ""
+                  }
+                  onChange={(e) => {
+                    const updatedLicenseList = [...resumeLicenseList];
+                    updatedLicenseList[index].r_licdate = e.target.value;
+                    setResumeLicenseList(updatedLicenseList);
+                  }}
+                />
+              </div>
               <input
-                className="resumeform-school-entrance-rec"
-                type="date"
-                name="r_licdate"
-                value={resumeLicenseDtoList.r_licdate}
-                onChange={handleChangeLic}
+                className="resumeform-certificate-box-inp"
+                type="text"
+                name="r_licname"
+                value={resumeLicenseList[0]?.r_licname || ""}
+                onChange={(e) =>
+                  setResumeLicenseList([
+                    {
+                      ...resumeLicenseList[0],
+                      r_licname: e.target.value,
+                    },
+                    ...resumeLicenseList.slice(1),
+                  ])
+                }
               />
             </div>
-            <input
-              className="resumeform-certificate-box-inp"
-              type="text"
-              name="r_licname"
-              value={resumeLicenseDtoList.r_licname}
-              onChange={handleChangeLic}
-            />
-          </div>
+          ))}
         </div>
         <div className="resumeform-content">
           <div className="resumeform-job-tiltle">
@@ -378,8 +391,8 @@ function Resumeform(props) {
               className="resume-content-box-input"
               type="text"
               name="r_self"
-              value={resumeDto.r_self}
-              onChange={handleChange}
+              value={resume.r_self || ""}
+              onChange={(e) => setResume({ ...resume, r_self: e.target.value })}
             />
           </div>
         </div>
@@ -396,8 +409,8 @@ function Resumeform(props) {
               className="resumeform-job-box-rec"
               type="file"
               name="r_file"
-              // value={resumeDto.r_file}
               onChange={handleFileChange}
+              // value={resumeDto.r_file}
             />
           </div>
         </div>
@@ -410,9 +423,13 @@ function Resumeform(props) {
               className="resumeform-job-box-rec"
               type="file"
               name="r_refile"
-              // value={resumeDto.r_refile}
               onChange={handleFileChange}
+              // value={resumeDto.r_refile}
             />
+            {/* <div className="resumeform-link-box-icon-text">
+              {" "}
+              PDF 파일로 올려주세요.
+            </div> */}
           </div>
         </div>
       </div>
@@ -426,4 +443,4 @@ function Resumeform(props) {
   );
 }
 
-export default Resumeform;
+export default ResumeUpdateform;

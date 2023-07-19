@@ -84,8 +84,8 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
               </div>
             </div>
             <NavLink
-              // to={member.m_role === "GUEST" ? "/userinfo" : "/bookmarks"}
-              to={member.m_role === "GUEST" ? "/notice/admin" : "/userinfo"}
+              to={member.m_role === "GUEST" ? "/userinfo" : "/notice/admin"}
+              // to={member.m_role === "GUEST" ? "/notice/admin" : "/userinfo"}
               onClick={closeMenuBar}
             >
               <b className="menu-modal-options_mypage">
