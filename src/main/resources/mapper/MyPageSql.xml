@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.MypageMapper">
+    <select id="getHireBookmarkList" parameterType="int" resultType="HireBoardDto">
+        SELECT hb.*
+        FROM hireboard hb
+                 INNER JOIN hirebookmark hbm ON hb.hb_idx = hbm.hb_idx
+        WHERE hbm.m_idx = #{m_idx}
+    </select>
+</mapper>

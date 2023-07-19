@@ -30,6 +30,7 @@ public class MemberDto {
 
     public static MemberDto toMemberDto(MemberEntity entity){
         return MemberDto.builder()
+        		.m_idx(entity.getMIdx())
                 .m_name(entity.getMName())
                 .m_id(entity.getMId())
                 .m_email(entity.getMEmail())

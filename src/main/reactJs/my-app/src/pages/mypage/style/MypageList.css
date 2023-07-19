@@ -106,3 +106,13 @@
   color: #6e727f;
   font-family: "Noto Sans KR";
 }
+.line-mypage_02 {
+  position: absolute;
+  width: calc(100% - 1px);
+  top: 21.55rem;
+  right: -0.05rem;
+  left: 0.15rem;
+  border-top: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  height: 0.1rem;
+}

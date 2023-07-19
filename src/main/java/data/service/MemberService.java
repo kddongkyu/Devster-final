@@ -114,8 +114,8 @@ public class MemberService {
             MemberEntity entityForUpdate = entity.get();
             entityForUpdate.setMNickname(dto.getM_nickname());
             //비밀번호 암호화후 재 삽입
-            entityForUpdate.setMEmail(dto.getM_email());
-            entityForUpdate.passwordEncode(passwordEncoder);
+//            entityForUpdate.setMEmail(dto.getM_email());
+//            entityForUpdate.passwordEncode(passwordEncoder);
             memberRepository.save(entityForUpdate);
 
             log.info("일반회원정보 업데이트 완료");
