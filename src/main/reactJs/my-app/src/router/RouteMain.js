@@ -31,7 +31,7 @@ import JwtTest from "../pages/test/JwtTest";
 import {Noticeform, Noticelist} from "../pages/notice";
 import {Reviewform, Reviewlist, Reviewupdate,Reviewdetail} from "../pages/review";
 
-import {FboardUpdateForm} from "../pages/fboard";
+import {FboardDetail, FboardUpdateForm} from "../pages/fboard";
 
 import NoticeAdmin from "../pages/mypage/NoticeAdmin";
 import MemberSignupApproval from "../pages/mypage/MemberSignupApproval";
