@@ -30,6 +30,9 @@ import org.slf4j.LoggerFactory;
 //우선적으로 댓글과 사진 수정 필요 
 // (230719, 10:25) insert 에서 사진 어떻게할거야..   
 // (230719, 11:16) login 필요한것과 필요없는것들 api 맵핑 맞춰주기.. 일단 다 짜고.! 
+/*  (230720, 09:31) 오늘은.. academy,hboard ->  (1)페이징처리 (2)검색처리..?  (3)코드리팩토링..?  (4)insert,update  (5)chkgood 
+    그리고 공지사항 (6)CRUD  -> getpagedNboard 완성..  업로드,수정,삭제, 조회 개발 해야 함 
+*/
 
 
 @RestController
