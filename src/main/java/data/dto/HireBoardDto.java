@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+<<<<<<< HEAD
 
+=======
+>>>>>>> de597ed6408fe72a57157fb99b665c5c74e24fc7
 import java.sql.Timestamp;
-
 import org.apache.ibatis.type.Alias;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+<<<<<<< HEAD
 
+=======
+>>>>>>> de597ed6408fe72a57157fb99b665c5c74e24fc7
 import data.entity.HireBoardEntity;
 
 @Data
@@ -38,5 +42,9 @@ public class HireBoardDto {
             .cm_idx(entity.getCMidx())
             .build();
     }
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> de597ed6408fe72a57157fb99b665c5c74e24fc7
