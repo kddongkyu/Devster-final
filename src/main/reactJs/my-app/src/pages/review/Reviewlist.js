@@ -114,165 +114,119 @@ function Reviewlist(props) {
 
     return (
         <div className="review">
-            <div className="review-advertise">
-                <div className="review-advertise-main" />
-                <b className="review-advertise-text">광고</b>
-            </div>
-            <div className="review-name">
-                <div className="review-name-rec" />
-                <div className="review-name-text">
-                    <b className="goat">Review</b>
-                    <div className="div">코딩테스트 / 면접 / 합격 후기 게시판</div>
-                </div>
-            </div>
-            <NavLink to={`/review/form`} >
-            <button className="review-headerbar-btn" >
-                {/*<div className="review-headerbar-rec" />*/}
-                <div className="div1">{`후기작성 `}</div>
-                <img
-                    className="review-headerbar-btn-icon"
-                    alt=""
-                    src={require('./assets/review_headerbar_btn_icon.svg').default}
-                />
-            </button>
-            </NavLink>
-            <div className="review-headerbar-function">
-                <div className="review-headerbar-function-sort">
-                    <div className="review-headerbar-function-sort1" />
-                    <img
-                        className="review-headerbar-function-sort-child"
-                        alt=""
-                        src={require('./assets/Vector 176.svg').default}
-                    />
-                    <div className="div2"
-                          // onClick={handleSortByDate}
-                        >전체</div>
-                    <button
-                        // onClick={handleSortByRating}
-                    >
-                    <img
-                        className="review-headerbar-function-sort-icon"
-                        alt=""
-                        src={require('./assets/review_headerbar_function_sort_icon.svg').default}
-
-                    />
-                    </button>
-                </div>
-            </div>
-            <div className="review-function-search-input">
-                <input className="review-function-search-input1" 
-                value={inputKeyword}
-                placeholder='검색어를 입력해주세요'
-                onChange={(e) => setInputKeyword(e.target.value)}
-               />
-                <img
-                    className="review-function-search-icon"
-                    alt=""
-                    src={require('./assets/review-search-icon.svg').default}
-                    onClick={handleSearchButtonClick}
-                />
-            </div>
-            <img
-                className="review-pages-reload-icon"
-                alt=""
-                src={require('./assets/review_pages_reload_icon.svg').default}
-                onClick={handleRefresh}
-            />
-            <div className="review-pages-paging">
-                <div className="div3">{`${currentPage} / ${totalPages} 페이지`}</div>
-                {/*1 / 12345 페이지*/}
-                <img
-                    className="review-pages-paging-backwardic-icon"
-                    alt=""
-                    src={require('./assets/review_pages_paging_backwardicon.svg').default}
-                    onClick={() => goToPreviousPage(finalKeyword)}
-                />
-                <img
-                    className="review-pages-paging-forwardico-icon"
-                    alt=""
-                    src={require('./assets/review_pages_paging_forwardicon.svg').default}
-                    onClick={() => goToNextPage(finalKeyword)}
-                />
-            </div>
-
-            <div className="review-list-box">
-                <div className="review-list-box-rec">
-
-                    {reviews.map((review)=>(
-                        <Link to={`/review/detail/${review.review.rb_idx}/${currentPage}`} key={review.review.rb_idx}>
-
-                            <div className="list-ee" >
-                <img
-                    className="review-list-box-img-icon"
-                    alt=""
-                    src={review.ciPhoto}
-                />
-                            <div className="review-list-subject-text">
-                                {review.review.rb_subject}
-                            </div>
-                <div className="review-list-box-title">
-                    <div className="review-list-box-title-user">
-                        <img className="logo-icon" alt=""
-                             src={review.mPhoto} />
-                        <div className="user-01234">{review.mNicname} ·
-                            {timeForToday(review.review.rb_writeday)}
-                        </div>
-                    </div>
-                    <div className="div5">
-                        <p className="p4">{`리뷰 종류 : `}{reviewTypes[review.review.rb_type]}</p>
-                    </div>
-                    <div className="review-list-companyname">{review.ciName}</div>
-                </div>
-                <div className="review-list-box-star">
-                    <div className="div6">{review.review.rb_star}</div>
-                    <div className="review-list-box-star-icons">
-                        <StarRating rating={review.review.rb_star} />
-                    </div>
-
-                    {/*<img*/}
-                    {/*   */}
-                    {/*    alt=""*/}
-                    {/*    */}
-                    {/*    src={require('./assets/review-stars_icons.svg').default}*/}
-                    {/*/>*/}
-                </div>
-                <div className="review-list-box-header">
-                    <div className="review-list-box-header-likes">
-                        <div className="review-list-box-header-likes-t">{review.review.rb_like}</div>
-                        <img
-                            className="review-list-box-header-likes-i-icon"
-                            alt=""
-                            src={require('./assets/review_list_box_header_likes_icon.svg').default}
-                        />
-                    </div>
-                    <div className="review-list-box-header-comment">
-                        <div className="review-list-box-header-views-t">99</div>
-                        <img
-                            className="review-list-box-header-comment-icon"
-                            alt=""
-                            src={require('./assets/review_list_box_header_comments_icon.svg').default}
-                        />
-                    </div>
-                    <div className="review-list-box-header-views">
-                        <div className="review-list-box-header-views-t">{review.review.rb_readcount}</div>
-                        <img
-                            src={require('./assets/review_list_box_header_views_icon.svg').default}
-                            className="review-list-box-header-views-i-icon"
-                            alt=""
-                        />
-                    </div>
-                </div>
-                    <hr className="review-rectangle"/>
-                        </div>
-                        </Link>
-                    ))}
-
-            </div>
-            </div>
-
-            <div className="review-child" />
-            <div className="review-item" />
+        <div className="review-advertise">
+          <div className="review-advertise-main" />
+          <b className="review-advertise-text">광고</b>
         </div>
+        <div className="review-name">
+          <div className="review-name-rec" />
+          <b className="review-goat">Review</b>
+          <div className="review-sub-goat">
+            코딩테스트 / 면접 / 합격 후기 게시판
+          </div>
+        </div>
+        <NavLink to={`/review/form`} >
+        <button className="review-headerbar-btn">
+          <div className="review-headerbar-btn-text">{`후기작성 `}</div>
+          <img
+            className="review-headerbar-btn-icon"
+            alt=""
+            src={require('./assets/review_headerbar_btn_icon.svg').default}
+          />
+        </button>
+        </NavLink>
+        <div className="review-function-search-input">
+          <div className="review-function-search-input1" />
+          <img className="vector-icon" alt="" src="/vector.svg" />
+        </div>
+        <div className="rboard-function-sort">
+          <div className="rboard-function-sort-box" />
+          <div className="rboard-function-sort-time">최신순</div>
+          <div className="rboard-function-sort-view">조회순</div>
+          <div className="rboard-function-sort-like">인기순</div>
+          <img
+            className="rboard-function-sort-bar2-icon"
+            alt=""
+            src="/rboard-function-sort-bar2.svg"
+          />
+          <img
+            className="rboard-function-sort-bar-icon"
+            alt=""
+            src="/rboard-function-sort-bar.svg"
+          />
+        </div>
+        <img
+          className="review-pages-reload-icon"
+          alt=""
+          src="/review-pages-reload-icon.svg"
+        />
+        <div className="review-top-page-text">1 / 12345 페이지</div>
+        <img
+          className="review-top-pages-next-icon"
+          alt=""
+          src="/reviewtoppagesnext.svg"
+        />
+        <img
+          className="rboard-top-pages-back-icon"
+          alt=""
+          src="/rboardtop-pages-back.svg"
+        />
+        <div className="review-child" />
+        <div className="review-list">
+          <div className="review-list-box-rec" />
+          <img
+            className="review-list-box-img-icon"
+            alt=""
+            src="/review-list-box-img@2x.png"
+          />
+          <div className="review-list-subject-text">
+            <p className="p">{`▶ 지원 시기 : `}</p>
+            <p className="p1">{` `}</p>
+          </div>
+          <img className="logo-icon" alt="" src="/logo.svg" />
+          <div className="review-list-user-time">User_01234 · 약 4시간 전</div>
+          <div className="review-list-rb-type">
+            <p className="p1">{`리뷰 종류 : 면접 `}</p>
+          </div>
+          <b className="review-list-companyname">삼성전자</b>
+          <div className="review-list-box-star-text">3.0</div>
+          <img
+            className="review-list-box-star-icons"
+            alt=""
+            src="/review-list-box-star-icons.svg"
+          />
+          <div className="review-list-box-header-likes-t">9</div>
+          <img
+            className="review-list-box-header-likes-i-icon"
+            alt=""
+            src="/review-list-box-header-likes-icon.svg"
+          />
+          <div className="review-list-box-header-comment">99</div>
+          <img
+            className="review-list-box-header-comment-icon"
+            alt=""
+            src="/review-list-box-header-comments-icon.svg"
+          />
+          <div className="review-list-box-header-views-t">800</div>
+          <img
+            className="review-list-box-header-views-i-icon"
+            alt=""
+            src="/review-list-box-header-views-icon.svg"
+          />
+          <div className="review-bottom-bar" />
+        </div>
+        <div className="review-bottom-page-text">1 / 12345 페이지</div>
+        <img
+          className="review-bottom-page-next-icon"
+          alt=""
+          src="/reviewbottompagenext.svg"
+        />
+        <img
+          className="review-bottom-page-pre-icon"
+          alt=""
+          src="/reviewbottompagepre.svg"
+        />
+      </div>
     );
 }
 
