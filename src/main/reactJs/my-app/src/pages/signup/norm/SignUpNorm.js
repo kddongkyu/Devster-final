@@ -21,7 +21,7 @@ function SignUpNorm(props) {
             </div>
             <div className='signup-guest-intro-text'>
                 <p className='devster'>Devster는 개발자를 꿈꾸는 학생들과</p>
-                <p className='devster'>{` 주니어 개발자들이 모인 커뮤니티 플랫폼입니다. `}</p>
+                <p className='devster'>주니어 개발자들이 모인 커뮤니티 플랫폼입니다.</p>
             </div>
             <div className='signup-guest-choose'>
                 <div className='signup-guest-choose-norm'>{`일반회원 `}</div>
