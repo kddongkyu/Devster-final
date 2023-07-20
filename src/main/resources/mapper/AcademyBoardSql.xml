@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.AcademyBoardMapper">
+    <update id="updateReadCount" parameterType="int">
+        update academyboard set ab_readcount=ab_readcount+1 where ab_idx=#{ab_idx}
+    </update>
+    <select id="selectNickNameOfMidx" parameterType="int" resultType="String">
+        SELECT m.m_nickname
+        FROM academyboard ab
+                 JOIN member m ON ab.m_idx = m.m_idx
+        WHERE ab.ab_idx = #{ab_idx};
+    </select>
+    <select id="selectPhotoOfMidx" parameterType="int" resultType="String">
+        SELECT m.m_photo
+        FROM academyboard ab
+                 JOIN member m ON ab.m_idx = m.m_idx
+        WHERE ab.ab_idx = #{ab_idx};
+    </select>
+
+</mapper>

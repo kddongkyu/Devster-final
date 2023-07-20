@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.HireBoardMapper">
+    <select id="getTotalCount" resultType="int">
+        select count(*) from hireboard
+    </select>
+    <select id="getPagingList" parameterType="Map" resultType="HireBoardDto">
+        select * from hireboard order by hb_idx desc limit #{start},#{perpage}
+    </select>
+    <select id="getCompName" parameterType="int" resultType="String">
+        SELECT cm.cm_compname
+        FROM hireboard hb
+                 JOIN companymember cm ON hb.cm_idx = cm.cm_idx
+        WHERE hb.hb_idx = #{hb_idx};
+    </select>
+    <select id="getCompPhoto" parameterType="int" resultType="String">
+        SELECT cm.cm_filename
+        FROM hireboard hb
+                 JOIN companymember cm ON hb.cm_idx = cm.cm_idx
+        WHERE hb.hb_idx = #{hb_idx};
+    </select>        
+    <update id="updateReadCount" parameterType="int">
+        update hireboard set hb_readcount=hb_readcount+1 where hb_idx=#{hb_idx}
+    </update>
+    <select id="getBkmkInfoBym_idx" resultType="integer">
+        SELECT bookmarkStatus
+        FROM hirebookmark
+        WHERE m_idx = #{m_idx} AND hb_idx = #{hb_idx};
+    </select>
+
+
+
+</mapper>

@@ -13,7 +13,7 @@ import data.repository.resume.ResumeRepository;
 import jwt.setting.settings.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
-import org.json.JSONObject;
+// import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -227,45 +227,45 @@ public class ResumeService {
         return "이력서 업데이트 완료.";
     }
 
-    public String translateResume(String inputText) throws IOException {
-        try {
-            String text = URLEncoder.encode(inputText, "UTF-8");
-            String apiURL = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation";
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", client_id);
-            con.setRequestProperty("X-NCP-APIGW-API-KEY", client_secret);
-            // post request
-            String postParams = "source=ko&target=en&text=" + text;
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(postParams);
-            wr.flush();
-            wr.close();
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 오류 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
+    // public String translateResume(String inputText) throws IOException {
+    //     try {
+    //         String text = URLEncoder.encode(inputText, "UTF-8");
+    //         String apiURL = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation";
+    //         URL url = new URL(apiURL);
+    //         HttpURLConnection con = (HttpURLConnection)url.openConnection();
+    //         con.setRequestMethod("POST");
+    //         con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", client_id);
+    //         con.setRequestProperty("X-NCP-APIGW-API-KEY", client_secret);
+    //         // post request
+    //         String postParams = "source=ko&target=en&text=" + text;
+    //         con.setDoOutput(true);
+    //         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+    //         wr.writeBytes(postParams);
+    //         wr.flush();
+    //         wr.close();
+    //         int responseCode = con.getResponseCode();
+    //         BufferedReader br;
+    //         if(responseCode==200) { // 정상 호출
+    //             br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+    //         } else {  // 오류 발생
+    //             br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+    //         }
+    //         String inputLine;
+    //         StringBuffer response = new StringBuffer();
+    //         while ((inputLine = br.readLine()) != null) {
+    //             response.append(inputLine);
+    //         }
+    //         br.close();
 
-            String responseJson = response.toString();
+    //         String responseJson = response.toString();
 
-            JSONObject obj = new JSONObject(responseJson);
-            String translatedText = obj.getJSONObject("message").getJSONObject("result").getString("translatedText");
+    //         JSONObject obj = new JSONObject(responseJson);
+    //         String translatedText = obj.getJSONObject("message").getJSONObject("result").getString("translatedText");
 
-            return translatedText;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+    //         return translatedText;
+    //     } catch (Exception e) {
+    //         throw e;
+    //     }
+    // }
 
 }
