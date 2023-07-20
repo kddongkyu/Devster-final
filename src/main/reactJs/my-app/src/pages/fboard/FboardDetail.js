@@ -330,12 +330,12 @@ function FboardDetail(props) {
             <div className="board-detail-counter">
                 <div className="board-detail-counter-like">
                     <div className="board-detail-counter-like-box"
-                         style={isGood ? { backgroundColor: '#F5EFF9' } : {}}/>
+                         style={isGood ? { backgroundColor: '#F5EFF9' } : {}}
+                         onClick={()=>handlelike(m_idx,fb_idx)}/>
                     <img
                         className="board-detail-counter-like-icon"
                         alt=""
                         src={require("./assets/boarddetail/review_detail_counter_like_icon.svg").default}
-                        onClick={()=>handlelike(m_idx,fb_idx)}
                     />
                 </div>
                 <div className="board-detail-counter-num">
@@ -346,12 +346,12 @@ function FboardDetail(props) {
                 </div>
                 <div className="board-detail-counter-dislike">
                     <div className="board-detail-counter-dislike-b"
-                         style={isBad ? { backgroundColor: '#F5EFF9' } : {}}/>
+                         style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
+                         onClick={()=>handleDislike(m_idx,fb_idx)}/>
                     <img
                         className="board-detail-counter-like-icon"
                         alt=""
                         src={require("./assets/boarddetail/review_detail_counter_dislike_icon.svg").default}
-                        onClick={()=>handleDislike(m_idx,fb_idx)}
                     />
                 </div>
             </div>
