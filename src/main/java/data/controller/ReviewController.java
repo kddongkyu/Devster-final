@@ -33,6 +33,7 @@ public class ReviewController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(required = false) String keyword) {
+
         return new ResponseEntity<>(reviewService.getPagedReviews(page, size, keyword), HttpStatus.OK);
     }
     

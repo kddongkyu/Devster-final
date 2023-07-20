@@ -87,7 +87,7 @@ public class ReviewService {
         } else {
             result = reviewRepository.findAll(pageable);
         }
-        
+
         List<Map<String, Object>> reviewsWithCompanyInfo = result
                 .getContent()
                 .stream()
@@ -118,6 +118,7 @@ public class ReviewService {
 
         return response;
     }
+
 
 
     public Map<String, Object> getOneReview(Integer rb_idx) {
