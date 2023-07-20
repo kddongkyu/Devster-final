@@ -59,10 +59,10 @@ public class ResumeController {
         return new ResponseEntity<String>(resumeService.updateResume(resumeWrapper.getResumeDto(),resumeWrapper.getResumeCareerDtoList(), resumeWrapper.getResumeLicenseDtoList(),session), HttpStatus.OK);
     }
 
-    @PostMapping("/D1/translate")
-    public ResponseEntity<String> translate(@RequestBody JsonNode jsonNode) throws IOException {
-        return new ResponseEntity<String>(resumeService.translateResume(jsonNode.get("text").asText()),HttpStatus.OK);
-    }
+    // @PostMapping("/D1/translate")
+    // public ResponseEntity<String> translate(@RequestBody JsonNode jsonNode) throws IOException {
+    //     return new ResponseEntity<String>(resumeService.translateResume(jsonNode.get("text").asText()),HttpStatus.OK);
+    // }
 
 
 }
