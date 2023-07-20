@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 @Builder
 public class NoticeBoardDto {
     private int nb_idx; //pk
-    private int m_state; //fk
     private String nb_subject;
     private String nb_content;
     private String nb_photo;
@@ -24,7 +23,6 @@ public class NoticeBoardDto {
     public static NoticeBoardDto toNoticeBoardDto(NoticeBoardEntity entity) {
         return NoticeBoardDto.builder()
                 .nb_idx(entity.getNBidx())
-                .m_state(entity.getMState())
                 .nb_subject(entity.getNBsubject())
                 .nb_content(entity.getNBcontent())
                 .nb_photo(entity.getNBphoto())

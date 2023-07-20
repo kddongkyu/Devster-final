@@ -25,9 +25,6 @@ public class NoticeBoardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nb_idx")
     private int NBidx;
-
-    @Column(name = "m_state")
-    private int MState;
     
     @Column(name = "nb_subject")
     private String NBsubject;
@@ -47,7 +44,6 @@ public class NoticeBoardEntity {
     public static NoticeBoardEntity toNoticeBoardEntity(NoticeBoardDto dto){
         return NoticeBoardEntity.builder()
             .NBidx(dto.getNb_idx())
-            .MState(dto.getM_state())
             .NBsubject(dto.getNb_subject())
             .NBcontent(dto.getNb_content())
             .NBphoto(dto.getNb_photo())
@@ -56,3 +52,4 @@ public class NoticeBoardEntity {
             .build();
     }
 }
+

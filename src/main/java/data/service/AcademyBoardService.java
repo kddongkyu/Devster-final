@@ -2,23 +2,33 @@ package data.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import data.dto.AcademyBoardDto;
 import data.entity.AcademyBoardEntity;
 import data.entity.AcademylikeEntity;
+import data.entity.MemberEntity;
 import data.mapper.AcademyBoardMapper;
 import data.repository.AcademyBoardRepository;
 import data.repository.AcademylikeRepository;
+import data.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -29,7 +39,10 @@ import org.slf4j.LoggerFactory;
 
 
 @Service
+@Slf4j
 public class AcademyBoardService {
+    private final MemberRepository memberRepository;    
+
     private final Logger logger = LoggerFactory.getLogger(HireBoardService.class);
 
     @Autowired 
@@ -43,47 +56,123 @@ public class AcademyBoardService {
 
     @Autowired
     AcademyBoardMapper academyBoardMapper;
+
+    @Autowired
+    public AcademyBoardService(AcademyBoardRepository academyBoardRepository,  MemberRepository memberRepository, NcpObjectStorageService storageService) {
+        this.academyBoardRepository = academyBoardRepository;
+        this.memberRepository = memberRepository;
+        this.storageService = storageService;
+    }
     
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    public AcademyBoardDto insertAcademyBoard(AcademyBoardDto dto,List<MultipartFile> upload){  
-        String ab_photo="";
-        if(upload.get(0).getOriginalFilename().equals("")){
-            ab_photo="no";
-        } else{
-            int i=0;
-            for(MultipartFile mfile : upload) {
-                ab_photo += (storageService.uploadFile(bucketName, "devster/hireboard", mfile) + ",");
-            }
-        }
-        ab_photo=ab_photo.substring(0,ab_photo.length()-1);
-        dto.setAb_photo(ab_photo);
 
+    public AcademyBoardDto insertAcademyBoard(AcademyBoardDto dto, HttpSession session){
         try {
-            AcademyBoardEntity entity = AcademyBoardEntity.toAcademyBoardEntity(dto);
-            academyBoardRepository.save(entity);
-
+            AcademyBoardEntity academyBoard = AcademyBoardEntity.toAcademyBoardEntity(dto);
+            academyBoardRepository.save(academyBoard);
             return dto;
-        } catch (Exception e) {
-            logger.error("Error occurred while inserting hireboard",e);
-            throw e;
+        } catch (Exception e){
+            logger.error("insert FreeBoard Error",e);
+            throw  e;
         }
     }
 
+    public List<String> uploadPhoto(List<MultipartFile> upload, HttpSession session){
+        List<String> fullPhoto = new ArrayList<>();
 
-    public List<AcademyBoardDto> getAllData(){
-        try{
-            List<AcademyBoardDto> list = new ArrayList<>();
-            for(AcademyBoardEntity entity : academyBoardRepository.findAll()){
-                list.add(AcademyBoardDto.toAcademyBoardDto(entity));
-            }
-            return list;
-        } catch(Exception e){
-            logger.error("Error occurred while getting all hireboard data", e);
-            throw e;
+        for(MultipartFile photo : upload ) {
+            fullPhoto.add(storageService.uploadFile(bucketName,"devster/aboard",photo));
         }
-    }    
+
+        if(session.getAttribute("photo") != null) {
+            storageService.deleteFile(bucketName,"devster/aboard",session.getAttribute("photo").toString());
+        }
+
+        session.setAttribute("photo",String.join(",",fullPhoto));
+        log.info("AcademyBoard 사진 업로드 완료");
+        return fullPhoto;
+    }
+
+    public void resetPhoto(String photo) {
+        storageService.deleteFile(bucketName,"devster/aboard",photo);
+        log.info("Academy 사진 초기화 완료");
+    }
+
+
+
+
+    // public AcademyBoardDto insertAcademyBoard(AcademyBoardDto dto,List<MultipartFile> upload){  
+    //     String ab_photo="";
+    //     if(upload.get(0).getOriginalFilename().equals("")){
+    //         ab_photo="no";
+    //     } else{
+    //         int i=0;
+    //         for(MultipartFile mfile : upload) {
+    //             ab_photo += (storageService.uploadFile(bucketName, "devster/hireboard", mfile) + ",");
+    //         }
+    //     }
+    //     ab_photo=ab_photo.substring(0,ab_photo.length()-1);
+    //     dto.setAb_photo(ab_photo);
+
+    //     try {
+    //         AcademyBoardEntity entity = AcademyBoardEntity.toAcademyBoardEntity(dto);
+    //         academyBoardRepository.save(entity);
+
+    //         return dto;
+    //     } catch (Exception e) {
+    //         logger.error("Error occurred while inserting hireboard",e);
+    //         throw e;
+    //     }
+    // }
+
+
+    // public List<AcademyBoardDto> getAllData(){
+    //     try{
+    //         List<AcademyBoardDto> list = new ArrayList<>();
+    //         for(AcademyBoardEntity entity : academyBoardRepository.findAll()){
+    //             list.add(AcademyBoardDto.toAcademyBoardDto(entity));
+    //         }
+    //         return list;
+    //     } catch(Exception e){
+    //         logger.error("Error occurred while getting all hireboard data", e);
+    //         throw e;
+    //     }
+    // }    
+
+    public Map<String, Object> getPagedAcademyboard(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("FBwriteDay").descending());
+        Page<AcademyBoardEntity> result = academyBoardRepository.findAll(pageable);
+
+        List<Map<String, Object>> academyBoardList = result
+                .getContent()
+                .stream()
+                .map(academyBoardEntity -> {
+                    MemberEntity memberInfo = memberRepository.findById(academyBoardEntity.getMIdx()).orElse(null);
+                    Map<String, Object> academyboardMemberInfo = new HashMap<>();
+                    academyboardMemberInfo.put("academyboard", AcademyBoardDto.toAcademyBoardDto(academyBoardEntity));
+
+                    if (memberInfo != null) {
+                        academyboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
+                        academyboardMemberInfo.put("mNicname", memberInfo.getMNickname());
+                    }
+                    return academyboardMemberInfo;
+                })
+                .collect(Collectors.toList());
+
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("academyBoardList", academyBoardList);
+        response.put("totalElements", result.getTotalElements());
+        response.put("totalPages", result.getTotalPages());
+        response.put("currentPage", result.getNumber() + 1);
+        response.put("hasNext", result.hasNext());
+
+        return response;
+    }
+
+
 
 
     public AcademyBoardDto findByAbIdx(int idx){
@@ -125,6 +214,55 @@ public class AcademyBoardService {
     }
 
 
+    // public void updateAcademyBoard(AcademyBoardDto dto,MultipartFile upload,int currentPage){
+
+    //     String filename="";
+    //     AcademyBoardEntity entity = academyBoardRepository.findById(dto.getAb_idx())
+    //             .orElseThrow(() -> new EntityNotFoundException("해당 idx의 게시물이 존재하지 않습니다:" +dto.getAb_idx()));
+    //     if(!upload.getOriginalFilename().equals("")) {
+    //         filename= entity.getABphoto();
+    //         storageService.deleteFile(bucketName,"devster/hireboard",filename);
+    //         filename=storageService.uploadFile(bucketName, "devster/hireboard", upload);
+    //     }
+    //     try {
+    //         entity.setABphoto(filename);
+    //         academyBoardRepository.save(entity);
+    //     } catch (Exception e) {
+    //         logger.error("Error occurred while inserting hireboard",e);
+    //         throw e;
+    //     }
+    // }
+
+
+
+    public void updateAcademyBoard(int ab_idx, AcademyBoardDto dto){
+        try {
+            Optional<AcademyBoardEntity> e = academyBoardRepository.findById(ab_idx);
+
+            if(e.isPresent()) {
+                AcademyBoardEntity existingEntity = e.get();
+                existingEntity.setABsubject(dto.getAb_subject());
+                existingEntity.setABcontent(dto.getAb_content());
+//                existingEntity.setFBphoto(dto.getFb_photo());
+                academyBoardRepository.save(existingEntity);
+            }
+
+        } catch (Exception e) {
+            log.error("update AcademyBoard Error", e);
+            throw e;
+        }
+    }
+
+    public void updatePhoto(Integer ab_idx , MultipartFile upload ) {
+        Optional<AcademyBoardEntity> entity = academyBoardRepository.findById(ab_idx);
+        storageService.deleteFile(bucketName,"devster/aboard",entity.get().getABphoto());
+        entity.get().setABphoto(storageService.uploadFile(bucketName,"devster/aboard",upload));
+        academyBoardRepository.save(entity.get());
+
+        log.info(ab_idx+" AcademyBoard 사진업데이트 완료");
+    }
+
+
 
 
     public void deleteAcademyBoard(Integer idx){
@@ -138,24 +276,7 @@ public class AcademyBoardService {
 
 
 
-    public void updateAcademyBoard(AcademyBoardDto dto,MultipartFile upload,int currentPage){
-
-        String filename="";
-        AcademyBoardEntity entity = academyBoardRepository.findById(dto.getAb_idx())
-                .orElseThrow(() -> new EntityNotFoundException("해당 idx의 게시물이 존재하지 않습니다:" +dto.getAb_idx()));
-        if(!upload.getOriginalFilename().equals("")) {
-            filename= entity.getABphoto();
-            storageService.deleteFile(bucketName,"devster/hireboard",filename);
-            filename=storageService.uploadFile(bucketName, "devster/hireboard", upload);
-        }
-        try {
-            entity.setABphoto(filename);
-            academyBoardRepository.save(entity);
-        } catch (Exception e) {
-            logger.error("Error occurred while inserting hireboard",e);
-            throw e;
-        }
-    }
+    
 
     @Transactional
     private AcademylikeEntity findOrCreateABoardLike(int ABidx,int MIdx){
@@ -228,6 +349,17 @@ public class AcademyBoardService {
          logger.error("review like Error(Exce)", e);
         }
     }
+
+    public boolean isAlreadyAddGoodRp(int MIdx, int ABidx){
+        AcademylikeEntity academylikeEntity=findOrCreateABoardLike(MIdx, ABidx);
+        return academylikeEntity.getLikestatus()==1;
+    }
+   
+    public boolean isAlreadyAddBadRp(int MIdx, int ABidx){
+        AcademylikeEntity academylikeEntity=findOrCreateABoardLike(MIdx, ABidx);
+        return academylikeEntity.getLikestatus()==2;
+    }
+
 
 }
 

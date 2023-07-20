@@ -96,10 +96,22 @@ public class AcademyCommentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/dislike")   
+    @PostMapping("/D1/dislike")   
     public ResponseEntity<Void> dislikeAcademyComment(int abc_idx, int m_idx){
         academyCommentService.dislike(abc_idx,m_idx);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/D1/{m_idx}/checkGood/{abc_idx}")
+    public ResponseEntity<Boolean> checkGood(@PathVariable int abc_idx, @PathVariable int m_idx) {
+        boolean isGood = academyCommentService.isAlreadyAddGoodRp(m_idx, abc_idx);
+        return ResponseEntity.ok(isGood);
+    }
+
+    @GetMapping("/D1/{m_idx}/checkBad/{abc_idx}")
+    public ResponseEntity<Boolean> checkBad(@PathVariable int abc_idx, @PathVariable int m_idx) {
+        boolean isBad = academyCommentService.isAlreadyAddBadRp(m_idx, abc_idx);
+        return ResponseEntity.ok(isBad);
     }
 
 }
