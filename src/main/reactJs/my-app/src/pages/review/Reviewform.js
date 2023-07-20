@@ -1,101 +1,195 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './style/Reviewform.css';
+import {ReviewModal} from "./index";
+import axiosIns from "../../api/JwtConfig";
+import jwt_decode from "jwt-decode";
+
 
 function Reviewform(props) {
+    let de = jwt_decode(localStorage.getItem('accessToken'));
+    const [isReviewOpen,setIsReviewOpen] =useState(false);
+    const openReviewModal = () => {
+        setIsReviewOpen(true);
+    };
+
+
+
+    const [selectedCompany,setSelectedCompany] =useState("");
+    const [selectedCompanyIdx,setSelectedCompanyIdx] = useState("");
+    const [rating, setRating] = useState(0);  // useState는 컴포넌트의 최상위 범위에서 호출합니다.
+    const [formData, setFormData] = useState({
+        rb_subject: '',
+        rb_content: '',
+        rb_star:'',
+        rb_type: '',
+        m_idx: de.idx,
+    });
+    useEffect(() => {
+        setFormData((prevData) => ({
+            ...prevData,
+            ci_idx: selectedCompanyIdx,
+        }));
+    }, [selectedCompanyIdx]);
+
+    // rating 상태가 변화할 때마다 formData의 rb_star를 업데이트합니다.
+    useEffect(() => {
+        setFormData((prevData) => ({
+            ...prevData,
+            rb_star: rating,
+        }));
+    }, [rating]);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async () => {
+        const apiUrl = '/api/review/D1'; // 서버의 API 엔드포인트 주소
+
+        try {
+             const response = await axiosIns.post(apiUrl, formData);
+           // const response = await axios.post(apiUrl, formData);
+            console.log(response.data);
+            // 서버의 응답을 처리합니다.
+            window.location.replace('/review');
+
+        } catch (error) {
+            console.error("reviewforminsertreact"+error);
+            // 에러 처리
+        }
+    };
+
+
+
+    //별 표시를 위한 에제 컴포넌트
+
+    const increaserating = () => {
+        if (rating < 5) {
+            setRating(rating + 1);
+        }
+    };
+    const decreaserating = () => {
+        if (rating > 0) {
+            setRating(rating - 1);
+        }
+    };
+
+    const Star = ({ filled }) => (
+        <span className={filled ? "star-filled" : "star-empty"}>{filled ? "★" : "☆"}&nbsp;</span>
+    );
+
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+        stars.push(<Star key={i} filled={i < rating} />);  // Star 컴포넌트를 사용합니다.
+    }
+
+
+
     return (
-        <div className="notice-list">
-            <div className="notice-advertise-box">
-                <div className="notice-advertise-main" />
-                <b className="notice-advertise-text">광고</b>
+        <div className="review-write-form">
+            <div className="advertise-box">
+                <div className="advertise-main" />
+                <b className="advertise-text">광고</b>
             </div>
-            <div className="notice-header">
-                <div className="main-best" />
-                <b className="notice-header-text">공지사항</b>
+            <div className="review-write">
+                <div className="review-write-scolum-box" />
+                <b className="review-write-lcolumn">Review</b>
+                <div className="review-write-scolumn">
+                    코딩테스트 / 면접 / 합격 후기 게시판
+                </div>
             </div>
-            <div className="notice-option">
-                <div className="notice-option-box" />
-                <img className="notice-option-child" alt="" src="/vector-176.svg" />
-                <div className="notice-list-all">전체</div>
-                <img className="notice-list-icon" alt="" src="/noticelisticon.svg" />
-            </div>
-            <div className="notice-list-write">
-                <div className="notice-list-write-box" />
-                <img
-                    className="notice-list-write-icon"
-                    alt=""
-                    src="/noticelistwrite-icon.svg"
+            <div className="review-write-subject">
+                <div className="review-write-subject-text">제목</div>
+                <input
+                    className="review-write-subject-box-icon"
+                    name="rb_subject"
+                    value={formData.rb_subject}
+                    onChange={handleInputChange}
                 />
-                <div className="notice-list-write-text">글쓰기</div>
+                <select
+                    className="review-write-select-box-icon"
+                    name="rb_type"
+                    value={formData.rb_type}
+                    onChange={handleInputChange}
+                    required
+                >
+                    <option value="" disabled hidden>선택하세요</option>
+                    <option value="1">면접</option>
+                    <option value="2">코딩</option>
+                    <option value="3">합격</option>
+                </select>
+
             </div>
-            <div className="notice-function-search-input">
-                <div className="notice-function-search-input1" />
-                <img
-                    className="notice-function-search-icon"
-                    alt=""
-                    src="/notice-function-search-icon.svg"
-                />
+
+            <div className="review-write-company">
+                <div className="review-write-company-text">회사선택</div>
+                <input  className="review-write-search-box-icon"
+                value={selectedCompany} readOnly/>
             </div>
-            <img className="notice-hr-icon" alt="" src="/notice-hr.svg" />
-            <div className="notice-list-pages">
-                <div className="notice-list-pages-current">12345 / 12345 페이지</div>
-                <img
-                    className="notice-list-pages-back-icon"
-                    alt=""
-                    src="/noticelist-pages-back.svg"
-                />
-                <img
-                    className="notice-list-pages-forward-icon"
-                    alt=""
-                    src="/noticelistpages-forward.svg"
-                />
-            </div>
-            <img
-                className="notice-list-pages-reset-icon"
-                alt=""
-                src="/noticelist-pages-reset.svg"
+
+            <img className="review-search-icon" alt=""
+                 src={require('./assets/review-search-icon.svg').default}
+                 onClick={openReviewModal}
             />
-            <div className="notice-list-line" />
-            <div className="notice-list1">
-                <img className="notice-list-child" alt="" src="/vector-179.svg" />
-                <div className="notice-list-writer">
-                    <img
-                        className="notice-list-logo-icon"
-                        alt=""
-                        src="/noticelistlogo.svg"
-                    />
-                    <div className="notice-list-writer-time">admin_01 · 약 4시간 전</div>
-                </div>
-                <div className="notice-list-tag">#공지사항 # Devster</div>
-                <b className="notice-list-subject">DEVSTER 공지사항</b>
-                <div className="notice-list-icons">
-                    <div className="notice-list-like">
-                        <div className="notice-list-like-text">9</div>
-                        <img
-                            className="notice-list-like-icon"
-                            alt=""
-                            src="/noticelistlikeicon.svg"
-                        />
-                    </div>
-                    <div className="notice-comments">
-                        <div className="notice-comments-count">99</div>
-                        <img
-                            className="notice-comments-icon"
-                            alt=""
-                            src="/noticecommentsicon.svg"
-                        />
-                    </div>
-                    <div className="notice-list-readcount">
-                        <div className="notice-list-readcount-text">800</div>
-                        <img
-                            className="notice-list-readcount-icon"
-                            alt=""
-                            src="/noticelistreadcounticon.svg"
-                        />
-                    </div>
-                </div>
-                <div className="notice-list-text-box" />
-                <div className="notice-list-text">공지사항</div>
+
+            <div className="review-content">
+
+                <div className="review-stars-icons">{stars}</div>
+
+                <textarea placeholder="내용을 입력해주세요"
+                    className="review-content-box-icon"
+                          name="rb_content"
+                          value={formData.rb_content}
+                          onChange={handleInputChange}
+                />
+
             </div>
+            <div className="review-stars">
+                <div className="notice-like">
+                    <div className="notice-like-countbox">
+                        <div className="notice-like-countbox-child" />
+                    </div>
+                    <div className="notice-like">
+                        <div className="notice-like">
+                            <div className="rectangle-wrapper">
+                                <div className="group-child" />
+                            </div>
+                            <div className="rectangle-container">
+                                <div className="group-item" />
+                            </div>
+                        </div>
+                        <div className="notice-like-count-input"
+                             value={formData.rb_star}
+                             onChange={handleInputChange}
+                        >{rating}</div>
+                    </div>
+                </div>
+                <button onClick={decreaserating}>
+                <img
+                    className="notice-dislike-icon"
+                    alt=""
+                    src={require('./assets/star-dislike-icon.svg').default}
+                /></button>
+                <button onClick={increaserating}>
+                <img className="notice-like-icon" alt=""
+                     src={require('./assets/star-like-icon.svg').default}
+/>                  </button>
+            </div>
+            <button className="review-form-btn" onClick={handleSubmit}>
+                <img
+                    className="review-form-btn-icon"
+                    alt=""
+                    src={require('./assets/review_form_btn_icon.svg').default}
+                />  &nbsp;&nbsp; 리뷰등록
+            </button>
+            <ReviewModal  isReviewOpen={isReviewOpen}
+                          setIsReviewOpen={setIsReviewOpen}
+                          setSelectedCompany={setSelectedCompany}
+                          setSelectedCompanyIdx={setSelectedCompanyIdx}/>
         </div>
     );
 }
