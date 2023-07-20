@@ -528,13 +528,30 @@
     font-weight: 500;
 }
 
-.signup-guest-pass-secure-text {
+.signup-guest-pass-secure-text-one {
+    color:#cb0303;
+}
+
+.signup-guest-pass-secure-text-two {
+    color:#db9f04;
+}
+
+.signup-guest-pass-secure-text-three {
     position: absolute;
     top: 0;
     right: 0;
     letter-spacing: 0.01em;
     display: inline-block;
     width: 5.9rem;
+}
+.signup-guest-pass-secure-text-init {
+    position: relative;
+    top: 0.3rem;
+    right: 0;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 5.9rem;
+    font-size: 1.3rem;
 }
 
 .signup-guest-pass-secure-red,
@@ -571,8 +588,8 @@
 
 .signup-guest-pass-secure {
     position: absolute;
-    top: 100.5rem;
-    right: 5.7rem;
+    top: 100.3rem;
+    left: 12.3rem;
     width: 5.9rem;
     height: 1.8rem;
     font-size: 0.8rem;
@@ -589,6 +606,23 @@
     border: 1px solid #d9d9d9;
     box-sizing: border-box;
     height: 3.9rem;
+}
+
+.signup-guest-pass-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 102.7rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-guest-pass-inputbox-error:focus {
+    border: 2px solid red;
 }
 
 .signup-guest-pass-check-text {
@@ -864,6 +898,17 @@
     left: 6rem;
     letter-spacing: 0.01em;
     font-size: 0.8rem;
+    color:red;
+}
+
+.signup-guest-pass-error-text {
+    position: absolute;
+    top: 100.6rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    text-align: right;
+    display: inline-block;
+    width: 17.5rem;
     color:red;
 }
 

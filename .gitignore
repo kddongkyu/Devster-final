@@ -38,3 +38,6 @@ out/
 
 ### Setting File ###
 *.yml
+
+### React Build File ###
+src/main/resources/static/**
