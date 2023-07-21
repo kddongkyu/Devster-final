@@ -47,7 +47,7 @@ function InputPass(props) {
     }
 
     const capsLockChk = (e) => {
-        setIsCapsOn(e.getModifierState("CapsLock"));
+        setIsCapsOn(e.getModifierState('CapsLock'));
     }
 
     function strengthLevelChk(password) {
@@ -103,7 +103,7 @@ function InputPass(props) {
                     {
                         strengthLevel === 1 ? '보안강도 : 하' :
                             strengthLevel === 2 ? '보안강도 : 중' :
-                                strengthLevel >= 3 ? '보안강도 : 상' : '에러'
+                                strengthLevel >= 3 ? '보안강도 : 상' : ''
                     }
                 </div>
                 <div className='signup-guest-pass-secure-icons'>
@@ -128,7 +128,8 @@ function InputPass(props) {
                 onKeyDown={capsLockChk}
                 onChange={handlePassChange}
             />
-            {isCapsOn &&
+            {
+                isCapsOn &&
                 <span className='signup-guest-pass-capslock'>*Caps Lock이 켜져 있습니다.</span>
             }
         </div>

@@ -1,4 +1,5 @@
 @import '~cropperjs/dist/cropper.css';
+
 .cropper-crop-box, .cropper-view-box {
     border-radius: 50%;
 }
@@ -17,6 +18,7 @@
     width: 34.6rem;
     height: 34.6rem;
 }
+
 .signup-crop-modal-x {
     position: absolute;
     top: 42.2rem;
@@ -28,11 +30,12 @@
     justify-content: center;
     width: 9.4rem;
 }
+
 .signup-crop-modal-scale {
     position: absolute;
     top: 45.7rem;
     left: calc(50%);
-    transform: translate(-50%,0%);
+    transform: translate(-50%, 0%);
     width: 32.6rem;
     height: 4rem;
 }
@@ -47,6 +50,7 @@
     width: 13.9rem;
     height: 3.9rem;
 }
+
 .signup-crop-modal-cancle-text {
     position: absolute;
     top: 1rem;
@@ -56,6 +60,7 @@
     display: inline-block;
     width: 4rem;
 }
+
 .signup-crop-modal-cancle {
     position: absolute;
     top: 52.1rem;
@@ -64,6 +69,7 @@
     height: 3.9rem;
     cursor: pointer;
 }
+
 .signup-guest-submit-upload-box {
     position: absolute;
     top: 0;
@@ -72,7 +78,9 @@
     background-color: #721ea6;
     width: 13.9rem;
     height: 3.9rem;
+    border: 1px solid #95969a;
 }
+
 .signup-crop-modal-upload {
     position: absolute;
     top: 52.1rem;
@@ -82,6 +90,7 @@
     color: #fff;
     cursor: pointer;
 }
+
 .sigup-crop-modal {
     position: relative;
     background-color: #fff;
@@ -101,9 +110,9 @@
     height: 74vh;
     z-index: 999;
     position: fixed;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
@@ -115,6 +124,7 @@
         opacity: 100%;
     }
 }
+
 .sigup-crop-modal-box {
     animation: modal-fadein 0.3s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
 }

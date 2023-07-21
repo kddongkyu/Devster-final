@@ -5,6 +5,9 @@ import InputId from "./inputs/InputId";
 import InputEmail from "./inputs/InputEmail";
 import InputEmailReg from "./inputs/InputEmailReg";
 import InputPass from "./inputs/InputPass";
+import InputPassChk from "./inputs/InputPassChk";
+import InputNickname from "./inputs/InputNickname";
+import InputAcademy from "./inputs/InputAcademy";
 
 function SignUpNormForm(props) {
     return (
@@ -23,32 +26,9 @@ function SignUpNormForm(props) {
                 <InputEmail/>
                 <InputEmailReg/>
                 <InputPass/>
-                <div className='signup-guest-pass-check-text'>
-                    <span>비밀번호 확인</span>
-                    <span className='signup-guest-input-name'> *</span>
-                </div>
-                <div className='signup-guest-pass-check-wanrin'>
-                    비밀번호가 일치하지 않습니다.
-                </div>
-                <div className='signup-guest-pass-check-inputb'/>
-                <div className='signup-guest-nickname-text'>
-                    <span>닉네임</span>
-                    <span className='signup-guest-input-name'> *</span>
-                </div>
-                <div className='signup-guest-nickname-check-te'>
-                    사용 불가능한 닉네임입니다.
-                </div>
-                <div className='signup-guest-nickname-inputbox'/>
-                <div className='signup-guest-academy-text'>
-                    <span>기관 선택</span>
-                    <span className='signup-guest-input-name'> *</span>
-                </div>
-                <div className='signup-guest-academy-inputbox'/>
-                <img
-                    className='signup-guest-academy-search-ic-icon'
-                    alt=''
-                    src={require('../assets/signup_guest_academy_search_icon.svg').default}
-                />
+                <InputPassChk/>
+                <InputNickname/>
+                <InputAcademy/>
                 <div className='signup-guest-hr1'/>
                 <SignUpNormContract/>
             </div>

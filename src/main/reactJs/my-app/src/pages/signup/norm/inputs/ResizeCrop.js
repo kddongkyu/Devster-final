@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import '../style/ResizeCrop.css'
+import '../../style/ResizeCrop.css'
 import axios from 'axios';
 import {Slider} from "@mui/material";
 
@@ -38,21 +38,20 @@ function ResizeCrop({isCropOpen, setIsCropOpen, cropImg, setSavedImg}) {
             formData.append('upload', croppedImgBlob, fileName);
 
             try {
-                let res = await axios({
+                const res = await axios({
                     method: 'post',
                     url: '/api/member/D0/photo',
                     data: formData,
                     headers: {'Content-type': 'multipart/form-data'}
                 });
-
                 if (res.status === 200) {
                     await setSavedImg(res.data);
                     setZoomValue(0);
                     setIsCropOpen(false);
                 }
             } catch (error) {
-                console.error('Fail to upload cropped image');
-                alert(error);
+                alert('사진 업로드에 실패했습니다.\n잠시후 다시 시도해주세요.');
+                console.error('사진 업로드 실패' + error.response?.status);
             }
         }
     }

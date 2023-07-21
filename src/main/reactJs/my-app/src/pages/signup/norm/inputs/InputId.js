@@ -14,7 +14,7 @@ function InputId(props) {
 
     const checkId = useCallback(async () => {
         try {
-            const res = await axios.get(`/api/member/D0/id/${m_id}`)
+            const res = await axios.get(`/api/member/D0/id/${m_id}`);
             if (res?.status === 200) {
                 if (res.data === false) {
                     dispatch(setIdIsValid(true));
@@ -37,7 +37,8 @@ function InputId(props) {
     useEffect(() => {
         if (isIdTouched) {
             const timer = setTimeout(() => {
-                const isIdValid = m_id.trim() !== '' && /^[A-Za-z0-9]{6,14}$/.test(m_id);
+                const idPattern = /^[A-Za-z0-9]{6,14}$/.test(m_id);
+                const isIdValid = m_id.trim() !== '' && idPattern;
                 dispatch(setIdChk(isIdValid));
                 if (!m_id.trim()) {
                     setErrorMessage('필수 입력 항목입니다.');
