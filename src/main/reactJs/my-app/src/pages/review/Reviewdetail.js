@@ -273,6 +273,8 @@ function Reviewdetail() {
                     alt=""
                     src={require('./assets/review_detail_header_function_url.svg').default}
                 />
+                {m_idx === reviewData.review.m_idx &&(
+                    <>
                 <Link to={`/review/update/${reviewData.review.rb_idx}`}>
                 <img className="review-edit-icon" alt=""
                      src={require('./assets/review-edit.svg').default}/>
@@ -280,7 +282,8 @@ function Reviewdetail() {
                 <img className="review-trash-icon" alt=""
                      src={require('./assets/review-trash.svg').default}
                      onClick={() => deleteReview(rb_idx)} />
-
+                    </>
+                )}
             </div>
             <div className="review-detail-body">
                 <div className="review-detail-body-text">

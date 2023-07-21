@@ -118,7 +118,7 @@
 .review-detail-info-status-view-icon {
     position: absolute;
     top: 0.45rem;
-    left: 7.2rem;
+    left: 4.2rem;
     width: 1.4rem;
     height: 0.94rem;
 }
@@ -661,8 +661,7 @@
  }
 .rview-readcount{
     /*left: 9rem;*/
-    padding-left: 3rem;
-    padding-left: 3rem;
+    /*padding-left: 3rem;*/
 }
 .ci_name_b{
     position: absolute;

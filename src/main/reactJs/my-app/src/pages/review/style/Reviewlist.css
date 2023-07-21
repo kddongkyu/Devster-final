@@ -139,6 +139,8 @@
   display: inline-block;
   width: 4rem;
   height: 1.4rem;
+  border: none;
+  background-color: #ffffff;
 }
 .rboard-function-sort-like,
 .rboard-function-sort-view {

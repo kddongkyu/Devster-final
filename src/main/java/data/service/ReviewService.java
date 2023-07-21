@@ -77,13 +77,57 @@ public class ReviewService {
         }
     }
 
- public Map<String, Object> getPagedReviews(int page, int size,String keyword) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("RBwriteday").descending());
+// public Map<String, Object> getPagedReviews(int page, int size,String keyword) {
+//        Pageable pageable = PageRequest.of(page, size, Sort.by("RBwriteday").descending());
+//        Page<ReviewEntity> result;
+//
+//        if (keyword != null && !keyword.trim().isEmpty()) {
+//            result = reviewRepository.findByRBsubjectContaining(keyword, pageable);
+//               logger.info("Keyword: " + keyword);
+//        } else {
+//            result = reviewRepository.findAll(pageable);
+//        }
+//
+//        List<Map<String, Object>> reviewsWithCompanyInfo = result
+//                .getContent()
+//                .stream()
+//                .map(reviewEntity -> {
+//                    CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(reviewEntity.getCIidx()).orElse(null);
+//                    MemberEntity memberInfo = memberRepository.findById(reviewEntity.getMIdx()).orElse(null);
+//                    Map<String, Object> reviewWithCompanyInfo = new HashMap<>();
+//                    reviewWithCompanyInfo.put("review", ReviewDto.toReviewDto(reviewEntity));
+//                    if (memberInfo != null) {
+//                        reviewWithCompanyInfo.put("mPhoto", memberInfo.getMPhoto());
+//                        reviewWithCompanyInfo.put("mNicname", memberInfo.getMNickname());
+//                    }
+//                    if (companyInfo != null) {
+//                        reviewWithCompanyInfo.put("ciName", companyInfo.getCIname());
+//                        reviewWithCompanyInfo.put("ciStar", companyInfo.getCIstar());
+//                        reviewWithCompanyInfo.put("ciPhoto", companyInfo.getCIphoto());
+//                    }
+//                    return reviewWithCompanyInfo;
+//                })
+//                .collect(Collectors.toList());
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("reviews", reviewsWithCompanyInfo);
+//        response.put("totalElements", result.getTotalElements());
+//        response.put("totalPages", result.getTotalPages());
+//        response.put("currentPage", result.getNumber() + 1);
+//        response.put("hasNext", result.hasNext());
+//
+//        return response;
+//    }
+
+    public Map<String, Object> getPagedReviews(int page, int size, String sortProperty, String sortDirection, String keyword) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortProperty));
         Page<ReviewEntity> result;
+
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             result = reviewRepository.findByRBsubjectContaining(keyword, pageable);
-               logger.info("Keyword: " + keyword);
+            logger.info("Keyword: " + keyword);
         } else {
             result = reviewRepository.findAll(pageable);
         }

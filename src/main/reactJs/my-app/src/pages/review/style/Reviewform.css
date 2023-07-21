@@ -300,6 +300,7 @@
     text-align: center;
     color: #fff;
     background-color: #721ea6;
+    border: none;
 }
 .review-write-form {
     position: relative;
