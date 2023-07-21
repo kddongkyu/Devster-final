@@ -41,5 +41,5 @@ out/
 *.yml
 
 ### React Build File ###
-src/main/resources/static/static/**
+src/main/resources/static/**
 
