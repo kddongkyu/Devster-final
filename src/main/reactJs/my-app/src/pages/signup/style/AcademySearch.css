@@ -20,15 +20,6 @@
     box-sizing: border-box;
     width: 20rem;
     height: 3.9rem;
-    padding-left: 4.5rem;
-}
-
-.signup-guest-academy-modal-sea-icon {
-    position: absolute;
-    top: 1.13rem;
-    left: calc(50% - 119.75px);
-    width: 1.67rem;
-    height: 1.67rem;
 }
 
 .signup-guest-academy-modal-sea3 {
@@ -100,6 +91,14 @@
     text-align: left;
     width: 27.6rem;
     font-size: 1.4rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.signup-guest-academy-modal-res-text:hover {
+    text-decoration: underline;
+    color: #721ea6;
+    font-weight: bold;
 }
 
 .sigup-guest-academy-modal-res-none-etc {

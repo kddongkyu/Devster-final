@@ -18,7 +18,6 @@ function AcademySearch({isSearchOpen, setIsSearchOpen}) {
             if (res?.status === 200) {
                 setAcademyList(res.data);
                 setAcademyLoading(false);
-                console.log(res);
             }
         } catch (error) {
         }
@@ -37,12 +36,16 @@ function AcademySearch({isSearchOpen, setIsSearchOpen}) {
         }
     }, [academyKeyWords, isAcademyTouched, AcademyLoading]);
 
-    const handleAcademySearch = async (e) => {
+    const handleAcademySearch = (e) => {
         if (!isAcademyTouched) {
             setIsAcademyTouched(true);
         }
         setAcademyKeyWords(e.target.value);
         setAcademyLoading(true);
+    }
+
+    const handleAcademyName = (ainame) => {
+        setAcademyKeyWords(ainame);
     }
 
     const closeSearchModal = () => {
@@ -68,11 +71,6 @@ function AcademySearch({isSearchOpen, setIsSearchOpen}) {
                             value={academyKeyWords}
                             onChange={handleAcademySearch}
                         />
-                        <img
-                            className='signup-guest-academy-modal-sea-icon'
-                            alt=''
-                            src={require('../../assets/signup_guest_academy_modal_search_icon.svg').default}
-                        />
                         <div className='signup-guest-academy-modal-sea2'>
                             <div className='signup-guest-academy-modal-sea3'/>
                             <div className='signup-guest-academy-modal-sea4'>확인</div>
@@ -84,8 +82,11 @@ function AcademySearch({isSearchOpen, setIsSearchOpen}) {
                             isAcademyTouched && !AcademyLoading && academyList.length > 0 &&
                             academyList?.map((item, idx) => {
                                 return (
-                                    <div className='signup-guest-academy-modal-res-text'>
-                                    {item.ainame}
+                                    <div
+                                        className='signup-guest-academy-modal-res-text'
+                                        onClick={()=>handleAcademyName(item.ainame)}
+                                    >
+                                        {item.ainame}
                                     </div>
                                 )
                             })
