@@ -46,8 +46,12 @@ public class FreeBoardService {
 
     public FreeBoardDto insertFreeBoard(FreeBoardDto dto, HttpSession session){
         try {
+            if(session.getAttribute("photo")!=null){
+                dto.setFb_photo(session.getAttribute("photo").toString());
+            }
             FreeBoardEntity freeBoard = FreeBoardEntity.toFreeBoardEntity(dto);
             freeBoardRepository.save(freeBoard);
+            session.removeAttribute("photo");
             return dto;
         } catch (Exception e){
             log.error("insert FreeBoard Error",e);

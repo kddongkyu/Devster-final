@@ -1,3 +1,4 @@
+/* 상단 */
 .advertise-main {
     position: absolute;
     width: 100%;
@@ -158,14 +159,31 @@
 .p {
     margin: 0;
 }
+
+/* 중단 */
 .board-detail-textarea-contents {
-    position: absolute;
+    position: relative;
     width: 100%;
     top: 6.7rem;
     left: 0;
     letter-spacing: -0.24px;
     display: inline-block;
-    height: 43.1rem;
+    /*height: 43.1rem;*/
+    /*margin-bottom: 5rem;*/
+}
+.fboard-detail-photo-list{
+    position: relative;
+    margin-top: 5rem;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.board-detail-photo {
+    /*top: 88rem;*/
+    left: calc(50% - 150px);
+    border: 1px solid #fff;
+    width: 30rem;
+    height: 30rem;
+    position: relative;
 }
 .board-detail-textarea-subject {
     position: absolute;
@@ -181,8 +199,55 @@
     top: 35.7rem;
     right: 3.7rem;
     left: 3.7rem;
-    height: 49.8rem;
+    /*height: 49.8rem;*/
     font-size: 1.3rem;
+}
+
+/* 하단 */
+/*.board-detail-listbackcounter{*/
+/*    display: flex;*/
+/*}*/
+
+
+.board-detail-listback-rec{
+    position: absolute;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.board-detail-listback-rec {
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    border: 1px solid #bdc0c4;
+    width: 6.8rem;
+    height: 3.5rem;
+}
+.board-detail-listback-text {
+    position: absolute;
+    top: 0.8rem;
+    left: 3.1rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+    width: 3.8rem;
+}
+.board-detail-listback-icon {
+    position: absolute;
+    top: 0.95rem;
+    left: 1rem;
+    width: 1.6rem;
+    height: 1.69rem;
+    overflow: hidden;
+}
+.board-detail-listback {
+    position: absolute;
+    top: 120.5rem;
+    left: 4.1rem;
+    width: 6.9rem;
+    height: 3.5rem;
+    font-size: 1.3rem;
+    color: #747474;
 }
 .board-detail-counter-like-box {
     position: absolute;
@@ -194,7 +259,6 @@
     box-sizing: border-box;
     width: 3.4rem;
     height: 3.8rem;
-    cursor: pointer;
 }
 .board-detail-counter-like-icon {
     position: absolute;
@@ -202,7 +266,6 @@
     right: 0.96rem;
     width: 1.38rem;
     height: 0.83rem;
-    cursor: pointer;
 }
 .board-detail-counter-like {
     position: absolute;
@@ -224,7 +287,7 @@
 .board-detail-counter-num-text {
     position: absolute;
     top: 1rem;
-    right: 2.4rem;
+    right: 1.7rem;
     letter-spacing: -0.24px;
     font-weight: 500;
 }
@@ -240,7 +303,6 @@
     background-color: #fff;
     border: 1px solid #bdc0c4;
     box-sizing: border-box;
-    cursor: pointer;
 }
 .board-detail-counter-dislike,
 .board-detail-counter-dislike-b {
@@ -249,12 +311,11 @@
     right: 0;
     width: 3.4rem;
     height: 3.8rem;
-    cursor: pointer;
 }
 .board-detail-counter {
     position: absolute;
-    top: 86.3rem;
-    right: 3.7rem;
+    top: 120.5rem;
+    right: 3.6rem;
     width: 12.2rem;
     height: 3.8rem;
     text-align: center;
@@ -270,7 +331,17 @@
 .advertise-box1 {
     position: absolute;
     width: calc(100% - 30px);
-    top: 93.7rem;
+    top: 127.9rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 11.2rem;
+    font-size: 2rem;
+    color: #000;
+}
+.advertise-box2 {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 128rem;
     right: 1.5rem;
     left: 1.5rem;
     height: 11.2rem;
@@ -280,7 +351,7 @@
 .board-detail-hr-icon {
     position: absolute;
     width: calc(100% - 40px);
-    top: 108.24rem;
+    top: 142.44rem;
     right: 2rem;
     left: 2rem;
     max-width: 100%;
@@ -289,7 +360,7 @@
 }
 .board-detail-comments-counts {
     position: absolute;
-    top: 109.9rem;
+    top: 144.1rem;
     left: 2rem;
     font-size: 1.6rem;
     letter-spacing: -0.24px;
@@ -332,7 +403,7 @@
 .board-detail-commnets-form {
     position: absolute;
     width: calc(100% - 32px);
-    top: 113.4rem;
+    top: 147.6rem;
     right: 1.6rem;
     left: 1.6rem;
     height: 24.4rem;
@@ -354,7 +425,7 @@
 }
 .board-detail-commnets-submit-b {
     position: absolute;
-    top: 132.1rem;
+    top: 166.3rem;
     right: 3.2rem;
     width: 11.6rem;
     height: 4rem;
@@ -372,7 +443,7 @@
 }
 .board-detail-commnets-detail-i {
     position: absolute;
-    top: 140.2rem;
+    top: 174.4rem;
     left: 2rem;
     width: 17.7rem;
     height: 3.5rem;
@@ -439,7 +510,7 @@
 }
 .board-detail-commnets-all-like {
     position: absolute;
-    top: 141rem;
+    top: 175.2rem;
     right: 1.9rem;
     width: 10.5rem;
     height: 2.7rem;
@@ -450,7 +521,7 @@
 .board-detail-commnets-all-cont {
     position: absolute;
     width: calc(100% - 45px);
-    top: 145rem;
+    top: 179.2rem;
     left: 1.9rem;
     letter-spacing: -0.24px;
     font-weight: 500;
@@ -477,7 +548,7 @@
 }
 .board-detail-commnets-hide {
     position: absolute;
-    top: 166.7rem;
+    top: 200.9rem;
     left: 2.5rem;
     width: 15rem;
     height: 1.6rem;
@@ -487,7 +558,7 @@
 }
 .board-detail-recom-box {
     position: absolute;
-    top: 169.5rem;
+    top: 203.7rem;
     left: 4.1rem;
     border-left: 1px solid #d2d2d2;
     box-sizing: border-box;
@@ -520,7 +591,7 @@
 }
 .board-detail-recom-info {
     position: absolute;
-    top: 170.4rem;
+    top: 204.6rem;
     left: 5rem;
     width: 17.7rem;
     height: 3.5rem;
@@ -546,7 +617,7 @@
 }
 .board-detail-recom-likes {
     position: absolute;
-    top: 171.2rem;
+    top: 205.4rem;
     right: 1.9rem;
     width: 10.5rem;
     height: 2.7rem;
@@ -563,12 +634,12 @@
 }
 .board-detail-recom-textarea {
     width: calc(100% - 82px);
-    top: 175rem;
+    top: 209.2rem;
     display: inline-block;
     height: 12.4rem;
 }
 .board-detail-recom-recom-form {
-    top: 188.7rem;
+    top: 222.9rem;
     text-align: center;
 }
 .fboard-detail {
@@ -577,48 +648,11 @@
     border: 1px solid rgba(210, 210, 210, 0.9);
     box-sizing: border-box;
     width: 100%;
-    height: 193.1rem;
+    height: 227.9rem;
     overflow: hidden;
     text-align: left;
     font-size: 1.2rem;
     color: #626567;
     font-family: "Noto Sans KR";
 }
-.board-detail-listback-rec {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 6.8rem;
-    height: 3.5rem;
-}
-.board-detail-listback-text {
-    position: absolute;
-    top: 0.8rem;
-    left: 3.1rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-    display: inline-block;
-    width: 3.8rem;
-}
-.board-detail-listback-icon {
-    position: absolute;
-    top: 0.95rem;
-    left: 1rem;
-    width: 1.6rem;
-    height: 1.69rem;
-    overflow: hidden;
-}
-.board-detail-listback {
-    position: absolute;
-    top: 86.3rem;
-    left: 4.1rem;
-    width: 6.9rem;
-    height: 3.5rem;
-    font-size: 1.3rem;
-    color: #747474;
-    cursor: pointer;
-}
+

@@ -14,8 +14,10 @@ function FboardDetail(props) {
     const { fb_idx, currentPage } = useParams();
     const [isGood, setIsGood] = useState(false);
     const [isBad, setIsBad] = useState(false);
+    const [arrayFromString, setArrayFromString] = useState([]);
 
     const navi = useNavigate();
+    const photoUrl = process.env.REACT_APP_PHOTO+"fboard/";
 
     const fetchFboard = useCallback((fb_idx, currentPage = null) => {
         const url=`/api/fboard/D0/${fb_idx}`;
@@ -23,6 +25,15 @@ function FboardDetail(props) {
             .then(response => {
                 console.log(response.data);
                 setFboardData(response.data);
+                if(response.data.fboard.fb_photo!=null){
+                    setArrayFromString(response.data.fboard.fb_photo.split(","));
+                }
+
+                // const originUrl = fboardData.fboard.fb_photo;
+                // if(originUrl != null) {
+                //     setArrayFromString(originUrl.split(","));
+                // }
+                // console.log(arrayFromString);
                 setIsLoading(false);
 
                 if (m_idx && fb_idx) {
@@ -50,10 +61,10 @@ function FboardDetail(props) {
     }, []);
 
     // 업데이트 폼으로 이동하는 변수
-    const navigateToPurchase = useCallback((fb_idx, currentPage) => {
+    const navigateToPurchase = useCallback(() => {
         const updateFormUrl = `/fboard/updateform/${fb_idx}/${currentPage}`;
-        navi(updateFormUrl);
-    }, [fb_idx,currentPage, navi]);
+        navi(updateFormUrl, { state: fboardData }); // fboardData를 state로 전달
+    }, [fb_idx, currentPage, fboardData, navi]);
 
 
     useEffect(() => {
@@ -64,6 +75,13 @@ function FboardDetail(props) {
         return <div>Loading...</div>;
     }
 
+    // 사진 출력
+    // const photoUrl = process.env.REACT_APP_PHOTO+"fboard/";
+    // const originUrl = fboardData.fboard.fb_photo;
+    // if(originUrl != null) {
+    //     setArrayFromString(originUrl.split(","));
+    // }
+    // console.log(arrayFromString);
 
     // 좋아요 싫어요
     const handlelike = (m_idx, fb_idx) => {
@@ -162,7 +180,7 @@ function FboardDetail(props) {
         };
 
 
-    let result = fboardData.fboard.rb_like - fboardData.fboard.rb_dislike;
+        let result = fboardData.fboard.rb_like - fboardData.fboard.rb_dislike;
 
         if (fboardData.fboard.rb_like <= fboardData.fboard.rb_dislike) {
             result = - result;
@@ -264,25 +282,14 @@ function FboardDetail(props) {
             <img className="fboard-url-icon" alt=""
                  src={require("./assets/boarddetail/notice_detail_header_function_url.svg").default}
             />
-            {/*<img*/}
-            {/*    className="fboard-update-icon"*/}
-            {/*    alt=""*/}
-            {/*    src={require("./assets/boarddetail/edit.svg").default}*/}
-            {/*    onClick={navigateToPurchase}*/}
-            {/*/>*/}
-            {/*<img*/}
-            {/*    className="fboard-delete-icon"*/}
-            {/*    alt=""*/}
-            {/*    src={require("./assets/boarddetail/trash.svg").default}*/}
-            {/*    onClick={() => deleteFboard(fb_idx)}*/}
-            {/*/>*/}
+
             {m_idx === fboardData.fboard.m_idx && (
                 <>
                     <img
                         className="fboard-update-icon"
                         alt=""
                         src={require("./assets/boarddetail/edit.svg").default}
-                        onClick={() => navigateToPurchase(fb_idx, currentPage)}
+                        onClick={navigateToPurchase}
                     />
                     <img
                         className="fboard-delete-icon"
@@ -310,14 +317,34 @@ function FboardDetail(props) {
                     <div className="board-detail-header-btn-like-t">{fboardData.fboard.fb_dislike}</div>
                 </div>
             </div>
+
+
             <div className="board-detail-textarea">
                 <div className="board-detail-textarea-subject">
                     {fboardData.fboard.fb_subject}
                 </div>
+
                 <div className="board-detail-textarea-contents">
-                   <pre>{fboardData.fboard.fb_content}</pre>
+                   <pre style={{marginBottom:"5rem"}}>
+                       {fboardData.fboard.fb_content}
+                   </pre>
+                </div>
+
+                <div className="fboard-detail-photo-list">
+                    {arrayFromString.map((imageId, index) => (
+                        <div>
+                            <img
+                                className="board-detail-photo" key={index}
+                                src={`${photoUrl}${imageId}`}
+                                alt={`Image ${index}`}
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
+
+            {/* 여기서부터 밑으로 정렬 */}
+            <div className="board-detail-listbackcounter">
             <div className="board-detail-listback" onClick={fboardNavigation}>
                 <div className="board-detail-listback-rec" />
                 <div className="board-detail-listback-text">목록</div>
@@ -355,10 +382,12 @@ function FboardDetail(props) {
                     />
                 </div>
             </div>
-            <div className="advertise-box1">
+            </div>
+            <div className="advertise-box2">
                 <div className="advertise-main" />
                 <b className="advertise-text1">광고 2</b>
             </div>
+
             {/*<img className="board-detail-hr-icon" alt="" src="/board-detail-hr.svg" />*/}
             <div className="board-detail-comments-counts">nn개의 댓글</div>
             <div className="board-detail-commnets-form">
