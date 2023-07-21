@@ -1,6 +1,7 @@
 package data.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,7 @@ import naver.cloud.NcpObjectStorageService;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.text.StringEscapeUtils;
@@ -38,14 +40,16 @@ import org.slf4j.LoggerFactory;
     (230720, 11:08) academyboard 페이징 처리  -> ok 
     (230720, 11:20) academyboard, academycomment 에서 chkgood -> ok 
     (11:40) insert, update : academyboard, academycomment -> ok 
-    (12:20) 검색처리  
-    (12:50) 점심시간
-    (14:10) noticeboard 업로드
-    (16:00) noticeboard 조회 
-    (16:30) noticeboard 수정
-    (17:00) noticeboard 삭제 
-    (17:30) 테스트 해보고 깃에 업로드 
+    (12:20) noticeboard 업로드,조회  -> ok 
+    (12:50) 점심시간 -> ok 
+    (14:10) noticeboard 수정, 삭제    -> ok     
+    (14:35) 테스트 해보고 ->  academyboard(ok) , academycomment(ok) 
+    (17:00) paging 및  searchpaging  ->  noticeboard(ok) , academyboard(ok) , hireboard() 
+    (17:30) hireboard 테스트 ->  
+    (18:00) 깃에 업로드  ->  
+    (.then) 광고 하든지 아니면은 게시판 프론트 하든지  
 */
+
 
 
 @RestController
@@ -61,8 +65,8 @@ public class AcademyBoardController {
     private NcpObjectStorageService storageService;
 
     @PostMapping("/D1")
-    public ResponseEntity<AcademyBoardDto> insertAcademyBoard(@RequestBody AcademyBoardDto dto, HttpSession session){
-        return new ResponseEntity<AcademyBoardDto>(academyBoardService.insertAcademyBoard(dto,session), HttpStatus.OK);
+    public ResponseEntity<AcademyBoardDto> insertAcademyBoard(@RequestBody AcademyBoardDto dto, HttpSession session, HttpServletRequest request){
+        return new ResponseEntity<AcademyBoardDto>(academyBoardService.insertAcademyBoard(dto,session,request), HttpStatus.OK);
     }
 
     @PostMapping("/D1/photo/upload")
@@ -90,8 +94,10 @@ public class AcademyBoardController {
     @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedAcademyboard(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(academyBoardService.getPagedAcademyboard(page, size), HttpStatus.OK);
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(required = false) String keyword,
+            HttpServletRequest request) {
+        return new ResponseEntity<>(academyBoardService.getPagedAcademyboard(page, size, keyword, request), HttpStatus.OK);
     }
 
 
@@ -146,14 +152,14 @@ public class AcademyBoardController {
 
 
     @GetMapping("/D1/{m_idx}/checkGood/{ab_idx}")
-    public ResponseEntity<Boolean> checkGood(@PathVariable int m_idx, @PathVariable int ab_idx) {
-        boolean isGood = academyBoardService.isAlreadyAddGoodRp(m_idx, ab_idx);
+    public ResponseEntity<Boolean> checkGood(@PathVariable int ab_idx, @PathVariable int m_idx) {
+        boolean isGood = academyBoardService.isAlreadyAddGoodRp(ab_idx, m_idx);
         return ResponseEntity.ok(isGood);
     }
 
     @GetMapping("/D1/{m_idx}/checkBad/{ab_idx}")
-    public ResponseEntity<Boolean> checkBad(@PathVariable int m_idx, @PathVariable int ab_idx) {
-        boolean isBad = academyBoardService.isAlreadyAddBadRp(m_idx, ab_idx);
+    public ResponseEntity<Boolean> checkBad(@PathVariable int ab_idx, @PathVariable int m_idx) {
+        boolean isBad = academyBoardService.isAlreadyAddBadRp(ab_idx, m_idx);
         return ResponseEntity.ok(isBad);
     }
 

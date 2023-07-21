@@ -38,7 +38,7 @@ public class NoticeBoardEntity {
     @Column(name = "nb_readcount")
     private int NBreadcount;
 
-    @Column(name = "nb_writeday")
+    @Column(name = "nb_writeday",insertable = false)
     private Timestamp NBwriteday;
 
     public static NoticeBoardEntity toNoticeBoardEntity(NoticeBoardDto dto){

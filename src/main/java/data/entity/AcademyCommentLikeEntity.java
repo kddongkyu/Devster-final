@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Entity(name = "aboard_comment_like")
+@Entity(name = "academyboard_comment_like")
 @Builder
 public class AcademyCommentLikeEntity {
     @Id

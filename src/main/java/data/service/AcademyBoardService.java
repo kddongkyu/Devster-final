@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ import data.mapper.AcademyBoardMapper;
 import data.repository.AcademyBoardRepository;
 import data.repository.AcademylikeRepository;
 import data.repository.MemberRepository;
+import jwt.setting.settings.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 
@@ -28,14 +30,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
-//사진처리와,  댓글대댓글 처리 로직 우선적으로 개발 필요 (230717, 12:25)
 
 
 @Service
@@ -43,38 +43,41 @@ import org.slf4j.LoggerFactory;
 public class AcademyBoardService {
     private final MemberRepository memberRepository;    
 
-    private final Logger logger = LoggerFactory.getLogger(HireBoardService.class);
+    private final AcademyBoardRepository academyBoardRepository;
 
-    @Autowired 
-    private AcademyBoardRepository academyBoardRepository;
+    private final AcademylikeRepository academylikeRepository;
 
-    @Autowired
-    private AcademylikeRepository academylikeRepository;
+    private final NcpObjectStorageService storageService;
 
-    @Autowired
-    private NcpObjectStorageService storageService;
+    private final AcademyBoardMapper academyBoardMapper;
 
-    @Autowired
-    AcademyBoardMapper academyBoardMapper;
+    private final JwtService jwtService;
 
-    @Autowired
-    public AcademyBoardService(AcademyBoardRepository academyBoardRepository,  MemberRepository memberRepository, NcpObjectStorageService storageService) {
+    public AcademyBoardService(AcademyBoardRepository academyBoardRepository,  MemberRepository memberRepository, NcpObjectStorageService storageService, AcademylikeRepository academylikeRepository,AcademyBoardMapper academyBoardMapper,JwtService jwtService) {
         this.academyBoardRepository = academyBoardRepository;
+        this.academylikeRepository = academylikeRepository;
         this.memberRepository = memberRepository;
         this.storageService = storageService;
+        this.academyBoardMapper = academyBoardMapper;
+        this.jwtService = jwtService;
+
     }
     
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
 
-    public AcademyBoardDto insertAcademyBoard(AcademyBoardDto dto, HttpSession session){
+    public AcademyBoardDto insertAcademyBoard(AcademyBoardDto dto, HttpSession session,HttpServletRequest request){
         try {
+            int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+            int AIidx = memberRepository.findById(m_idx).get().getAIidx();
+
+            dto.setAi_idx(AIidx);
             AcademyBoardEntity academyBoard = AcademyBoardEntity.toAcademyBoardEntity(dto);
             academyBoardRepository.save(academyBoard);
             return dto;
         } catch (Exception e){
-            logger.error("insert FreeBoard Error",e);
+            log.error("insert AcademyBoard Error",e);
             throw  e;
         }
     }
@@ -122,7 +125,7 @@ public class AcademyBoardService {
 
     //         return dto;
     //     } catch (Exception e) {
-    //         logger.error("Error occurred while inserting hireboard",e);
+    //         log.error("Error occurred while inserting hireboard",e);
     //         throw e;
     //     }
     // }
@@ -136,14 +139,27 @@ public class AcademyBoardService {
     //         }
     //         return list;
     //     } catch(Exception e){
-    //         logger.error("Error occurred while getting all hireboard data", e);
+    //         log.error("Error occurred while getting all hireboard data", e);
     //         throw e;
     //     }
     // }    
 
-    public Map<String, Object> getPagedAcademyboard(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("FBwriteDay").descending());
-        Page<AcademyBoardEntity> result = academyBoardRepository.findAll(pageable);
+    public Map<String, Object> getPagedAcademyboard(int page, int size, String keyword, HttpServletRequest request) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+        int AIidx = memberRepository.findById(m_idx).get().getAIidx();
+
+        Pageable pageable = PageRequest.of(page,size,Sort.by("ABwriteday").descending());
+        Page<AcademyBoardEntity> result;
+
+        if(keyword!=null && !keyword.trim().isEmpty()){
+            result = academyBoardRepository.findByABsubjectContainingAndAIidx(keyword, AIidx, pageable);
+        } else {
+            result = academyBoardRepository.findByAIidx(AIidx, pageable);
+        }
+        
+        // Pageable pageable = PageRequest.of(page, size, Sort.by("ABwriteday").descending());
+        // Page<AcademyBoardEntity> result = academyBoardRepository.findByAIidx(AIidx, pageable);
+        // Page<AcademyBoardEntity> result = academyBoardRepository.findAll(pageable);
 
         List<Map<String, Object>> academyBoardList = result
                 .getContent()
@@ -181,7 +197,7 @@ public class AcademyBoardService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + idx));
             return AcademyBoardDto.toAcademyBoardDto(entity);    
         } catch (EntityNotFoundException e) {
-            logger.error("Error occurred while getting a entity", e);
+            log.error("Error occurred while getting a entity", e);
             throw e;
         }
     } 
@@ -228,7 +244,7 @@ public class AcademyBoardService {
     //         entity.setABphoto(filename);
     //         academyBoardRepository.save(entity);
     //     } catch (Exception e) {
-    //         logger.error("Error occurred while inserting hireboard",e);
+    //         log.error("Error occurred while inserting hireboard",e);
     //         throw e;
     //     }
     // }
@@ -270,7 +286,7 @@ public class AcademyBoardService {
             System.out.println(idx);
             academyBoardRepository.deleteById(idx);
         } catch (Exception e) {
-            logger.error("Error occurred while deleting a entity",e);
+            log.error("Error occurred while deleting a entity",e);
         }
     }
 
@@ -310,9 +326,9 @@ public class AcademyBoardService {
                 academyBoardRepository.save(academyBoardEntity);
             }
         } catch (IllegalArgumentException e) {
-            logger.error("review like Error(Ill)", e);
+            log.error("review like Error(Ill)", e);
         } catch (Exception e) {
-         logger.error("review like Error(Exce)", e);
+         log.error("review like Error(Exce)", e);
         }
     }
      
@@ -344,19 +360,19 @@ public class AcademyBoardService {
                 academyBoardRepository.save(academyBoardEntity);
             }
         } catch (IllegalArgumentException e) {
-            logger.error("review like Error(Ill)", e);
+            log.error("review like Error(Ill)", e);
         } catch (Exception e) {
-         logger.error("review like Error(Exce)", e);
+         log.error("review like Error(Exce)", e);
         }
     }
 
-    public boolean isAlreadyAddGoodRp(int MIdx, int ABidx){
-        AcademylikeEntity academylikeEntity=findOrCreateABoardLike(MIdx, ABidx);
+    public boolean isAlreadyAddGoodRp(int ABidx, int MIdx){
+        AcademylikeEntity academylikeEntity=findOrCreateABoardLike(ABidx, MIdx);
         return academylikeEntity.getLikestatus()==1;
     }
    
-    public boolean isAlreadyAddBadRp(int MIdx, int ABidx){
-        AcademylikeEntity academylikeEntity=findOrCreateABoardLike(MIdx, ABidx);
+    public boolean isAlreadyAddBadRp(int ABidx, int MIdx){
+        AcademylikeEntity academylikeEntity=findOrCreateABoardLike(ABidx, MIdx);
         return academylikeEntity.getLikestatus()==2;
     }
 
