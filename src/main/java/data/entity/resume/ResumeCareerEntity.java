@@ -38,7 +38,7 @@ public class ResumeCareerEntity {
     @Column(name = "r_position")
     private String RPosition;
 
-    public ResumeCareerEntity toResumeCareerEntity(ResumeCareerDto dto) {
+    public static ResumeCareerEntity toResumeCareerEntity(ResumeCareerDto dto) {
         ResumeCareerEntity entity = new ResumeCareerEntity();
         entity.setRecarIdx(dto.getRecar_idx());
         entity.setMIdx(dto.getM_idx());

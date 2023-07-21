@@ -1,51 +1,44 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './style/Reviewupdate.css';
 import axiosIns from "../../api/JwtConfig";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { ReviewModal } from "./index";
+import jwt_decode from "jwt-decode";
 
-function Reviewupdate(props) {
-    const { rb_idx } = useParams();
+function Reviewupdate({reviewData}) {
+    const [rbSubject, setRbsubject] = useState("");
+    const [rbContent, setRbcontent] = useState("");
+    const [rbType, setRbtype] = useState("");
+    const [rbStar, setRbstar] = useState("");
+    const [ciName, setCiname] = useState("");
+    const [ciIdx, setCiidx] = useState("");
+    const navi = useNavigate();
+    const { rb_idx, currentPage } = useParams();
     const [rating, setRating] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
-    const [updatedate, setUpdatedate] = useState({
-        review: {
-            rb_subject: "",
-            rb_content: "",
-            rb_star: "",
-            rb_type: "",
-        },
-        ci_idx: "",
-        ci_name: ""
-    });
-
     const [isReviewOpen, setIsReviewOpen] = useState(false);
+    const [selectedCompany, setSelectedCompany] = useState("");
+    const [selectedCompanyIdx, setSelectedCompanyIdx] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+
+    let de = jwt_decode(localStorage.getItem("accessToken"));
+    const m_idx = de.idx;
+
     const openReviewModal = () => {
         setIsReviewOpen(true);
     };
-    const [selectedCompany, setSelectedCompany] = useState("");
-    const [selectedCompanyIdx, setSelectedCompanyIdx] = useState("");
 
     useEffect(() => {
-        setUpdatedate(() => ({
-            ...updatedate,
-            ci_idx: selectedCompanyIdx,
-        }));
+        setCiidx(selectedCompanyIdx);
     }, [selectedCompanyIdx]);
 
     useEffect(() => {
-        setUpdatedate(() => ({
-            ...updatedate,
-            rb_star: rating,
-        }));
+        setRbstar(rating);
     }, [rating]);
 
-
-
-
     useEffect(() => {
-        setRating(updatedate.review.rb_star);
-    }, [updatedate.review.rb_star]);
+        setRating(rbStar);
+    }, [rbStar]);
+
 
     const UpStar = ({ filled }) => (
         <span className={filled ? "star-filled" : "star-empty"}>{filled ? "★" : "☆"}&nbsp;</span>
@@ -55,48 +48,6 @@ function Reviewupdate(props) {
     for (let i = 0; i < 5; i++) {
         upstars.push(<UpStar key={i} filled={i < rating} />);
     }
-
-    const fetchReview = useCallback((rb_idx) => {
-        const url = `api/review/D1/${rb_idx}`;
-        axiosIns.get(url)
-            .then(response => {
-                console.log(response.data);
-                setUpdatedate(response.data);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching review:', error);
-            });
-    }, [rb_idx]);
-
-    useEffect(() => {
-        fetchReview(rb_idx);
-    }, [rb_idx, fetchReview]);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    const handleUpdateSubmit = async () => {
-        const apiUrl = `/api/review/D1/${rb_idx}`;
-        console.dir(updatedate, "들어가?");
-        try {
-            const response = await axiosIns.put(apiUrl, updatedate);
-            if (response && response.data) {
-                console.log(response.data);
-
-
-                // 서버의 응답을 처리합니다.
-                window.location.replace(`api/D1/review/${rb_idx}`);
-            } else {
-                console.error("Invalid response:", response);
-                // 응답이 유효하지 않은 경우에 대한 처리
-            }
-        } catch (error) {
-            console.error("reviewforminsertreact", error);
-            // 에러 처리
-        }
-    };
 
     const increaserating = () => {
         if (rating < 5) {
@@ -108,13 +59,57 @@ function Reviewupdate(props) {
             setRating(rating - 1);
         }
     };
-    const Star = ({ filled }) => (
-        <span className={filled ? "star-filled" : "star-empty"}>{filled ? "★" : "☆"}&nbsp;</span>
-    );
 
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-        stars.push(<Star key={i} filled={i < (rating || 0)} />);  // Star 컴포넌트를 사용합니다.
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axiosIns.get(`/api/review/D0/${rb_idx}`);
+                if (response.data && response.data.review) {
+                    setRbsubject(response.data.review.rb_subject);
+                    setRbcontent(response.data.review.rb_content);
+                    setRbtype(response.data.review.rb_type);
+                    setRbstar(response.data.review.rb_star);
+                    setCiname(response.data.ciName);
+                    setCiidx(response.data.review.ci_idx);
+                    setIsLoading(false);  // 추가: 데이터를 불러오는데 성공하면 로딩 상태를 종료합니다.
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, [rb_idx]);
+
+
+    const handleUpdateSubmit = (e)=>{
+        e.preventDefault();
+        console.log(dto)
+
+        const dto={
+            rb_subject : rbSubject,
+            rb_content: rbContent,
+            rb_star:rbStar,
+            rb_type:rbType,
+            ci_idx:ciIdx,
+            ci_name:ciName,
+            m_idx:m_idx,
+        }
+        axiosIns
+            .put(`/api/review/D1/${rb_idx}`,dto)
+            .then((res)=>{
+                navi(`/review/detail/${rb_idx}/${currentPage}`);
+            })
+            .catch((error)=>{
+                console.error("Error in updating review: ", error);
+            });
+    };
+
+
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
 
     return (
@@ -137,31 +132,15 @@ function Reviewupdate(props) {
                     className="reviewupdate-write-subject-box-icon"
                     name="rb_subject"
                     required
-                    value={updatedate.review.rb_subject}
-                    onChange={(e)=>{
-                        setUpdatedate({
-                            ...updatedate,
-                            review: {
-                                ...updatedate.review,
-                                rb_subject: e.target.value
-                            }
-                        })
-                    }}
+                    value={rbSubject}
+                   onChange={(e)=>setRbsubject(e.target.value)}
                 />
                 <select
                     className="reviewupdate-write-select-box-icon"
                     name="rb_type"
-                    value={updatedate.review.rb_type}
+                    value={rbType}
                     required
-                    onChange={(e)=>{
-                        setUpdatedate({
-                            ...updatedate,
-                            review: {
-                                ...updatedate.review,
-                                rb_type: e.target.value
-                            }
-                        })
-                    }}
+                    onChange={(e)=>setRbtype(e.target.value)}
                 >
                     <option value="" disabled hidden>선택하세요</option>
                     <option value="1">면접</option>
@@ -174,7 +153,7 @@ function Reviewupdate(props) {
                 <input
                     className="reviewupdate-write-company-box-icon"
                     readOnly
-                    value={`${selectedCompany===""?updatedate.ciName:selectedCompany}`}
+                    value={`${selectedCompany===""?ciName:selectedCompany}`}
                     name="ci_idx"
                 />
 
@@ -190,16 +169,8 @@ function Reviewupdate(props) {
                 <textarea
                     className="reviewupdate-content-box-icon"
                     placeholder="내용을 입력해주세요"
-                    value={updatedate.review.rb_content}
-                    onChange={(e)=>{
-                        setUpdatedate({
-                            ...updatedate,
-                            review: {
-                                ...updatedate.review,
-                                rb_content: e.target.value
-                            }
-                        })
-                    }}
+                    value={rbContent}
+                    onChange={(e)=>setRbcontent(e.target.value)}
                 />
 
             </div>
@@ -220,8 +191,8 @@ function Reviewupdate(props) {
                         <div
                             className="notice-like-count-input"
                             name="rb_star"
-                            value={updatedate.review.rb_star}
-                            // onChange={handleupdateChange}
+                            value={rbStar}
+                             //onChange={handleupdateChange}
                         >
                             {rating}
                         </div>

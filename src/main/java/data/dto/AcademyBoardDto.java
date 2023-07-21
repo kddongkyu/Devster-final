@@ -10,11 +10,13 @@ import data.entity.AcademyBoardEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Alias("AcademyBoardDto")
 @Builder
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class AcademyBoardDto {
     private int ab_idx;
     private int m_idx;

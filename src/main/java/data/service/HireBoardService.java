@@ -3,14 +3,18 @@ package data.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import data.dto.HireBoardDto;
+import data.entity.CompanyMemberEntity;
 import data.entity.HireBoardEntity;
 import data.entity.HireBookmarkEntity;
+import data.repository.CompanyMemberRepository;
 import data.repository.HireBoardRepository;
 import data.repository.HireBookmarkRepository;
 import naver.cloud.NcpObjectStorageService;
 import data.mapper.HireBoardMapper;
+import org.springframework.data.domain.Pageable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +23,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,23 +40,28 @@ import org.slf4j.LoggerFactory;
 @Service
 public class HireBoardService {
 
-    @Autowired
-    HireBoardMapper hireBoardMapper;
+    
+    
 
     private final Logger logger = LoggerFactory.getLogger(HireBoardService.class);
     
+    @Autowired
+    private final HireBoardMapper hireBoardMapper;
     private final HireBoardRepository hireBoardRepository;
     private final HireBookmarkRepository hireBookmarkRepository;
-
-    @Autowired
-    private NcpObjectStorageService storageService;
+    private final NcpObjectStorageService storageService;
+    private final CompanyMemberRepository companyMemberRepository;
     
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    public HireBoardService(HireBoardRepository hireBoardRepository, HireBookmarkRepository hireBoardBookmarkRepository) {
+    public HireBoardService(HireBoardMapper hireBoardMapper, HireBoardRepository hireBoardRepository, HireBookmarkRepository hireBoardBookmarkRepository,
+    NcpObjectStorageService storageService, CompanyMemberRepository companyMemberRepository) {
+        this.hireBoardMapper = hireBoardMapper;
         this.hireBoardRepository = hireBoardRepository;
         this.hireBookmarkRepository = hireBoardBookmarkRepository;
+        this.storageService = storageService;
+        this.companyMemberRepository = companyMemberRepository;
     }
 
 
@@ -63,70 +71,107 @@ public class HireBoardService {
     }
 
 
-    public Map<String,Object> list(int currentPage){
+    public Map<String, Object> getPagedHboard(int page, int size,String keyword) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("HBwriteday").descending());
+        Page<HireBoardEntity> result;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            result = hireBoardRepository.findByHBsubjectContaining(keyword, pageable);
+               logger.info("Keyword: " + keyword);
+        } else {
+            result = hireBoardRepository.findAll(pageable);
+        }
+
+        List<Map<String, Object>> hiresWithCompanyInfo = result
+                .getContent()
+                .stream()
+                .map(hireBoardEntity -> {
+                    CompanyMemberEntity companyMemberInfo = companyMemberRepository.findById(hireBoardEntity.getCMidx()).orElse(null);
+                    Map<String, Object> hireWithCompanyInfo = new HashMap<>();
+                    hireWithCompanyInfo.put("hboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
+                    if (companyMemberInfo != null) {
+                        hireWithCompanyInfo.put("cmCompname", companyMemberInfo.getCMcompname());
+                        hireWithCompanyInfo.put("cmPhoto", companyMemberInfo.getCMfilename());
+                    }
+                    return hireWithCompanyInfo;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("reviews", hiresWithCompanyInfo);
+        response.put("totalElements", result.getTotalElements());
+        response.put("totalPages", result.getTotalPages());
+        response.put("currentPage", result.getNumber() + 1);
+        response.put("hasNext", result.hasNext());
+
+        return response;
+    }
+
+
+    // public Map<String,Object> list(int currentPage){
     
-        //페이징처리
-        int totalCount;//총갯수
-        int perPage=10;//한페이지당 출력할 글갯수
-        int perBlock=5;//출력할 페이지갯수
-        int startNum;//db에서 가져올 시작번호
-        int startPage;//출력할 시작페이지
-        int endPage;//출력할 끝페이지
-        int totalPage;//총 페이지수
-        int no;//출력할 시작번호
+    //     //페이징처리
+    //     int totalCount;//총갯수
+    //     int perPage=10;//한페이지당 출력할 글갯수
+    //     int perBlock=5;//출력할 페이지갯수
+    //     int startNum;//db에서 가져올 시작번호
+    //     int startPage;//출력할 시작페이지
+    //     int endPage;//출력할 끝페이지
+    //     int totalPage;//총 페이지수
+    //     int no;//출력할 시작번호
 
-        //총갯수
-        totalCount = (int)hireBoardRepository.count();
-         //총 페이지수
-        totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
-        //시작페이지
-        startPage=(currentPage-1)/perBlock*perBlock+1;
-        //끝페이지
-        endPage=startPage+perBlock-1;
-        if(endPage>totalPage)
-            endPage=totalPage;
-        //시작번호
-        startNum=(currentPage-1)*perPage;    
-        //각페이지당 출력할 번호
-        no=totalCount-(currentPage-1)*perPage;
+    //     //총갯수
+    //     totalCount = (int)hireBoardRepository.count();
+    //      //총 페이지수
+    //     totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
+    //     //시작페이지
+    //     startPage=(currentPage-1)/perBlock*perBlock+1;
+    //     //끝페이지
+    //     endPage=startPage+perBlock-1;
+    //     if(endPage>totalPage)
+    //         endPage=totalPage;
+    //     //시작번호
+    //     startNum=(currentPage-1)*perPage;    
+    //     //각페이지당 출력할 번호
+    //     no=totalCount-(currentPage-1)*perPage;
 
-        Map<String, Integer> map=new HashMap<>();
-        map.put("start", startNum);
-        map.put("perpage", perPage);
-        List<Map<String,Object>> fullList = new ArrayList<>();
-        List<HireBoardDto> list = hireBoardMapper.getPagingList(map);
+    //     Map<String, Integer> map=new HashMap<>();
+    //     map.put("start", startNum);
+    //     map.put("perpage", perPage);
+    //     List<Map<String,Object>> fullList = new ArrayList<>();
+    //     List<HireBoardDto> list = hireBoardMapper.getPagingList(map);
         
-        for(HireBoardDto dto : list){
-            Map<String,Object> dmap = new HashMap<>();
-            dmap.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
-            dmap.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
-            dmap.put("hb_subject",dto.getHb_subject());
-            dmap.put("hb_content",dto.getHb_content());
-            dmap.put("hb_readcount",dto.getHb_readcount());
-            dmap.put("hb_writeday",dto.getHb_writeday());
-            dmap.put("hb_photo",dto.getHb_photo());
-            fullList.add(dmap);
-        }
+    //     for(HireBoardDto dto : list){
+    //         Map<String,Object> dmap = new HashMap<>();
+    //         dmap.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
+    //         dmap.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
+    //         dmap.put("hb_subject",dto.getHb_subject());
+    //         dmap.put("hb_content",dto.getHb_content());
+    //         dmap.put("hb_readcount",dto.getHb_readcount());
+    //         dmap.put("hb_writeday",dto.getHb_writeday());
+    //         dmap.put("hb_photo",dto.getHb_photo());
+    //         fullList.add(dmap);
+    //     }
 
-        //출력할 페이지번호들을 Vector에 담아서 보내기
-        Vector<Integer> parr=new Vector<>();
-        for(int i=startPage;i<=endPage;i++){
-            parr.add(i);
-        }
+    //     //출력할 페이지번호들을 Vector에 담아서 보내기
+    //     Vector<Integer> parr=new Vector<>();
+    //     for(int i=startPage;i<=endPage;i++){
+    //         parr.add(i);
+    //     }
 
-        //필요한 변수들을 Map 에 담아서 보낸다
-        Map<String,Object> smap=new HashMap<>();
-        smap.put("totalCount",totalCount);
-        smap.put("list",fullList);
-        smap.put("parr",parr);
-        smap.put("startPage",startPage);
-        smap.put("endPage",endPage);
-        smap.put("no",no);
-        smap.put("totalPage",totalPage);
+    //     //필요한 변수들을 Map 에 담아서 보낸다
+    //     Map<String,Object> smap=new HashMap<>();
+    //     smap.put("totalCount",totalCount);
+    //     smap.put("list",fullList);
+    //     smap.put("parr",parr);
+    //     smap.put("startPage",startPage);
+    //     smap.put("endPage",endPage);
+    //     smap.put("no",no);
+    //     smap.put("totalPage",totalPage);
 
-        System.out.println(smap);
-        return  smap;
-    } 
+    //     System.out.println(smap);
+    //     return  smap;
+    // } 
 
 
     public List<HireBoardDto> getPagingList(int start, int perpage) {
