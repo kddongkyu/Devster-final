@@ -51,7 +51,7 @@ public class AcademyBoardEntity {
             .ABlike(dto.getAb_like())
             .ABdislike(dto.getAb_dislike())
             .ABwriteday(dto.getAb_writeday())
-            .ABidx(dto.getAi_idx())
+            .AIidx(dto.getAi_idx())
             .build();
     }
 }

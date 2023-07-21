@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import data.entity.HireBoardEntity;
 
 @Data
-@Alias("HireBoardDto")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
