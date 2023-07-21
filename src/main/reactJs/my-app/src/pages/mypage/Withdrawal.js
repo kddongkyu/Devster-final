@@ -115,8 +115,8 @@ function Withdrawal(props) {
   if (isEmailSent && seconds > 0) {
     timerMessage = (
       <span>
-        남은 인증시간 :{minutes < 10 ? "0" : ""}
-        {minutes}:{displaySeconds < 10 ? "0" : ""}
+        남은 인증시간 :{minutes < 30 ? "0" : ""}
+        {minutes}:{displaySeconds < 30 ? "0" : ""}
         {displaySeconds}
       </span>
     );
