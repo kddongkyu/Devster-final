@@ -30,7 +30,7 @@ public class ResumeLicenseEntity {
     @Column(name = "r_licname")
     private String RLicname;
 
-    public ResumeLicenseEntity toResumeLicenseEntity(ResumeLicenseDto dto) {
+    public static ResumeLicenseEntity toResumeLicenseEntity(ResumeLicenseDto dto) {
         return ResumeLicenseEntity.builder()
                 .RElicidx(dto.getRelic_idx())
                 .MIdx(dto.getM_idx())

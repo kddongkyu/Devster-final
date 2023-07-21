@@ -240,7 +240,7 @@ public class FreeBoardService {
         } catch (Exception e) {
             log.error("review like Error(Exce)", e);
         }
-            }
+    }
 
 
 }

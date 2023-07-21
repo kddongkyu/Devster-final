@@ -13,6 +13,7 @@ build/
 .settings
 .springBeans
 .sts4-cache
+.metadata/**
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
@@ -40,4 +41,5 @@ out/
 *.yml
 
 ### React Build File ###
-src/main/resources/static/**
+src/main/resources/static/static/**
+
