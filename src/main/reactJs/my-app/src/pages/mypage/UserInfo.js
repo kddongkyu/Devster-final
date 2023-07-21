@@ -13,47 +13,60 @@ function UserInfo(props) {
     ai_name: "",
   });
   const [previewImage, setPreviewImage] = useState(null);
-  //console.log("previewImage: " + previewImage);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+
   const navigate = useNavigate();
   const decodedToken = jwt_decode(localStorage.accessToken);
   const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${previewImage}`;
-  const m_idx = decodedToken.idx;
-  //console.log("idx" + m_idx);
+  // const m_idx = decodedToken.idx;
 
   // Functions
   const getMemberData = async (idx) => {
     try {
       const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
-      //console.log(response.data);
+      setPreviewImage(`${photoUrl}${response.data.m_photo}`); // 서버에서 불러온 이미지 경로를 저장
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleImageUpload = async (event) => {
+  const handleImagePreview = (event) => {
     const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("upload", file);
-    try {
-      await axiosIns.post(`/api/member/D1/photo/${m_idx}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      const userInfoResponse = await axiosIns.get(`/api/member/D1/${m_idx}`);
-      setPreviewImage(userInfoResponse.data.m_photo);
-    } catch (error) {
-      console.error("Failed to upload image: ", error);
+    setSelectedImage(file); // selectedImage에는 파일 객체를 저장
+    setImagePreviewUrl(URL.createObjectURL(file)); // imagePreviewUrl에는 미리보기 URL을 저장
+  };
+
+  const handleImageUpload = async () => {
+    if (selectedImage) {
+      const formData = new FormData();
+      formData.append("upload", selectedImage);
+      try {
+        const response = await axiosIns.post(`/api/member/D1/photo`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        setPreviewImage(`${photoUrl}${response.data.m_photo}`); // 서버에서 받아온 이미지 경로를 저장
+      } catch (error) {
+        console.error("Failed to upload image: ", error);
+      }
     }
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    // 이미지 업로드
+    await handleImageUpload();
+
+    // 회원 정보 업데이트 로직
     try {
       const response = await axiosIns.put("/api/member/D1", member);
       if (response.status === 200) {
         alert("수정되었습니다");
-        navigate(`/userinfo`);
+        //navigate(`/userinfo`);
+        window.location.reload();
       } else {
         console.log("There was an issue updating the member");
       }
@@ -65,19 +78,7 @@ function UserInfo(props) {
   // Effects
   useEffect(() => {
     getMemberData(decodedToken.idx);
-  }, []);
-
-  useEffect(() => {
-    const fetchProfileImage = async () => {
-      try {
-        const userInfoResponse = await axiosIns.get(`/api/member/D1/${m_idx}`);
-        setPreviewImage(userInfoResponse.data.m_photo);
-      } catch (error) {
-        console.error("Failed to fetch profile image: ", error);
-      }
-    };
-    fetchProfileImage();
-  }, [m_idx]);
+  }, [decodedToken.idx]);
 
   const fileInputRef = useRef();
 
@@ -150,7 +151,7 @@ function UserInfo(props) {
           <input
             type="file"
             id="file"
-            onChange={handleImageUpload}
+            onChange={handleImagePreview}
             ref={fileInputRef}
             style={{ display: "none" }}
           />
@@ -164,7 +165,7 @@ function UserInfo(props) {
           </button>
           <div className="profile-picture">
             <img
-              src={previewImage ? imageUrl : require("./assets/noimage.png")}
+              src={imagePreviewUrl ? imagePreviewUrl : previewImage}
               alt="Preview"
             />
           </div>

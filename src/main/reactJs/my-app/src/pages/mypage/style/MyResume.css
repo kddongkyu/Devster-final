@@ -135,7 +135,8 @@
   .resume_info_box_05,
   .resume_info_box_06,
   .resume_info_box_07,
-  .resume_info_box_08{
+  .resume_info_box_08,
+  .resume_info_box_09{
     width: 100%;
     /* height: 10rem; */
     border-radius: 1rem;

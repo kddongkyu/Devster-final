@@ -279,6 +279,7 @@
   left: 3.74rem;
   width: 1.43rem;
   height: 1.43rem;
+  cursor: pointer;
 }
 .resumeform-career-group-02-tex {
   position: absolute;
@@ -380,6 +381,7 @@
   left: 5.04rem;
   width: 1.43rem;
   height: 1.43rem;
+  cursor: pointer;
 }
 .resumeform-certificate-box-dat2 {
   position: absolute;
@@ -504,4 +506,58 @@
   font-size: 1.5rem;
   color: #000;
   font-family: "Noto Sans KR";
+}
+.resumeform-career-group-02:first-child{
+  top: 4.1rem;
+}
+.resumeform-career-group-02:nth-child(3) {
+  top: 13rem;
+}
+
+.resumeform-career-group-02:nth-child(4) {
+  top: 22rem;
+}
+
+.resumeform-certificate-box:nth-child(3) {
+  top: 8.6rem;
+}
+
+.resumeform-certificate-box:nth-child(4) {
+  top: 13.2rem;
+}
+
+.resumeform-career-group-02-removeButton{
+  position: absolute;
+  right: -2.5rem;
+}
+
+.clearFileInput{
+  position: absolute;
+  right: 0rem;
+}
+
+.customFileUpload {
+  background-color: #f5eff9;
+  border: none;
+  color: #000;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.customFileUploadButton {
+  background-color: #f5eff9;
+  border: none;
+  color: #000;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
 }

@@ -15,6 +15,8 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
     m_role: "",
   });
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   //const decodedToken = jwt_decode(localStorage.accessToken);
   const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${member.m_photo}`;
@@ -35,6 +37,9 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
     if (localStorage.accessToken && localStorage.refreshToken) {
       const decodedToken = jwt_decode(localStorage.accessToken);
       getMemberData(decodedToken.idx);
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
     }
   }, []);
 
@@ -64,43 +69,50 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           />
         </div>
         <div className="menu-modal-options">
-          <NavLink to={"/"}>
+          <NavLink to={"/fboard"} onClick={closeMenuBar}>
             <b className="menu-modal-options-fb">일반게시판</b>
           </NavLink>
           <div className="menu-modal-options-qna">Q&A</div>
           <b className="menu-modal-options-hire">채용정보</b>
           <b className="menu-modal-options-aca">학원별게시판</b>
-          <b className="menu-modal-options-review">회사후기</b>
+          <NavLink to={"/review"} onClick={closeMenuBar}>
+            <b className="menu-modal-options-review">회사후기</b>
+          </NavLink>
         </div>
 
-        <div className="menu-mypage">
-          <div className="menu-mypage-box">
-            <div className="menu-mypage-userinfo">
-              <div className="menu-mypage-userinfo-img">
-                <img alt="" src={imageUrl} />
-              </div>
-              <div className="menu-mypage-userinfo-contents">
-                <div className="menu-mypage-userinfo-nickname">
-                  {member.m_nickname}
+        {isLoggedIn ? (
+          <div className="menu-mypage">
+            <div className="menu-mypage-box">
+              <div className="menu-mypage-userinfo">
+                <div className="menu-mypage-userinfo-img">
+                  {member.m_photo ? <img alt="" src={imageUrl} /> : null}
                 </div>
-                <div className="menu-mypage-userinfo-email">
-                  {member.m_email}
+                <div className="menu-mypage-userinfo-contents">
+                  <div className="menu-mypage-userinfo-nickname">
+                    {member.m_nickname}
+                  </div>
+                  <div className="menu-mypage-userinfo-email">
+                    {member.m_email}
+                  </div>
                 </div>
               </div>
+              <NavLink
+                to={member.m_role === "USER" ? "/userinfo" : "/notice/admin"}
+                // to={member.m_role === "GUEST" ? "/notice/admin" : "/userinfo"}
+                onClick={closeMenuBar}
+              >
+                <b className="menu-modal-options_mypage">
+                  <div style={{ marginTop: "1rem" }}>마이페이지</div>
+                </b>
+              </NavLink>
             </div>
-            <NavLink
-              to={member.m_role === "GUEST" ? "/userinfo" : "/notice/admin"}
-              // to={member.m_role === "GUEST" ? "/notice/admin" : "/userinfo"}
-              onClick={closeMenuBar}
-            >
-              <b className="menu-modal-options_mypage">
-                <div style={{ marginTop: "1rem" }}>마이페이지</div>
-              </b>
-            </NavLink>
           </div>
-        </div>
+        ) : null}
 
-        <div className="menu-account">
+        <div
+          className="menu-account"
+          style={{ top: isLoggedIn ? "43rem" : "30rem" }} // 로그인 상태에 따라 top 값을 변경
+        >
           <div className="menu-account-box" />
           <NavLink to={"/signin"}>
             <div className="menu-account-signin">

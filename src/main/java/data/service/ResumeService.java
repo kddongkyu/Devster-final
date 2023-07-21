@@ -179,6 +179,7 @@ public class ResumeService {
         return m_idx + " 이력서 최종 삭제 완료";
     }
 
+    @Transactional
     public String updateResume(ResumeDto dto, List<ResumeCareerDto> resumeCareerDtoList, List<ResumeLicenseDto> resumeLicenseDtoList ,HttpSession session) {
         // 이력서 엔티티 가져오기
         ResumeEntity entity = resumeRepository.findByMIdx(dto.getM_idx()).orElseThrow(() -> new IllegalArgumentException("해당 이력서가 없습니다. id=" + dto.getM_idx()));
@@ -187,12 +188,18 @@ public class ResumeService {
         if(file != null) {
             storageService.deleteFile(bucketName,"devster/resume/file",entity.getRFile());
             dto.setR_file(file);
+        } else if (dto.getR_file().equals("delete")) {
+            storageService.deleteFile(bucketName,"devster/resume/file",entity.getRFile());
+            dto.setR_file("");
         }
 
         String reFile = (String) session.getAttribute("refile");
         if(reFile != null) {
             storageService.deleteFile(bucketName,"devster/resume/refile",entity.getRReffile());
             dto.setR_reffile(reFile);
+        } else if (dto.getR_reffile().equals("delete")) {
+            storageService.deleteFile(bucketName,"devster/resume/refile",entity.getRReffile());
+            dto.setR_reffile("");
         }
 
         // 이력서 엔티티 업데이트
@@ -200,23 +207,15 @@ public class ResumeService {
         resumeRepository.save(entity);
         log.info("이력서 기본정보 업데이트 완료.");
 
+        resumeCareerRepository.deleteAllByMIdx(dto.getM_idx());
         for(ResumeCareerDto careerDto : resumeCareerDtoList) {
-            // 경력 엔티티 가져오기
-            ResumeCareerEntity resumeCareerEntity = resumeCareerRepository.findById(careerDto.getRecar_idx()).orElseThrow(() -> new IllegalArgumentException("해당 경력이 없습니다. id=" + careerDto.getRecar_idx()));
-
-            // 경력 엔티티 업데이트
-            resumeCareerEntity.updateResumeCareerEntity(careerDto);
-            resumeCareerRepository.save(resumeCareerEntity);
+            resumeCareerRepository.save(ResumeCareerEntity.toResumeCareerEntity(careerDto));
         }
         log.info("이력서 경력 업데이트 완료.");
 
+        resumeLicenseRepository.deleteAllByMIdx(dto.getM_idx());
         for(ResumeLicenseDto licenseDto : resumeLicenseDtoList) {
-            // 자격증 엔티티 가져오기
-            ResumeLicenseEntity resumeLicenseEntity = resumeLicenseRepository.findById(licenseDto.getRelic_idx()).orElseThrow(() -> new IllegalArgumentException("해당 자격증이 없습니다. id=" + licenseDto.getRelic_idx()));
-
-            // 자격증 엔티티 업데이트
-            resumeLicenseEntity.updateResumeLicenseEntity(licenseDto);
-            resumeLicenseRepository.save(resumeLicenseEntity);
+            resumeLicenseRepository.save(ResumeLicenseEntity.toResumeLicenseEntity(licenseDto));
         }
         log.info("이력서 자격증 업데이트 완료.");
 
