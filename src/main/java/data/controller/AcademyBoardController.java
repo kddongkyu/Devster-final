@@ -31,24 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-//academyboard CRUD 테스트 및 댓글, 좋아요, 사진 수정 필요 (230717, 12:28)
-//우선적으로 댓글과 사진 수정 필요 
-// (230719, 10:25) insert 에서 사진 어떻게할거야..   
-// (230719, 11:16) login 필요한것과 필요없는것들 api 맵핑 맞춰주기.. 일단 다 짜고.! 
-/*  (230720, 09:31) 오늘은.. academy,hboard ->  (1)페이징처리 (2)검색처리..?  (3)코드리팩토링..?  (4)insert,update  (5)chkgood 
-    그리고 공지사항 (6)CRUD  -> getpagedNboard 완성..  업로드,수정,삭제, 조회 개발 해야 함 
-    (230720, 11:08) academyboard 페이징 처리  -> ok 
-    (230720, 11:20) academyboard, academycomment 에서 chkgood -> ok 
-    (11:40) insert, update : academyboard, academycomment -> ok 
-    (12:20) noticeboard 업로드,조회  -> ok 
-    (12:50) 점심시간 -> ok 
-    (14:10) noticeboard 수정, 삭제    -> ok     
-    (14:35) 테스트 해보고 ->  academyboard(ok) , academycomment(ok) 
-    (17:00) paging 및  searchpaging  ->  noticeboard(ok) , academyboard(ok) , hireboard() 
-    (17:30) hireboard 테스트 ->  
-    (18:00) 깃에 업로드  ->  
-    (.then) 광고 하든지 아니면은 게시판 프론트 하든지  
-*/
+
 
 
 

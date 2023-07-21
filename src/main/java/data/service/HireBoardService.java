@@ -88,10 +88,10 @@ public class HireBoardService {
                 .map(hireBoardEntity -> {
                     CompanyMemberEntity companyMemberInfo = companyMemberRepository.findById(hireBoardEntity.getCMidx()).orElse(null);
                     Map<String, Object> hireWithCompanyInfo = new HashMap<>();
-                    hireWithCompanyInfo.put("hireboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
+                    hireWithCompanyInfo.put("hboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
                     if (companyMemberInfo != null) {
                         hireWithCompanyInfo.put("cmCompname", companyMemberInfo.getCMcompname());
-                        hireWithCompanyInfo.put("mNicname", companyMemberInfo.getCMfilename());
+                        hireWithCompanyInfo.put("cmPhoto", companyMemberInfo.getCMfilename());
                     }
                     return hireWithCompanyInfo;
                 })
