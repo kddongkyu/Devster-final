@@ -14,7 +14,8 @@ function InputName(props) {
     useEffect(() => {
         if (isNameTouched) {
             const timer = setTimeout(() => {
-                const isNameValid = m_name.trim() !== '' && /^[A-Za-z가-힣]+$/.test(m_name);
+                const namePattern = /^[A-Za-z가-힣]+$/.test(m_name);
+                const isNameValid = m_name.trim() !== '' && namePattern;
                 dispatch(setNameIsValid(isNameValid));
                 if (!m_name.trim()) {
                     setErrorMessage('필수 입력 항목입니다.');

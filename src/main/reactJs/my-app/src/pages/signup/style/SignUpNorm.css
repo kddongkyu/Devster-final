@@ -385,7 +385,7 @@
 
 .signup-guest-email-exist-text {
     position: absolute;
-    top:87.2rem;
+    top: 87.2rem;
     right: 6rem;
     font-size: 1.1rem;
     text-align: right;
@@ -470,18 +470,21 @@
     box-sizing: border-box;
     height: 3rem;
 }
+
 .signup-guest-email-input-reg-b {
     width: 100%;
     left: 0;
     border-radius: 5px;
     border: 1px solid #d9d9d9;
 }
+
 .signup-guest-email-inputbox2 {
     border-radius: 0 5px 5px 0;
     background-color: #f5eff9;
     border: 1px solid #d2d2d2;
     width: 6rem;
 }
+
 .signup-guest-email-reg-send-te1 {
     position: absolute;
     top: 0.5rem;
@@ -490,6 +493,7 @@
     display: inline-block;
     width: 4.6rem;
 }
+
 .signup-guest-email-reg-chk {
     position: absolute;
     top: 0;
@@ -498,6 +502,7 @@
     height: 3rem;
     cursor: pointer;
 }
+
 .signup-guest-email-reg-input {
     position: absolute;
     width: calc(100% - 218px);
@@ -529,11 +534,11 @@
 }
 
 .signup-guest-pass-secure-text-one {
-    color:#cb0303;
+    color: #cb0303;
 }
 
 .signup-guest-pass-secure-text-two {
-    color:#db9f04;
+    color: #db9f04;
 }
 
 .signup-guest-pass-secure-text-three {
@@ -544,6 +549,7 @@
     display: inline-block;
     width: 5.9rem;
 }
+
 .signup-guest-pass-secure-text-init {
     position: relative;
     top: 0.3rem;
@@ -639,7 +645,7 @@
     right: 6rem;
     font-size: 1.1rem;
     letter-spacing: 0.01em;
-    color: #721ea6;
+    color: red;
     text-align: right;
     display: inline-block;
     width: 14.5rem;
@@ -655,6 +661,23 @@
     border: 1px solid #d9d9d9;
     box-sizing: border-box;
     height: 3.9rem;
+}
+
+.signup-guest-pass-check-inputb-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 110.8rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-guest-pass-check-inputb-error:focus {
+    border: 2px solid red;
 }
 
 .signup-guest-nickname-text {
@@ -689,6 +712,23 @@
     height: 3.9rem;
 }
 
+.signup-guest-nickname-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 118.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-guest-nickname-inputbox-error:focus {
+    border: 2px solid red;
+}
+
 .signup-guest-academy-text {
     position: absolute;
     top: 124.7rem;
@@ -707,6 +747,7 @@
     border: 1px solid #d9d9d9;
     box-sizing: border-box;
     height: 3.9rem;
+    cursor: pointer;
 }
 
 .signup-guest-academy-search-ic-icon {
@@ -715,6 +756,7 @@
     left: 7.53rem;
     width: 1.67rem;
     height: 1.67rem;
+    cursor: pointer;
 }
 
 .signup-guest-hr1 {
@@ -898,7 +940,16 @@
     left: 6rem;
     letter-spacing: 0.01em;
     font-size: 0.8rem;
-    color:red;
+    color: red;
+}
+
+.signup-guest-passchk-capslock {
+    position: absolute;
+    top: 114.7rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-size: 0.8rem;
+    color: red;
 }
 
 .signup-guest-pass-error-text {
@@ -909,18 +960,41 @@
     text-align: right;
     display: inline-block;
     width: 17.5rem;
-    color:red;
+    color: red;
 }
 
 .signup-guest-text-color-error {
-    color:red;
+    color: red;
 }
 
 .signup-guest-text-color-confirm {
-    color:#721ea6;
+    color: #721ea6;
 }
 
 .signup-guest-button-disabled {
     pointer-events: none;
     opacity: 0.4;
+}
+
+.signup-guest-email-reg-send-inprogress {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #b2b2b2;
+    border-radius: 50%;
+    border-top-color: #721ea6;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
 }

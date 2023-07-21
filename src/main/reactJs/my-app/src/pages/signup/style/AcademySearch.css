@@ -1,0 +1,213 @@
+.signup-guest-academy-modal-tex-star {
+    color: red;
+}
+
+.signup-guest-academy-modal-tex {
+    position: absolute;
+    top: 6.4rem;
+    left: calc(50% - 135px);
+    font-size: 1.3rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-guest-academy-modal-input {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 139px);
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    width: 20rem;
+    height: 3.9rem;
+    padding-left: 4.5rem;
+}
+
+.signup-guest-academy-modal-sea-icon {
+    position: absolute;
+    top: 1.13rem;
+    left: calc(50% - 119.75px);
+    width: 1.67rem;
+    height: 1.67rem;
+}
+
+.signup-guest-academy-modal-sea3 {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 39px);
+    border-radius: 0 5px 5px 0;
+    background-color: #f5eff9;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    width: 7.8rem;
+    height: 3.9rem;
+    border-left-color: transparent;
+}
+
+.signup-guest-academy-modal-sea4 {
+    position: absolute;
+    top: 0.7rem;
+    left: calc(50% - 29.89px);
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.98rem;
+    height: 2.47rem;
+}
+
+.signup-guest-academy-modal-sea2 {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 61px);
+    width: 7.8rem;
+    height: 3.9rem;
+}
+
+.signup-guest-academy-modal-sea {
+    position: absolute;
+    top: 8.7rem;
+    left: calc(50% - 139px);
+    width: 27.8rem;
+    height: 3.9rem;
+    font-size: 1.6rem;
+    color: #626567;
+}
+
+.signup-guest-academy-modal-res {
+    position: absolute;
+    top: 15rem;
+    left: calc(50% - 173px);
+    border-radius: 5px;
+    border: 1px solid #95969a;
+    box-sizing: border-box;
+    width: 34.6rem;
+    height: 26rem;
+}
+
+.signup-guest-academy-modal-res-box {
+    position: absolute;
+    top: 17rem;
+    left: calc(50% - 153px);
+    box-sizing: border-box;
+    width: 30.6rem;
+    height: 22rem;
+    overflow: auto;
+}
+
+.signup-guest-academy-modal-res-text {
+    letter-spacing: -0.24px;
+    text-align: left;
+    width: 27.6rem;
+    font-size: 1.4rem;
+}
+
+.sigup-guest-academy-modal-res-none-etc {
+    color: #721ea6;
+    font-size: 1.6rem;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.signup-guest-academy-modal-res-none {
+    position: absolute;
+    top: 26.9rem;
+    left: calc(50% - 150px);
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 30rem;
+}
+
+.signup-academy-crop-modal-canc {
+    position: absolute;
+    top: 43.4rem;
+    left: calc(50% - 70px);
+    width: 13.9rem;
+    height: 3.9rem;
+}
+
+.signup-academy-crop-modal-canc-box {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 69.5px);
+    border-radius: 5px;
+    border: 1px solid #95969a;
+    box-sizing: border-box;
+    width: 13.9rem;
+    height: 3.9rem;
+    background-color: #721ea6;
+}
+
+.signup-academy-crop-modal-canc-text {
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - 20.5px);
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: inline-block;
+    width: 4rem;
+    color: white;
+}
+
+.sigup-academy-modal {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+    border-radius: 10px;
+    box-shadow: 0px 0px 100px 2000px rgba(0, 0, 0, .5);
+}
+
+.sigup-academy-modal-box {
+    width: 96%;
+    height: 62.5vh;
+    z-index: 999;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+@keyframes modal-fadein {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+.sigup-academy-modal-box {
+    animation: modal-fadein 0.3s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
+}
+
+.signup-guest-academy-modal-inprogress {
+    position: relative;
+    bottom:1.5rem;
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    border: 6px solid #b2b2b2;
+    border-radius: 50%;
+    border-top-color: #721ea6;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}

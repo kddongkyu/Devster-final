@@ -13,13 +13,17 @@ const initialState = {
     idChk: false,
     emailChk: false,
     emailRegChk: false,
+    passChk: false,
+    nicknameChk:false,
 
     nameIsValid: false,
     idIsValid: false,
     emailIsValid: false,
     passIsValid: false,
+    nicknameIsValid:false,
 
     isEmailSent: false,
+    sendingInProg : false,
 
     isSubmitted: false,
 };
@@ -54,6 +58,7 @@ export const normMemberSlice = createSlice({
         },
 
 
+        //check를 해야할시
         setIdChk: (state, action) => {
             state.idChk = action.payload;
         },
@@ -63,9 +68,15 @@ export const normMemberSlice = createSlice({
         setEmailRegChk: (state, action) => {
             state.emailRegChk = action.payload;
         },
+        setPassChk: (state, action) => {
+            state.passChk = action.payload;
+        },
+        setNicknameChk:(state,action) =>{
+            state.nicknameChk=action.payload;
+        },
 
 
-
+        //submit용
         setNameIsValid: (state, action) => {
             state.nameIsValid = action.payload;
         },
@@ -78,11 +89,16 @@ export const normMemberSlice = createSlice({
         setPassIsValid: (state, action) => {
             state.passIsValid = action.payload;
         },
-
+        setNicknameIsValid:(state,action) =>{
+            state.nicknameIsValid=action.payload;
+        },
 
 
         setIsEmailSent: (state, action) => {
             state.isEmailSent = action.payload;
+        },
+        setSendingInProg : (state,action) => {
+            state.sendingInProg = action.payload;
         },
         setIsSubmitted: (state, action) => {
             state.isSubmitted = action.payload;
@@ -102,11 +118,15 @@ export const {
     setIdChk,
     setEmailChk,
     setEmailRegChk,
+    setPassChk,
+    setNicknameChk,
     setNameIsValid,
     setIdIsValid,
     setEmailIsValid,
     setPassIsValid,
+    setNicknameIsValid,
     setIsEmailSent,
+    setSendingInProg,
     setIsSubmitted
 } = normMemberSlice.actions;
 

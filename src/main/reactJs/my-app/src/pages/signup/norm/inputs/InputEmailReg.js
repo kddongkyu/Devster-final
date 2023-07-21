@@ -1,7 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
-import {setEmailRegChk, setEmailRegInput, setIsEmailSent, setSeconds} from "../../../../redux/normMemberSlice";
+import {
+    setEmailRegChk,
+    setEmailRegInput,
+    setIsEmailSent,
+    setSeconds,
+    setSendingInProg
+} from "../../../../redux/normMemberSlice";
 import RegTimer from "./RegTimer";
 
 function InputEmailReg(props) {
@@ -12,6 +18,7 @@ function InputEmailReg(props) {
     const emailIsValid = useSelector(state => state.norm.emailIsValid);
     const isEmailSent = useSelector(state => state.norm.isEmailSent);
     const emailRegChk = useSelector(state => state.norm.emailRegChk);
+    const sendingInProg=useSelector(state=>state.norm.sendingInProg);
 
     const [emailRegNum, setEmailRegNum] = useState('');
 
@@ -20,6 +27,7 @@ function InputEmailReg(props) {
             return;
         }
         try {
+            dispatch(setSendingInProg(true));
             const res = await axios({
                 method: 'post',
                 url: '/api/member/D0/email/validation',
@@ -33,12 +41,15 @@ function InputEmailReg(props) {
                 setEmailRegNum(res.data);
                 dispatch(setEmailRegInput(''));
                 alert(isEmailSent ? '인증번호가 재발송되었습니다.' : '인증번호가 발송되었습니다.');
+                dispatch(setSendingInProg(false));
             } else {
                 dispatch(setIsEmailSent(false));
                 alert('인증번호 발송에 실패했습니다.\n잠시후 다시 시도해주세요.');
+                dispatch(setSendingInProg(false));
             }
         } catch (error) {
             dispatch(setIsEmailSent(false));
+            dispatch(setSendingInProg(false));
             console.error('인증번호 발송 실패' + error.response?.status);
         }
     }
@@ -64,18 +75,33 @@ function InputEmailReg(props) {
 
     return (
         <div>
-            <div
-                className={`signup-guest-email-reg-send
+            {
+                !sendingInProg &&
+                <div
+                    className={`signup-guest-email-reg-send
                 ${emailIsValid && !emailRegChk ? '' : 'signup-guest-button-disabled'}`}
-                onClick={emailIsValid ? () => handleSendButton() : null}
-            >
-                <div className='signup-guest-email-inputbox1'/>
-                <div className='signup-guest-email-reg-send-te'>
-                    {
-                        isEmailSent && !emailRegChk ? '재전송' : '인증번호 전송'
-                    }
+                    onClick={emailIsValid ? () => handleSendButton() : null}
+                >
+                    <div className='signup-guest-email-inputbox1'/>
+                    <div className='signup-guest-email-reg-send-te'>
+                        {
+                            !isEmailSent && !emailRegChk ? '인증번호 전송' : '재전송'
+                        }
+                    </div>
                 </div>
-            </div>
+            }
+            {
+                sendingInProg &&
+                <div
+                    className={`signup-guest-email-reg-send
+                ${emailIsValid && !emailRegChk ? '' : 'signup-guest-button-disabled'}`}
+                >
+                    <div className='signup-guest-email-inputbox1'/>
+                    <div className='signup-guest-email-reg-send-te'>
+                        <div className='signup-guest-email-reg-send-inprogress'></div>
+                    </div>
+                </div>
+            }
             <div className="signup-guest-email-reg-input">
                 <input
                     type='text'

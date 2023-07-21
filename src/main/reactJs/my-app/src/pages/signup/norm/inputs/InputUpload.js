@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import axios from 'axios';
 import {jwtHandleError} from '../../../../api/JwtHandleError';
-import ResizeCrop from '../ResizeCrop';
+import ResizeCrop from './ResizeCrop';
 
 function InputUpload(props) {
     const profileRef = useRef();
@@ -11,51 +11,60 @@ function InputUpload(props) {
 
     const photoUrl = process.env.REACT_APP_MEMBERURL;
 
-    const uploadProfileImg = (e) => {
+    const uploadProfileImg = async (e) => {
         const file = e.target.files[0];
         const fileExtention = file?.name.split('.').pop().toLowerCase();
-        if (fileExtention === undefined || fileExtention === null || fileExtention === '') {
-            return;
-        } else if (fileExtention !== 'png' && fileExtention !== 'jpg' && fileExtention !== 'jpeg') {
+        if (!fileExtention || !['png', 'jpg', 'jpeg'].includes(fileExtention)) {
             alert('.png, .jpg, .jpeg 파일만 업로드 가능합니다.');
+            resetFileInput();
             return;
         }
 
         let formData = new FormData();
         formData.append('upload', file);
+        try {
+            const res = await axios({
+                method: 'post',
+                url: '/api/member/D0/photo',
+                data: formData,
+                headers: {'Content-type': 'multipart/form-data'}
+            });
 
-        axios({
-            method: 'post',
-            url: '/api/member/D0/photo',
-            data: formData,
-            headers: {'Content-type': 'multipart/form-data'}
-        })
-            .then(res => {
+            if (res?.status === 200) {
                 setSavedImg(res.data);
                 setCropImg(URL.createObjectURL(file));
-            })
-            .catch((error) => {
-                jwtHandleError(error);
-            });
+            }
+        } catch (error) {
+            alert('사진 업로드에 실패했습니다.\n잠시후 다시 시도해주세요.');
+            console.error('사진 업로드 실패' + error.response?.status);
+        }
     }
 
-    const setDefaultImg = () => {
+    const setDefaultImg = async () => {
         if (savedImg == null) {
-            return false;
+            return;
         } else {
-            axios({
-                method: 'put',
-                url: '/api/member/D0/photo/reset',
-                data: {'photo': savedImg},
-                headers: {'Content-type': 'application/json'}
-            })
-                .then(res => {
-                    setSavedImg(null);
-                })
-                .catch((error) => {
-                    jwtHandleError(error);
+            try {
+                const res = await axios({
+                    method: 'put',
+                    url: '/api/member/D0/photo/reset',
+                    data: {'photo': savedImg},
+                    headers: {'Content-type': 'application/json'}
                 });
+
+                if (res?.status === 200) {
+                    setSavedImg(null);
+                    resetFileInput();
+                }
+            } catch (error) {
+                alert('사진 초기화에 실패했습니다.\n잠시후 다시 시도해주세요.');
+                console.error('사진 초기화 실패' + error.response?.status);
+            }
         }
+    }
+
+    const resetFileInput = () => {
+        profileRef.current.value = '';
     }
 
     const openCropModal = () => {
@@ -87,15 +96,13 @@ function InputUpload(props) {
 
             </div>
             <div className='signup-guest-upload-profile'>
-                <div className='signup-guest-upload-profile-im'>
+                <div className='signup-guest-upload-profile-im'
+                     onClick={() => {
+                         profileRef.current.click()
+                     }}
+                >
                     <div className='signup-guest-upload-profile-im1'/>
-                    <div
-                        className='signup-guest-upload-profile-im2'
-                        onClick={() => {
-                            profileRef.current.click()
-                        }}
-                    >파일 선택
-                    </div>
+                    <div className='signup-guest-upload-profile-im2'>파일 선택</div>
                     <img
                         className='signup-guest-upload-profile-im-icon'
                         alt=''

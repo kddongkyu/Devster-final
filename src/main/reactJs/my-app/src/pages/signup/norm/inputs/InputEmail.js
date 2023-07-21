@@ -10,6 +10,7 @@ function InputEmail(props) {
     const emailIsValid = useSelector(state => state.norm.emailIsValid);
     const isEmailSent = useSelector(state => state.norm.isEmailSent);
     const emailRegChk = useSelector(state => state.norm.emailRegChk);
+    const sendingInProg = useSelector(state=>state.norm.sendingInProg);
 
     const [isEmailTouched, setIsEmailTouched] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -22,7 +23,7 @@ function InputEmail(props) {
                 url: '/api/member/D0/email',
                 data: JSON.stringify({m_email: m_email}),
                 headers: {'Content-Type': 'application/json'}
-            })
+            });
             if (res?.status === 200) {
                 if (res.data === false) {
                     dispatch(setEmailIsValid(true));
@@ -45,7 +46,8 @@ function InputEmail(props) {
     useEffect(() => {
         if (isEmailTouched) {
             const timer = setTimeout(() => {
-                const isEmailValid = m_email.trim() !== '' && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(m_email);
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(m_email);
+                const isEmailValid = m_email.trim() !== '' && emailPattern;
                 dispatch(setEmailChk(isEmailValid));
                 if (!m_email.trim()) {
                     setErrorMessage('필수 입력 항목입니다.');
@@ -92,7 +94,7 @@ function InputEmail(props) {
                 <input
                     type='text'
                     className={`${isInputValid ? 'signup-guest-email-inputbox' : 'signup-guest-email-inputbox-error'}`}
-                    disabled={isEmailSent}
+                    disabled={isEmailSent || sendingInProg}
                     value={m_email}
                     onChange={handleEmailChange}
                 />

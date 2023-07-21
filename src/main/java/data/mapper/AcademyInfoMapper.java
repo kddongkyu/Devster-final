@@ -3,6 +3,6 @@ package data.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface AcademyinfoMapper {
+public interface AcademyInfoMapper {
     public String getRoomName(int ai_idx);
 }
