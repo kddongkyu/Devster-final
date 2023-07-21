@@ -9,7 +9,5 @@ import java.util.Optional;
 
 public interface ResumeCareerRepository extends JpaRepository<ResumeCareerEntity, Integer> {
     Optional<List<ResumeCareerEntity>> findAllByMIdx(int m_idx);
-
     void deleteAllByMIdx(int m_idx);
-
 }

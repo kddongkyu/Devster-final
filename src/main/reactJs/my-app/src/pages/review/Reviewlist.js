@@ -1,15 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,useState} from 'react';
 import './style/Reviewlist.css';
 import axiosIns from "../../api/JwtConfig";
 import {Link, NavLink} from "react-router-dom";
 import StarRating from "./StarRating";
-function Reviewlist(props) {
 
-    const [inputKeyword, setInputKeyword] = useState(''); // 사용자가 입력하는 검색어
-    const [finalKeyword, setFinalKeyword] = useState(''); // 최종 검색어 (검색 버튼
+
+function Reviewlist(props) {
     const [reviews, setReviews] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
     const [totalPages,setTotalPages]=useState(1);
+    //정렬
+    const [sortProperty, setSortProperty] = useState('');
+    const [sortDirection, setSortDirection] = useState('');
+    //검색
+    const [inputKeyword, setInputKeyword] = useState(''); // 사용자가 입력하는 검색어
+    const [finalKeyword, setFinalKeyword] = useState(''); // 최종 검색어 (검색 버튼
 
 
 
@@ -19,48 +24,83 @@ function Reviewlist(props) {
 
     //검색 기능
     const handleSearchButtonClick = () => {
-    // 검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
-    const searchKeyword = inputKeyword.trim();
-    setFinalKeyword(searchKeyword);
-    // 첫 페이지의 검색 결과를 가져옵니다.
-    setCurrentPage(1);
-     };
-      
+        // 검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
+        const searchKeyword = inputKeyword;
+        setFinalKeyword(searchKeyword);
+        // 첫 페이지의 검색 결과를 가져옵니다.
+        setCurrentPage(1);
+    };
+
 
     useEffect(() => {
-        fetchReviews(currentPage,finalKeyword);
-      }, [currentPage, finalKeyword]);
-      
+        // Ensure currentPage is at least 1
+        const page = Math.max(1, currentPage);
+        fetchReviews(page, finalKeyword, sortProperty, sortDirection);
+    }, [currentPage, finalKeyword, sortProperty, sortDirection]);
 
-      const fetchReviews = async (currentPage, keyword) => {
-        const searchKeyword = finalKeyword && finalKeyword.trim() !== '' ? finalKeyword.trim() : null;
-      
+
+    const fetchReviews = async (page, keyword, sortProperty, sortDirection) => {
+        const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
+        console.log(sortDirection,sortProperty)
         try {
-          const response = await axiosIns.get('/api/review/D0', { params: { currentPage: currentPage, keyword: searchKeyword } });
-         console.log(finalKeyword);
-          setReviews(response.data.reviews);
-          setTotalPages(response.data.totalPages);
-          console.log(response.data.reviews)
-        } catch (error) {
-          console.error('Error fetching reviews:', error);
-        }
-      };
-      
+            const response = await axiosIns.get('/api/review/D0', {
+                params: {
+                    page: page - 1, // Use the page parameter
+                    keyword: searchKeyword,
+                    sortProperty,
+                    sortDirection
+                }
+            });
 
-      const goToPreviousPage = () => {
-        if (currentPage > 1) {
-            fetchReviews(currentPage - 1, finalKeyword);
-            setCurrentPage(currentPage - 1);
+            setReviews(response.data.reviews);
+            console.log(setReviews);
+            setTotalPages(response.data.totalPages);
+
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
         }
     };
-    
+
+
+    const onClickLatest = () => {
+       // fetchReviews(currentPage, finalKeyword, 'RBwriteday', 'DESC');
+        setSortProperty('RBwriteday');
+        setSortDirection('DESC');
+    };
+
+    const onClickLikes = () => {
+
+        setSortProperty('RBlike');
+        setSortDirection('DESC');
+      //  fetchReviews(currentPage, finalKeyword, 'RBlike', 'DESC');
+    };
+
+    const onClickViews = () => {
+       // fetchReviews(currentPage, finalKeyword, 'RBreadcount', 'DESC');
+        setSortProperty('RBreadcount');
+        setSortDirection('DESC');
+    };
+
+
+
+
+    const goToPreviousPage = () => {
+        if (currentPage > 1) {
+            const newPage = currentPage - 1;
+            fetchReviews(newPage, finalKeyword, sortProperty, sortDirection);
+            setCurrentPage(newPage);
+        }
+    };
+
     const goToNextPage = () => {
         if (currentPage < totalPages) {
-            fetchReviews(currentPage + 1, finalKeyword);
-            setCurrentPage(currentPage + 1);
+            const newPage = currentPage + 1;
+            fetchReviews(newPage, finalKeyword, sortProperty, sortDirection);
+            setCurrentPage(newPage);
         }
     };
-    
+
+
 
     const reviewTypes = {
         1: '면접',
@@ -111,65 +151,58 @@ function Reviewlist(props) {
     };
 
 
-
     return (
         <div className="review">
             <div className="review-advertise">
-                <div className="review-advertise-main" />
+                <div className="review-advertise-main"/>
                 <b className="review-advertise-text">광고</b>
             </div>
             <div className="review-name">
-                <div className="review-name-rec" />
-                <div className="review-name-text">
-                    <b className="goat">Review</b>
-                    <div className="div">코딩테스트 / 면접 / 합격 후기 게시판</div>
+                <div className="review-list-box-rec"/>
+                <div className="review-name-rec"/>
+                <b className="review-goat">Review</b>
+                <div className="review-sub-goat">
+                    코딩테스트 / 면접 / 합격 후기 게시판
                 </div>
             </div>
-            <NavLink to={`/review/form`} >
-            <button className="review-headerbar-btn" >
-                {/*<div className="review-headerbar-rec" />*/}
-                <div className="div1">{`후기작성 `}</div>
-                <img
-                    className="review-headerbar-btn-icon"
-                    alt=""
-                    src={require('./assets/review_headerbar_btn_icon.svg').default}
-                />
-            </button>
+            <NavLink to={`/review/form`}>
+                <button className="review-headerbar-btn">
+                    <div className="review-headerbar-rec"/>
+                    <div className="review-headerbar-btn-text">{`후기작성 `}</div>
+                    <img
+                        className="review-headerbar-btn-icon"
+                        alt=""
+                        src={require('./assets/review_headerbar_btn_icon.svg').default}
+                    />
+                </button>
             </NavLink>
-            <div className="review-headerbar-function">
-                <div className="review-headerbar-function-sort">
-                    <div className="review-headerbar-function-sort1" />
-                    <img
-                        className="review-headerbar-function-sort-child"
-                        alt=""
-                        src={require('./assets/Vector 176.svg').default}
-                    />
-                    <div className="div2"
-                          // onClick={handleSortByDate}
-                        >전체</div>
-                    <button
-                        // onClick={handleSortByRating}
-                    >
-                    <img
-                        className="review-headerbar-function-sort-icon"
-                        alt=""
-                        src={require('./assets/review_headerbar_function_sort_icon.svg').default}
-
-                    />
-                    </button>
-                </div>
-            </div>
             <div className="review-function-search-input">
-                <input className="review-function-search-input1" 
-                value={inputKeyword}
-                placeholder='검색어를 입력해주세요'
-                onChange={(e) => setInputKeyword(e.target.value)}
-               />
+                <input className="review-function-search-input1"
+                       value={inputKeyword}
+                       placeholder='검색어를 입력해주세요'
+                       onChange={(e) => setInputKeyword(e.target.value)}
+                />
                 <img
-                    className="review-function-search-icon"
+                    className="review-list-search-icon"
                     alt=""
                     src={require('./assets/review-search-icon.svg').default}
                     onClick={handleSearchButtonClick}
+                />
+            </div>
+            <div className="rboard-function-sort">
+                <div className="rboard-function-sort-box"/>
+                <button className="rboard-function-sort-time" onClick={onClickLatest}>최신순</button>
+                <button className="rboard-function-sort-view" onClick={onClickViews}>조회순</button>
+                <button className="rboard-function-sort-like" onClick={onClickLikes}>인기순</button>
+                <img
+                    className="rboard-function-sort-bar2-icon"
+                    alt=""
+                    src={require('./assets/rboard_function_sort_bar2.svg').default}
+                />
+                <img
+                    className="rboard-function-sort-bar-icon"
+                    alt=""
+                    src={require('./assets/rboard_function_sort_bar.svg').default}
                 />
             </div>
             <img
@@ -178,102 +211,98 @@ function Reviewlist(props) {
                 src={require('./assets/review_pages_reload_icon.svg').default}
                 onClick={handleRefresh}
             />
-            <div className="review-pages-paging">
-                <div className="div3">{`${currentPage} / ${totalPages} 페이지`}</div>
-                {/*1 / 12345 페이지*/}
-                <img
-                    className="review-pages-paging-backwardic-icon"
-                    alt=""
-                    src={require('./assets/review_pages_paging_backwardicon.svg').default}
-                    onClick={() => goToPreviousPage(finalKeyword)}
-                />
-                <img
-                    className="review-pages-paging-forwardico-icon"
-                    alt=""
-                    src={require('./assets/review_pages_paging_forwardicon.svg').default}
-                    onClick={() => goToNextPage(finalKeyword)}
-                />
-            </div>
+            <div className="review-top-page-text">{`${currentPage} / ${totalPages} 페이지`}</div>
+            <img
+                className="review-top-pages-next-icon"
+                alt=""
+                src={require('./assets/review_pages_paging_forwardicon.svg').default}
+                onClick={() => goToNextPage(finalKeyword,sortProperty,sortDirection)}
+                style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
+            />
+            <img
+                className="rboard-top-pages-back-icon"
+                alt=""
+                src={require('./assets/rboard-top_pages_back.svg').default}
+                onClick={() => goToPreviousPage(finalKeyword,sortProperty,sortDirection)}
 
-            <div className="review-list-box">
-                <div className="review-list-box-rec">
+                style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
+            />
+            <div className="review-child"/>
 
-                    {reviews.map((review)=>(
-                        <Link to={`/review/detail/${review.review.rb_idx}/${currentPage}`} key={review.review.rb_idx}>
+            {reviews.map((review)=>(
+                <Link to={`/review/detail/${review.review.rb_idx}/${currentPage}`} key={review.review.rb_idx}>
+                    <div className="review-list-box">
+                        <img
+                            className="review-list-box-img-icon"
+                            alt=""
+                            src={review.ciPhoto}
+                        />
+                        <div className="review-list-subject-text">
+                            <p className="p">{review.review.rb_subject}</p>
+                        </div>
+                        <img className="logo-icon" alt="" src={review.mPhoto}/>
+                        <div className="review-list-user-time">{review.mNicname} ·
+                            {timeForToday(review.review.rb_writeday)}</div>
+                        <div className="review-list-rb-type">
+                            <p className="p1">{`리뷰 종류 : `}{reviewTypes[review.review.rb_type]}</p>
+                        </div>
+                        <b className="review-list-companyname">{review.ciName}</b>
+                        <div className="review-list-box-star-text">{review.review.rb_star}.0</div>
+                        <div className="review-list-box-star-icons">
+                            <StarRating rating={review.review.rb_star} />
+                        </div>
 
-                            <div className="list-ee" >
-                <img
-                    className="review-list-box-img-icon"
-                    alt=""
-                    src={review.ciPhoto}
-                />
-                            <div className="review-list-subject-text">
-                                {review.review.rb_subject}
+                        <div className="review-bottom-bar"/>
+                        <div className="review-list-box-icons">
+                            <div className="review-list-box-header-comment-parent">
+                                <div className="review-list-box-header-comment">9.9k</div>
+                                <img
+                                    className="review-list-box-header-comment-icon"
+                                    alt=""
+                                    src={require('./assets/review_list_box_header_comments_icon.svg').default}
+                                />
                             </div>
-                <div className="review-list-box-title">
-                    <div className="review-list-box-title-user">
-                        <img className="logo-icon" alt=""
-                             src={review.mPhoto} />
-                        <div className="user-01234">{review.mNicname} ·
-                            {timeForToday(review.review.rb_writeday)}
+                            <div className="review-list-box-header-likes-t-parent">
+                                <div className="review-list-box-header-likes-t">{review.review.rb_like}</div>
+                                <img
+                                    className="review-ist-box-header-like-icon"
+                                    alt=""
+                                    src={require('./assets/review_list_box_header_likes_icon.svg').default}
+                                />
+                            </div>
+                            <div className="review-list-box-header-views-t-parent">
+                                <div className="review-list-box-header-comment">{review.review.rb_readcount}</div>
+                                <img
+                                    className="review-list-box-header-view-icon"
+                                    alt=""
+                                    src={require('./assets/review_list_box_header_views_icon.svg').default}
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div className="div5">
-                        <p className="p4">{`리뷰 종류 : `}{reviewTypes[review.review.rb_type]}</p>
-                    </div>
-                    <div className="review-list-companyname">{review.ciName}</div>
-                </div>
-                <div className="review-list-box-star">
-                    <div className="div6">{review.review.rb_star}</div>
-                    <div className="review-list-box-star-icons">
-                        <StarRating rating={review.review.rb_star} />
-                    </div>
+                </Link>
+            ))}:
 
-                    {/*<img*/}
-                    {/*   */}
-                    {/*    alt=""*/}
-                    {/*    */}
-                    {/*    src={require('./assets/review-stars_icons.svg').default}*/}
-                    {/*/>*/}
-                </div>
-                <div className="review-list-box-header">
-                    <div className="review-list-box-header-likes">
-                        <div className="review-list-box-header-likes-t">{review.review.rb_like}</div>
-                        <img
-                            className="review-list-box-header-likes-i-icon"
-                            alt=""
-                            src={require('./assets/review_list_box_header_likes_icon.svg').default}
-                        />
-                    </div>
-                    <div className="review-list-box-header-comment">
-                        <div className="review-list-box-header-views-t">99</div>
-                        <img
-                            className="review-list-box-header-comment-icon"
-                            alt=""
-                            src={require('./assets/review_list_box_header_comments_icon.svg').default}
-                        />
-                    </div>
-                    <div className="review-list-box-header-views">
-                        <div className="review-list-box-header-views-t">{review.review.rb_readcount}</div>
-                        <img
-                            src={require('./assets/review_list_box_header_views_icon.svg').default}
-                            className="review-list-box-header-views-i-icon"
-                            alt=""
-                        />
-                    </div>
-                </div>
-                    <hr className="review-rectangle"/>
-                        </div>
-                        </Link>
-                    ))}
+            <div className="review-bottom-page-text">{`${currentPage} / ${totalPages} 페이지`}</div>
+            <img
+                className="review-bottom-page-next-icon"
+                alt=""
+                src={require('./assets/review_pages_paging_forwardicon.svg').default}
+                onClick={() => goToNextPage(finalKeyword,sortProperty,sortDirection)}
 
-            </div>
-            </div>
+                style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
+            />
+            <img
+                className="review-bottom-page-pre-icon"
+                alt=""
+                src={require('./assets/rboard-top_pages_back.svg').default}
+                onClick={() => goToPreviousPage(finalKeyword,sortProperty,sortDirection)}
 
-            <div className="review-child" />
-            <div className="review-item" />
+                style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
+            />
         </div>
     );
-}
+};
+
 
 export default Reviewlist;

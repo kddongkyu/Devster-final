@@ -4,6 +4,7 @@ import axiosIns from "../../api/JwtConfig";
 import {Link, useParams} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import StarRating from "./StarRating";
+import {Reviewcomment} from "./index";
 function Reviewdetail() {
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
@@ -13,6 +14,7 @@ function Reviewdetail() {
     const { rb_idx, currentPage } = useParams();
     const [isGood, setIsGood] = useState(false);
     const [isBad, setIsBad] = useState(false);
+    const [status, setStatus] = useState("");
 
     const fetchReview = useCallback((rb_idx, currentPage = null) => {
         const url=`/api/review/D0/${rb_idx}`;
@@ -102,34 +104,27 @@ function Reviewdetail() {
         axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
             .then(response => {
                 if (response.data === 2) {
-                    // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    alert("이미 싫어요가 눌려 있습니다");
                     fetchReview(rb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
                     axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
                         .then(response => {
                             if (response.data === 1) {
-                                // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                                alert("이미 좋아요가 눌려 있습니다");
                                 axiosIns.post(`/api/review/D1/${m_idx}/like/${rb_idx}`)
                                     .then(response => {
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("좋아요 요청 실패");
                                         console.error('좋아요 요청 실패:', error);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/${m_idx}/like/${rb_idx}`)
                                     .then(response => {
-                                        alert("좋아요를 눌렀습니다");
                                         console.log('좋아요 요청 성공:', response.data);
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("좋아요 요청 실패");
                                         console.error('좋아요 요청 실패:', error);
                                     });
                             }
@@ -150,34 +145,28 @@ function Reviewdetail() {
         axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
             .then(response => {
                 if (response.data === 1) {
-                    // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    alert("이미 좋아요가 눌려 있습니다");
                     fetchReview(rb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
                     axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
                         .then(response => {
                             if (response.data === 2) {
-                                // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                                alert("이미 싫어요가 눌려 있습니다");
+
                                 axiosIns.post(`/api/review/D1/${m_idx}/dislike/${rb_idx}`)
                                     .then(response => {
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("싫어요 요청 실패");
                                         console.error('싫어요 요청 실패:', error);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/${m_idx}/dislike/${rb_idx}`)
                                     .then(response => {
-                                        alert("싫어요를 눌렀습니다");
                                         console.log('싫어요 요청 성공:', response.data);
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("싫어요 요청 실패");
                                         console.error('싫어요 요청 실패:', error);
                                     });
                             }
@@ -191,6 +180,8 @@ function Reviewdetail() {
                 console.error('좋아요 상태 체크 실패:', error);
             });
     };
+
+
 
     const deleteReview = (rb_idx) => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
@@ -273,6 +264,8 @@ function Reviewdetail() {
                     alt=""
                     src={require('./assets/review_detail_header_function_url.svg').default}
                 />
+                {m_idx === reviewData.review.m_idx &&(
+                    <>
                 <Link to={`/review/update/${reviewData.review.rb_idx}`}>
                 <img className="review-edit-icon" alt=""
                      src={require('./assets/review-edit.svg').default}/>
@@ -280,7 +273,8 @@ function Reviewdetail() {
                 <img className="review-trash-icon" alt=""
                      src={require('./assets/review-trash.svg').default}
                      onClick={() => deleteReview(rb_idx)} />
-
+                    </>
+                )}
             </div>
             <div className="review-detail-body">
                 <div className="review-detail-body-text">
@@ -314,6 +308,7 @@ function Reviewdetail() {
                         src={require('./assets/review_detail_counter_dislike_icon.svg').default}
                     />
                 </div>
+
             </div>
             <div className="advertise-box1">
                 <div className="advertise-main" />
@@ -324,154 +319,8 @@ function Reviewdetail() {
                 alt=""
                 src="/review-detail-hr.svg"
             />
-            <div className="review-detail-comments-counts">nn개의 댓글</div>
-            <div className="review-detail-commnets-form">
-                <div className="review-detail-commnets-form-bo" />
-                <img
-                    className="review-detail-commnets-form-im-icon"
-                    alt=""
-                    src="/review-detail-commnets-form-img@2x.png"
-                />
-                <div className="review-detail-commnets-form-te" />
-                <div className="review-detail-commnets-form-su">
-                    <div className="review-detail-commnets-form-su1" />
-                    <b className="review-detail-commnets-form-su2">댓글 쓰기</b>
-                </div>
-            </div>
-            <div className="review-detail-commnets">
-                <div className="review-detail-comments-all">
-                    <div className="review-detail-commnets-detail-">
-                        <div className="review-detail-recom-info-text">
-                            <div className="review-detail-recom-info-count">댓글 1</div>
-                            <div className="review-detail-recom-info-date">
-                                <span>{`약  6시간 전 · `}</span>
-                                <span className="span">{`수정됨 `}</span>
-                            </div>
-                        </div>
-                        <img
-                            className="review-detail-commnets-detail-icon"
-                            alt=""
-                            src="/review-detail-commnets-detail-info-img@2x.png"
-                        />
-                    </div>
-                    <div className="review-detail-commnets-all-lik">
-                        <div className="review-detail-commnets-all-up">
-                            <div className="review-detail-commnets-all-up-" />
-                            <img
-                                className="review-detail-commnets-all-up-icon"
-                                alt=""
-                                src="/review-detail-commnets-all-up-icon.svg"
-                            />
-                        </div>
-                        <div className="review-detail-recom-likes-coun">
-                            <div className="review-detail-commnets-all-box" />
-                            <div className="review-detail-commnets-all-lik2">27</div>
-                        </div>
-                        <div className="review-detail-commnets-all-dow">
-                            <div className="review-detail-recom-down-box" />
-                            <img
-                                className="review-detail-commnets-all-dow-icon"
-                                alt=""
-                                src="/review-detail-commnets-all-down-icon.svg"
-                            />
-                        </div>
-                    </div>
-                    <div className="review-detail-commnets-all-con">
-                        <p className="p">
-                            모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을
-                            박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는
-                        </p>
-                        <p className="p">&nbsp;</p>
-                        <p className="p">
-                            {" "}
-                            제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야
-                            한다.
-                        </p>
-                        <p className="p">
-                            선거에 관한 경비는 법률이 정하는 경우를 제외하고
-                        </p>
-                        <p className="p">&nbsp;</p>
-                        <p className="p">&nbsp;</p>
-                        <p className="p">
-                            는 정당 또는 후보자에게 부담시킬 수 없다. 행정각부의
-                        </p>
-                        <p className="p">&nbsp;</p>
-                        <p className="p">
-                            {" "}
-                            설치·조직과 직무범위는 법률로 정한다. 대통령은 국가의 원수이며,
-                            외국에 대하여 국가를 대표한다.
-                        </p>
-                    </div>
-                </div>
-                <div className="review-detail-commnets-hide">
-                    <img
-                        className="review-detail-commnets-hide-ic-icon"
-                        alt=""
-                        src="/review-detail-commnets-hide-icon.svg"
-                    />
-                    <div className="review-detail-commnets-hide-te">댓글 모두 숨기기</div>
-                    <div className="review-detail-commnets-hide-co">댓글 쓰기</div>
-                </div>
-            </div>
-            <div className="review-detail-recom">
-                <div className="review-detail-recom-box" />
-                <div className="review-detail-recom-info">
-                    <div className="review-detail-recom-info-text">
-                        <div className="review-detail-recom-info-count">대댓글 1</div>
-                        <div className="review-detail-recom-info-date">
-                            <span>{`약  1시간 전 · `}</span>
-                            <span className="span">{`수정됨 `}</span>
-                        </div>
-                    </div>
-                    <img
-                        className="review-detail-commnets-detail-icon"
-                        alt=""
-                        src="/review-detail-recom-info-img@2x.png"
-                    />
-                </div>
-                <div className="review-detail-recom-likes">
-                    <div className="review-detail-commnets-all-up">
-                        <div className="review-detail-commnets-all-up-" />
-                        <img
-                            className="review-detail-commnets-all-up-icon"
-                            alt=""
-                            src="/review-detail-recom-up-icon.svg"
-                        />
-                    </div>
-                    <div className="review-detail-recom-likes-coun">
-                        <div className="review-detail-commnets-all-box" />
-                        <div className="review-detail-commnets-all-lik2">27</div>
-                    </div>
-                    <div className="review-detail-commnets-all-dow">
-                        <div className="review-detail-recom-down-box" />
-                        <img
-                            className="review-detail-commnets-all-dow-icon"
-                            alt=""
-                            src="/review-detail-recom-down-icon.svg"
-                        />
-                    </div>
-                </div>
-                <div className="review-detail-recom-textarea">
-                    <p className="p">
-                        모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을
-                        박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는
-                    </p>
-                    <p className="p">&nbsp;</p>
-                    <p className="p">
-                        {" "}
-                        제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야
-                        한다.
-                    </p>
-                    <p className="p">선거에 관한 경비는 법률이 정하는 경우를</p>
-                </div>
-                <div className="review-detail-recom-recom-form">{`댓글 쓰기 `}</div>
-            </div>
-            <div className="review-line-box" />
-            <div className="review-detail-headline">
-                <div className="review-detail-headline-box" />
-                <div className="review-detail-headline-text">리뷰게시판</div>
-            </div>
 
+        <Reviewcomment rb_idx={rb_idx}/>
         </div>
 
     );
