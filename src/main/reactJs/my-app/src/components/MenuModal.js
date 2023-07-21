@@ -72,9 +72,15 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           <NavLink to={"/fboard"} onClick={closeMenuBar}>
             <b className="menu-modal-options-fb">일반게시판</b>
           </NavLink>
-          <div className="menu-modal-options-qna">Q&A</div>
-          <b className="menu-modal-options-hire">채용정보</b>
-          <b className="menu-modal-options-aca">학원별게시판</b>
+          <NavLink to={"/qboard"} onClick={closeMenuBar}>
+            <div className="menu-modal-options-qna">Q&A</div>
+          </NavLink>
+          <NavLink to={"/hboard"} onClick={closeMenuBar}>
+            <b className="menu-modal-options-hire">채용정보</b>
+          </NavLink>
+          <NavLink to={"/aboard"} onClick={closeMenuBar}>
+            <b className="menu-modal-options-aca">학원별게시판</b>
+          </NavLink>
           <NavLink to={"/review"} onClick={closeMenuBar}>
             <b className="menu-modal-options-review">회사후기</b>
           </NavLink>

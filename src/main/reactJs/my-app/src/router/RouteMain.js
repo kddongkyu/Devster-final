@@ -34,8 +34,6 @@ import {
 } from "../pages/review";
 import JwtTest from "../pages/test/JwtTest";
 
-import { Noticeform, Noticelist } from "../pages/notice";
-
 function RouteMain(props) {
   const location = useLocation();
 
@@ -54,14 +52,12 @@ function RouteMain(props) {
         <Route path="/hboard" element={<Hboard />} />
         <Route path="/aboard" element={<Aboard />} />
         <Route path="/review" element={<Reviewlist />} />
-        <Route path="/notice" element={<Noticelist />} />
 
         <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />} />
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route path="/review/form" element={<Reviewform />} />
-        <Route path="/notice/form" element={<Noticeform />} />
 
         <Route
           path="/review/detail/:rb_idx/:currentPage"
