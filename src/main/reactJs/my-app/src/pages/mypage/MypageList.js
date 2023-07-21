@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import MypageListGuest from "./MypageListGuest";
 import MypageListAdmin from "./MypageListAdmin";
+import MypageListUser from "./MypageListUser";
 
 function MypageList(props) {
   const activeStyle = {
@@ -16,7 +17,7 @@ function MypageList(props) {
   };
 
   const [member, setMember] = useState({
-    m_role: "",
+    m_role: "USER",
   });
 
   const decodedToken = jwt_decode(localStorage.accessToken);
@@ -40,7 +41,7 @@ function MypageList(props) {
   return (
     <div className="mypage">
       <div className="mypage-wrapper">
-        {member.m_role === "GUEST" ? <MypageListGuest /> : <MypageListAdmin />}
+        {member.m_role === "USER" ? <MypageListUser /> : <MypageListAdmin />}
         {/* {member.m_role === "GUEST" ? <MypageListAdmin /> : <MypageListGuest />} */}
       </div>
       <Outlet />

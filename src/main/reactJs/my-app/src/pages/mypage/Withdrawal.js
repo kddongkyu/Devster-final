@@ -1,7 +1,158 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style/Withdrawal.css";
+import Email from "./signoutInputs/Email";
+import jwt_decode from "jwt-decode";
+import axiosIns from "../../api/JwtConfig";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setEmailRegChk,
+  setEmailRegInput,
+  setIsEmailSent,
+  setSeconds,
+} from "../../redux/normMemberSlice";
+import { useNavigate } from "react-router-dom";
 
 function Withdrawal(props) {
+  const [member, setMember] = useState({
+    m_email: "",
+  });
+
+  const decodedToken = jwt_decode(localStorage.accessToken);
+
+  const getMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
+      setMember(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getMemberData(decodedToken.idx);
+  }, [decodedToken.idx]);
+
+  const dispatch = useDispatch();
+  const m_email = member.m_email;
+  console.log(m_email);
+  const seconds = useSelector((state) => state.norm.seconds);
+  const emailRegInput = useSelector((state) => state.norm.emailRegInput);
+  // const emailIsValid = useSelector(state => state.norm.emailIsValid);
+  const isEmailSent = useSelector((state) => state.norm.isEmailSent);
+  const emailRegChk = useSelector((state) => state.norm.emailRegChk);
+
+  const [emailRegNum, setEmailRegNum] = useState("");
+
+  const handleSendButton = async () => {
+    try {
+      const res = await axios({
+        method: "post",
+        url: "/api/member/D0/email/validation",
+        data: JSON.stringify({ m_email: m_email }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res?.status === 200) {
+        dispatch(setIsEmailSent(true));
+        dispatch(setSeconds(30));
+        setEmailRegNum(res.data);
+        dispatch(setEmailRegInput(""));
+        alert(
+          isEmailSent
+            ? "인증번호가 재발송되었습니다."
+            : "인증번호가 발송되었습니다."
+        );
+      } else {
+        dispatch(setIsEmailSent(false));
+        alert("인증번호 발송에 실패했습니다.\n잠시후 다시 시도해주세요.");
+      }
+    } catch (error) {
+      dispatch(setIsEmailSent(false));
+      console.error("인증번호 발송 실패" + error.response?.status);
+    }
+  };
+
+  const handleEmailRegChange = (e) => {
+    dispatch(setEmailRegInput(e.target.value));
+  };
+
+  const handleRegChk = () => {
+    if (isEmailSent && emailRegNum === emailRegInput) {
+      dispatch(setEmailRegChk(true));
+      dispatch(setSeconds(null));
+      alert("인증 되었습니다.");
+    } else {
+      dispatch(setEmailRegChk(false));
+      alert("인증에 실패했습니다.\n인증번호를 확인해주세요.");
+    }
+  };
+
+  useEffect(() => {
+    console.log("emailRegChk changed:", emailRegChk);
+  }, [emailRegChk]);
+
+  // =========================인증시간==============================
+
+  const minutes = Math.floor(seconds / 60);
+  const displaySeconds = seconds % 60;
+  let timerMessage = "";
+
+  useEffect(() => {
+    if (isEmailSent && seconds > 0) {
+      const regTimer = setTimeout(() => {
+        dispatch(setSeconds(seconds - 1));
+        console.log(regTimer);
+      }, 1000);
+      return () => clearTimeout(regTimer);
+    } else if (seconds !== null && seconds <= 0) {
+      dispatch(setEmailRegChk(false));
+    }
+  }, [isEmailSent, seconds]);
+
+  // let timerMessage = "";
+
+  if (isEmailSent && seconds > 0) {
+    timerMessage = (
+      <span>
+        남은 인증시간 :{minutes < 30 ? "0" : ""}
+        {minutes}:{displaySeconds < 30 ? "0" : ""}
+        {displaySeconds}
+      </span>
+    );
+  } else if (emailRegChk) {
+    timerMessage = <span style={{ color: "#721ea6" }}>인증 되었습니다.</span>;
+  } else if (isEmailSent && seconds <= 0) {
+    timerMessage = <span>인증시간이 만료되었습니다.</span>;
+  }
+
+  // =========================회원탈퇴==============================
+
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    const confirmSignOut = window.confirm("정말 탈퇴하시겠습니까?");
+    if (confirmSignOut) {
+      try {
+        const res = await axios({
+          method: "delete",
+          url: "/api/member/D1",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.accessToken}`,
+          },
+        });
+        if (res?.status === 200) {
+          alert("탈퇴가 완료되었습니다.");
+          localStorage.clear();
+          navigate("/signin");
+        }
+      } catch (error) {
+        console.error("탈퇴 실패" + error.response?.status);
+      }
+    }
+  };
+
   return (
     <div className="withrawal">
       <div className="content-withrawal">
@@ -34,11 +185,58 @@ function Withdrawal(props) {
         </div>
         <div className="text-content-withdrawal-email">이메일</div>
         <div className="email-confirm-box">
-          <div className="email-input-box" />
-          <button className="withrawal-button">
-            <div className="text-go-withdrawal">탈퇴하기</div>
+          <input
+            className="email-input-box"
+            type="text"
+            value={member.m_email}
+            disabled
+          />
+          {/* <Email /> */}
+          <button className="withrawal-button" onClick={handleSendButton}>
+            인증번호 전송
           </button>
         </div>
+
+        {/* ===========================인증번호 확인 ======================= */}
+        <div className="withdrawal-signup-guest-email-reg-input">
+          <input
+            type="text"
+            className="signup-guest-email-input-reg-b"
+            disabled={!isEmailSent || emailRegChk || seconds <= 0}
+            value={emailRegInput}
+            onChange={handleEmailRegChange}
+          />
+          <div
+            className={`withdrawal-signup-guest-email-reg-chk
+                    ${
+                      !isEmailSent || emailRegChk || seconds <= 0
+                        ? "signup-guest-button-disabled"
+                        : ""
+                    }`}
+            onClick={handleRegChk}
+          >
+            <div className="signup-guest-email-inputbox2" />
+            <div className="withdrawal-signup-guest-email-reg-send-te1">
+              확인
+            </div>
+          </div>
+        </div>
+        {/* ===========================인증번호 확인 ======================= */}
+        <div
+          className={`withdrawal-signup-guest-email-reg-timelef
+            ${seconds >= 60 ? "" : "withdrawal-signup-guest-text-color-error"}`}
+        >
+          {timerMessage}
+        </div>
+
+        <button
+          type="button"
+          className="withrawal-button-finish"
+          disabled={!emailRegChk}
+          onClick={handleSignOut}
+        >
+          탈퇴하기
+        </button>
       </div>
     </div>
   );

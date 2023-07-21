@@ -14,7 +14,10 @@ function ResumeUpdateform(props) {
     m_email: "",
   });
 
-  const [resume, setResume] = useState({});
+  const [resume, setResume] = useState({
+    r_file: "",
+    r_reffile: "",
+  });
 
   const [resumeCareerList, setResumeCareerList] = useState([]);
   const [resumeLicenseList, setResumeLicenseList] = useState([]);
@@ -40,6 +43,17 @@ function ResumeUpdateform(props) {
     }
   };
 
+  const removeCareer = (index) => {
+    const newCareerList = resumeCareerList.filter((_, idx) => idx !== index);
+    setResumeCareerList(newCareerList);
+    console.log(newCareerList);
+  };
+
+  const removeLicense = (index) => {
+    const newLicenseList = resumeLicenseList.filter((_, idx) => idx !== index);
+    setResumeLicenseList(newLicenseList);
+  };
+
   useEffect(() => {
     getMemberData(m_idx);
     getResume(m_idx);
@@ -54,9 +68,11 @@ function ResumeUpdateform(props) {
         resumeLicenseDtoList: resumeLicenseList,
       });
 
+      console.log("response.data: " + response.data);
+
       if (response.status === 200) {
-        // 요청이 성공하면 /myresume로 이동합니다.
         navigate("/myresume");
+        console.log("resumeCareerList: " + resumeCareerList.r_company);
       } else {
         console.error("An error occurred while updating the resume");
       }
@@ -69,12 +85,22 @@ function ResumeUpdateform(props) {
 
   const handleFileChange = async (e) => {
     let file = e.target.files[0];
+
+    let extension = file.name.split(".").pop().toLowerCase();
+
+    if (extension !== "pdf") {
+      alert("PDF 파일만 가능합니다.");
+      e.target.value = null;
+      return;
+    }
+
     let formData = new FormData();
     formData.append("upload", file);
     let url;
 
     switch (e.target.name) {
       case "r_file":
+        setResume((prevResume) => ({ ...prevResume, r_file: file.name }));
         try {
           const response = await axiosIns.post("/api/resume/D1/file", formData);
           url = response.data.url;
@@ -87,6 +113,7 @@ function ResumeUpdateform(props) {
         }
         break;
       case "r_refile":
+        setResume((prevResume) => ({ ...prevResume, r_reffile: file.name }));
         try {
           const response = await axiosIns.post(
             "/api/resume/D1/refile",
@@ -107,7 +134,15 @@ function ResumeUpdateform(props) {
   };
 
   return (
-    <form className="resumeform" onSubmit={updateResume}>
+    <form
+      className="resumeform"
+      onSubmit={updateResume}
+      style={{
+        height: `${
+          125 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+        }rem`,
+      }}
+    >
       <div className="resumeform-wrapper">
         <div className="resumeform-header">
           <b className="resumeform-header-name">{member.m_name}</b>
@@ -241,6 +276,15 @@ function ResumeUpdateform(props) {
           </div>
           {resumeCareerList.map((career, index) => (
             <div key={index} className="resumeform-career-group-02">
+              {index !== 0 && (
+                <button
+                  type="button"
+                  onClick={() => removeCareer(index)}
+                  className="resumeform-career-group-02-removeButton"
+                >
+                  삭제
+                </button>
+              )}
               <div className="resumeform-career-group-02-gro">
                 <input
                   className="resumeform-school-entrance-rec"
@@ -286,16 +330,12 @@ function ResumeUpdateform(props) {
                   className="resumeform-school-entrance-rec"
                   type="text"
                   name="r_company"
-                  value={resumeCareerList[0]?.r_company || ""}
-                  onChange={(e) =>
-                    setResumeCareerList([
-                      {
-                        ...resumeCareerList[0],
-                        r_company: e.target.value,
-                      },
-                      ...resumeCareerList.slice(1),
-                    ])
-                  }
+                  value={career.r_company || ""}
+                  onChange={(e) => {
+                    const updatedCareerList = [...resumeCareerList];
+                    updatedCareerList[index].r_company = e.target.value;
+                    setResumeCareerList(updatedCareerList);
+                  }}
                 />
               </div>
               <div className="resumeform-career-group-02-gro6">
@@ -303,16 +343,12 @@ function ResumeUpdateform(props) {
                   className="resumeform-school-entrance-rec"
                   type="text"
                   name="r_department"
-                  value={resumeCareerList[0]?.r_department || ""}
-                  onChange={(e) =>
-                    setResumeCareerList([
-                      {
-                        ...resumeCareerList[0],
-                        r_department: e.target.value,
-                      },
-                      ...resumeCareerList.slice(1),
-                    ])
-                  }
+                  value={career.r_department || ""}
+                  onChange={(e) => {
+                    const updatedCareerList = [...resumeCareerList];
+                    updatedCareerList[index].r_department = e.target.value;
+                    setResumeCareerList(updatedCareerList);
+                  }}
                 />
               </div>
               <div className="resumeform-career-group-02-gro8">
@@ -320,23 +356,22 @@ function ResumeUpdateform(props) {
                   className="resumeform-school-entrance-rec"
                   type="text"
                   name="r_position"
-                  value={resumeCareerList[0]?.r_position || ""}
-                  onChange={(e) =>
-                    setResumeCareerList([
-                      {
-                        ...resumeCareerList[0],
-                        r_position: e.target.value,
-                      },
-                      ...resumeCareerList.slice(1),
-                    ])
-                  }
+                  value={career.r_position || ""}
+                  onChange={(e) => {
+                    const updatedCareerList = [...resumeCareerList];
+                    updatedCareerList[index].r_position = e.target.value;
+                    setResumeCareerList(updatedCareerList);
+                  }}
                 />
               </div>
             </div>
           ))}
         </div>
 
-        <div className="resumeform-certificate">
+        <div
+          className="resumeform-certificate"
+          style={{ top: `${55 + resumeCareerList.length * 9}rem` }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">자격증</b>
             <img
@@ -347,6 +382,15 @@ function ResumeUpdateform(props) {
           </div>
           {resumeLicenseList.map((license, index) => (
             <div className="resumeform-certificate-box" key={index}>
+              {index !== 0 && (
+                <button
+                  type="button"
+                  onClick={() => removeLicense(index)}
+                  className="resumeform-career-group-02-removeButton"
+                >
+                  삭제
+                </button>
+              )}
               <div className="resumeform-certificate-box-dat">
                 <input
                   className="resumeform-school-entrance-rec"
@@ -371,21 +415,24 @@ function ResumeUpdateform(props) {
                 className="resumeform-certificate-box-inp"
                 type="text"
                 name="r_licname"
-                value={resumeLicenseList[0]?.r_licname || ""}
-                onChange={(e) =>
-                  setResumeLicenseList([
-                    {
-                      ...resumeLicenseList[0],
-                      r_licname: e.target.value,
-                    },
-                    ...resumeLicenseList.slice(1),
-                  ])
-                }
+                value={license.r_licname || ""}
+                onChange={(e) => {
+                  const updatedLicenseList = [...resumeLicenseList];
+                  updatedLicenseList[index].r_licname = e.target.value;
+                  setResumeLicenseList(updatedLicenseList);
+                }}
               />
             </div>
           ))}
         </div>
-        <div className="resumeform-content">
+        <div
+          className="resumeform-content"
+          style={{
+            top: `${
+              65 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+            }rem`,
+          }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">간단 자기소개</b>
           </div>
@@ -399,7 +446,14 @@ function ResumeUpdateform(props) {
             />
           </div>
         </div>
-        <div className="resumeform-fileupload">
+        <div
+          className="resumeform-fileupload"
+          style={{
+            top: `${
+              94 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+            }rem`,
+          }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`첨부파일 업로드  `}</span>
@@ -407,22 +461,53 @@ function ResumeUpdateform(props) {
             </b>
           </div>
           <div className="resumeform-job-box">
-            {/* <div className="resumeform-job-box-rec" /> */}
+            <label htmlFor="fileUpload" className="customFileUpload">
+              {resume.r_file || "Choose File"}
+            </label>
             <input
+              id="fileUpload"
+              style={{ display: "none" }}
               className="resumeform-job-box-rec"
               type="file"
               name="r_file"
               onChange={handleFileChange}
-              // value={resumeDto.r_file}
             />
+            <button
+              type="button"
+              onClick={() => document.getElementById("fileUpload").click()}
+              className="customFileUploadButton"
+            >
+              파일선택
+            </button>
+            <button
+              type="button"
+              className="clearFileInput"
+              onClick={() =>
+                setResume((prevResume) => ({ ...prevResume, r_file: "delete" }))
+              }
+            >
+              삭제
+            </button>
           </div>
         </div>
-        <div className="resumeform-resumefileupload">
+        <div
+          className="resumeform-resumefileupload"
+          style={{
+            top: `${
+              103 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+            }rem`,
+          }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">이력서 업로드</b>
           </div>
           <div className="resumeform-job-box">
+            <label htmlFor="resumeFileUpload" className="customFileUpload">
+              {resume.r_reffile || "Choose File"}
+            </label>
             <input
+              id="resumeFileUpload"
+              style={{ display: "none" }}
               className="resumeform-job-box-rec"
               type="file"
               name="r_refile"
@@ -433,12 +518,39 @@ function ResumeUpdateform(props) {
               {" "}
               PDF 파일로 올려주세요.
             </div> */}
+            <button
+              type="button"
+              onClick={() =>
+                document.getElementById("resumeFileUpload").click()
+              }
+              className="customFileUploadButton"
+            >
+              파일선택
+            </button>
+            <button
+              type="button"
+              className="clearFileInput"
+              onClick={() =>
+                setResume((prevResume) => ({
+                  ...prevResume,
+                  r_reffile: "delete",
+                }))
+              }
+            >
+              삭제
+            </button>
           </div>
         </div>
       </div>
       <button
         type="submit"
-        style={{ position: "absolute", top: "126rem", right: "3rem" }}
+        style={{
+          position: "absolute",
+          top: `${
+            122 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+          }rem`,
+          right: "3rem",
+        }}
       >
         Submit
       </button>

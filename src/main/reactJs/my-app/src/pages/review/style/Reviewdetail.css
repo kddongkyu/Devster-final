@@ -104,7 +104,7 @@
     left: 5.3rem;
     font-weight: 500;
     display: inline-block;
-    width: 13.3rem;
+    width: 20.3rem;
     height: 1.7rem;
 }
 .review-detail-info-status-text {
@@ -118,7 +118,7 @@
 .review-detail-info-status-view-icon {
     position: absolute;
     top: 0.45rem;
-    left: 7.2rem;
+    left: 4.2rem;
     width: 1.4rem;
     height: 0.94rem;
 }
@@ -354,6 +354,7 @@
     top: 1rem;
     right: 3.1rem;
     letter-spacing: -0.24px;
+    color: #fff;
 }
 .review-detail-commnets-form-su {
     position: absolute;
@@ -361,6 +362,7 @@
     right: 1.6rem;
     width: 11.6rem;
     height: 4rem;
+    border: none;
 }
 .review-detail-commnets-form {
     position: absolute;
@@ -503,7 +505,7 @@
     color: #721ea6;
 }
 .review-detail-commnets {
-    position: absolute;
+    position: relative;
     top: 140.2rem;
     left: 1.9rem;
     width: 35.2rem;
@@ -661,8 +663,8 @@
  }
 .rview-readcount{
     /*left: 9rem;*/
-    padding-left: 3rem;
-    padding-left: 3rem;
+    /*padding-left: 3rem;*/
+    float: left;
 }
 .ci_name_b{
     position: absolute;

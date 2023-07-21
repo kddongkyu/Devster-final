@@ -24,16 +24,25 @@ function Bookmarks(props) {
   }, []);
 
   return (
-    <div className="bookmarks">
+    <div
+      className="bookmarks"
+      style={{ height: bookmark.length === 0 ? "60rem" : "90rem" }}
+    >
       <div className="content-bookmarks">
         <div className="content-bookmarks1">
           <b className="text-bookmark">채용정보 북마크</b>
 
           {bookmark.length === 0 ? (
-            <div className="bookmark-01">북마크한 채용정보가 없습니다</div>
+            <div className="bookmark-01" style={{ width: "100%" }}>
+              북마크한 채용정보가 없습니다
+            </div>
           ) : (
             bookmark.map((item, idx) => (
-              <div className={`bookmark-0${idx + 1}`} key={idx}>
+              <div
+                className={`bookmark-0${idx + 1}`}
+                key={idx}
+                style={{ width: "46.84%" }}
+              >
                 <div>
                   <div className="bookmark-image-01" />
                   <div className="text-bookmark-01">{item.hb_subject}</div>

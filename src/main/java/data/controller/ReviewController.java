@@ -28,14 +28,26 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/D0")
-    public ResponseEntity<Map<String, Object>> getPagedReviews(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
-            @RequestParam(required = false) String keyword) {
-        return new ResponseEntity<>(reviewService.getPagedReviews(page, size, keyword), HttpStatus.OK);
-    }
-    
+//    @GetMapping("/D0")
+//    public ResponseEntity<Map<String, Object>> getPagedReviews(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "5") int size,
+//            @RequestParam(required = false) String keyword) {
+//
+//        return new ResponseEntity<>(reviewService.getPagedReviews(page, size, keyword), HttpStatus.OK);
+//    }
+@GetMapping("/D0")
+public ResponseEntity<Map<String, Object>> getPagedReviews(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size,
+        @RequestParam(defaultValue = "RBwriteday") String sortProperty,
+        @RequestParam(defaultValue = "DESC") String sortDirection,
+        @RequestParam(required = false) String keyword) {
+
+    return new ResponseEntity<>(reviewService.getPagedReviews(page, size, sortProperty, sortDirection, keyword), HttpStatus.OK);
+}
+
+
 
 
     @PostMapping("/D1")

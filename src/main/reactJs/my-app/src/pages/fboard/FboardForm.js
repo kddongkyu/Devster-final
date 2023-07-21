@@ -8,6 +8,7 @@ function FboardForm (props)  {
     const [fbSubject,setFbSubject]=useState('');
     const [fbPhoto,setFbPhoto]=useState('');
     const [fbContent,setFbContent]=useState('');
+    const [photoLength, setPhotoLength]=useState(0);
     const navi=useNavigate();
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
@@ -18,7 +19,7 @@ function FboardForm (props)  {
 
         const dto = {
             fb_subject: fbSubject,
-            fb_photo: fbPhoto,
+            // fb_photo: fbPhoto,
             fb_content: fbContent,
             m_idx: de.idx
         };
@@ -37,14 +38,26 @@ function FboardForm (props)  {
     //파일 업로드
     const onUploadEvent=(e)=>{
         const uploadPhoto=new FormData();
-        uploadPhoto.append("upload",e.target.files[0]);
+        setPhotoLength(e.target.files.length);
+
+        for (let i = 0; i < e.target.files.length; i++) {
+            uploadPhoto.append("upload", e.target.files[i]);
+        }
+
         axiosIns({
             method:'post',
             url:'/api/fboard/D1/photo/upload',
             data:uploadPhoto,
             headers:{'Content-Type':'multipart/form-data'}
         }).then(res=>{
-            setFbPhoto(res.data);
+            // setFbPhoto(res.data);
+            // // 추가: 업로드가 완료되면 fbPhoto 상태를 dto에 설정
+            // const dto = {
+            //     fb_subject: fbSubject,
+            //     fb_photo: res.data.join(","), // 여러장의 사진 URL을 쉼표로 구분하여 문자열로 설정
+            //     fb_content: fbContent,
+            //     m_idx: de.idx
+            // };
         });
     }
 
@@ -64,41 +77,42 @@ function FboardForm (props)  {
           </div>
         </div>
       </div>
-      <div className="qboard-form-subject">
-        <input type="text" className="qboard-form-subject-rec" placeholder="제목을 입력해주세요."
+      <div className="fboard-form-subject">
+        <input type="text" className="fboard-form-subject-rec" placeholder="제목을 입력해주세요."
                required
                onChange={(e)=>setFbSubject(e.target.value)} value={fbSubject}/>
        
       </div>
-      <div className="qboard-form-content">
-        <textarea className="qboard-form-content-rec"
+      <div className="fboard-form-content">
+        <textarea className="fboard-form-content-rec"
                   placeholder="내용을 입력해주세요."
                   required value={fbContent}
                   onChange={(e)=>setFbContent(e.target.value)}
         ></textarea>
       </div>
-      <div className="qboard-form-fileupload">
-        <input type="file" className="qboard-form-subject-rec"
+
+      <div className="fboard-form-fileupload">
+        <input type="file" className="fboard-form-subject-rec"
                 placeholder="첨부 사진을 올려주세요."
-               onChange={onUploadEvent}/>
-        {/*<div className="qboard-form-fileupload-placeho">*/}
+               onChange={onUploadEvent} multiple/>
+        {/*<div className="fboard-form-fileupload-placeho">*/}
         {/*  첨부 사진을 올려주세요.*/}
         {/*</div>*/}
-
-        <div className="qboard-form-fileupload-cnt-tex">
+        <div className="fboard-form-fileupload-cnt-tex">
             <img
-                // className="qboard-form-fileupload-icon"
+                // className="fboard-form-fileupload-icon"
                 alt=""
                 src={require("./assets/qboard_form_fileupload_icon.svg").default}
             />
-          &nbsp;&nbsp;사진 3장이 등록되었습니다.
+          &nbsp;&nbsp;사진 {photoLength}장이 등록되었습니다.
         </div>
+
       </div>
-      <button type='submit' className="qboard-form-btn">
-        <div className="qboard-form-btn-child" />
-        <div className="qboard-form-btn-text">게시글등록</div>
+      <button type='submit' className="fboard-form-btn">
+        <div className="fboard-form-btn-child" />
+        <div className="fboard-form-btn-text">게시글등록</div>
         <img
-          className="qboard-form-btn-icon"
+          className="fboard-form-btn-icon"
           alt=""
           src={require("./assets/qboard_form_btn_icon.svg").default}
         />

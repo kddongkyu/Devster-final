@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style/Resumeform.css";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
@@ -29,8 +29,10 @@ function Resumeform(props) {
     getMemberData(m_idx);
   }, []);
 
+  const fileInput1 = useRef(null);
+  const fileInput2 = useRef(null);
+
   const [resumeDto, setResumeDto] = useState({
-    //r_idx: 1,
     m_idx: m_idx,
     r_self: "",
     r_pos: "",
@@ -40,8 +42,8 @@ function Resumeform(props) {
     r_gradeend: "",
     r_gradecom: "",
     r_sta: "",
-    r_file: "",
-    r_refile: "",
+    r_fileLocal: null,
+    r_refileLocal: null,
     r_status: 1,
     r_ldate: "",
   });
@@ -60,7 +62,21 @@ function Resumeform(props) {
     },
   ]);
 
+  const [resumeLicenseDtoList, setResumeLicenseDtoList] = useState([
+    {
+      // relic_idx: 1,
+      m_idx: m_idx,
+      r_licdate: "",
+      r_licname: "",
+    },
+  ]);
+
   const addCareer = () => {
+    if (resumeCareerDtoList.length >= 3) {
+      alert("최대 3개까지만 가능합니다");
+      return;
+    }
+
     const newCareerList = [
       ...resumeCareerDtoList,
       {
@@ -72,18 +88,57 @@ function Resumeform(props) {
         r_position: "",
       },
     ];
-    console.log(newCareerList); // 이 부분을 추가했습니다.
     setResumeCareerDtoList(newCareerList);
   };
 
-  // const handleChangeCareer = (e) => {
-  //   setResumeCareerDtoList([
-  //     {
-  //       ...resumeCareerDtoList[0],
-  //       [e.target.name]: e.target.value,
-  //     },
-  //   ]);
-  // };
+  const addLicense = () => {
+    if (resumeLicenseDtoList.length >= 3) {
+      alert("최대 3개까지만 가능합니다");
+      return;
+    }
+
+    const newLicenseList = [
+      ...resumeLicenseDtoList,
+      {
+        m_idx: m_idx,
+        r_licdate: "",
+        r_licname: "",
+      },
+    ];
+    setResumeLicenseDtoList(newLicenseList);
+  };
+
+  const removeCareer = (index) => {
+    const newCareerList = resumeCareerDtoList.filter((_, idx) => idx !== index);
+    setResumeCareerDtoList(newCareerList);
+  };
+
+  const removeLicense = (index) => {
+    const newLicenseList = resumeLicenseDtoList.filter(
+      (_, idx) => idx !== index
+    );
+    setResumeLicenseDtoList(newLicenseList);
+  };
+
+  const clearFileInput1 = () => {
+    if (fileInput1.current) {
+      fileInput1.current.value = "";
+    }
+    setResumeDto({
+      ...resumeDto,
+      r_fileLocal: null,
+    });
+  };
+
+  const clearFileInput2 = () => {
+    if (fileInput2.current) {
+      fileInput2.current.value = "";
+    }
+    setResumeDto({
+      ...resumeDto,
+      r_refileLocal: null,
+    });
+  };
 
   const handleChangeCareer = (e, index) => {
     const updatedCareerList = resumeCareerDtoList.map((career, idx) =>
@@ -96,15 +151,6 @@ function Resumeform(props) {
   //   console.log(resumeCareerDtoList);
   // }, [resumeCareerDtoList]);
 
-  const [resumeLicenseDtoList, setResumeLicenseDtoList] = useState([
-    {
-      // relic_idx: 1,
-      m_idx: m_idx,
-      r_licdate: "",
-      r_licname: "",
-    },
-  ]);
-
   const handleChange = (e) => {
     setResumeDto({
       ...resumeDto,
@@ -112,48 +158,34 @@ function Resumeform(props) {
     });
   };
 
-  const handleChangeLic = (e) => {
-    setResumeLicenseDtoList([
-      {
-        ...resumeLicenseDtoList[0],
-        [e.target.name]: e.target.value,
-      },
-    ]);
+  const handleChangeLicense = (e, index) => {
+    const updatedLicenseList = resumeLicenseDtoList.map((license, idx) =>
+      idx === index ? { ...license, [e.target.name]: e.target.value } : license
+    );
+    setResumeLicenseDtoList(updatedLicenseList);
   };
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     let file = e.target.files[0];
-    let formData = new FormData();
-    formData.append("upload", file);
-    let url;
+
+    if (file.type !== "application/pdf") {
+      alert("pdf 파일만 업로드 할 수 있습니다");
+      e.target.value = null;
+      return;
+    }
 
     switch (e.target.name) {
       case "r_file":
-        try {
-          const response = await axiosIns.post("/api/resume/D1/file", formData);
-          url = response.data.url;
-          setResumeDto((prevDto) => ({
-            ...prevDto,
-            resumeFileUrl: url,
-          }));
-        } catch (error) {
-          console.log(error.message);
-        }
+        setResumeDto((prevDto) => ({
+          ...prevDto,
+          r_fileLocal: file,
+        }));
         break;
       case "r_refile":
-        try {
-          const response = await axiosIns.post(
-            "/api/resume/D1/refile",
-            formData
-          );
-          url = response.data.url;
-          setResumeDto((prevDto) => ({
-            ...prevDto,
-            reFileUrl: url,
-          }));
-        } catch (error) {
-          console.log(error.message);
-        }
+        setResumeDto((prevDto) => ({
+          ...prevDto,
+          r_refileLocal: file,
+        }));
         break;
       default:
         break;
@@ -162,6 +194,30 @@ function Resumeform(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let formData = new FormData();
+
+    if (resumeDto.r_fileLocal) {
+      formData.append("upload", resumeDto.r_fileLocal);
+      try {
+        const response = await axiosIns.post("/api/resume/D1/file", formData);
+        let url = response.data.url;
+        resumeDto.r_file = url; // Update the resumeDto with the returned URL
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    if (resumeDto.r_refileLocal) {
+      formData.append("upload", resumeDto.r_refileLocal);
+      try {
+        const response = await axiosIns.post("/api/resume/D1/refile", formData);
+        let url = response.data.url;
+        resumeDto.r_refile = url; // Update the resumeDto with the returned URL
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
 
     const resumeWrapper = {
       resumeDto,
@@ -179,7 +235,15 @@ function Resumeform(props) {
   };
 
   return (
-    <form className="resumeform" onSubmit={handleSubmit}>
+    <form
+      className="resumeform"
+      onSubmit={handleSubmit}
+      style={{
+        height: `${
+          125 + resumeCareerDtoList.length * 9 + resumeLicenseDtoList.length * 4
+        }rem`,
+      }}
+    >
       <div className="resumeform-wrapper">
         <div className="resumeform-header">
           <b className="resumeform-header-name">{member.m_name}</b>
@@ -296,6 +360,15 @@ function Resumeform(props) {
           </div>
           {resumeCareerDtoList.map((career, index) => (
             <div className="resumeform-career-group-02" key={index}>
+              {index !== 0 && (
+                <button
+                  type="button"
+                  onClick={() => removeCareer(index)}
+                  className="resumeform-career-group-02-removeButton"
+                >
+                  삭제
+                </button>
+              )}
               <div className="resumeform-career-group-02-gro">
                 <input
                   className="resumeform-school-entrance-rec"
@@ -344,35 +417,59 @@ function Resumeform(props) {
             </div>
           ))}
         </div>
-        <div className="resumeform-certificate">
+        <div
+          className="resumeform-certificate"
+          style={{ top: `${55 + resumeCareerDtoList.length * 9}rem` }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">자격증</b>
             <img
               className="resume-certificate-plusicon"
               alt=""
               src={require("./assets/resume_certificate_plusicon.svg").default}
+              onClick={addLicense}
             />
           </div>
-          <div className="resumeform-certificate-box">
-            <div className="resumeform-certificate-box-dat">
+          {resumeLicenseDtoList.map((license, index) => (
+            <div className="resumeform-certificate-box" key={index}>
+              {index !== 0 && (
+                <button
+                  type="button"
+                  onClick={() => removeLicense(index)}
+                  className="resumeform-career-group-02-removeButton"
+                >
+                  삭제
+                </button>
+              )}
+              <div className="resumeform-certificate-box-dat">
+                <input
+                  className="resumeform-school-entrance-rec"
+                  type="date"
+                  name="r_licdate"
+                  value={license.r_licdate}
+                  onChange={(e) => handleChangeLicense(e, index)}
+                />
+              </div>
               <input
-                className="resumeform-school-entrance-rec"
-                type="date"
-                name="r_licdate"
-                value={resumeLicenseDtoList.r_licdate}
-                onChange={handleChangeLic}
+                className="resumeform-certificate-box-inp"
+                type="text"
+                name="r_licname"
+                value={license.r_licname}
+                onChange={(e) => handleChangeLicense(e, index)}
               />
             </div>
-            <input
-              className="resumeform-certificate-box-inp"
-              type="text"
-              name="r_licname"
-              value={resumeLicenseDtoList.r_licname}
-              onChange={handleChangeLic}
-            />
-          </div>
+          ))}
         </div>
-        <div className="resumeform-content">
+        <div
+          className="resumeform-content"
+          style={{
+            top: `${
+              65 +
+              resumeCareerDtoList.length * 9 +
+              resumeLicenseDtoList.length * 4
+            }rem`,
+          }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">간단 자기소개</b>
           </div>
@@ -386,7 +483,16 @@ function Resumeform(props) {
             />
           </div>
         </div>
-        <div className="resumeform-fileupload">
+        <div
+          className="resumeform-fileupload"
+          style={{
+            top: `${
+              94 +
+              resumeCareerDtoList.length * 9 +
+              resumeLicenseDtoList.length * 4
+            }rem`,
+          }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`첨부파일 업로드  `}</span>
@@ -395,33 +501,65 @@ function Resumeform(props) {
           </div>
           <div className="resumeform-job-box">
             {/* <div className="resumeform-job-box-rec" /> */}
+
             <input
+              ref={fileInput1}
               className="resumeform-job-box-rec"
               type="file"
               name="r_file"
-              // value={resumeDto.r_file}
               onChange={handleFileChange}
             />
+            <button
+              type="button"
+              onClick={clearFileInput1}
+              className="clearFileInput"
+            >
+              취소
+            </button>
           </div>
         </div>
-        <div className="resumeform-resumefileupload">
+        <div
+          className="resumeform-resumefileupload"
+          style={{
+            top: `${
+              103 +
+              resumeCareerDtoList.length * 9 +
+              resumeLicenseDtoList.length * 4
+            }rem`,
+          }}
+        >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">이력서 업로드</b>
           </div>
           <div className="resumeform-job-box">
             <input
+              ref={fileInput2}
               className="resumeform-job-box-rec"
               type="file"
               name="r_refile"
-              // value={resumeDto.r_refile}
               onChange={handleFileChange}
             />
+            <button
+              type="button"
+              onClick={clearFileInput2}
+              className="clearFileInput"
+            >
+              취소
+            </button>
           </div>
         </div>
       </div>
       <button
         type="submit"
-        style={{ position: "absolute", top: "126rem", right: "3rem" }}
+        style={{
+          position: "absolute",
+          top: `${
+            122 +
+            resumeCareerDtoList.length * 9 +
+            resumeLicenseDtoList.length * 4
+          }rem`,
+          right: "3rem",
+        }}
       >
         Submit
       </button>

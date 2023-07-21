@@ -127,3 +127,72 @@
     font-family: "Noto Sans KR";
   }
   
+  .email-input-box-error{
+    position: absolute;
+    width: 76.5%;
+    top: 0;
+    right: 8rem;
+    left: 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 4.7rem;
+    outline: none;
+    border: 2px solid red !important;
+  }
+
+  .withdrawal-signup-guest-email-reg-input{
+    position: absolute;
+    /* width: calc(100% - 218px); */
+    width: 76.5%;
+    top: 59.9rem;
+    right: 0;
+    left: 0;
+    height: 3rem;
+    color: #626567;
+  }
+
+  .withdrawal-signup-guest-email-reg-timelef {
+    position: absolute;
+    top: 63rem;
+    right: 18rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: #721ea6;
+    text-align: right;
+    display: inline-block;
+    width: 13rem;
+}
+
+.withdrawal-signup-guest-text-color-error {
+  color: red;
+}
+
+.withdrawal-signup-guest-email-inputbox2 {
+  border-radius: 0 5px 5px 0;
+  background-color: #f5eff9;
+  border: 1px solid #d2d2d2;
+  width: 6rem;
+}
+
+.withdrawal-signup-guest-email-reg-send-te1 {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.7rem;
+  letter-spacing: 0.01em;
+  display: inline-block;
+  width: 4.6rem;
+}
+
+.withrawal-button-finish {
+  position: absolute;
+  /* width: calc(100% - 218px); */
+  width: 20.5%;
+  top: 59.9rem;
+  right: 0;
+  /* left: 0; */
+  height: 4.7rem;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #d3d4d8;
+  box-sizing: border-box;
+}

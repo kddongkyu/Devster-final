@@ -238,6 +238,18 @@ public class AcademyCommentService {
     }
 
 
+    public boolean isAlreadyAddGoodRp(int ABcidx, int MIdx){
+        AcademyCommentLikeEntity academyCommentLikeEntity=findOrCreateABoardCommentLike(ABcidx,MIdx);
+        return academyCommentLikeEntity.getLikestatus()==1;
+    }
+   
+    public boolean isAlreadyAddBadRp(int ABcidx, int MIdx){
+        AcademyCommentLikeEntity academyCommentLikeEntity=findOrCreateABoardCommentLike(ABcidx, MIdx);
+        return academyCommentLikeEntity.getLikestatus()==2;
+    }
+
+
+
 }
 
 

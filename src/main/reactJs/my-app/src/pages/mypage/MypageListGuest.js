@@ -78,7 +78,7 @@ function MypageListGuest(props) {
       </div>
       <div className="menu-notice">
         <NavLink
-          to={"/notice"}
+          to={"/mypage/notice"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;

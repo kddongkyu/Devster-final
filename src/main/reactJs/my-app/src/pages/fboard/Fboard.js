@@ -14,7 +14,9 @@ function Fboard(props) {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const [contentCount, setContentCount] = useState(15); // 텍스트의 초기 개수
+    const [contentCount, setContentCount] = useState(15);
+    const [subjectCount, setsubjectCount] = useState(10);
+
 
     const handleResize = () => {
         // 화면 너비에 따라 텍스트 개수를 업데이트
@@ -31,6 +33,21 @@ function Fboard(props) {
             setContentCount(15);
         }
     };
+    const handleSubjectResize = () => {
+        // 화면 너비에 따라 텍스트 개수를 업데이트
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 1000) {
+            setsubjectCount(50);
+        } else if (screenWidth >= 768) {
+            setsubjectCount(35);
+        } else if (screenWidth >= 600) {
+            setsubjectCount(25);
+        } else if (screenWidth >= 480) {
+            setsubjectCount(20);
+        } else {
+            setsubjectCount(10);
+        }
+    };
 
     useEffect(() => {
         // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
@@ -42,6 +59,20 @@ function Fboard(props) {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+    useEffect(() => {
+        // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
+        window.addEventListener('resize', handleSubjectResize);
+        handleSubjectResize(); // 초기 렌더링 시 텍스트 개수 설정
+
+        return () => {
+            // 컴포넌트가 언마운트될 때 리사이즈 이벤트 핸들러 제거
+            window.removeEventListener('resize', handleSubjectResize);
+        };
+    }, []);
+
+    const compareValues = (value1, value2) => {
+        return value1.length > value2;
+    };
 
     useEffect(() => {
         fetchFboards(currentPage);
@@ -122,6 +153,17 @@ function Fboard(props) {
         return formattedDateWithoutTime;
     };
 
+    const setPhotoUrl = (value) => {
+        if (value == null) {
+            return require("./assets/logo-img.svg").default;
+        }
+        const photoUrl = process.env.REACT_APP_PHOTO+"fboard/";
+        const firstCommaIndex = value.indexOf(",");
+        const parsedPhoto = value.substring(0, firstCommaIndex);
+        const srcUrl = photoUrl + parsedPhoto;
+
+        return srcUrl;
+    }
 
     return (
         <div className="fboard">
@@ -270,57 +312,68 @@ function Fboard(props) {
             </div>
 
             <div className="fboard_list">
-                {freeBoardList && freeBoardList.map((fboard) => (
-                    <div key={fboard.fboard.fb_idx} className="fboard-preview">
-                        <div className="fboard-preview-box"/>
-                        <div className="fboard-preview-img-profile">
-                            <img alt=""
-                            src={fboard.mPhoto}/>
-                        </div>
-                        <div className="fboard-preview-type">
-                            <b className="fboard-preview-type-text">자유게시판</b>
-                            <div className="fboard-preview-type-date">{timeForToday(fboard.fboard.fb_writeday)}</div>
-                        </div>
-                        <div className="fboard-preview-id">
-                            <div className="fboard-preview-type-text">{fboard.mNicname}</div>
-                        </div>
-                        <NavLink to={`/fboard/detail/${fboard.fboard.fb_idx}/${currentPage}`}>
-                        <b className="fboard-preview-subject">{fboard.fboard.fb_subject}</b>
-                        <div className="fboard-preview-contents">
-                            {(fboard.fboard.fb_content).slice(0, contentCount)}
-                        </div>
-                            <div className="fboard-preview-img-preview">
+                {freeBoardList && freeBoardList.map((fboard) => {
+                    return (
+                        <div key={fboard.fboard.fb_idx} className="fboard-preview">
+                            <div className="fboard-preview-box"/>
+                            <div className="fboard-preview-img-profile">
                                 <img alt=""
-                                src={fboard.fboard.fb_photo}/>
+                                     src={fboard.mPhoto}/>
                             </div>
-                        </NavLink>
+                            <div className="fboard-preview-type">
+                                <b className="fboard-preview-type-text">자유게시판</b>
+                                <div className="fboard-preview-type-date">{timeForToday(fboard.fboard.fb_writeday)}</div>
+                            </div>
+                            <div className="fboard-preview-id">
+                                <div className="fboard-preview-type-text">{fboard.mNicname}</div>
+                            </div>
+                            <NavLink to={`/fboard/detail/${fboard.fboard.fb_idx}/${currentPage}`}>
+                                <b className="fboard-preview-subject">
+                                    {compareValues(String(fboard.fboard.fb_subject), subjectCount)
+                                        ? fboard.fboard.fb_subject.slice(0, subjectCount) + "···"
+                                        : fboard.fboard.fb_subject}
+                                </b>
+                                <div className="fboard-preview-contents">
+                                    {compareValues(String(fboard.fboard.fb_content), contentCount)
+                                        ? fboard.fboard.fb_content.slice(0, contentCount) + "···"
+                                        : fboard.fboard.fb_content}
+                                    {/*{(fboard.fboard.fb_content).slice(0, contentCount)}*/}
+                                </div>
+                                <div>
+                                    <img alt=""
+                                         src={setPhotoUrl(fboard.fboard.fb_photo)}
+                                         className="fboard-preview-img-preview"/>
+                                </div>
+                            </NavLink>
 
-                        <div className="fboard-preview-likes">
-                            <div className="fboard-preview-likes-text">{fboard.fboard.fb_like - fboard.fboard.fb_dislike}</div>
-                            <img
-                                className="fboard-preview-likes-icon"
-                                alt=""
-                                src={require("./assets/board_preview_likes_icon.svg").default}
-                            />
+                            <div className="fboard-preview-likes">
+                                <div className="fboard-preview-likes-text">{fboard.fboard.fb_like - fboard.fboard.fb_dislike}</div>
+                                <img
+                                    className="fboard-preview-likes-icon"
+                                    alt=""
+                                    src={require("./assets/board_preview_likes_icon.svg").default}
+                                />
+                            </div>
+                            <div className="fboard-preview-comments">
+                                <div className="fboard-preview-likes-text">99</div>
+                                <img
+                                    className="fboard-preview-comments-icon"
+                                    alt=""
+                                    src={require("./assets/board_preview_comments_icon.svg").default}
+                                />
+                            </div>
+                            <div className="fboard-preview-views">
+                                <div className="fboard-preview-views-text">{fboard.fboard.fb_readcount}</div>
+                                <img
+                                    className="fboard-preview-views-icon"
+                                    alt=""
+                                    src={require("./assets/board_preview_views_icon.svg").default}
+                                />
+                            </div>
                         </div>
-                        <div className="fboard-preview-comments">
-                            <div className="fboard-preview-likes-text">99</div>
-                            <img
-                                className="fboard-preview-comments-icon"
-                                alt=""
-                                src={require("./assets/board_preview_comments_icon.svg").default}
-                            />
-                        </div>
-                        <div className="fboard-preview-views">
-                            <div className="fboard-preview-views-text">{fboard.fboard.fb_readcount}</div>
-                            <img
-                                className="fboard-preview-views-icon"
-                                alt=""
-                                src={require("./assets/board_preview_views_icon.svg").default}
-                            />
-                        </div>
-                    </div>
-                ))}
+                    )
+                    }
+                 )}
             </div>
 
             <div className="fboard-pages2">

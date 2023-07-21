@@ -17,9 +17,9 @@ function MyResume(props) {
   const decodedToken = jwt_decode(localStorage.accessToken);
   const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${member.m_photo}`;
+  const FileUrl = process.env.REACT_APP_RESUMEFILEURL;
+  const REFileUrl = process.env.REACT_APP_RESUMEREFILEURL;
   const m_idx = decodedToken.idx;
-
-  //console.log(m_idx);
 
   const [isLoadingMemberData, setIsLoadingMemberData] = useState(true); // 초기값은 true
 
@@ -63,7 +63,7 @@ function MyResume(props) {
   }, []);
 
   const deleteResume = async () => {
-    const url = `/api/resume/D1/${m_idx}`;
+    const url = `/api/resume/D1`;
 
     try {
       const response = await axiosIns.delete(url);
@@ -77,7 +77,10 @@ function MyResume(props) {
   };
 
   return (
-    <div className="resume-none">
+    <div
+      className="resume-none"
+      style={{ height: resume ? "170rem" : "75rem" }}
+    >
       <div className="content-resume">
         <b className="text-content-resume">내 이력서</b>
 
@@ -182,14 +185,36 @@ function MyResume(props) {
                 {resume.resumeDto.r_self}
               </span>
             </div>
-            <div className="resume_info_box_08">
-              <div className="resume_info_box_title">첨부파일 업로드</div>
-              <span className="resume_info_box_content">
-                {resume.resumeDto.r_file}
-                {/* <br />
-                {resume.resumeDto.r_reffile} */}
-              </span>
-            </div>
+            {resume && resume.resumeDto && resume.resumeDto.r_file && (
+              <div className="resume_info_box_08">
+                <div className="resume_info_box_title">첨부파일 업로드</div>
+                <span className="resume_info_box_content">
+                  <a
+                    href={`${FileUrl}${resume.resumeDto.r_file}`}
+                    download={`${member.m_name} 첨부파일.pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    첨부파일 열기
+                  </a>
+                </span>
+              </div>
+            )}
+            {resume && resume.resumeDto && resume.resumeDto.r_reffile && (
+              <div className="resume_info_box_09">
+                <div className="resume_info_box_title">이력서 파일 업로드</div>
+                <span className="resume_info_box_content">
+                  <a
+                    href={`${REFileUrl}${resume.resumeDto.r_reffile}`}
+                    download={`${member.m_name} 이력서.pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    이력서 파일 열기
+                  </a>
+                </span>
+              </div>
+            )}
             <button type="button" onClick={deleteResume}>
               삭제
             </button>
