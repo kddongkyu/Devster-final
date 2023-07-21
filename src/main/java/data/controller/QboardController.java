@@ -1,8 +1,8 @@
 package data.controller;
 
-import data.dto.QboardDto;
-import data.dto.QboardDetailDto;
-import data.dto.QboardResponseDto;
+import data.dto.qboard.QboardDto;
+import data.dto.qboard.QboardDetailDto;
+import data.dto.qboard.QboardResponseDto;
 import data.service.QboardService;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.http.HttpStatus;

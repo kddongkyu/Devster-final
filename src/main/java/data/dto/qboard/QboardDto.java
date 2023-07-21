@@ -1,4 +1,4 @@
-package data.dto;
+package data.dto.qboard;
 
 import data.entity.QboardEntity;
 import lombok.AllArgsConstructor;

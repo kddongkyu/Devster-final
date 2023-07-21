@@ -1,6 +1,6 @@
 package data.entity;
 
-import data.dto.QboardDto;
+import data.dto.qboard.QboardDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,13 +1,11 @@
 package data.service;
 
-import data.dto.QboardDetailDto;
-import data.dto.QboardDto;
-import data.dto.QboardResponseDto;
+import data.dto.qboard.QboardDetailDto;
+import data.dto.qboard.QboardDto;
+import data.dto.qboard.QboardResponseDto;
 import data.entity.MemberEntity;
 import data.entity.QboardEntity;
-import data.entity.QboardLikeEntity;
 import data.repository.MemberRepository;
-import data.repository.board.qboard.QboardLikeRespository;
 import data.repository.board.qboard.QboardRepository;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
@@ -29,13 +27,11 @@ import java.util.stream.Collectors;
 public class QboardService {
 
     private final QboardRepository qboardRepository;
-    private final QboardLikeRespository qboardLikeRespository;
     private final MemberRepository memberRepository;
     private final NcpObjectStorageService storageService;
 
-    public QboardService(QboardRepository qboardRepository, QboardLikeRespository qboardLikeRespository, MemberRepository memberRepository, NcpObjectStorageService storageService) {
+    public QboardService(QboardRepository qboardRepository, MemberRepository memberRepository, NcpObjectStorageService storageService) {
         this.qboardRepository = qboardRepository;
-        this.qboardLikeRespository = qboardLikeRespository;
         this.memberRepository = memberRepository;
         this.storageService = storageService;
     }

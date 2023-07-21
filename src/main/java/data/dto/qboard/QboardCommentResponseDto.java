@@ -1,4 +1,4 @@
-package data.dto;
+package data.dto.qboard;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class QboardResponseDto {
-    private List<QboardDetailDto> qboardDetailDtoList;
+public class QboardCommentResponseDto {
+    private List<QboardCommentDetailDto> qboardCommentDetailDtoList;
     private int totalCount;
-    private int totalPages;
-    private int currentPage;
-    private boolean hasNext;
 }
