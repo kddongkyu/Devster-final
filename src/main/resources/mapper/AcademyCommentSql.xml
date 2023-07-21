@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.AcademyCommentMapper">
+    <select id="getAllCommentList" resultType="AcademyCommentDto" parameterType="int">
+        select * from academycomment where ab_idx=#{ab_idx} order by abc_idx desc
+    </select>
+    <select id="getTotalComment" parameterType="int" resultType="int">
+        select count(*) from academycomment where ab_idx=#{ab_idx}
+    </select>
+    <select id="selectPhotoOfAbc_idx" parameterType="int" resultType="String">
+        SELECT m.m_photo
+        FROM academycomment a
+                 JOIN member m ON a.m_idx = m.m_idx
+        WHERE a.abc_idx = #{abc_idx}
+    </select>
+    <select id="selectNickNameOfAbc_idx" parameterType="int" resultType="String">
+        SELECT m.m_nickname
+        FROM academycomment a
+                 JOIN member m ON a.m_idx = m.m_idx
+        WHERE a.abc_idx = #{abc_idx}
+    </select>
+    <select id="countReply" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM academycomment WHERE abc_idx=#{abc_ref}
+    </select>
+    <!-- <select id="getAcademyComment" resultType="AcademyCommentDto" parameterType="int">
+        select * from academycomment where abc_idx=#{abc_idx}
+    </select> -->
+    <select id="getAllReplyComment" resultType="AcademyCommentDto" parameterType="int">
+        select * from academycomment where abc_ref=#{abc_idx}
+    </select>
+
+
+</mapper>

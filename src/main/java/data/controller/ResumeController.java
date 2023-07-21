@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -39,6 +41,11 @@ public class ResumeController {
         return new ResponseEntity<String>(resumeService.uploadReFile(upload,session), HttpStatus.OK);
     }
 
+    @GetMapping("/D1")
+    public ResponseEntity<List<ResumeWrapper>> getAllResume() {
+        return new ResponseEntity<List<ResumeWrapper>>(resumeService.getAllResume(), HttpStatus.OK);
+    }
+
     @GetMapping("/D1/{m_idx}")
     public ResponseEntity<ResumeWrapper> getOneResume(@PathVariable int m_idx) {
         ResumeWrapper resumeWrapper = resumeService.getOneResume(m_idx);
@@ -59,10 +66,10 @@ public class ResumeController {
         return new ResponseEntity<String>(resumeService.updateResume(resumeWrapper.getResumeDto(),resumeWrapper.getResumeCareerDtoList(), resumeWrapper.getResumeLicenseDtoList(),session), HttpStatus.OK);
     }
 
-    @PostMapping("/D1/translate")
-    public ResponseEntity<String> translate(@RequestBody JsonNode jsonNode) throws IOException {
-        return new ResponseEntity<String>(resumeService.translateResume(jsonNode.get("text").asText()),HttpStatus.OK);
-    }
+     @PostMapping("/D1/translate")
+     public ResponseEntity<String> translate(@RequestBody JsonNode jsonNode) throws IOException {
+         return new ResponseEntity<String>(resumeService.translateResume(jsonNode.get("text").asText()),HttpStatus.OK);
+     }
 
 
 }
