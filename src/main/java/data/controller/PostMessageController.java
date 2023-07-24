@@ -3,6 +3,8 @@ package data.controller;
 import data.dto.PostMessage.PostMessageDetailDto;
 import data.dto.PostMessage.PostMessageDto;
 import data.service.PostMessageService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,8 @@ public class PostMessageController {
     }
 
     @GetMapping("/D1")
-    public ResponseEntity<List<PostMessageDetailDto>> getAllPostMessage(HttpServletRequest request) {
-        return new ResponseEntity<List<PostMessageDetailDto>>(postMessageService.getAllPostMessages(request), HttpStatus.OK);
+    public ResponseEntity<List<PostMessageDetailDto>> getAllPostMessage(HttpServletRequest request,Pageable pageable) {
+        return new ResponseEntity<List<PostMessageDetailDto>>(postMessageService.getAllPostMessages(request,pageable), HttpStatus.OK);
     }
     @GetMapping("/D1/{idx}")
     public ResponseEntity<PostMessageDetailDto> getOnePostMessage(@PathVariable int idx) {
@@ -35,8 +37,8 @@ public class PostMessageController {
     }
 
     @PostMapping("/D1")
-    public ResponseEntity<String> sendPostMessage(@RequestBody PostMessageDto dto) {
-        return new ResponseEntity<String>(postMessageService.sendPostMessage(dto), HttpStatus.OK);
+    public ResponseEntity<String> sendPostMessage(@RequestBody PostMessageDto dto,HttpServletRequest request) {
+        return new ResponseEntity<String>(postMessageService.sendPostMessage(dto,request), HttpStatus.OK);
     }
 
     @DeleteMapping("/D1")

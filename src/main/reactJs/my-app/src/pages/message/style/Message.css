@@ -1,0 +1,167 @@
+.textmsg-searchbar-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 30px;
+    background-color: #fff;
+    border: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    height: 5rem;
+}
+.textmsg-searchbar-search-text {
+    position: absolute;
+    top: 1.3rem;
+    left: 4.7rem;
+    letter-spacing: -0.24px;
+}
+.textmsg-searchbar-search-icon {
+    position: absolute;
+    top: 1.71rem;
+    left: 2.41rem;
+    width: 1.58rem;
+    height: 1.58rem;
+}
+.textmsg-searchbar-sort-icon {
+    position: absolute;
+    top: 1.73rem;
+    right: 2.42rem;
+    width: 1.65rem;
+    height: 1.55rem;
+}
+.textmsg-searchbar {
+    position: absolute;
+    width: calc(100% - 45px);
+    top: 7.6rem;
+    right: 2.3rem;
+    left: 2.2rem;
+    height: 5rem;
+}
+.textmsg-preview-box {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    box-sizing: border-box;
+    height: 9rem;
+}
+
+.textmsg-preview-img {
+    position: absolute;
+    top: 1.8rem;
+    left: 0.3rem;
+    border-radius: 15px;
+    background-color: #f6f6f8;
+    border: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    width: 5.5rem;
+    height: 5.5rem;
+}
+.textmsg-preview-subject {
+    position: absolute;
+    top: 3.1rem;
+    left: 6.6rem;
+    font-size: 2rem;
+    letter-spacing: -0.24px;
+}
+.textmsg-preview-date,
+.textmsg-preview-id {
+    position: absolute;
+    top: 1.6rem;
+    left: 6.6rem;
+    letter-spacing: -0.24px;
+    color: #626567;
+}
+.textmsg-preview-date {
+    top: 5.7rem;
+    color: #95969a;
+}
+
+.textmsg-preview {
+    position: relative;
+    width: calc(100% - 44px);
+    margin-bottom: 1rem;
+    margin-left: 2.2rem; /* 왼쪽 패딩을 추가합니다. */
+    height: 9rem;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.textmsg-preview-border {
+    border-bottom: 1px solid rgb(167, 165, 165);
+}
+
+.moblie-textmsg {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: auto; /* 높이를 자동으로 설정합니다. */
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.6rem;
+    color: #bdc0c4;
+    font-family: "Noto Sans KR";
+    padding-top: 13.8rem; /* 상단 패딩을 추가하여 최초의 컴포넌트가 헤더와 검색창 아래에 위치하도록 합니다. */
+}
+
+.detail-outside {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: auto; /* 높이를 자동으로 설정합니다. */
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.6rem;
+    /*color: #bdc0c4;*/
+    font-family: "Noto Sans KR";
+    padding-top: 6rem; /* 상단 패딩을 추가하여 최초의 컴포넌트가 헤더와 검색창 아래에 위치하도록 합니다. */
+}
+
+.textmsg-detail-box {
+    margin-left: 2.2rem; /* 왼쪽 패딩을 추가합니다. */
+    margin-right: 2.2rem; /* 오른쪽 패딩을 추가합니다. */
+    height: auto; /* 요소의 높이가 자동으로 조정되게 합니다. */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* 버튼들 사이에 간격을 추가합니다. */
+    margin-top: 2rem; /* 버튼들 위에 여백을 추가합니다. */
+}
+
+.delete-button, .list-button {
+    padding: 0.5rem 1rem; /* 버튼 내부에 여백을 추가합니다. */
+    background-color: white; /* 버튼의 배경색을 설정합니다. */
+    color: #721ea6; /* 버튼의 텍스트 색을 설정합니다. */
+    border: 1px solid #721ea6; /* 버튼의 테두리를 제거합니다. */
+    border-radius: 0.75rem; /* 버튼의 모서리를 둥글게 만듭니다. */
+    cursor: pointer; /* 마우스를 버튼 위에 올렸을 때 포인터로 바꿉니다. */
+}
+
+.form-outside {
+    position: relative;
+    background-color: #e3e3e5;
+    text-align: center;
+    width: 100%;
+    height: auto; /* 높이를 자동으로 설정합니다. */
+    overflow: hidden;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: "Noto Sans KR";
+    margin-top: 6.5rem; /* 상단 패딩을 추가하여 최초의 컴포넌트가 헤더와 검색창 아래에 위치하도록 합니다. */
+}
+
+.textmsg-preview-zero {
+    position: relative;
+    width: calc(100% - 44px);
+    margin-bottom: 1rem;
+    margin-left: 2.2rem; /* 왼쪽 패딩을 추가합니다. */
+    height: 9rem;
+    font-size: 3rem;
+    color: #000;
+}
+
+
+
+

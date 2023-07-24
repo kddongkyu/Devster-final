@@ -33,6 +33,9 @@ import {
   Reviewdetail,
 } from "../pages/review";
 import JwtTest from "../pages/test/JwtTest";
+import MessageList from "../pages/message/MessageList";
+import MessageDetail from "../pages/message/MessageDetail";
+import MessageForm from "../pages/message/MessageForm";
 
 function RouteMain(props) {
   const location = useLocation();
@@ -83,6 +86,16 @@ function RouteMain(props) {
           <Route path="/notice/admin" element={<NoticeAdmin />} />
           <Route path="/member/approval" element={<MemberSignupApproval />} />
         </Route>
+
+        <Route>
+          <Route path="/message" element={<MessageList/>}/>
+        </Route>
+        <Route
+            path="/message/detail/:mes_idx"
+            element={<MessageDetail />}
+        />
+        <Route path="/message/form" element={<MessageForm />} />
+
 
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
