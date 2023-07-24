@@ -1,6 +1,6 @@
 server:
   port: 443
-  port-html : 80
+  port-html: 80
 
   ssl:
     key-store: classpath:keystore.p12
@@ -27,7 +27,7 @@ spring:
     include: oauth
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: ANT_PATH_MATCHER
 
 logging:
   level:
@@ -60,9 +60,9 @@ naver:
     client_secret: Ad6GvUB4CSZS0ilyxUo9tUGWN7ZXQSBb8dp5gyf0
   sens:
     service_id: ncp:sms:kr:305197781446:devster-sms
-    accessKey : tDdcJbDAJB2SiRYiC0vD
-    secretKey : AxkRbXwgsDv4Dl5ypWleAdSSOLZ8SDFh8iLUQxtY
-    number : "01044854249"
+    accessKey: tDdcJbDAJB2SiRYiC0vD
+    secretKey: AxkRbXwgsDv4Dl5ypWleAdSSOLZ8SDFh8iLUQxtY
+    number: "01044854249"
 
 kakao:
   client_id: 168ba1a4e0e55db8af46e892ae6c7b82

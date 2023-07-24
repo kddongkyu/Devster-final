@@ -86,7 +86,7 @@ public class HireBoardController {
     @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedHboard(
         @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "5") int size,
+        @RequestParam(defaultValue = "10") int size,
         @RequestParam(required = false) String keyword){
             return new ResponseEntity<>(hireBoardService.getPagedHboard(page,size,keyword),HttpStatus.OK);
         }

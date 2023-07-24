@@ -98,7 +98,7 @@ public class HireBoardService {
                 .collect(Collectors.toList());
 
         Map<String, Object> response = new HashMap<>();
-        response.put("reviews", hiresWithCompanyInfo);
+        response.put("hireBoardList", hiresWithCompanyInfo);
         response.put("totalElements", result.getTotalElements());
         response.put("totalPages", result.getTotalPages());
         response.put("currentPage", result.getNumber() + 1);
