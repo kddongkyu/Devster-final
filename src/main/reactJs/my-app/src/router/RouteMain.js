@@ -36,6 +36,7 @@ import JwtTest from "../pages/test/JwtTest";
 import MessageList from "../pages/message/MessageList";
 import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
+import QboardDetail from "../pages/qboard/QboardDetail";
 
 function RouteMain(props) {
   const location = useLocation();
@@ -70,6 +71,10 @@ function RouteMain(props) {
           path="/fboard/detail/:fb_idx/:currentPage"
           element={<FboardDetail />}
         />
+        <Route
+          path="/qboard/detail/:qb_idx/:currentPage"
+          element={<QboardDetail />}
+        />
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
         <Route
@@ -94,7 +99,7 @@ function RouteMain(props) {
             path="/message/detail/:mes_idx"
             element={<MessageDetail />}
         />
-        <Route path="/message/form" element={<MessageForm />} />
+        <Route path="/message/form/:recv_nick" element={<MessageForm />} />
 
 
         <Route>

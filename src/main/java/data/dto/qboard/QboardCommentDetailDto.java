@@ -14,5 +14,5 @@ public class QboardCommentDetailDto {
     private String photo;
     private String nickname;
     private int replyCount;
-    private List<QboardCommentDto> replyList;
+    private List<QboardCommentDetailDto> replyList;
 }

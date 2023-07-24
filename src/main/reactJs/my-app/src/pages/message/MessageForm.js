@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
 import axiosIns from "../../api/JwtConfig";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import './style/MessageForm.css'
 
 function MessageForm(props) {
 
     const [subject,setSubject] = useState(null);
     const [content,setContent] = useState(null);
+    const {recv_nick} = useParams();
     const navi=useNavigate();
 
     const onSubmitEvent = (e) => {
         e.preventDefault();
 
         const dto = {
-            // recv_nick: props.nickname,
-            recv_nick: "ae",
+            recv_nick: recv_nick,
             subject: subject,
             content: content
         };

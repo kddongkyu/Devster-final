@@ -24,7 +24,7 @@ public class QboardCommentService {
     }
 
     public QboardCommentResponseDto getAllCommentList(int qb_idx){
-        List<QboardCommentEntity> qboardEntityList = qboardCommentRespository.findAllByQBidxAndQBcrefEquals(qb_idx,0);
+        List<QboardCommentEntity> qboardEntityList = qboardCommentRespository.findAllByQBidxAndQBcrefEqualsOrderByQBcwritedayDesc(qb_idx,0);
         log.info(qb_idx + "번 게시글 댓글 리스트 가져오기 완료");
         List<QboardCommentDetailDto> qboardCommentDetailDtoList = new ArrayList<>();
         int totalCount = qboardCommentRespository.countAllByQBidx(qb_idx);
@@ -45,10 +45,16 @@ public class QboardCommentService {
             dto.setNickname(memberInfo.getMNickname());
             dto.setReplyCount(qboardCommentRespository.countAllByQBcref(entity.getQBcidx()));
             log.info("작성자 정보 입력완료");
-            List<QboardCommentEntity> replyEntityList = qboardCommentRespository.findAllByQBcref(entity.getQBcidx());
-            List<QboardCommentDto> replyDtoList = new ArrayList<>();
+            List<QboardCommentEntity> replyEntityList = qboardCommentRespository.findAllByQBcrefOrderByQBcwritedayDesc(entity.getQBcidx());
+            List<QboardCommentDetailDto> replyDtoList = new ArrayList<>();
             for(QboardCommentEntity entity1 : replyEntityList) {
-                replyDtoList.add(QboardCommentDto.toQboardCommentDto(entity1));
+                QboardCommentDetailDto dto1 = new QboardCommentDetailDto();
+                dto1.setQboardCommentDto((QboardCommentDto.toQboardCommentDto(entity1)));
+
+                MemberEntity memberInfoEntity2 = memberRepository.findById(entity1.getMIdx()).get();
+                dto1.setPhoto(memberInfoEntity2.getMPhoto());
+                dto1.setNickname(memberInfoEntity2.getMNickname());
+                replyDtoList.add(dto1);
             }
             log.info("대댓글 정보 가져오기 완료");
             dto.setReplyList(replyDtoList);
