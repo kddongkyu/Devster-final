@@ -1,0 +1,16 @@
+.review-detail-commnets-hide {
+    position: relative;
+    height: auto;
+    width: 60rem;
+}
+
+.review-detail-commnets-hide-co {
+    /* 원하는 버튼 스타일 지정 */
+}
+
+.review-detail-commnets-form {
+    position: absolute;
+    top: 100%;  /* 버튼 바로 아래 위치 */
+    left: 0;
+    /* 필요한 경우 폼 스타일 지정 */
+}

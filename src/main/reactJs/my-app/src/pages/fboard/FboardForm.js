@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 function FboardForm (props)  {
 
     const [fbSubject,setFbSubject]=useState('');
-    const [fbPhoto,setFbPhoto]=useState('');
+    //const [fbPhoto,setFbPhoto]=useState('');
     const [fbContent,setFbContent]=useState('');
     const [photoLength, setPhotoLength]=useState(0);
     const navi=useNavigate();

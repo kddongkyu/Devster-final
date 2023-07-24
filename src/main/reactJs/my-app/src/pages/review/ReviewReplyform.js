@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
-import './style/Reviewdetail.css';
+import './style/replyform.css'
+
 import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
-function Reviewcommentform({rb_idx,currentPage}) {
+
+
+function ReviewReplyform({rbc_idx,rb_idx}) {
+
     const [reviewcomment,setReviewcomment]=useState('');
     const navi=useNavigate();
 
@@ -19,7 +23,8 @@ function Reviewcommentform({rb_idx,currentPage}) {
         const dto = {
             rbc_content:reviewcomment,
             m_idx:de.idx,
-            rb_idx:rb_idx
+            rb_idx:rb_idx,
+            rbc_ref:rbc_idx
         };
 //console.log(dto)
         axiosIns.post("/api/review/D1/comment", dto)
@@ -34,8 +39,6 @@ function Reviewcommentform({rb_idx,currentPage}) {
             });
     }
 
-
-
     return (
         <div>
             <form className="review-detail-commnets-form" onSubmit={onSubmitEvent}>
@@ -46,10 +49,10 @@ function Reviewcommentform({rb_idx,currentPage}) {
                     src=""
                 />
                 <textarea className="review-detail-commnets-form-te"
-                placeholder="내용을 입력해주세요"
-                required value={reviewcomment}
+                          placeholder="내용을 입력해주세요"
+                          required value={reviewcomment}
                           onChange={(e)=>setReviewcomment(e.target.value)}
-                         >
+                >
                 </textarea>
                 <button  type='submit' className="review-detail-commnets-form-su">
                     <div className="review-detail-commnets-form-su1" />
@@ -60,4 +63,4 @@ function Reviewcommentform({rb_idx,currentPage}) {
     );
 }
 
-export default Reviewcommentform;
+export default ReviewReplyform;

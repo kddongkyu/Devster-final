@@ -25,7 +25,7 @@ import {
 } from "../pages/fboard";
 import { Qboard, QboardForm } from "../pages/qboard";
 import { Hboard, HboardForm } from "../pages/hboard";
-import { Aboard, AboardForm } from "../pages/aboard";
+import {Aboard, Aboarddtail, AboardForm, Aboardupdate} from "../pages/aboard";
 import {
   Reviewform,
   Reviewlist,
@@ -33,6 +33,7 @@ import {
   Reviewdetail,
 } from "../pages/review";
 import JwtTest from "../pages/test/JwtTest";
+
 
 function RouteMain(props) {
   const location = useLocation();
@@ -67,12 +68,19 @@ function RouteMain(props) {
           path="/fboard/detail/:fb_idx/:currentPage"
           element={<FboardDetail />}
         />
+        <Route
+          path="/aboard/detail/:ab_idx/:currentPage"
+          element={<Aboarddtail/>}
+        />
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
         <Route
           path="/fboard/updateform/:fb_idx/:currentPage"
           element={<FboardUpdateForm />}
         />
+        <Route path="/aboard/update/:ab_idx/:currentPage"
+               element={<Aboardupdate/>}
+               />
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
