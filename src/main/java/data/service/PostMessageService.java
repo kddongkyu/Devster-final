@@ -2,12 +2,15 @@ package data.service;
 
 import data.dto.PostMessage.PostMessageDetailDto;
 import data.dto.PostMessage.PostMessageDto;
+import data.dto.PostMessage.PostMessageRespnoseDto;
 import data.entity.PostMessageEntity;
 import data.repository.MemberRepository;
 import data.repository.PostMessageRepository;
 import jwt.setting.settings.JwtService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,16 +34,35 @@ public class PostMessageService {
         this.jwtService = jwtService;
     }
 
-    public List<PostMessageDetailDto> getAllPostMessages(HttpServletRequest request, Pageable pageable) {
+    public PostMessageRespnoseDto getAllPostMessages(HttpServletRequest request, int currentPage) {
         int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
         String nickName = memberRepository.findById(m_idx).get().getMNickname();
+
+        Pageable pageable = PageRequest.of(currentPage,7, Sort.by("SENDtime").descending());
 
         List<PostMessageEntity> entityList = postMessageRepository.findAllByRECVnick(nickName,pageable).getContent();
         List<PostMessageDetailDto> dtoList = new ArrayList<>();
         for(PostMessageEntity entity : entityList) {
             dtoList.add(toPostMessageDetialDto(entity));
         }
-        return dtoList;
+        long totalMessageCount = postMessageRepository.countByRECVnick(nickName);
+        int totalPages = (int) Math.ceil((double) totalMessageCount / 7);
+
+        PostMessageRespnoseDto dto = new PostMessageRespnoseDto(dtoList,totalPages);
+        return dto;
+    }
+
+    public PostMessageRespnoseDto getSearchList(HttpServletRequest request, String keyword) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+        String nickName = memberRepository.findById(m_idx).get().getMNickname();
+
+        List<PostMessageEntity> entityList = postMessageRepository.findAllByRECVnickAndContentContaining(nickName,keyword);
+        List<PostMessageDetailDto> dtoList = new ArrayList<>();
+        for(PostMessageEntity entity : entityList) {
+            dtoList.add(toPostMessageDetialDto(entity));
+        }
+        PostMessageRespnoseDto dto = new PostMessageRespnoseDto(dtoList,0);
+        return dto;
     }
 
     public PostMessageDetailDto getOnePostMessage(int idx) {

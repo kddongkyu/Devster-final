@@ -10,6 +10,9 @@ import java.util.List;
 public interface PostMessageRepository extends JpaRepository<PostMessageEntity, Integer> {
 
     Page<PostMessageEntity> findAllByRECVnick(String nickname, Pageable pageable);
-//    List<PostMessageEntity> findAllByRECVnick(String nickname);
+
+    List<PostMessageEntity> findAllByRECVnickAndContentContaining(String nickname, String keyword);
     void deleteAllByRECVnick(String nickname);
+
+    long countByRECVnick(String nickName);
 }

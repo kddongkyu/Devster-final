@@ -9,17 +9,20 @@
     border: 1px solid #cfcfcf;
     box-sizing: border-box;
     height: 5rem;
+    text-align: center;
+    font-size: 1.5rem;
 }
 .textmsg-searchbar-search-text {
     position: absolute;
     top: 1.3rem;
     left: 4.7rem;
     letter-spacing: -0.24px;
+    border : none;
 }
 .textmsg-searchbar-search-icon {
     position: absolute;
     top: 1.71rem;
-    left: 2.41rem;
+    left: 33rem;
     width: 1.58rem;
     height: 1.58rem;
 }
