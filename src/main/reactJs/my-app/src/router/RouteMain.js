@@ -24,7 +24,7 @@ import {
   FboardUpdateForm,
 } from "../pages/fboard";
 import { Qboard, QboardForm } from "../pages/qboard";
-import { Hboard, HboardForm } from "../pages/hboard";
+import { Hboard, HboardForm, HboardDetail } from "../pages/hboard";
 import { Aboard, AboardForm } from "../pages/aboard";
 import {
   Reviewform,
@@ -66,6 +66,10 @@ function RouteMain(props) {
         <Route
           path="/fboard/detail/:fb_idx/:currentPage"
           element={<FboardDetail />}
+        />
+        <Route
+          path="/hboard/detail/:hb_idx/:currentPage"
+          element={<HboardDetail />}
         />
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />

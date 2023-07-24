@@ -1,4 +1,3 @@
-/* 상단 */
 .advertise-main {
   position: absolute;
   width: 100%;
@@ -7,41 +6,42 @@
   left: 0;
   border: 1px solid #d2d2d2;
   box-sizing: border-box;
-  height: 11.2rem;
+  height: 7rem;
 }
 .advertise-text {
   position: absolute;
-  top: 4.2rem;
+  top: 2.63rem;
   left: calc(50% - 18px);
   letter-spacing: -0.24px;
 }
 .advertise-box {
   position: absolute;
   width: calc(100% - 30px);
-  top: 7.6rem;
-  right: 1.5rem;
-  left: 1.5rem;
-  height: 11.2rem;
-  font-size: 2rem;
+  top: 4.75rem;
+  right: 0.94rem;
+  left: 0.94rem;
+  height: 7rem;
+  font-size: 1.25rem;
   color: #000;
 }
-/*.board-detail-type-hr-icon {*/
-/*    position: absolute;*/
-/*    width: 100%;*/
-/*    top: 24.35rem;*/
-/*    text-align: center;*/
-/*    max-width: 100%;*/
-/*    overflow: hidden;*/
-/*    height: 0.3rem;*/
-/*}*/
+.board-detail-type-hr-icon {
+  position: absolute;
+  width: calc(100% - 41px);
+  top: 15.22rem;
+  right: 1.31rem;
+  left: 1.25rem;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.13rem;
+}
 .board-detail-type-text {
   position: absolute;
-  top: 21.9rem;
-  left: 2.4rem;
-  font-size: 1.4rem;
+  top: 13.69rem;
+  left: 1.5rem;
+  font-size: 0.88rem;
   letter-spacing: -0.24px;
 }
-.fboard-detail-info-profile-img-icon {
+.notice-detail-info-profile-img-icon {
   position: absolute;
   top: 0;
   left: 0;
@@ -50,7 +50,7 @@
   height: 4.3rem;
   object-fit: cover;
 }
-.fboard-detail-info-nickname {
+.notice-detail-info-nickname {
   position: absolute;
   top: 0.2rem;
   left: 5.3rem;
@@ -64,8 +64,8 @@
 .span {
   color: #721ea6;
 }
-.fboard-detail-info-status-text,
-.fboard-detail-info-status-text1 {
+.notice-detail-info-status-text,
+.notice-detail-info-status-text1 {
   position: absolute;
   top: 2.3rem;
   left: 12.8rem;
@@ -73,25 +73,25 @@
   display: inline-block;
   width: 10rem;
 }
-.fboard-detail-info-status-text1 {
+.notice-detail-info-status-text1 {
   left: 5.4rem;
   width: 5rem;
 }
-.fboard-detail-info-status-view-icon {
+.notice-detail-info-status-view-icon {
   position: absolute;
   top: 2.75rem;
   left: 11rem;
   width: 1.4rem;
   height: 0.94rem;
 }
-.fboard-detail-info {
+.notice-detail-info {
   position: absolute;
   top: 29rem;
   left: 2.7rem;
   width: 18.8rem;
   height: 4.3rem;
 }
-.fboard-url-icon {
+.hboard-url-icon {
   position: absolute;
   top: 27.13rem;
   right: 3rem;
@@ -102,25 +102,24 @@
 .fboard-delete-icon,
 .fboard-update-icon {
   position: absolute;
-  top: 27.2rem;
-  right: 6.3rem;
-  width: 2.4rem;
-  height: 2.4rem;
+  top: 27.13rem;
+  right: 6rem;
+  width: 3.2rem;
+  height: 2.35rem;
   overflow: hidden;
-  cursor: pointer;
 }
 .fboard-delete-icon {
-  right: 9.8rem;
-  width: 2.3rem;
-  height: 2.3rem;
+  top: 27.13rem;
+  right: 10rem;
+  width: 2.2rem;
+  height: 2.35rem;
 }
-
 .board-detail-header-btn-like-i-icon {
   position: absolute;
-  top: 0.45rem;
-  right: 2.4rem;
-  width: 1.1rem;
-  height: 0.9rem;
+  top: 0.28rem;
+  right: 1.5rem;
+  width: 0.69rem;
+  height: 0.56rem;
 }
 .board-detail-header-btn-like-t {
   position: absolute;
@@ -128,68 +127,51 @@
   right: 0;
   letter-spacing: -0.24px;
 }
-.fboard-detail-header-btn-like {
+.notice-detail-header-btn-like {
   position: absolute;
   top: 0;
-  right: 3.7rem;
-  width: 3.5rem;
-  height: 1.7rem;
+  right: 2.31rem;
+  width: 2.19rem;
+  height: 1.06rem;
 }
 .board-detail-header-btn-dislik-icon {
   position: absolute;
-  top: 0.55rem;
-  right: 1.8rem;
-  width: 1.1rem;
-  height: 0.9rem;
+  top: 0.35rem;
+  right: 1.13rem;
+  width: 0.69rem;
+  height: 0.56rem;
 }
-.fboard-detail-header-btn-disli {
+.notice-detail-header-btn-disli {
   position: absolute;
   top: 0;
   right: 0;
-  width: 2.9rem;
-  height: 1.7rem;
+  width: 1.81rem;
+  height: 1.06rem;
 }
-.fboard-detail-header-btn {
+.notice-detail-header-btn {
   position: absolute;
-  top: 31.3rem;
-  right: 2.7rem;
-  width: 7.2rem;
-  height: 1.7rem;
+  top: 19.56rem;
+  right: 1.69rem;
+  width: 4.5rem;
+  height: 1.06rem;
 }
 .p {
   margin: 0;
 }
-
-/* 중단 */
 .board-detail-textarea-contents {
-  position: relative;
+  position: absolute;
   width: 100%;
-  top: 6.7rem;
+  top: 4.19rem;
   left: 0;
   letter-spacing: -0.24px;
   display: inline-block;
-  /*height: 43.1rem;*/
-  /*margin-bottom: 5rem;*/
-}
-.fboard-detail-photo-list {
-  position: relative;
-  margin-top: 5rem;
-  background-color: #fff;
-  box-sizing: border-box;
-}
-.board-detail-photo {
-  /*top: 88rem;*/
-  left: calc(50% - 150px);
-  border: 1px solid #fff;
-  width: 30rem;
-  height: 30rem;
-  position: relative;
+  height: 26.94rem;
 }
 .board-detail-textarea-subject {
   position: absolute;
   top: 0;
   left: 0;
-  font-size: 1.8rem;
+  font-size: 1.13rem;
   letter-spacing: -0.24px;
   color: #000;
 }
@@ -202,50 +184,51 @@
   /*height: 49.8rem;*/
   font-size: 1.3rem;
 }
-
-/* 하단 */
-/*.board-detail-listbackcounter{*/
-/*    display: flex;*/
-/*}*/
-
-.board-detail-listback-rec {
+.board-detail-listback-rec,
+.board-detail-photo {
   position: absolute;
   background-color: #fff;
   box-sizing: border-box;
 }
-
+.board-detail-photo {
+  top: 55rem;
+  left: calc(50% - 150px);
+  border: 1px solid #fff;
+  width: 18.75rem;
+  height: 18.75rem;
+}
 .board-detail-listback-rec {
   top: 0;
   left: 0;
   border-radius: 5px;
   border: 1px solid #bdc0c4;
-  width: 6.8rem;
-  height: 3.5rem;
+  width: 4.25rem;
+  height: 2.19rem;
 }
 .board-detail-listback-text {
   position: absolute;
-  top: 0.8rem;
-  left: 3.1rem;
+  top: 0.5rem;
+  left: 1.94rem;
   letter-spacing: -0.24px;
   font-weight: 500;
   display: inline-block;
-  width: 3.8rem;
+  width: 2.38rem;
 }
 .board-detail-listback-icon {
   position: absolute;
-  top: 0.95rem;
-  left: 1rem;
-  width: 1.6rem;
-  height: 1.69rem;
+  top: 0.59rem;
+  left: 0.63rem;
+  width: 1rem;
+  height: 1.06rem;
   overflow: hidden;
 }
 .board-detail-listback {
   position: absolute;
-  top: 120.5rem;
-  left: 4.1rem;
-  width: 6.9rem;
-  height: 3.5rem;
-  font-size: 1.3rem;
+  top: 75.31rem;
+  left: 2.56rem;
+  width: 4.31rem;
+  height: 2.19rem;
+  font-size: 0.81rem;
   color: #747474;
 }
 .board-detail-counter-like-box {
@@ -256,22 +239,22 @@
   background-color: #fff;
   border: 1px solid #bdc0c4;
   box-sizing: border-box;
-  width: 3.4rem;
-  height: 3.8rem;
+  width: 2.13rem;
+  height: 2.38rem;
 }
 .board-detail-counter-like-icon {
   position: absolute;
-  top: 1.66rem;
-  right: 0.96rem;
+  top: 1.04rem;
+  right: 0.6rem;
   width: 1.38rem;
-  height: 0.83rem;
+  height: 0.52rem;
 }
 .board-detail-counter-like {
   position: absolute;
   top: 0;
-  right: 8.8rem;
-  width: 3.4rem;
-  height: 3.8rem;
+  right: 5.5rem;
+  width: 2.13rem;
+  height: 2.38rem;
 }
 .board-detail-counter-num-box {
   position: absolute;
@@ -280,22 +263,22 @@
   background-color: #fff;
   border: 1px solid #bdc0c4;
   box-sizing: border-box;
-  width: 5.6rem;
-  height: 3.8rem;
+  width: 3.5rem;
+  height: 2.38rem;
 }
 .board-detail-counter-num-text {
   position: absolute;
-  top: 1rem;
-  right: 1.7rem;
+  top: 0.63rem;
+  right: 1.06rem;
   letter-spacing: -0.24px;
   font-weight: 500;
 }
 .board-detail-counter-num {
   position: absolute;
   top: 0;
-  right: 3.3rem;
-  width: 5.6rem;
-  height: 3.8rem;
+  right: 2.06rem;
+  width: 3.5rem;
+  height: 2.38rem;
 }
 .board-detail-counter-dislike-b {
   border-radius: 0 5px 5px 0;
@@ -308,60 +291,50 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 3.4rem;
-  height: 3.8rem;
+  width: 2.13rem;
+  height: 2.38rem;
 }
 .board-detail-counter {
   position: absolute;
-  top: 120.5rem;
-  right: 3.6rem;
-  width: 12.2rem;
-  height: 3.8rem;
+  top: 75.31rem;
+  right: 2.25rem;
+  width: 7.63rem;
+  height: 2.38rem;
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 0.81rem;
   color: #000;
 }
 .advertise-text1 {
   position: absolute;
-  top: 4.2rem;
+  top: 2.63rem;
   left: calc(50% - 27px);
   letter-spacing: -0.24px;
 }
 .advertise-box1 {
   position: absolute;
   width: calc(100% - 30px);
-  top: 127.9rem;
-  right: 1.5rem;
-  left: 1.5rem;
-  height: 11.2rem;
-  font-size: 2rem;
-  color: #000;
-}
-.advertise-box2 {
-  position: absolute;
-  width: calc(100% - 30px);
-  top: 128rem;
-  right: 1.5rem;
-  left: 1.5rem;
-  height: 11.2rem;
-  font-size: 2rem;
+  top: 79.94rem;
+  right: 0.94rem;
+  left: 0.94rem;
+  height: 7rem;
+  font-size: 1.25rem;
   color: #000;
 }
 .board-detail-hr-icon {
   position: absolute;
   width: calc(100% - 40px);
-  top: 142.44rem;
-  right: 2rem;
-  left: 2rem;
+  top: 89.03rem;
+  right: 1.25rem;
+  left: 1.25rem;
   max-width: 100%;
   overflow: hidden;
-  height: 0.12rem;
+  height: 0.08rem;
 }
 .board-detail-comments-counts {
   position: absolute;
-  top: 144.1rem;
-  left: 2rem;
-  font-size: 1.6rem;
+  top: 90.06rem;
+  left: 1.25rem;
+  font-size: 1rem;
   letter-spacing: -0.24px;
   font-weight: 500;
   color: #4a4a4a;
@@ -376,36 +349,36 @@
   background-color: #fff;
   border: 1px solid #cfcfcf;
   box-sizing: border-box;
-  height: 24.4rem;
+  height: 15.25rem;
 }
 .board-detail-commnets-form-img-icon {
   position: absolute;
-  top: 1.5rem;
-  left: 1.6rem;
+  top: 0.94rem;
+  left: 1rem;
   border-radius: 50%;
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 1.75rem;
+  height: 1.75rem;
   object-fit: cover;
 }
 .board-detail-commnets-form-tex {
   position: absolute;
   width: calc(100% - 68px);
-  top: 1.7rem;
-  right: 1.6rem;
-  left: 5.2rem;
+  top: 1.06rem;
+  right: 1rem;
+  left: 3.25rem;
   border-radius: 8px;
   background-color: #fff;
   border: 1px solid #cfcfcf;
   box-sizing: border-box;
-  height: 15.7rem;
+  height: 9.81rem;
 }
 .board-detail-commnets-form {
   position: absolute;
   width: calc(100% - 32px);
-  top: 147.6rem;
-  right: 1.6rem;
-  left: 1.6rem;
-  height: 24.4rem;
+  top: 92.25rem;
+  right: 1rem;
+  left: 1rem;
+  height: 15.25rem;
 }
 .board-detail-commnets-form-sub {
   position: absolute;
@@ -413,22 +386,22 @@
   right: 0;
   border-radius: 8px;
   background-color: #721ea6;
-  width: 11.6rem;
-  height: 4rem;
+  width: 7.25rem;
+  height: 2.5rem;
 }
 .board-detail-commnets-form-sub1 {
   position: absolute;
-  top: 1rem;
-  right: 3.1rem;
+  top: 0.63rem;
+  right: 1.94rem;
   letter-spacing: -0.24px;
 }
 .board-detail-commnets-submit-b {
   position: absolute;
-  top: 166.3rem;
-  right: 3.2rem;
-  width: 11.6rem;
-  height: 4rem;
-  font-size: 1.4rem;
+  top: 103.94rem;
+  right: 2rem;
+  width: 7.25rem;
+  height: 2.5rem;
+  font-size: 0.88rem;
   color: #fff;
 }
 .board-detail-commnets-detail-i-icon {
@@ -436,16 +409,16 @@
   top: 0;
   left: 0;
   border-radius: 50%;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 2.19rem;
+  height: 2.19rem;
   object-fit: cover;
 }
 .board-detail-commnets-detail-i {
   position: absolute;
-  top: 174.4rem;
-  left: 2rem;
-  width: 17.7rem;
-  height: 3.5rem;
+  top: 109rem;
+  left: 1.25rem;
+  width: 11.06rem;
+  height: 2.19rem;
   color: #1c1c1c;
 }
 .board-detail-commnets-all-up-b {
@@ -456,22 +429,22 @@
   background-color: #fff;
   border: 1px solid #bdc0c4;
   box-sizing: border-box;
-  width: 2.93rem;
-  height: 2.7rem;
+  width: 1.83rem;
+  height: 1.69rem;
 }
 .board-detail-commnets-all-up-i-icon {
   position: absolute;
-  top: 1.15rem;
-  right: 0.81rem;
-  width: 1.23rem;
-  height: 0.66rem;
+  top: 0.72rem;
+  right: 0.5rem;
+  width: 0.77rem;
+  height: 0.41rem;
 }
 .board-detail-commnets-all-up {
   position: absolute;
   top: 0;
-  right: 7.57rem;
-  width: 2.93rem;
-  height: 2.7rem;
+  right: 4.73rem;
+  width: 1.83rem;
+  height: 1.69rem;
 }
 .board-detail-commnets-all-box {
   position: absolute;
@@ -480,89 +453,89 @@
   background-color: #fff;
   border: 1px solid #bdc0c4;
   box-sizing: border-box;
-  width: 4.82rem;
-  height: 2.7rem;
+  width: 3.01rem;
+  height: 1.69rem;
 }
 .board-detail-commnets-all-like2 {
   position: absolute;
-  top: 0.61rem;
-  right: 1.36rem;
+  top: 0.38rem;
+  right: 0.85rem;
   letter-spacing: -0.24px;
   font-weight: 500;
   display: inline-block;
-  width: 1.89rem;
-  height: 1.35rem;
+  width: 1.18rem;
+  height: 0.84rem;
 }
 .board-detail-commnets-all-down-icon {
   position: absolute;
-  top: 1.14rem;
-  right: 0.81rem;
-  width: 1.23rem;
-  height: 0.66rem;
+  top: 0.71rem;
+  right: 0.5rem;
+  width: 0.77rem;
+  height: 0.41rem;
 }
 .board-detail-commnets-all-down {
   position: absolute;
   top: 0;
   right: 0;
-  width: 2.93rem;
-  height: 2.7rem;
+  width: 1.83rem;
+  height: 1.69rem;
 }
 .board-detail-commnets-all-like {
   position: absolute;
-  top: 175.2rem;
-  right: 1.9rem;
-  width: 10.5rem;
-  height: 2.7rem;
+  top: 109.5rem;
+  right: 1.19rem;
+  width: 6.56rem;
+  height: 1.69rem;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 0.69rem;
   color: #000;
 }
 .board-detail-commnets-all-cont {
   position: absolute;
   width: calc(100% - 45px);
-  top: 179.2rem;
-  left: 1.9rem;
+  top: 112rem;
+  left: 1.19rem;
   letter-spacing: -0.24px;
   font-weight: 500;
   display: inline-block;
-  height: 20.8rem;
+  height: 13rem;
 }
 .board-detail-commnets-hide-ico-icon {
   position: absolute;
-  top: 0.5rem;
-  left: -0.11rem;
-  width: 1.16rem;
-  height: 0.59rem;
+  top: 0.31rem;
+  left: -0.07rem;
+  width: 0.72rem;
+  height: 0.37rem;
 }
 .board-detail-commnets-hide-com,
 .board-detail-commnets-hide-tex {
   position: absolute;
   top: 0;
-  left: 1.8rem;
+  left: 1.13rem;
   letter-spacing: -0.24px;
 }
 .board-detail-commnets-hide-com {
-  left: 10.8rem;
+  left: 6.75rem;
   color: #626567;
 }
 .board-detail-commnets-hide {
   position: absolute;
-  top: 200.9rem;
-  left: 2.5rem;
-  width: 15rem;
-  height: 1.6rem;
+  top: 125.56rem;
+  left: 1.56rem;
+  width: 9.38rem;
+  height: 1rem;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 0.69rem;
   color: #721ea6;
 }
 .board-detail-recom-box {
   position: absolute;
-  top: 203.7rem;
-  left: 4.1rem;
+  top: 127.31rem;
+  left: 2.56rem;
   border-left: 1px solid #d2d2d2;
   box-sizing: border-box;
-  width: 33rem;
-  height: 22rem;
+  width: 20.63rem;
+  height: 13.75rem;
 }
 .board-detail-recom-info-counts {
   position: absolute;
@@ -570,38 +543,38 @@
   left: 0;
   font-weight: 500;
   display: inline-block;
-  width: 13.3rem;
-  height: 1.7rem;
+  width: 8.31rem;
+  height: 1.06rem;
 }
 .board-detail-recom-info-date {
   position: absolute;
-  top: 1.9rem;
-  left: 0.1rem;
-  font-size: 1rem;
+  top: 1.19rem;
+  left: 0.06rem;
+  font-size: 0.63rem;
   letter-spacing: -0.24px;
   color: #626567;
 }
 .board-detail-recom-info-text {
   position: absolute;
   top: 0;
-  left: 4.4rem;
-  width: 13.3rem;
-  height: 3.3rem;
+  left: 2.75rem;
+  width: 8.31rem;
+  height: 2.06rem;
 }
 .board-detail-recom-info {
   position: absolute;
-  top: 204.6rem;
-  left: 5rem;
-  width: 17.7rem;
-  height: 3.5rem;
+  top: 127.88rem;
+  left: 3.13rem;
+  width: 11.06rem;
+  height: 2.19rem;
   color: #1c1c1c;
 }
 .board-detail-recom-likes-count {
   position: absolute;
   top: 0;
-  right: 2.84rem;
-  width: 4.82rem;
-  height: 2.7rem;
+  right: 1.78rem;
+  width: 3.01rem;
+  height: 1.69rem;
 }
 .board-detail-recom-down-box {
   position: absolute;
@@ -611,34 +584,34 @@
   background-color: #fff;
   border: 1px solid #bdc0c4;
   box-sizing: border-box;
-  width: 2.93rem;
-  height: 2.7rem;
+  width: 1.83rem;
+  height: 1.69rem;
 }
 .board-detail-recom-likes {
   position: absolute;
-  top: 205.4rem;
-  right: 1.9rem;
-  width: 10.5rem;
-  height: 2.7rem;
+  top: 128.38rem;
+  right: 1.19rem;
+  width: 6.56rem;
+  height: 1.69rem;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 0.69rem;
   color: #000;
 }
 .board-detail-recom-recom-form,
 .board-detail-recom-textarea {
   position: absolute;
-  left: 5.3rem;
+  left: 3.31rem;
   letter-spacing: -0.24px;
   font-weight: 500;
 }
 .board-detail-recom-textarea {
   width: calc(100% - 82px);
-  top: 209.2rem;
+  top: 130.75rem;
   display: inline-block;
-  height: 12.4rem;
+  height: 7.75rem;
 }
 .board-detail-recom-recom-form {
-  top: 222.9rem;
+  top: 139.31rem;
   text-align: center;
 }
 .fboard-detail {
@@ -647,10 +620,10 @@
   border: 1px solid rgba(210, 210, 210, 0.9);
   box-sizing: border-box;
   width: 100%;
-  height: 227.9rem;
+  height: 142.44rem;
   overflow: hidden;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 0.75rem;
   color: #626567;
   font-family: "Noto Sans KR";
 }
