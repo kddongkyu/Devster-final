@@ -62,8 +62,8 @@ public class MemberController {
     }
 
     @PutMapping("/D0/photo/reset")
-    public ResponseEntity<Void> resetPhoto(String photo){
-        memberService.resetPhoto(photo);
+    public ResponseEntity<Void> resetPhoto(String photo,HttpSession session){
+        memberService.resetPhoto(photo,session);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -91,9 +91,9 @@ public class MemberController {
         return memberService.isDuplicateNickname(safeNickname);
     }
 
-    @GetMapping("/D0/academy/{name}")
-    public ResponseEntity<List<AcademyInfoEntity>> academyInfoSearch(@PathVariable String name) {
-        return new ResponseEntity<List<AcademyInfoEntity>>(memberService.academyNameSearch(name),HttpStatus.OK);
+    @PostMapping("/D0/academy")
+    public ResponseEntity<List<AcademyInfoEntity>> academyInfoSearch(@RequestBody JsonNode json) {
+        return new ResponseEntity<List<AcademyInfoEntity>>(memberService.academyNameSearch(json.get("name").asText()),HttpStatus.OK);
     }
 
     @PostMapping("/D0/email/validation")

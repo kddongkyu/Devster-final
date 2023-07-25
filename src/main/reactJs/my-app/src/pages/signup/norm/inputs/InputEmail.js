@@ -2,7 +2,11 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setEmailChk, setEmailIsValid, setM_email} from "../../../../redux/normMemberSlice";
 import axios from "axios";
-import EmailReset from "./EmailReset";
+import {EmailReset} from "./index";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../../../api/ToastAlert";
+import {jwtHandleError} from "../../../../api/JwtHandleError";
+
 
 function InputEmail(props) {
     const dispatch = useDispatch();
@@ -10,11 +14,19 @@ function InputEmail(props) {
     const emailIsValid = useSelector(state => state.norm.emailIsValid);
     const isEmailSent = useSelector(state => state.norm.isEmailSent);
     const emailRegChk = useSelector(state => state.norm.emailRegChk);
-    const sendingInProg = useSelector(state=>state.norm.sendingInProg);
-
+    const sendingInProg = useSelector(state => state.norm.sendingInProg);
+    const isSubmitted = useSelector(state => state.norm.isSubmitted);
     const [isEmailTouched, setIsEmailTouched] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isInputValid, setIsInputValid] = useState(true);
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
+
+    useEffect(() => {
+        if (!emailIsValid && isSubmitted) {
+            setIsEmailTouched(true);
+        }
+    }, [isSubmitted]);
 
     const checkEmail = useCallback(async () => {
         try {
@@ -39,7 +51,7 @@ function InputEmail(props) {
             dispatch(setEmailIsValid(false));
             setIsInputValid(false);
             setErrorMessage('서버에 문제가 발생했습니다.');
-            console.error('중복확인 에러' + error.response?.status)
+            jwtHandleError(error,toastAlert);
         }
     }, [dispatch, m_email, emailRegChk]);
 

@@ -55,8 +55,9 @@ public class MemberService {
         return photo;
     }
 
-    public void resetPhoto(String photo) {
+    public void resetPhoto(String photo, HttpSession session) {
         storageService.deleteFile(bucketName,"devster/member",photo);
+        session.removeAttribute("photo");
         log.info("일반회원 사진 초기화 완료");
     }
 

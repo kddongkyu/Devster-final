@@ -117,6 +117,12 @@ public class CompanyMemberService {
         }
     }
 
+    public boolean isDuplicateRegNum(String regNum) {
+        boolean isDuplicate = companyMemberRepository.existsByCMreg(regNum);
+        log.info("기업회원 사업자 등록번호 중복확인 완료");
+        return isDuplicate;
+    }
+
     public boolean isDuplicatedCompName(String companyName) {
         boolean isDuplicate = companyMemberRepository.existsByCMcompname(companyName);
         log.info("기업회원 기업명 중복확인 완료");

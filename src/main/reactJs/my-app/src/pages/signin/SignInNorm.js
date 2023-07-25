@@ -1,27 +1,39 @@
 import React, {useRef} from 'react';
 import {userSignIn} from "../../api/SignInApi";
 import {jwtHandleError} from "../../api/JwtHandleError";
-import {useNavigate} from "react-router-dom";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function SignInNorm(props) {
-    const navi = useNavigate();
     const normIdRef = useRef('');
     const normPwRef = useRef('');
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
 
     const normSignIn = async (e) => {
         e.preventDefault();
 
-        const userSignInInfo = {
+        const normSignInInfo = {
             id: normIdRef.current.value,
             password: normPwRef.current.value,
         };
 
+        const normUrl = '/api/member/login';
+
         try {
-            await userSignIn(userSignInInfo);
-            navi('/home');
+            await userSignIn(normSignInInfo, normUrl);
+            // window.location.replace('/home');
         } catch (error) {
-            jwtHandleError(error);
+            jwtHandleError(error, toastAlert);
         }
+    }
+
+    const handleOnNormId = (e) => {
+        normIdRef.current.value = e.target.value;
+    }
+
+    const handleOnNormPw = (e) => {
+        normPwRef.current.value = e.target.value;
     }
 
     return (
@@ -36,18 +48,12 @@ function SignInNorm(props) {
             <form onSubmit={normSignIn}>
                 <div>
                     <div className='login-devster-id-text'>사용자 ID</div>
-                    <div className='login-devster-id-remember'>
-                        <div className='login-devster-id-remember-text'>ID 기억하기</div>
-                        <div className='login-devster-id-remember-ck'/>
-                    </div>
                     <input
                         className='login-devster-id-box-input'
                         type='text'
                         required
                         ref={normIdRef}
-                        onChange={(e) => {
-                            normIdRef.current.value = e.target.value
-                        }}
+                        onChange={handleOnNormId}
                     />
                     <div className='login-devster-pw-text'>비밀번호</div>
                     <input
@@ -55,12 +61,12 @@ function SignInNorm(props) {
                         type='password'
                         required
                         ref={normPwRef}
-                        onChange={(e) => {
-                            normPwRef.current.value = e.target.value
-                        }}
+                        onChange={handleOnNormPw}
                     />
                     <div className='login-devster-finder'>사용자 ID / 비밀번호 찾기</div>
-                    <button type='submit' className='login-loginbtn'>
+                    <button
+                        type='submit'
+                        className='login-loginbtn'>
                         <div className='login-loginbtn-box'/>
                         <div className='login-loginbtn-text'>로그인</div>
                     </button>

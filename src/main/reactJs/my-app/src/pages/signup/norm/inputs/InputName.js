@@ -6,10 +6,16 @@ function InputName(props) {
     const dispatch = useDispatch();
     const m_name = useSelector(state => state.norm.m_name);
     const nameIsValid = useSelector(state => state.norm.nameIsValid);
-
+    const isSubmitted = useSelector(state => state.norm.isSubmitted);
     const [isNameTouched, setIsNameTouched] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isInputValid, setisInputValid] = useState(true);
+
+    useEffect(() => {
+        if (!nameIsValid && isSubmitted) {
+            setIsNameTouched(true);
+        }
+    }, [isSubmitted]);
 
     useEffect(() => {
         if (isNameTouched) {
@@ -40,13 +46,16 @@ function InputName(props) {
         dispatch(setNameIsValid(false));
     }
 
-    useEffect(()=>{
-      console.log('nameIsValid changed:',nameIsValid);
-    },[nameIsValid]);
+    useEffect(() => {
+        console.log('nameIsValid changed:', nameIsValid);
+    }, [nameIsValid]);
 
     return (
         <div>
-            <div className='signup-guest-name-text'>
+            <div
+                className='signup-guest-name-text'
+                id='recheck'
+            >
                 <span>이름</span>
                 <span className='signup-guest-input-name'> *</span>
             </div>
@@ -60,6 +69,7 @@ function InputName(props) {
                 type='text'
                 className={`${isInputValid ? 'signup-guest-name-inputbox' : 'signup-guest-name-inputbox-error'}`}
                 value={m_name}
+                required
                 onChange={handleNameChange}
             />
         </div>
