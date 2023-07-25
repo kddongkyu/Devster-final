@@ -6,6 +6,7 @@ import data.dto.qboard.QboardResponseDto;
 import data.entity.MemberEntity;
 import data.entity.QboardEntity;
 import data.repository.MemberRepository;
+import data.repository.board.qboard.QboardCommentRespository;
 import data.repository.board.qboard.QboardRepository;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
@@ -27,11 +28,13 @@ import java.util.stream.Collectors;
 public class QboardService {
 
     private final QboardRepository qboardRepository;
+    private final QboardCommentRespository qboardCommentRespository;
     private final MemberRepository memberRepository;
     private final NcpObjectStorageService storageService;
 
-    public QboardService(QboardRepository qboardRepository, MemberRepository memberRepository, NcpObjectStorageService storageService) {
+    public QboardService(QboardRepository qboardRepository, QboardCommentRespository qboardCommentRespository, MemberRepository memberRepository, NcpObjectStorageService storageService) {
         this.qboardRepository = qboardRepository;
+        this.qboardCommentRespository = qboardCommentRespository;
         this.memberRepository = memberRepository;
         this.storageService = storageService;
     }
@@ -72,7 +75,7 @@ public class QboardService {
     }
 
     public QboardResponseDto getPagedQboard(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("FBwriteDay").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("QBwriteDay").descending());
         Page<QboardEntity> result = qboardRepository.findAll(pageable);
 
         List<QboardDetailDto> qboardList = result
@@ -85,6 +88,8 @@ public class QboardService {
                         detailDto.setPhoto(memberInfo.getMPhoto());
                         detailDto.setNickname(memberInfo.getMNickname());
                     }
+                    detailDto.setTotalcommentCount(qboardCommentRespository.countAllByQBidx(qboardEntity.getQBidx()));
+                    detailDto.setQboardDto(QboardDto.toQboardDto(qboardEntity));
                     return detailDto;
                 })
                 .collect(Collectors.toList());
@@ -92,7 +97,7 @@ public class QboardService {
         QboardResponseDto qboardResponseDto = new QboardResponseDto();
         qboardResponseDto.setQboardDetailDtoList(qboardList);
         qboardResponseDto.setTotalCount((int)result.getTotalElements());
-        qboardResponseDto.setTotalPages(result.getTotalPages());
+        qboardResponseDto.setTotalPages(result.getTotalPages() - 1);
         qboardResponseDto.setCurrentPage(result.getNumber() + 1);
         qboardResponseDto.setHasNext(result.hasNext());
 

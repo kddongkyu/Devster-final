@@ -1,12 +1,59 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import "./style/Board.css";
 import { NavLink } from 'react-router-dom';
+import QboardPreview from "./QboardPreview";
+import axiosIns from "../../api/JwtConfig";
 
-const Board = () => {
+const Qboard = () => {
+
+  const [qboardList, setQboardList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const handleRefresh = () => {
     window.location.reload();
   };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const fetchQboards = () => {
+    axiosIns.get(`/api/qboard/D0/list?currentPage=${currentPage}`)
+        .then(response => {
+          setQboardList(response.data.qboardDetailDtoList);
+          setTotalPages(response.data.totalPages);
+        })
+        .catch(error => {
+          console.error('Error fetching qboards:', error);
+        });
+  };
+
+  useEffect(() => {
+    fetchQboards();
+  }, [currentPage]);
+
+
+
+  useEffect(() => {
+    // JPA로부터 데이터 가져오는 API 호출
+    axiosIns.get(`/api/qboard/D0/list`)
+        .then(response => {
+          setQboardList(response.data.qboardDetailDtoList);
+        })
+        .catch(error => {
+          console.error('Error fetching qboards:', error);
+        });
+  }, []);
+
 
   return (
     <div className="board">
@@ -73,19 +120,23 @@ const Board = () => {
       src={require("./assets/board_pages_reset.svg").default}
       onClick={handleRefresh}
     />
-    <div className="board-pages">
-      <div className="board-pages-current">12345 / 12345 페이지</div>
-      <img
-        className="board-pages-back-icon"
-        alt=""
-        src={require("./assets/board_pages_back.svg").default}
-      />
-      <img
-        className="board-pages-forward-icon"
-        alt=""
-        src={require("./assets/board_pages_forward.svg").default}
-      />
-    </div>
+      <div className="qboard-pages">
+        <div className="qboard-pages-current">{`${currentPage} / ${totalPages} 페이지`}</div>
+        <img
+            className="qboard-pages-back-icon"
+            alt=""
+            src={require("./assets/board_pages_back.svg").default}
+            onClick={goToPreviousPage}
+            style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
+        />
+        <img
+            className="qboard-pages-forward-icon"
+            alt=""
+            src={require("./assets/board_pages_forward.svg").default}
+            onClick={goToNextPage}
+            style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
+        />
+      </div>
     {/* <img className="board-hr-icon1" alt="" src="/board-hr1.svg" /> */}
     <div className="board-notice">
       <div className="board-notice-box" />
@@ -134,50 +185,30 @@ const Board = () => {
         </div>
       </div>
     </div>
-    <div className="board-preview">
-      <div className="board-preview-box" />
-      <div className="board-preview-img-profile" />
-      <div className="board-preview-type">
-        <b className="board-preview-type-text">게시판명길이최대로</b>
-        <div className="board-preview-type-date">작성시간</div>
+      <div className="qboard-list">
+        {qboardList.map((data, idx) =>
+            <QboardPreview key={idx} data={data} />
+        )}
       </div>
-      <div className="board-preview-id">
-        <div className="board-preview-type-text">아이디명최대로</div>
-      </div>
-      <b className="board-preview-subject">제목 일이삼사오육칠팔구...</b>
-      <div className="board-preview-contents">
-        본문 일이삼사오육칠팔구십일이...
-      </div>
-      <div className="board-preview-img-preview" />
-      <div className="board-preview-likes">
-        <div className="board-preview-likes-text">99.9k</div>
+      <div className="qboard-pages2">
+        <div className="qboard-pages-current">{`${currentPage} / ${totalPages} 페이지`}</div>
         <img
-          className="board-preview-likes-icon"
-          alt=""
-          src={require("./assets/board_preview_likes_icon.svg").default}
-
+            className="qboard-pages-back-icon"
+            alt=""
+            src={require("./assets/board_pages_back.svg").default}
+            onClick={goToPreviousPage}
+            style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
+        />
+        <img
+            className="qboard-pages-forward-icon"
+            alt=""
+            src={require("./assets/board_pages_forward.svg").default}
+            onClick={goToNextPage}
+            style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
         />
       </div>
-      <div className="board-preview-comments">
-        <div className="board-preview-likes-text">99.9k</div>
-        <img
-          className="board-preview-comments-icon"
-          alt=""
-          src={require("./assets/board_preview_comments_icon.svg").default}
-
-        />
-      </div>
-      <div className="board-preview-views">
-        <div className="board-preview-views-text">99.9k</div>
-        <img
-          className="board-preview-views-icon"
-          alt=""
-          src={require("./assets/board_preview_views_icon.svg").default}
-        />
-      </div>
-    </div>
   </div>
   );
 };
 
-export default Board;
+export default Qboard;

@@ -503,8 +503,8 @@
   height: 11.1rem;
 }
 .board-preview-box {
-  position: absolute;
-  height: 100%;
+  position: relative;
+  height: auto;
   width: 100%;
   top: 0;
   right: 0;
@@ -630,7 +630,7 @@
   height: 2.3rem;
 }
 .board-preview {
-  position: absolute;
+  position: relative;
   width: calc(100% - 44px);
   top: 61.3rem;
   right: 2.2rem;
@@ -642,10 +642,62 @@
   position: relative;
   background-color: #fff;
   width: 100%;
-  height: 83.6rem;
+  height: auto;
   overflow: hidden;
   text-align: left;
   font-size: 1.2rem;
   color: #626567;
   font-family: "Noto Sans KR";
+}
+
+.qboard-list{
+  margin-bottom: 65rem;
+}
+
+.qboard-pages-reset-icon {
+  position: absolute;
+  top: 45.2rem;
+  left: 2.1rem;
+  width: 2.04rem;
+  height: 2.03rem;
+  cursor: pointer;
+}
+.qboard-pages-current {
+  position: absolute;
+  top: 0;
+  right: 7.01rem;
+  letter-spacing: 0.5px;
+  line-height: 2.1rem;
+  display: inline-block;
+  width: 23.9rem;
+}
+.qboard-pages,
+.qboard-pages-back-icon,
+.qboard-pages-forward-icon {
+  position: absolute;
+  top: 0.43rem;
+  right: 3.12rem;
+  width: 1.3rem;
+  height: 1.23rem;
+}
+
+.qboard-pages,
+.qboard-pages-forward-icon {
+  right: -0.06rem;
+}
+.qboard-pages {
+  top: 45.2rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
+}
+
+.qboard-pages2{
+  position: absolute;
+  top: 226rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
 }
