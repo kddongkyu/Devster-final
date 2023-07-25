@@ -272,15 +272,16 @@
     border: 1px solid #721ea6;
     box-sizing: border-box;
     height: 3.5rem;
-    padding-left: 5rem;
+    padding-left: 2rem;
     color: #626567;
   }
   .fboard-function-search-icon {
     position: absolute;
     top: 1rem;
-    left: 1.3rem;
+    right: 1.5rem;
     width: 1.6rem;
     height: 1.5rem;
+    cursor: pointer;
   }
   .board-hr-icon,
   .fboard-function-search-input {
@@ -647,7 +648,7 @@
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 230rem;
+    /*height: 230rem;*/
     overflow: hidden;
     text-align: left;
     font-size: 1.2rem;
@@ -655,11 +656,17 @@
     font-family: "Noto Sans KR";
   }
 
+  .fboard_list{
+    margin-bottom: 65rem;
+  }
+
   .fboard-pages2{
-    position: absolute;
-    top: 226rem;
-    right: 2.79rem;
-    width: 30.91rem;
+    position: relative;
+    margin-top: 1rem;
+    /*top: 226rem;*/
+    /*right: 2.79rem;*/
+    /*width: 30.91rem;*/
+    width: calc(100% - 2.79rem);
     height: 2.1rem;
     text-align: right;
   }

@@ -6,7 +6,8 @@ const initialState = {
     m_email: '',
     m_pass: '',
     m_nickname: '',
-    m_academy: '',
+    ai_idx: '',
+    ai_name: '',
     seconds: null,
     emailRegInput: '',
 
@@ -14,17 +15,19 @@ const initialState = {
     emailChk: false,
     emailRegChk: false,
     passChk: false,
-    nicknameChk:false,
+    nicknameChk: false,
 
     nameIsValid: false,
     idIsValid: false,
     emailIsValid: false,
     passIsValid: false,
-    nicknameIsValid:false,
+    nicknameIsValid: false,
+    academyIsValid: false,
+    contractValid:false,
 
     isEmailSent: false,
-    sendingInProg : false,
-
+    sendingInProg: false,
+    isSelectedTouched : false,
     isSubmitted: false,
 };
 
@@ -47,8 +50,11 @@ export const normMemberSlice = createSlice({
         setM_nickname: (state, action) => {
             state.m_nickname = action.payload;
         },
-        setM_academy: (state, action) => {
-            state.m_academy = action.payload;
+        setAi_idx: (state, action) => {
+            state.ai_idx = action.payload;
+        },
+        setAi_name: (state, action) => {
+            state.ai_name = action.payload;
         },
         setSeconds: (state, action) => {
             state.seconds = action.payload;
@@ -58,7 +64,6 @@ export const normMemberSlice = createSlice({
         },
 
 
-        //check를 해야할시
         setIdChk: (state, action) => {
             state.idChk = action.payload;
         },
@@ -71,12 +76,11 @@ export const normMemberSlice = createSlice({
         setPassChk: (state, action) => {
             state.passChk = action.payload;
         },
-        setNicknameChk:(state,action) =>{
-            state.nicknameChk=action.payload;
+        setNicknameChk: (state, action) => {
+            state.nicknameChk = action.payload;
         },
 
 
-        //submit용
         setNameIsValid: (state, action) => {
             state.nameIsValid = action.payload;
         },
@@ -89,16 +93,25 @@ export const normMemberSlice = createSlice({
         setPassIsValid: (state, action) => {
             state.passIsValid = action.payload;
         },
-        setNicknameIsValid:(state,action) =>{
-            state.nicknameIsValid=action.payload;
+        setNicknameIsValid: (state, action) => {
+            state.nicknameIsValid = action.payload;
+        },
+        setAcademyIsValid: (state, action) => {
+            state.academyIsValid = action.payload;
+        },
+        setContractValid:(state,action) => {
+            state.contractValid = action.payload;
         },
 
 
         setIsEmailSent: (state, action) => {
             state.isEmailSent = action.payload;
         },
-        setSendingInProg : (state,action) => {
+        setSendingInProg: (state, action) => {
             state.sendingInProg = action.payload;
+        },
+        setIsSelectedTouched:(state,action) => {
+            state.isSelectedTouched=action.payload;
         },
         setIsSubmitted: (state, action) => {
             state.isSubmitted = action.payload;
@@ -112,7 +125,8 @@ export const {
     setM_email,
     setM_pass,
     setM_nickname,
-    setM_academy,
+    setAi_idx,
+    setAi_name,
     setSeconds,
     setEmailRegInput,
     setIdChk,
@@ -125,8 +139,11 @@ export const {
     setEmailIsValid,
     setPassIsValid,
     setNicknameIsValid,
+    setAcademyIsValid,
+    setContractValid,
     setIsEmailSent,
     setSendingInProg,
+    setIsSelectedTouched,
     setIsSubmitted
 } = normMemberSlice.actions;
 

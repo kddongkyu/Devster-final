@@ -163,14 +163,73 @@ public class FreeBoardService {
         }
     }
 
-    public void updatePhoto(Integer fb_idx , MultipartFile upload ) {
-        Optional<FreeBoardEntity> entity = freeBoardRepository.findById(fb_idx);
-        storageService.deleteFile(bucketName,"devster/fboard",entity.get().getFBphoto());
-        entity.get().setFBphoto(storageService.uploadFile(bucketName,"devster/fboard",upload));
-        freeBoardRepository.save(entity.get());
+public void updatePhoto(Integer fb_idx, List<MultipartFile> uploads) {
+    // Step 1: FreeBoardEntity를 fb_idx를 기준으로 데이터베이스에서 조회합니다.
+    Optional<FreeBoardEntity> entityOptional = freeBoardRepository.findById(fb_idx);
 
-        log.info(fb_idx+" FreeBoard 사진업데이트 완료");
+    // Step 2: 조회된 entity가 존재하는지 확인합니다.
+    if (entityOptional.isPresent()) {
+        FreeBoardEntity entity = entityOptional.get();
+
+        // Step 3: 업로드할 새로운 사진들을 업로드하고, 파일명을 entity에 설정합니다.
+        List<String> uploadedFileNames = new ArrayList<>();
+
+        for (MultipartFile upload : uploads) {
+            String uploadedFileName = storageService.uploadFile(bucketName, "devster/fboard", upload);
+            uploadedFileNames.add(uploadedFileName);
+        }
+        // 추가: List<String> 형태를 문자열로 변환하여 설정합니다.
+        String fbPhotoString = String.join(",", uploadedFileNames);
+        entity.setFBphoto((entity.getFBphoto())+","+fbPhotoString);
+
+        // Step 4: 업데이트된 entity를 데이터베이스에 저장합니다.
+        freeBoardRepository.save(entity);
+
+        // Step 5: 업데이트가 완료되면 로그를 남깁니다.
+        log.info(fb_idx + " FreeBoard 사진 업데이트 완료");
+    } else {
+        // Step 7: fb_idx에 해당하는 FreeBoardEntity가 존재하지 않는 경우, 오류 처리 또는 예외 처리를 수행할 수 있습니다.
+        // 여기서는 오류 처리를 생략하고 로그만 남깁니다.
+        log.error("FreeBoardEntity with fb_idx " + fb_idx + " not found.");
     }
+}
+
+    public void deletePhoto(Integer fb_idx, String imageFileName) {
+        // Step 1: FreeBoardEntity를 fb_idx를 기준으로 데이터베이스에서 조회합니다.
+        Optional<FreeBoardEntity> entityOptional = freeBoardRepository.findById(fb_idx);
+
+        // Step 2: 조회된 entity가 존재하는지 확인합니다.
+        if (entityOptional.isPresent()) {
+            FreeBoardEntity entity = entityOptional.get();
+
+            // Step 3: 기존 사진 파일명들을 가져옵니다.
+            String existingPhotos = entity.getFBphoto();
+            List<String> existingPhotosList = Arrays.asList(existingPhotos.split(","));
+
+            // Step 4: 이미지 파일명을 DB에서 삭제합니다.
+            List<String> updatedPhotosList = new ArrayList<>();
+            for (String photo : existingPhotosList) {
+                if (!photo.equals(imageFileName)) {
+                    updatedPhotosList.add(photo);
+                }
+            }
+            entity.setFBphoto(String.join(",", updatedPhotosList));
+            freeBoardRepository.save(entity);
+
+            // Step 5: 버킷에서 이미지 파일을 삭제합니다.
+            storageService.deleteFile(bucketName, "devster/fboard", imageFileName);
+
+            // Step 6: 삭제가 완료되면 로그를 남깁니다.
+            log.info(fb_idx + " FreeBoard 이미지 삭제 완료");
+        } else {
+            // Step 7: fb_idx에 해당하는 FreeBoardEntity가 존재하지 않는 경우, 오류 처리 또는 예외 처리를 수행할 수 있습니다.
+            // 여기서는 오류 처리를 생략하고 로그만 남깁니다.
+            log.error("FreeBoardEntity with fb_idx " + fb_idx + " not found.");
+        }
+    }
+
+
+
 
     // 좋아요 싫어요 관련 로직
     private FreeBoardLikeEntity findOrCreateFBoardLike(int MIdx, int FBidx){

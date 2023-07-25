@@ -67,8 +67,13 @@ public class FreeBoardController {
     }
 
     @PostMapping("/D1/photo/{fb_idx}")
-    public ResponseEntity<Void> updatePhoto(@PathVariable Integer fb_idx, @RequestBody MultipartFile upload) {
+    public ResponseEntity<Void> updatePhoto(@PathVariable Integer fb_idx,@RequestBody List<MultipartFile> upload) {
         freeBoardService.updatePhoto(fb_idx,upload);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping("/D1/photo/{fb_idx}/{imageFileName}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable Integer fb_idx, @PathVariable String imageFileName) {
+        freeBoardService.deletePhoto(fb_idx, imageFileName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

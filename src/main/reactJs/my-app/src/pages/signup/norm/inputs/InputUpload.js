@@ -1,21 +1,27 @@
 import React, {useRef, useState} from 'react';
 import axios from 'axios';
-import {jwtHandleError} from '../../../../api/JwtHandleError';
-import ResizeCrop from './ResizeCrop';
+import {ResizeCrop} from "./index";
+import {jwtHandleError} from "../../../../api/JwtHandleError";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../../../api/ToastAlert";
 
 function InputUpload(props) {
     const profileRef = useRef();
     const [savedImg, setSavedImg] = useState(null);
     const [isCropOpen, setIsCropOpen] = useState(false);
     const [cropImg, setCropImg] = useState(null);
-
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
     const photoUrl = process.env.REACT_APP_MEMBERURL;
 
     const uploadProfileImg = async (e) => {
         const file = e.target.files[0];
+        if(!file) {
+            return;
+        }
         const fileExtention = file?.name.split('.').pop().toLowerCase();
         if (!fileExtention || !['png', 'jpg', 'jpeg'].includes(fileExtention)) {
-            alert('.png, .jpg, .jpeg 파일만 업로드 가능합니다.');
+            toastAlert('.png, .jpg, .jpeg 파일만 업로드 가능합니다.','warning');
             resetFileInput();
             return;
         }
@@ -35,8 +41,7 @@ function InputUpload(props) {
                 setCropImg(URL.createObjectURL(file));
             }
         } catch (error) {
-            alert('사진 업로드에 실패했습니다.\n잠시후 다시 시도해주세요.');
-            console.error('사진 업로드 실패' + error.response?.status);
+            jwtHandleError(error,toastAlert);
         }
     }
 
@@ -57,8 +62,7 @@ function InputUpload(props) {
                     resetFileInput();
                 }
             } catch (error) {
-                alert('사진 초기화에 실패했습니다.\n잠시후 다시 시도해주세요.');
-                console.error('사진 초기화 실패' + error.response?.status);
+                jwtHandleError(error,toastAlert);
             }
         }
     }
@@ -89,7 +93,7 @@ function InputUpload(props) {
                 <input
                     type='file'
                     hidden
-                    accept='.png,.jpg,.jpeg'
+                    accept='image/*'
                     ref={profileRef}
                     onChange={uploadProfileImg}
                 />

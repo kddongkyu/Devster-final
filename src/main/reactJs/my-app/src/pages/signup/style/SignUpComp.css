@@ -1,0 +1,84 @@
+.signup-company-compreg-text {
+    position: absolute;
+    top: 31.6rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-weight: bold;
+}
+
+.signup-company-compreg-confirm {
+    position: absolute;
+    top: 39.4rem;
+    left: calc(50% - 108px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 21.6rem;
+    height: 1.9rem;
+}
+
+.signup-company-compreg-inputbo {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 33.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-hr {
+    position: absolute;
+    width: 100%;
+    top: 47.3rem;
+    right: 0;
+    left: 0;
+    border-top: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 0.1rem;
+}
+
+.signup-comp-signin-link,
+.signup-comp-signin-text {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 73px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-signin-link {
+    left: calc(50% + 36px);
+    text-decoration: underline;
+    color: #721ea6;
+    cursor: pointer;
+}
+
+.signup-comp-signin {
+    position: absolute;
+    top: 51.8rem;
+    left: calc(50% - 73px);
+    width: 14.6rem;
+    height: 1.9rem;
+}
+
+.signup-company-compreg-msg {
+    position: absolute;
+    top: 31.8rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: red;
+    text-align: right;
+    display: inline-block;
+}
+
+.signup-comp-text-color-error {
+    color: red;
+}
+
+.signup-comp-text-color-confirm {
+    color: #721ea6;
+}

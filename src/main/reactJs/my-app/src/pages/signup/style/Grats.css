@@ -1,0 +1,158 @@
+.signup-success-icon {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 26px);
+    width: 5.51rem;
+    height: 5.51rem;
+}
+.signup-success-text-success,
+.signup-success-text-ty {
+    position: absolute;
+    letter-spacing: 0.01em;
+    display: inline-block;
+}
+.signup-success-text-success {
+    top: 0;
+    left: calc(50% - 72.68px);
+    width: 14.42rem;
+    height: 4.1rem;
+}
+.signup-success-text-ty {
+    top: 4.52rem;
+    left: calc(50% - 142px);
+    font-size: 1.5rem;
+    color: #626567;
+    width: 28.4rem;
+    height: 2.68rem;
+}
+.signup-success-box,
+.signup-success-text {
+    position: absolute;
+    top: 6.7rem;
+    left: calc(50% - 142px);
+    width: 28.4rem;
+    height: 7.2rem;
+}
+.signup-success-box {
+    top: 20.6rem;
+    height: 13.9rem;
+    font-size: 2.3rem;
+}
+.signup-success-back-box {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 65px);
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1.3px solid #d9d9d9;
+    box-sizing: border-box;
+    width: 13rem;
+    height: 3.8rem;
+}
+.signup-success-back-text {
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - 44px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 8.8rem;
+    height: 1.9rem;
+}
+.signup-success-back {
+    position: absolute;
+    top: 36.4rem;
+    left: calc(50% - 139px);
+    width: 13rem;
+    height: 3.8rem;
+    cursor: pointer;
+}
+.signup-success-login-box {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 65px);
+    border-radius: 5px;
+    background-color: #721ea6;
+    border: 1.3px solid #721ea6;
+    box-sizing: border-box;
+    width: 13rem;
+    height: 3.8rem;
+}
+.signup-success-login-text {
+    position: absolute;
+    top: 0.95rem;
+    left: calc(50% - 37px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 7.4rem;
+    height: 1.9rem;
+}
+.signup-success-login {
+    position: absolute;
+    top: 36.4rem;
+    left: calc(50% + 9px);
+    width: 13rem;
+    height: 3.8rem;
+    color: #fff;
+    cursor: pointer;
+}
+.signup-success {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+
+@keyframes layer_vector_rotate {
+    0% {
+        rotate: -45deg;
+    }
+    38% {
+        rotate: 6.96deg;
+    }
+    76% {
+        rotate: -1.08deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
+@keyframes layer_vector_scale {
+    0% {
+        scale: 175% 175%;
+    }
+    38% {
+        scale: 88.4% 88.4%;
+    }
+    76% {
+        scale: 101.8% 101.8%;
+    }
+    100% {
+        scale: 100% 100%;
+    }
+}
+@keyframes llayer_vector_opacity {
+    0% {
+        opacity: 0%;
+    }
+    38% {
+        opacity: 115.47%;
+    }
+    76% {
+        opacity: 97.6%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+.signup-success-icon {
+    animation: layer_vector_rotate 0.8s cubic-bezier(0.33, 0, 0.67, 1) 0s 1 normal both,
+    layer_vector_scale 0.8s cubic-bezier(0.33, 0, 0.67, 1) 0s 1 normal both,
+    llayer_vector_opacity 0.8s cubic-bezier(0.33, 0, 0.67, 1) 0s 1 normal both;
+}

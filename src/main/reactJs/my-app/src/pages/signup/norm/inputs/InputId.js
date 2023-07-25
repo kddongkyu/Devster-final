@@ -2,15 +2,26 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setM_id, setIdChk, setIdIsValid} from "../../../../redux/normMemberSlice";
 import axios from "axios";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../../../api/ToastAlert";
+import {jwtHandleError} from "../../../../api/JwtHandleError";
 
 function InputId(props) {
     const dispatch = useDispatch();
     const m_id = useSelector(state => state.norm.m_id);
     const idIsValid = useSelector(state => state.norm.idIsValid);
-
+    const isSubmitted = useSelector(state => state.norm.isSubmitted);
     const [isIdTouched, setIsIdTouched] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [isInputValid, setisInputValid] = useState(true);
+    const [isInputValid, setIsInputValid] = useState(true);
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
+
+    useEffect(()=> {
+        if(!idIsValid && isSubmitted) {
+            setIsIdTouched(true);
+        }
+    },[isSubmitted]);
 
     const checkId = useCallback(async () => {
         try {
@@ -18,19 +29,19 @@ function InputId(props) {
             if (res?.status === 200) {
                 if (res.data === false) {
                     dispatch(setIdIsValid(true));
-                    setisInputValid(true);
+                    setIsInputValid(true);
                     setErrorMessage('사용 가능한 아이디입니다.');
                 } else {
                     dispatch(setIdIsValid(false));
-                    setisInputValid(false);
+                    setIsInputValid(false);
                     setErrorMessage('이미 사용중인 아이디입니다.');
                 }
             }
         } catch (error) {
             dispatch(setIdIsValid(false));
-            setisInputValid(false);
+            setIsInputValid(false);
             setErrorMessage('서버에 문제가 발생했습니다.');
-            console.error('중복확인 에러' + error.response?.status)
+            jwtHandleError(error,toastAlert);
         }
     }, [dispatch, m_id]);
 
@@ -42,10 +53,10 @@ function InputId(props) {
                 dispatch(setIdChk(isIdValid));
                 if (!m_id.trim()) {
                     setErrorMessage('필수 입력 항목입니다.');
-                    setisInputValid(false);
+                    setIsInputValid(false);
                 } else if (!isIdValid) {
                     setErrorMessage('아이디를 확인해주세요.');
-                    setisInputValid(false);
+                    setIsInputValid(false);
                 } else {
                     checkId();
                 }
@@ -85,6 +96,7 @@ function InputId(props) {
                 type='text'
                 className={`${isInputValid ? 'signup-guest-id-inputbox' : 'signup-guest-id-inputbox-error'}`}
                 value={m_id}
+                required={isSubmitted}
                 onChange={handleIdChange}
             />
         </div>
