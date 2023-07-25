@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -12,4 +14,5 @@ public class QboardCommentDetailDto {
     private String photo;
     private String nickname;
     private int replyCount;
+    private List<QboardCommentDetailDto> replyList;
 }
