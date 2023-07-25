@@ -265,7 +265,7 @@ function FboardDetail(props) {
                     alt=""
                     src={fboardData.mPhoto}
                 />
-                <div className="fboard-detail-info-nickname">{fboardData.mNicname}</div>
+                <div className="fboard-detail-info-nickname" >{fboardData.mNicname}</div>
                 <div className="fboard-detail-info-status-text">
                     <span>{fboardData.fboard.fb_readcount}</span>
                     {/*<span className="span">{`수정됨 `}</span>*/}

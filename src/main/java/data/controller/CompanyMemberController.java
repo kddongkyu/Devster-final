@@ -36,6 +36,10 @@ public class CompanyMemberController {
         this.mailService = mailService;
     }
 
+    @PostMapping("/D1/check")
+    public void check() {
+    }
+
     @GetMapping("/D1")
     public ResponseEntity<List<CompanyMemberDto>> getAllCompanyMembers(){
         return new ResponseEntity<List<CompanyMemberDto>>(companyMemberService.getAllCompanyMembers(), HttpStatus.OK);
@@ -67,6 +71,11 @@ public class CompanyMemberController {
     public ResponseEntity<Void> updateCompanyMember(@RequestBody CompanyMemberDto dto) {
         companyMemberService.updateCompanyMember(escapeDto(dto));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/D0/regnum")
+    public boolean isDuplicatedRegNum(@RequestBody JsonNode json) {
+        return companyMemberService.isDuplicateRegNum(json.get("regnum").asText());
     }
 
     @PostMapping("/D0/email")

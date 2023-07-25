@@ -35,10 +35,8 @@ public class PostMessageEntity {
 
     public static PostMessageEntity toPostMessageEntity(PostMessageDto dto){
         return PostMessageEntity.builder()
-                .MESidx(dto.getMes_idx())
                 .SENDnick(dto.getSend_nick())
                 .RECVnick(dto.getRecv_nick())
-                .SENDtime(dto.getSend_time())
                 .content(dto.getContent())
                 .subject(dto.getSubject())
                 .build();
