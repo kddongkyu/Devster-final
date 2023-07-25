@@ -1,5 +1,5 @@
 import "./style/FboardForm.css";
-import {useState} from "react";
+import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
@@ -10,6 +10,8 @@ function FboardForm (props)  {
     const [fbContent,setFbContent]=useState('');
     const [photoLength, setPhotoLength]=useState(0);
     const navi=useNavigate();
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
     console.log(de.idx);
@@ -36,32 +38,44 @@ function FboardForm (props)  {
     }
 
     //파일 업로드
-    const onUploadEvent=(e)=>{
-        const uploadPhoto=new FormData();
-        setPhotoLength(e.target.files.length);
+    const onUploadEvent = (e) => {
+        setIsLoading(true);
+        const uploadPhoto = new FormData();
+        const files = e.target.files;
+        const maxAllowedFiles = 10;
 
-        for (let i = 0; i < e.target.files.length; i++) {
-            uploadPhoto.append("upload", e.target.files[i]);
+        // Check if the number of files exceeds the limit
+        if (files.length + photoLength > maxAllowedFiles) {
+            // Handle the error or inform the user that only 10 files are allowed
+            alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
+            e.target.value = null;
+            setIsLoading(false);
+            return;
+        }
+
+        setPhotoLength(photoLength + files.length);
+        const newPhotos = Array.from(files);
+        setSelectedPhotos([...selectedPhotos, ...newPhotos]);
+
+        for (let i = 0; i < files.length; i++) {
+            uploadPhoto.append("upload", files[i]);
         }
 
         axiosIns({
-            method:'post',
-            url:'/api/fboard/D1/photo/upload',
-            data:uploadPhoto,
-            headers:{'Content-Type':'multipart/form-data'}
-        }).then(res=>{
-            // setFbPhoto(res.data);
-            // // 추가: 업로드가 완료되면 fbPhoto 상태를 dto에 설정
-            // const dto = {
-            //     fb_subject: fbSubject,
-            //     fb_photo: res.data.join(","), // 여러장의 사진 URL을 쉼표로 구분하여 문자열로 설정
-            //     fb_content: fbContent,
-            //     m_idx: de.idx
-            // };
-        });
-    }
+            method: "post",
+            url: "/api/fboard/D1/photo/upload",
+            data: uploadPhoto,
+            headers: { "Content-Type": "multipart/form-data" },
+        }).then((res) => {
+            // Handle the response if needed
 
-  return (
+        }).finally(()=>{
+            setIsLoading(false);
+        });
+    };
+
+
+    return (
       <div>
     <form className="fboard-form" onSubmit={onSubmitEvent}>
       <div className="advertise-box">
@@ -91,13 +105,22 @@ function FboardForm (props)  {
         ></textarea>
       </div>
 
+        {/* 사진 미리보기*/}
+        <div className="fboard-form-photo-list">
+            {selectedPhotos.map((photo, index) => (
+                <img
+                    key={index}
+                    src={URL.createObjectURL(photo)}
+                    alt={`미리보기 ${index + 1}`}
+                    className={`fboard-form-photo${index + 1}`}
+                />
+            ))}
+        </div>
+
       <div className="fboard-form-fileupload">
         <input type="file" className="fboard-form-subject-rec"
                 placeholder="첨부 사진을 올려주세요."
                onChange={onUploadEvent} multiple/>
-        {/*<div className="fboard-form-fileupload-placeho">*/}
-        {/*  첨부 사진을 올려주세요.*/}
-        {/*</div>*/}
         <div className="fboard-form-fileupload-cnt-tex">
             <img
                 // className="fboard-form-fileupload-icon"
@@ -108,9 +131,9 @@ function FboardForm (props)  {
         </div>
 
       </div>
-      <button type='submit' className="fboard-form-btn">
-        <div className="fboard-form-btn-child" />
-        <div className="fboard-form-btn-text">게시글등록</div>
+      <button type='submit' className="fboard-form-btn" disabled={isLoading}>
+        <div className={isLoading ? "fboard-form-btn-child_loading" : "fboard-form-btn-child"} />
+        <div className="fboard-form-btn-text"> {isLoading ? "로딩중..." : "게시글등록"} </div>
         <img
           className="fboard-form-btn-icon"
           alt=""
@@ -119,7 +142,6 @@ function FboardForm (props)  {
       </button>
       <div className="moblie" />
     </form>
-          {/*<img alt='' src={`${photoUrl}${photo}`}/>*/}
       </div>
   );
 };
