@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QboardCommentRespository extends JpaRepository<QboardCommentEntity, Integer> {
-    List<QboardCommentEntity> findAllByQBidx(int qb_idx);
+    List<QboardCommentEntity> findAllByQBidxAndQBcrefEqualsOrderByQBcwritedayDesc(int QBidx, int QBcref);
+    List<QboardCommentEntity> findAllByQBcrefOrderByQBcwritedayDesc(int qb_idx);
     int countAllByQBidx(int qb_idx);
     int countAllByQBcref(int qbc_idx);
+    void deleteAllByQBcref(int qbc_idx);
 }

@@ -144,6 +144,10 @@ public class MemberService {
         return academyInfoRepository.findAllByAInameContains(name);
     }
 
+    public String academyName(int ai_idx) {
+        return academyInfoRepository.findById(ai_idx).get().getAIname();
+    }
+
     public boolean isDuplicateId(String id) {
         log.info("일반회원 아이디 중복확인 완료");
         return memberRepository.existsByMId(id);

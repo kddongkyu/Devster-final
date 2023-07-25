@@ -16,5 +16,5 @@ public class PostMessageDetailDto {
     private String content;
     private String send_nick;
     private String send_nick_photo;
-    private Timestamp send_time;
+    private String send_time;
 }

@@ -38,7 +38,7 @@ out/
 .vscode/
 
 ### Setting File ###
-*.yml
+#.yml
 
 ### React Build File ###
 src/main/resources/static/**
