@@ -428,3 +428,21 @@
     width: 18.7rem;
     height: 1.9rem;
 }
+
+.login-pass-capslock-norm {
+    position: absolute;
+    top: 65.5rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-size: 0.8rem;
+    color: red;
+}
+
+.login-pass-capslock-comp {
+    position: absolute;
+    top: 48.3rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-size: 0.8rem;
+    color: red;
+}

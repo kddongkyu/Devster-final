@@ -15,6 +15,7 @@ function FboardForm(props) {
     const [fbContent, setFbContent] = useState('');
     const [photoLength, setPhotoLength] = useState(0);
     const navi = useNavigate();
+
     //에러 호출용 변수
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);

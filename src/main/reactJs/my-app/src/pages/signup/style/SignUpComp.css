@@ -1,9 +1,661 @@
+.signup-comp-input-position-box {
+    position:relative;
+    top:-44.3rem;
+}
+
+.signup-comp-member {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 166rem;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+
+.signup-comp-intro-icon {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 44px);
+    width: 8.7rem;
+    height: 5.1rem;
+}
+
+.signup-comp-intro-icon-text-d {
+    position: absolute;
+    top: 3.9rem;
+    left: calc(50% - 86px);
+    display: inline-block;
+    width: 17.2rem;
+    height: 4.5rem;
+}
+
+.signup-comp-intro-icon-text-h {
+    position: absolute;
+    top: 8.8rem;
+    left: calc(50% - 76px);
+    font-size: 1.3rem;
+    letter-spacing: 7.5px;
+    color: #721ea6;
+}
+
+.signup-comp-intro {
+    position: absolute;
+    top: 6.4rem;
+    left: calc(50% - 86px);
+    width: 17.2rem;
+    height: 10.8rem;
+    font-size: 4.8rem;
+    font-family: Lalezar;
+    cursor: pointer;
+}
+
+.signup-comp-devster {
+    margin: 0;
+}
+
+.signup-comp-intro-text {
+    position: absolute;
+    top: 19rem;
+    left: calc(50% - 132px);
+    letter-spacing: 0.01em;
+    color: #626567;
+}
+
+.signup-comp-choose-norm-false {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 67.5px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+}
+
+.signup-comp-choose-bar-icon {
+    position: absolute;
+    top: 0.25rem;
+    left: calc(50% - 0.1px);
+    width: 0.12rem;
+    height: 1.9rem;
+}
+
+.signup-comp-choose-comp {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 11.5px);
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor: pointer;
+}
+
+.signup-comp-choose {
+    position: absolute;
+    top: 25.7rem;
+    left: calc(50% - 68px);
+    width: 13.5rem;
+    height: 2.2rem;
+    font-size: 1.5rem;
+    color: #721ea6;
+}
+
+.signup-comp-compname-position-box {
+    position: relative;
+    bottom: 44.3rem;
+}
+
+.signup-comp-compname-text {
+    position: absolute;
+    top: 78.8rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-compname-text {
+    left: 6rem;
+}
+
+.signup-comp-compname-exist-text {
+    position: absolute;
+    top: 79rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    text-align: right;
+    display: inline-block;
+    width: 14rem;
+}
+
+.signup-comp-compname-inputbox {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 81.1rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-compname-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 81.1rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-compname-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-email-exist-text,
+.signup-comp-email-text {
+    position: absolute;
+    top: 87rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-email-text {
+    left: 6rem;
+}
+
+.signup-comp-email-exist-text,
+.signup-comp-email-text {
+    position: absolute;
+    top: 87rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-email-exist-text {
+    position: absolute;
+    top: 87.2rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    text-align: right;
+    display: inline-block;
+    width: 14rem;
+}
+
+.signup-comp-email-inputbox {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 89.3rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-email-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 89.3rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-email-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-email-reg-send {
+    position: absolute;
+    top: 94.4rem;
+    left: 5.6rem;
+    width: 9.9rem;
+    height: 3rem;
+    color: #626567;
+    cursor: pointer;
+}
+
+.signup-comp-button-disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.signup-comp-email-inputbox1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #f5eff9;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    width: 9.9rem;
+    height: 3rem;
+}
+
+.signup-comp-email-reg-send-te {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.6rem;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 8.69rem;
+}
+
+.signup-comp-email-reg-send-inprogress {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #b2b2b2;
+    border-radius: 50%;
+    border-top-color: #721ea6;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.signup-comp-email-reg-input {
+    position: absolute;
+    width: calc(100% - 218px);
+    top: 94.4rem;
+    right: 5.6rem;
+    left: 16.2rem;
+    height: 3rem;
+    color: #626567;
+}
+
+.signup-comp-email-input-reg-b,
+.signup-comp-email-inputbox2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-sizing: border-box;
+    height: 3rem;
+}
+
+.signup-comp-email-input-reg-b {
+    width: 100%;
+    left: 0;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+}
+
+.signup-comp-email-reg-chk {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
+.signup-comp-email-inputbox2 {
+    border-radius: 0 5px 5px 0;
+    background-color: #f5eff9;
+    border: 1px solid #d2d2d2;
+    width: 6rem;
+}
+
+.signup-comp-email-reg-send-te1 {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.7rem;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 4.6rem;
+}
+
+.signup-comp-email-reg-timelef {
+    position: absolute;
+    top: 97.6rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: #721ea6;
+    text-align: right;
+    display: inline-block;
+    width: 13rem;
+}
+
+.signup-comp-email-reset-icon {
+    position: absolute;
+    top: 90.43rem;
+    right: 7.53rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    cursor: pointer;
+}
+
+.signup-comp-pass-text {
+    position: absolute;
+    top: 100.4rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-pass-error-text {
+    position: absolute;
+    top: 100.6rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    text-align: right;
+    display: inline-block;
+    width: 17.5rem;
+    color: red;
+}
+
+.signup-comp-pass-secure {
+    position: absolute;
+    top: 100.3rem;
+    left: 12.3rem;
+    width: 5.9rem;
+    height: 1.8rem;
+    font-size: 0.8rem;
+    color: #0fb133;
+}
+
+.signup-comp-pass-secure-text-one {
+    color: #cb0303;
+}
+
+.signup-comp-pass-secure-text-two {
+    color: #db9f04;
+}
+
+.signup-comp-pass-secure-text-three {
+    position: absolute;
+    top: 0;
+    right: 0;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 5.9rem;
+}
+
+.signup-comp-pass-secure-icons {
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    width: 3.9rem;
+    height: 0.3rem;
+}
+
+.signup-comp-pass-secure-red,
+.signup-comp-pass-secure-yello {
+    position: absolute;
+    top: 0;
+    right: 2.73rem;
+    background-color: #cb0303;
+    width: 1.17rem;
+    height: 0.3rem;
+}
+
+.signup-comp-pass-secure-yello {
+    right: 1.37rem;
+    background-color: #db9f04;
+}
+
+.signup-comp-pass-secure-green {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #0fb133;
+    width: 1.17rem;
+    height: 0.3rem;
+}
+
+.signup-comp-pass-inputbox {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 102.7rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-pass-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 102.7rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-pass-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-pass-capslock {
+    position: absolute;
+    top: 106.6rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-size: 0.8rem;
+    color: red;
+}
+
+.signup-comp-pass-check-text {
+    position: absolute;
+    top: 108.5rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-pass-check-wanrin {
+    position: absolute;
+    top: 108.7rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: red;
+    text-align: right;
+    display: inline-block;
+    width: 14.5rem;
+}
+
+.signup-comp-pass-check-inputb {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 110.8rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-pass-check-inputb-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 110.8rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-pass-check-inputb-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-passchk-capslock {
+    position: absolute;
+    top: 114.7rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-size: 0.8rem;
+    color: red;
+}
+
+.signup-comp-tele-text {
+    position: absolute;
+    top: 70.6rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-tele-valid {
+    position: absolute;
+    top: 70.8rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: red;
+    text-align: right;
+    display: inline-block;
+}
+
+.signup-comp-tele-inputbox {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 72.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-tele-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 72.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-tele-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-cmname-text {
+    position: absolute;
+    top: 70.6rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-cmname-valid {
+    position: absolute;
+    top: 70.8rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: red;
+    text-align: right;
+    display: inline-block;
+}
+
+.signup-comp-cmname-inputbox {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 72.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-cmname-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 72.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-cmname-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.signup-comp-signup-text {
+    position: absolute;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    top: 30.4rem;
+    left: 2.4rem;
+    text-align: left;
+    width: 11.9rem;
+    font-weight: 600;
+}
+
 .signup-company-compreg-text {
     position: absolute;
     top: 31.6rem;
     left: 6rem;
     letter-spacing: 0.01em;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .signup-company-compreg-confirm {
@@ -29,10 +681,27 @@
     height: 3.9rem;
 }
 
+.signup-company-compreg-inputbo-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 33.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-company-compreg-inputbo-error:focus {
+    border: 2px solid red;
+}
+
 .signup-comp-hr {
     position: absolute;
     width: 100%;
-    top: 47.3rem;
+    top: 47.4rem;
     right: 0;
     left: 0;
     border-top: 1px solid #d2d2d2;
@@ -58,7 +727,7 @@
 
 .signup-comp-signin {
     position: absolute;
-    top: 51.8rem;
+    top: 50.5rem;
     left: calc(50% - 73px);
     width: 14.6rem;
     height: 1.9rem;
@@ -81,4 +750,35 @@
 
 .signup-comp-text-color-confirm {
     color: #721ea6;
+}
+
+.signup-comp-input-name {
+    color: red;
+}
+
+.signup-comp-reg-msg {
+    margin-bottom: 1.5rem;
+}
+
+.signup-comp-loading-inprogress {
+    display: inline-block;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 4px solid #b2b2b2;
+    border-radius: 50%;
+    border-top-color: #721ea6;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
 }

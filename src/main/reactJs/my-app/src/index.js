@@ -13,7 +13,7 @@ root.render(
     // <React.StrictMode>
     <Provider store={store}>
         <SnackbarProvider
-            maxSnack={2}
+            maxSnack={3}
             anchorOrigin={{vertical:'top', horizontal:'center'}}>
             <Root/>
         </SnackbarProvider>
