@@ -1,4 +1,4 @@
-.advertise-main {
+.qboard-advertise-main {
      position: absolute;
      width: 100%;
      top: 0;
@@ -10,7 +10,7 @@
     
 }
 
-.advertise-text {
+.qboard-advertise-text {
      position: absolute;
      top: 4.2rem;
      left: calc(50% - 18px);
@@ -18,7 +18,7 @@
     
 }
 
-.advertise-box {
+.qboard-advertise-box {
      position: absolute;
      width: calc(100% - 30px);
      top: 7.6rem;
@@ -30,7 +30,7 @@
     
 }
 
- /*.board-detail-type-hr-icon {*/  /*    position: absolute;*/  /*    width: 100%;*/  /*    top: 24.35rem;*/  /*    text-align: center;*/  /*    max-width: 100%;*/  /*    overflow: hidden;*/  /*    height: 0.3rem;*/  /*}*/ .board-detail-type-text {
+ /*.qboard-detail-type-hr-icon {*/  /*    position: absolute;*/  /*    width: 100%;*/  /*    top: 24.35rem;*/  /*    text-align: center;*/  /*    max-width: 100%;*/  /*    overflow: hidden;*/  /*    height: 0.3rem;*/  /*}*/ .qboard-detail-type-text {
      position: absolute;
      top: 21.9rem;
      left: 2.4rem;
@@ -130,7 +130,7 @@
     
 }
 
-.board-detail-header-btn-like-i-icon {
+.qboard-detail-header-btn-like-i-icon {
      position: absolute;
      top: 0.45rem;
      right: 2.4rem;
@@ -139,7 +139,7 @@
     
 }
 
-.board-detail-header-btn-like-t {
+.qboard-detail-header-btn-like-t {
      position: absolute;
      top: 0;
      right: 0;
@@ -156,7 +156,7 @@
     
 }
 
-.board-detail-header-btn-dislik-icon {
+.qboard-detail-header-btn-dislik-icon {
      position: absolute;
      top: 0.55rem;
      right: 1.8rem;
@@ -188,7 +188,7 @@
     
 }
 
- /* 중단 */ .board-detail-textarea-contents {
+ /* 중단 */ .qboard-detail-textarea-contents {
      position: relative;
      width: 100%;
      top: 6.7rem;
@@ -206,7 +206,7 @@
     
 }
 
-.board-detail-photo {
+.qboard-detail-photo {
      /*top: 88rem;*/ 
     left: calc(50% - 150px);
      border: 1px solid #fff;
@@ -216,7 +216,7 @@
     
 }
 
-.board-detail-textarea-subject {
+.qboard-detail-textarea-subject {
      position: absolute;
      top: 0;
      left: 0;
@@ -226,7 +226,7 @@
     
 }
 
-.board-detail-textarea {
+.qboard-detail-textarea {
      position: absolute;
      width: calc(100% - 74px);
      top: 35.7rem;
@@ -237,14 +237,14 @@
     
 }
 
- /* 하단 */  /*.board-detail-listbackcounter{*/  /*    display: flex;*/  /*}*/ .board-detail-listback-rec {
+ /* 하단 */  /*.qboard-detail-listbackcounter{*/  /*    display: flex;*/  /*}*/ .qboard-detail-listback-rec {
      position: absolute;
      background-color: #fff;
      box-sizing: border-box;
     
 }
 
-.board-detail-listback-rec {
+.qboard-detail-listback-rec {
      top: 0;
      left: 0;
      border-radius: 5px;
@@ -254,7 +254,7 @@
     
 }
 
-.board-detail-listback-text {
+.qboard-detail-listback-text {
      position: absolute;
      top: 0.8rem;
      left: 3.1rem;
@@ -265,7 +265,7 @@
     
 }
 
-.board-detail-listback-icon {
+.qboard-detail-listback-icon {
      position: absolute;
      top: 0.95rem;
      left: 1rem;
@@ -275,7 +275,7 @@
     
 }
 
-.board-detail-listback {
+.qboard-detail-listback {
      position: absolute;
      top: 120.5rem;
      left: 4.1rem;
@@ -286,7 +286,7 @@
     
 }
 
-.board-detail-counter-like-box {
+.qboard-detail-counter-like-box {
      position: absolute;
      top: 0;
      right: 0;
@@ -299,7 +299,7 @@
     
 }
 
-.board-detail-counter-like-icon {
+.qboard-detail-counter-like-icon {
      position: absolute;
      top: 1.66rem;
      right: 0.96rem;
@@ -308,7 +308,7 @@
     
 }
 
-.board-detail-counter-like {
+.qboard-detail-counter-like {
      position: absolute;
      top: 0;
      right: 8.8rem;
@@ -317,7 +317,7 @@
     
 }
 
-.board-detail-counter-num-box {
+.qboard-detail-counter-num-box {
      position: absolute;
      top: 0;
      right: 0;
@@ -329,7 +329,7 @@
     
 }
 
-.board-detail-counter-num-text {
+.qboard-detail-counter-num-text {
      position: absolute;
      top: 1rem;
      right: 1.7rem;
@@ -338,7 +338,7 @@
     
 }
 
-.board-detail-counter-num {
+.qboard-detail-counter-num {
      position: absolute;
      top: 0;
      right: 3.3rem;
@@ -347,7 +347,7 @@
     
 }
 
-.board-detail-counter-dislike-b {
+.qboard-detail-counter-dislike-b {
      border-radius: 0 5px 5px 0;
      background-color: #fff;
      border: 1px solid #bdc0c4;
@@ -355,7 +355,7 @@
     
 }
 
-.board-detail-counter-dislike, .board-detail-counter-dislike-b {
+.qboard-detail-counter-dislike, .qboard-detail-counter-dislike-b {
      position: absolute;
      top: 0;
      right: 0;
@@ -364,7 +364,7 @@
     
 }
 
-.board-detail-counter {
+.qboard-detail-counter {
      position: absolute;
      top: 120.5rem;
      right: 3.6rem;
@@ -376,7 +376,7 @@
     
 }
 
-.advertise-text1 {
+.qboard-advertise-text1 {
      position: absolute;
      top: 4.2rem;
      left: calc(50% - 27px);
@@ -384,7 +384,7 @@
     
 }
 
-.advertise-box1 {
+.qboard-advertise-box1 {
      position: absolute;
      width: calc(100% - 30px);
      top: 127.9rem;
@@ -396,7 +396,7 @@
     
 }
 
-.advertise-box2 {
+.qboard-advertise-box2 {
      position: absolute;
      width: calc(100% - 30px);
      top: 128rem;
@@ -408,7 +408,7 @@
     
 }
 
-.board-detail-hr-icon {
+.qboard-detail-hr-icon {
      position: absolute;
      width: calc(100% - 40px);
      top: 142.44rem;
@@ -420,7 +420,7 @@
     
 }
 
-.board-detail-comments-counts {
+.qboard-detail-comments-counts {
      position: absolute;
      top: 144.1rem;
      left: 2rem;
@@ -431,7 +431,7 @@
     
 }
 
-.board-detail-commnets-form-box {
+.qboard-detail-commnets-form-box {
      position: absolute;
      width: 100%;
      top: 0;
@@ -445,7 +445,7 @@
     
 }
 
-.board-detail-commnets-form-img-icon {
+.qboard-detail-commnets-form-img-icon {
      position: absolute;
      top: 1.5rem;
      left: 1.6rem;
@@ -456,7 +456,7 @@
     
 }
 
-.board-detail-commnets-form-tex {
+.qboard-detail-commnets-form-tex {
      position: absolute;
      width: calc(100% - 68px);
      top: 1.7rem;
@@ -470,7 +470,7 @@
     
 }
 
-.board-detail-commnets-form {
+.qboard-detail-commnets-form {
      position: absolute;
      width: calc(100% - 32px);
      top: 147.6rem;
@@ -480,7 +480,7 @@
     
 }
 
-.board-detail-commnets-form-sub {
+.qboard-detail-commnets-form-sub {
      position: absolute;
      top: 0;
      right: 0;
@@ -491,7 +491,7 @@
     
 }
 
-.board-detail-commnets-form-sub1 {
+.qboard-detail-commnets-form-sub1 {
      position: absolute;
      top: 1rem;
      right: 3.1rem;
@@ -499,7 +499,7 @@
     
 }
 
-.board-detail-commnets-submit-b {
+.qboard-detail-commnets-submit-b {
      position: absolute;
      top: 166.3rem;
      right: 3.2rem;
@@ -510,7 +510,7 @@
     
 }
 
-.board-detail-commnets-detail-i-icon {
+.qboard-detail-commnets-detail-i-icon {
      position: absolute;
      top: 0;
      left: 0;
@@ -521,7 +521,7 @@
     
 }
 
-.board-detail-commnets-detail-i {
+.qboard-detail-commnets-detail-i {
      position: absolute;
      top: 174.4rem;
      left: 2rem;
@@ -531,7 +531,7 @@
     
 }
 
-.board-detail-commnets-all-up-b {
+.qboard-detail-commnets-all-up-b {
      position: absolute;
      top: 0;
      right: 0;
@@ -544,7 +544,7 @@
     
 }
 
-.board-detail-commnets-all-up-i-icon {
+.qboard-detail-commnets-all-up-i-icon {
      position: absolute;
      top: 1.15rem;
      right: 0.81rem;
@@ -553,7 +553,7 @@
     
 }
 
-.board-detail-commnets-all-up {
+.qboard-detail-commnets-all-up {
      position: absolute;
      top: 0;
      right: 7.57rem;
@@ -562,7 +562,7 @@
     
 }
 
-.board-detail-commnets-all-box {
+.qboard-detail-commnets-all-box {
      position: absolute;
      top: 0;
      right: 0;
@@ -574,7 +574,7 @@
     
 }
 
-.board-detail-commnets-all-like2 {
+.qboard-detail-commnets-all-like2 {
      position: absolute;
      top: 0.61rem;
      right: 1.36rem;
@@ -586,7 +586,7 @@
     
 }
 
-.board-detail-commnets-all-down-icon {
+.qboard-detail-commnets-all-down-icon {
      position: absolute;
      top: 1.14rem;
      right: 0.81rem;
@@ -595,7 +595,7 @@
     
 }
 
-.board-detail-commnets-all-down {
+.qboard-detail-commnets-all-down {
      position: absolute;
      top: 0;
      right: 0;
@@ -604,7 +604,7 @@
     
 }
 
-.board-detail-commnets-all-like {
+.qboard-detail-commnets-all-like {
      position: absolute;
      top: 175.2rem;
      right: 1.9rem;
@@ -616,7 +616,7 @@
     
 }
 
-.board-detail-commnets-all-cont {
+.qboard-detail-commnets-all-cont {
      position: absolute;
      width: calc(100% - 45px);
      top: 179.2rem;
@@ -628,7 +628,7 @@
     
 }
 
-.board-detail-commnets-hide-ico-icon {
+.qboard-detail-commnets-hide-ico-icon {
      position: absolute;
      top: 0.5rem;
      left: -0.11rem;
@@ -637,7 +637,7 @@
     
 }
 
-.board-detail-commnets-hide-com, .board-detail-commnets-hide-tex {
+.qboard-detail-commnets-hide-com, .qboard-detail-commnets-hide-tex {
      position: absolute;
      top: 0;
      left: 1.8rem;
@@ -645,13 +645,13 @@
     
 }
 
-.board-detail-commnets-hide-com {
+.qboard-detail-commnets-hide-com {
      left: 10.8rem;
      color: #626567;
     
 }
 
-.board-detail-commnets-hide {
+.qboard-detail-commnets-hide {
      position: absolute;
      top: 200.9rem;
      left: 2.5rem;
@@ -663,7 +663,7 @@
     
 }
 
-.board-detail-recom-box {
+.qboard-detail-recom-box {
      position: absolute;
      top: 203.7rem;
      left: 4.1rem;
@@ -674,7 +674,7 @@
     
 }
 
-.board-detail-recom-info-counts {
+.qboard-detail-recom-info-counts {
      position: absolute;
      top: 0;
      left: 0;
@@ -685,7 +685,7 @@
     
 }
 
-.board-detail-recom-info-date {
+.qboard-detail-recom-info-date {
      position: absolute;
      top: 1.9rem;
      left: 0.1rem;
@@ -695,7 +695,7 @@
     
 }
 
-.board-detail-recom-info-text {
+.qboard-detail-recom-info-text {
      position: absolute;
      top: 0;
      left: 4.4rem;
@@ -704,7 +704,7 @@
     
 }
 
-.board-detail-recom-info {
+.qboard-detail-recom-info {
      position: absolute;
      top: 204.6rem;
      left: 5rem;
@@ -714,7 +714,7 @@
     
 }
 
-.board-detail-recom-likes-count {
+.qboard-detail-recom-likes-count {
      position: absolute;
      top: 0;
      right: 2.84rem;
@@ -723,7 +723,7 @@
     
 }
 
-.board-detail-recom-down-box {
+.qboard-detail-recom-down-box {
      position: absolute;
      top: 0;
      right: 0;
@@ -736,7 +736,7 @@
     
 }
 
-.board-detail-recom-likes {
+.qboard-detail-recom-likes {
      position: absolute;
      top: 205.4rem;
      right: 1.9rem;
@@ -748,7 +748,7 @@
     
 }
 
-.board-detail-recom-recom-form, .board-detail-recom-textarea {
+.qboard-detail-recom-recom-form, .qboard-detail-recom-textarea {
      position: absolute;
      left: 5.3rem;
      letter-spacing: -0.24px;
@@ -756,7 +756,7 @@
     
 }
 
-.board-detail-recom-textarea {
+.qboard-detail-recom-textarea {
      width: calc(100% - 82px);
      top: 209.2rem;
      display: inline-block;
@@ -764,7 +764,7 @@
     
 }
 
-.board-detail-recom-recom-form {
+.qboard-detail-recom-recom-form {
      top: 222.9rem;
      text-align: center;
     

@@ -56,66 +56,66 @@ const Qboard = () => {
 
 
   return (
-    <div className="board">
-    <div className="advertise-box">
-      <div className="advertise-main" />
-      <b className="advertise-text">광고</b>
+    <div className="qboard">
+    <div className="qboard-advertise-box">
+      <div className="qboard-advertise-main" />
+      <b className="qboard-advertise-text">광고</b>
     </div>
-    <div className="board-name">
-      <div className="board-name-box" />
-      <div className="board-name-text">
-        <b className="board-name-text-type">{`Q&A`}</b>
-        <div className="board-name-text-detail">질문 및 답변 게시판</div>
+    <div className="qboard-name">
+      <div className="qboard-name-box" />
+      <div className="qboard-name-text">
+        <b className="qboard-name-text-type">{`Q&A`}</b>
+        <div className="qboard-name-text-detail">질문 및 답변 게시판</div>
       </div>
     </div>
-    <div className="board-selection">
-      <NavLink to="/fboard" activeClassName="active" className="board-selection-freeboard">
-        <div className="board-selection-freeboard-box" />
-        <div className="board-selection-freeboard-text">자유</div>
+    <div className="qboard-selection">
+      <NavLink to="/fboard" activeClassName="active" className="qboard-selection-freeboard">
+        <div className="qboard-selection-freeboard-box" />
+        <div className="qboard-selection-freeboard-text">자유</div>
       </NavLink>
-      <div className="board-selection-qna">
-        <div className="board-selection-qna-box" />
-        <div className="board-selection-qna-text">{`Q&A`}</div>
+      <div className="qboard-selection-qna">
+        <div className="qboard-selection-qna-box" />
+        <div className="qboard-selection-qna-text">{`Q&A`}</div>
       </div>
-      <NavLink to="/hboard" activeClassName="active" className="board-selection-hire">
-        <div className="board-selection-hire-box" />
-        <div className="board-selection-hire-text">채용정보</div>
+      <NavLink to="/hboard" activeClassName="active" className="qboard-selection-hire">
+        <div className="qboard-selection-hire-box" />
+        <div className="qboard-selection-hire-text">채용정보</div>
       </NavLink>
-      <NavLink to="/aboard" activeClassName="active" className="board-selection-academy">
-        <div className="board-selection-academy-box" />
-        <div className="board-selection-academy-text">학원별</div>
+      <NavLink to="/aboard" activeClassName="active" className="qboard-selection-academy">
+        <div className="qboard-selection-academy-box" />
+        <div className="qboard-selection-academy-text">학원별</div>
       </NavLink>
     </div>
-    <NavLink to="/qboard/form" activeClassName="active" className="board-write">
-      <div className="board-write-box" />
-      <img className="board-write-icon" alt="" src={require("./assets/board_write_icon.svg").default} />
-      <div className="board-write-text">질문하기</div>
+    <NavLink to="/qboard/form" activeClassName="active" className="qboard-write">
+      <div className="qboard-write-box" />
+      <img className="qboard-write-icon" alt="" src={require("./assets/board_write_icon.svg").default} />
+      <div className="qboard-write-text">질문하기</div>
     </NavLink>
-    <div className="board-function-sort">
-      <div className="board-function-sort-box" />
-      <div className="board-function-sort-reset">전체</div>
+    <div className="qboard-function-sort">
+      <div className="qboard-function-sort-box" />
+      <div className="qboard-function-sort-reset">전체</div>
       <img
-        className="board-function-sort-bar-icon"
+        className="qboard-function-sort-bar-icon"
         alt=""
         src={require("./assets/board_function_sort_bar.svg").default}
       />
       <img
-        className="board-function-sort-by-icon"
+        className="qboard-function-sort-by-icon"
         alt=""
         src={require("./assets/board_function_sort_by.svg").default}
       />
     </div>
-    <div className="board-function-search-input">
-      <input type="text" className="board-function-search-input1" />
+    <div className="qboard-function-search-input">
+      <input type="text" className="qboard-function-search-input1" />
       <img
-        className="board-function-search-icon"
+        className="qboard-function-search-icon"
         alt=""
         src={require("./assets/board_function_search_icon2.svg").default}
       />
     </div>
-    {/* <img className="board-hr-icon" alt="" src="/board-hr.svg" /> */}
+    {/* <img className="qboard-hr-icon" alt="" src="/qboard-hr.svg" /> */}
     <img
-      className="board-pages-reset-icon"
+      className="qboard-pages-reset-icon"
       alt=""
       src={require("./assets/board_pages_reset.svg").default}
       onClick={handleRefresh}
@@ -137,47 +137,46 @@ const Qboard = () => {
             style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
         />
       </div>
-    {/* <img className="board-hr-icon1" alt="" src="/board-hr1.svg" /> */}
-    <div className="board-notice">
-      <div className="board-notice-box" />
-      <div className="board-notice-preview">
-        <div className="board-notice-preview-info">
+    <div className="qboard-notice">
+      <div className="qboard-notice-box" />
+      <div className="qboard-notice-preview">
+        <div className="qboard-notice-preview-info">
           <img
-            className="board-notice-preview-info-logo-icon"
+            className="qboard-notice-preview-info-logo-icon"
             alt=""
             src={require("./assets/board_notice_preview_info_logo.svg").default}
           />
-          <div className="board-notice-preview-info-text">
+          <div className="qboard-notice-preview-info-text">
             admin_01 · 약 4시간 전
           </div>
         </div>
-        <b className="board-notice-preview-subject">DEVSTER 공지사항</b>
-        <div className="board-notice-preview-notice">
-          <div className="board-notice-preview-notice-bo" />
-          <div className="board-notice-preview-notice-te">공지사항</div>
+        <b className="qboard-notice-preview-subject">DEVSTER 공지사항</b>
+        <div className="qboard-notice-preview-notice">
+          <div className="qboard-notice-preview-notice-bo" />
+          <div className="qboard-notice-preview-notice-te">공지사항</div>
         </div>
-        <div className="board-notice-preview-hash">#공지사항 # Devster</div>
-        <div className="board-notice-preview-icons">
-          <div className="board-notice-preview-views">
-            <div className="board-notice-preview-views-tex">800</div>
+        <div className="qboard-notice-preview-hash">#공지사항 # Devster</div>
+        <div className="qboard-notice-preview-icons">
+          <div className="qboard-notice-preview-views">
+            <div className="qboard-notice-preview-views-tex">800</div>
             <img
-              className="board-notice-preview-views-ico-icon"
+              className="qboard-notice-preview-views-ico-icon"
               alt=""
               src={require("./assets/board_preview_views_icon.svg").default}
             />
           </div>
-          <div className="board-notice-preview-icons-com">
-            <div className="board-notice-preview-views-tex">99</div>
+          <div className="qboard-notice-preview-icons-com">
+            <div className="qboard-notice-preview-views-tex">99</div>
             <img
-              className="board-notice-preview-icons-com2"
+              className="qboard-notice-preview-icons-com2"
               alt=""
               src={require("./assets/board_preview_comments_icon.svg").default}
             />
           </div>
-          <div className="board-notice-preview-icons-lik">
-            <div className="board-notice-preview-icons-lik1">9</div>
+          <div className="qboard-notice-preview-icons-lik">
+            <div className="qboard-notice-preview-icons-lik1">9</div>
             <img
-              className="board-notice-preview-icons-lik2"
+              className="qboard-notice-preview-icons-lik2"
               alt=""
               src={require("./assets/board_preview_likes_icon.svg").default}
             />

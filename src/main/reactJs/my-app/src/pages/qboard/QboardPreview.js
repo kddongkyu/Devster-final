@@ -117,38 +117,38 @@ const QboardPreview = (props) => {
     }
 
     return (
-        <div className="board-preview">
-            <div className="board-preview-box" />
-            <img className="board-preview-img-profile" src={`${photoUrl}${props.data.photo}`}/>
-            <div className="board-preview-type">
-                <b className="board-preview-type-text">Q&A 게시판</b>
-                <div className="board-preview-type-date">{timeForToday(props.data.qboardDto.qb_writeday)}</div>
+        <div className="qboard-preview">
+            <div className="qboard-preview-box" />
+            <img className="qboard-preview-img-profile" src={`${photoUrl}${props.data.photo}`}/>
+            <div className="qboard-preview-type">
+                <b className="qboard-preview-type-text">Q&A 게시판</b>
+                <div className="qboard-preview-type-date">{timeForToday(props.data.qboardDto.qb_writeday)}</div>
             </div>
-            <div className="board-preview-id">
-                <div className="board-preview-type-text">{props.data.nickname}</div>
+            <div className="qboard-preview-id">
+                <div className="qboard-preview-type-text">{props.data.nickname}</div>
             </div>
-            <b className="board-preview-subject">{compareValues(String(props.data.qboardDto.qb_subject), subjectCount)
+            <b className="qboard-preview-subject">{compareValues(String(props.data.qboardDto.qb_subject), subjectCount)
                 ? props.data.qboardDto.qb_subject.slice(0, subjectCount) + "···"
                 : props.data.qboardDto.qb_subject}</b>
-            <div className="board-preview-contents">
+            <div className="qboard-preview-contents">
                 {compareValues(String(props.data.qboardDto.qb_content), contentCount)
                     ? props.data.qboardDto.qb_content.slice(0, contentCount) + "···"
                     : props.data.qboardDto.qb_content}
             </div>
-            <img className="board-preview-img-preview" src={setPhotoUrl(props.data.qboardDto.qb_photo)}/>
-            <div className="board-preview-comments">
-                <div className="board-preview-likes-text">{props.data.totalcommentCount}</div>
+            <img className="qboard-preview-img-preview" src={setPhotoUrl(props.data.qboardDto.qb_photo)}/>
+            <div className="qboard-preview-comments">
+                <div className="qboard-preview-likes-text">{props.data.totalcommentCount}</div>
                 <img
-                    className="board-preview-comments-icon"
+                    className="qboard-preview-comments-icon"
                     alt=""
                     src={require("./assets/board_preview_comments_icon.svg").default}
 
                 />
             </div>
-            <div className="board-preview-views">
-                <div className="board-preview-views-text">{props.data.qboardDto.qb_readcount}</div>
+            <div className="qboard-preview-views">
+                <div className="qboard-preview-views-text">{props.data.qboardDto.qb_readcount}</div>
                 <img
-                    className="board-preview-views-icon"
+                    className="qboard-preview-views-icon"
                     alt=""
                     src={require("./assets/board_preview_views_icon.svg").default}
                 />

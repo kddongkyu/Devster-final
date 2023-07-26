@@ -96,6 +96,11 @@ public class CompanyMemberController {
         return companyMemberService.isDuplicatedCompName(safeCompName);
     }
 
+    @PostMapping("/D0/hp")
+    public boolean isDuplicatedHp(@RequestBody JsonNode json) throws Exception {
+        return companyMemberService.isDuplicateHp(json.get("hp").asText());
+    }
+
     @GetMapping("/D1/logout")
     public String logOut(@RequestHeader(name = "Authorization")String token) {
         companyMemberService.logout(token);
