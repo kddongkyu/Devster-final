@@ -140,40 +140,36 @@ public class ResumeService {
 
         ResumeDto resumeDto = resumeRepository.findByMIdx(m_idx)
                 .map(ResumeDto::toResumeDto)
-                .orElseThrow(() -> new NoSuchElementException("No Resume found with the provided index."));
+                .orElse(null); // 수정: 이력서 정보가 없으면 null을 반환
         resumeWrapper.setResumeDto(resumeDto);
-        log.info("resumeDto 값 가져오기 및 삽입 완료");
+
+        if (resumeDto != null) { // 수정: 이력서 정보가 있을 때만 로그를 출력
+            log.info("resumeDto 값 가져오기 및 삽입 완료");
+        }
 
         List<ResumeCareerEntity> resumeCareerEntities = resumeCareerRepository.findAllByMIdx(m_idx)
-                .orElse(Collections.emptyList());  // 값이 없는 경우 빈 리스트를 반환
-
+                .orElse(Collections.emptyList());
         List<ResumeCareerDto> resumeCareerDtoList = resumeCareerEntities.stream()
                 .map(ResumeCareerDto::toResumeCareerDto)
                 .collect(Collectors.toList());
-
-        if (resumeCareerDtoList.isEmpty()) {
-            throw new NoSuchElementException("No ResumeCareer found with the provided index.");
+        resumeWrapper.setResumeCareerDtoList(resumeCareerDtoList);
+        if (!resumeCareerDtoList.isEmpty()) { // 수정: 경력 정보가 있을 때만 로그를 출력
+            log.info("resumeCareerDto 값 가져오기 및 삽입 완료");
         }
 
-        resumeWrapper.setResumeCareerDtoList(resumeCareerDtoList);
-        log.info("resumeCareerDto 값 가져오기 및 삽입 완료");
-
         List<ResumeLicenseEntity> resumeLicenseEntities = resumeLicenseRepository.findAllByMIdx(m_idx)
-                .orElse(Collections.emptyList());  // 값이 없는 경우 빈 리스트를 반환
-
+                .orElse(Collections.emptyList());
         List<ResumeLicenseDto> resumeLicenseDtoList = resumeLicenseEntities.stream()
                 .map(ResumeLicenseDto::toResumeLicenseDto)
                 .collect(Collectors.toList());
-
-        if (resumeLicenseDtoList.isEmpty()) {
-            throw new NoSuchElementException("No ResumeLicense found with the provided index.");
-        }
-
         resumeWrapper.setResumeLicenseDtoList(resumeLicenseDtoList);
-        log.info("resumeLicenseDto 값 가져오기 및 삽입 완료");
+        if (!resumeLicenseDtoList.isEmpty()) { // 수정: 라이센스 정보가 있을 때만 로그를 출력
+            log.info("resumeLicenseDto 값 가져오기 및 삽입 완료");
+        }
 
         return resumeWrapper;
     }
+
 
     @Transactional
     public String deleteResume(HttpServletRequest request) {

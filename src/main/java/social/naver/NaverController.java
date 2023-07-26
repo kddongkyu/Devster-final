@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Member;
+import java.util.Optional;
+
 @RestController
 @Slf4j
 @CrossOrigin
@@ -37,7 +40,7 @@ public class NaverController {
     }
 
     @GetMapping("/oauth2/callback/naver")
-    private ResponseEntity<String> naverCallBack(String code){
+    private ResponseEntity<?> naverCallBack(String code){
         RestTemplate rt = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -71,7 +74,7 @@ public class NaverController {
         return naverData(naverToken.getAccess_token());
     }
 
-    private ResponseEntity<String> naverData(String accessToken) {
+    private ResponseEntity<?> naverData(String accessToken) {
         RestTemplate rt = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -87,77 +90,67 @@ public class NaverController {
                 String.class // 요청 시 반환되는 데이터 타입
         );
 
-        MemberEntity returnMember = getUser(response.getBody());
-
-        log.info(returnMember.toString());
-
-        deleteToken(accessToken);
-
-        int m_idx = returnMember.getMIdx();
-
-        String accessTokenNaver = jwtService.generateAccessToken(m_idx,"normal");
-        String refreshTokenNaver = jwtService.generateRefreshToken("normal");
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Authorization", "Bearer " + accessTokenNaver);
-        responseHeaders.add("Authorization-Refresh", refreshTokenNaver);
-
-        log.info("로그인에 성공하였습니다. 회원 인덱스 번호 : {}", m_idx);
-        log.info("로그인에 성공하였습니다. AccessToken : {}", accessTokenNaver);
-
-        memberRepository.findById(m_idx)
-                .ifPresent(member -> {
-                    member.setMRefreshtoken(refreshTokenNaver);
-                    memberRepository.saveAndFlush(member);
-                });
-
-        // 클라이언트에게 보낼 응답 바디. 필요한 정보가 있다면 이 부분 수정
-        String responseBody = "네이버 로그인 accessToken, refreshToken 발급";
-
-        // ResponseEntity 객체 반환
-        return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
-    }
-
-    private MemberEntity getUser(String data) {
         ObjectMapper objectMapper = new ObjectMapper();
-
         NaverReturnData naverReturnData = null;
 
         try {
-            JsonNode jsonNode = objectMapper.readTree(data);
+            JsonNode jsonNode = objectMapper.readTree(response.getBody());
             naverReturnData = objectMapper.treeToValue(jsonNode.get("response"), NaverReturnData.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("getUser : JSON 변환중 에러발생");
         }
 
-        MemberEntity findUser = memberRepository.findByMSocialTypeAndMSocialid(SocialType.NAVER,
-                naverReturnData.getId()).orElse(null);
+        Optional<MemberEntity> optionalReturnMember = memberRepository.findByMSocialTypeAndMSocialid(SocialType.KAKAO, naverReturnData.getId());
+        Optional<MemberEntity> optionalReturnMember2 = memberRepository.findByMEmail(naverReturnData.getEmail());
 
-        if(findUser == null) {
-            log.info("네이버 신규 회원가입 요청");
-            return saveUser(naverReturnData);
+
+        log.info(optionalReturnMember.toString());
+
+        if(optionalReturnMember.isPresent()) {
+            MemberEntity returnMember = optionalReturnMember.get();
+            
+            deleteToken(accessToken);
+
+            int m_idx = returnMember.getMIdx();
+
+            String accessTokenNaver = jwtService.generateAccessToken(m_idx,"normal");
+            String refreshTokenNaver = jwtService.generateRefreshToken("normal");
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Authorization", "Bearer " + accessTokenNaver);
+            responseHeaders.add("Authorization-Refresh", refreshTokenNaver);
+
+            log.info("로그인에 성공하였습니다. 회원 인덱스 번호 : {}", m_idx);
+            log.info("로그인에 성공하였습니다. AccessToken : {}", accessTokenNaver);
+
+            memberRepository.findById(m_idx)
+                    .ifPresent(member -> {
+                        member.setMRefreshtoken(refreshTokenNaver);
+                        memberRepository.saveAndFlush(member);
+                    });
+
+            // 클라이언트에게 보낼 응답 바디. 필요한 정보가 있다면 이 부분 수정
+            String responseBody = "네이버 로그인 accessToken, refreshToken 발급";
+
+            // ResponseEntity 객체 반환
+            log.info("네이버 계정 있음.");
+            return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
+        } else if(optionalReturnMember2.isPresent()) {
+            log.info("이미 사용중인 이메일");
+            String socialType = String.valueOf(optionalReturnMember2.get().getMSocialType());
+            if(socialType.equals("KAKAO")) {
+                log.info("카카오로 이미 가입된 이메일.");
+                return new ResponseEntity<>("이미 카카오로 가입된 이메일 입니다.",HttpStatus.IM_USED);
+            } else {
+                log.info("일반회원으로 이미 가입된 이메일");
+                return new ResponseEntity<>("이미 일반회원으로 가입된 이메일입니다.",HttpStatus.IM_USED);
+            }
+        } else {
+            log.info("네이버 계정 없음.");
+            log.info(naverReturnData.toString());
+            return new ResponseEntity<>(naverReturnData,HttpStatus.NO_CONTENT);
         }
-        log.info("네이버 기존 회원 정보 반환");
-        return findUser;
-    }
-
-    private MemberEntity saveUser(NaverReturnData naverReturnData) {
-        MemberEntity savedMember = memberRepository.save(
-                MemberEntity.builder()
-                        .MId("Naver-"+naverReturnData.getEmail())
-                        .MSocialid(naverReturnData.getId())
-                        .MSocialType(SocialType.NAVER)
-                        .MEmail(naverReturnData.getEmail())
-                        .MName(naverReturnData.getName())
-                        .AIidx(100)
-                        .AIname("네이버클라우드캠프")
-                        .MNickname("네이버 가입 테스트 닉네임")
-                        .build()
-        );
-
-        log.info("네이버 신규 회원가입 성공");
         
-        return savedMember;
     }
 
     private void deleteToken(String accessToken) {
