@@ -56,7 +56,7 @@ public class CompanyMemberController {
         companyMemberService.registerCompanymember(dto);
         return "기업회원 회원가입 성공";
     }
-    @PostMapping("/photo")
+    @PostMapping("/D0/photo")
     public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload, HttpSession session, HttpServletRequest request) {
         return new ResponseEntity<String>(companyMemberService.uploadPhoto(upload, session, request),HttpStatus.OK);
     }

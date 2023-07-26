@@ -16,7 +16,7 @@ import {
     MemberSignupApproval,
 } from "../pages/mypage";
 import {SignIn} from "../pages/signin";
-import {Grats, SignUpNorm} from "../pages/signup";
+import {Grats, SignUpCompForm, SignUpNorm} from "../pages/signup";
 import {
     Fboard,
     FboardDetail,
@@ -110,6 +110,7 @@ function RouteMain(props) {
 
             <Route path="/signin" element={<SignIn/>}/>
             <Route path="/signup" element={<SignUpNorm/>}/>
+            <Route path="/csignup" element={<SignUpCompForm/>}/>
             <Route path="/grats" element={<Grats/>}/>
             <Route path="/devchat/:ai_idx" element={<DevChat/>}/>
             <Route path="*" element={<NotFound/>}/>

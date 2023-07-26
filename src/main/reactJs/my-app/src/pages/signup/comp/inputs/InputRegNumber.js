@@ -18,6 +18,7 @@ function InputRegNumber(props) {
     const [errorMessage, setErrorMessage] = useState('');
     const [RegValidMsg, setRegValidMsg] = useState('');
     const [isInputValid, setIsInputValid] = useState(true);
+    const [loadingPage, setLoadingPage] = useState(false);
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
     const RegServiceKey = process.env.REACT_APP_REGSERVICEKEY;
@@ -60,8 +61,10 @@ function InputRegNumber(props) {
                 const code = res.data.data[0].b_stt_cd;
                 if (code === '01') {
                     dispatch(setRegIsValid(true));
+                    sessionStorage.setItem('cm_reg',cm_reg);
                     setRegValidMsg('인증 되었습니다.');
                     setIsInputValid(true);
+                    setLoadingPage(true);
                 } else if (code === '02') {
                     dispatch(setRegIsValid(false));
                     setRegValidMsg('휴/폐업한 사업자등록번호 입니다.');
@@ -73,7 +76,7 @@ function InputRegNumber(props) {
                 }
             }
         } catch (error) {
-
+            jwtHandleError(error, toastAlert, regIsValid);
         }
     }, [cm_reg, dispatch]);
 
@@ -100,6 +103,15 @@ function InputRegNumber(props) {
         }
     }, [cm_reg, dispatch, isRegTouched, checkReg]);
 
+    useEffect(() => {
+        if (regIsValid) {
+            const timer = setTimeout(async () => {
+                navi('/csignup');
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [regIsValid]);
+
     const handleRegChange = (e) => {
         if (!isRegTouched) {
             setIsRegTouched(true);
@@ -117,22 +129,26 @@ function InputRegNumber(props) {
         <div className='signup-company-compreg'>
             <div className='signup-company-compreg-text'>
                 사업자 등록번호
-                <span className='signup-guest-input-name'> *</span>
+                <span className='signup-comp-input-name'> *</span>
             </div>
             <div className='signup-company-compreg-msg'>
                 {errorMessage}
             </div>
             <input
                 type='text'
-                className='signup-company-compreg-inputbo'
+                className={`${isInputValid ? 'signup-company-compreg-inputbo' : 'signup-company-compreg-inputbo-error'}`}
                 value={cm_reg}
                 onChange={handleRegChange}
             />
             <div
                 className={`signup-company-compreg-confirm
-                ${isInputValid ? 'signup-guest-text-color-confirm' : 'signup-guest-text-color-error'}`}
+                ${isInputValid ? 'signup-comp-text-color-confirm' : 'signup-comp-text-color-error'}`}
             >
-                {RegValidMsg}
+                <div className='signup-comp-reg-msg'>{RegValidMsg}</div>
+                {
+                    regIsValid && loadingPage &&
+                    <div className='signup-comp-loading-inprogress'></div>
+                }
             </div>
             <div className='signup-comp-hr'/>
             <div className='signup-comp-signin'>

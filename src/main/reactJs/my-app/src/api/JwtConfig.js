@@ -54,7 +54,13 @@ axiosIns.interceptors.request.use(
         let accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
 
-        if (isTokenExpired(accessToken) && refreshToken) {
+        if (isTokenExpired(refreshToken) && refreshToken) {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('expiredTime');
+            alert('세션이 만료되었습니다.\n로그아웃 되었습니다.');
+            window.location.reload();
+        } else if (isTokenExpired(accessToken) && refreshToken) {
             try {
                 accessToken = await refreshAccessToken(refreshToken);
                 config.headers['Authorization'] = `Bearer ${accessToken}`;

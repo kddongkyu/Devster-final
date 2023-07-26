@@ -5,6 +5,7 @@ import {SignInComp, SignInNorm} from './index';
 function SignIn(props) {
     const [normMember, setNormMember] = useState(true);
     const [compMember, setCompMember] = useState(false);
+    const [isCapsOn, setIsCapsOn] = useState(false);
 
     const selectNormMember = () => {
         setNormMember(true);
@@ -14,6 +15,10 @@ function SignIn(props) {
     const selectCompMember = () => {
         setNormMember(false);
         setCompMember(true);
+    }
+
+    const capsLockChk = (e) => {
+        setIsCapsOn(e.getModifierState('CapsLock'));
     }
 
     return (
@@ -53,11 +58,11 @@ function SignIn(props) {
             </div>
             {
                 normMember &&
-                <SignInNorm/>
+                <SignInNorm capsLockChk={capsLockChk} isCapsOn={isCapsOn}/>
             }
             {
                 compMember &&
-                <SignInComp/>
+                <SignInComp capsLockChk={capsLockChk} isCapsOn={isCapsOn}/>
             }
             <div
                 className={`${normMember ? 'login-signuplink' : 'login-signuplink-comp'}`}

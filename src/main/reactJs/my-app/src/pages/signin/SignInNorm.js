@@ -4,7 +4,7 @@ import {jwtHandleError} from "../../api/JwtHandleError";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 
-function SignInNorm(props) {
+function SignInNorm({capsLockChk, isCapsOn}) {
     const normIdRef = useRef('');
     const normPwRef = useRef('');
     const {enqueueSnackbar} = useSnackbar();
@@ -61,6 +61,7 @@ function SignInNorm(props) {
                         type='password'
                         required
                         ref={normPwRef}
+                        onKeyDown={capsLockChk}
                         onChange={handleOnNormPw}
                     />
                     <div className='login-devster-finder'>사용자 ID / 비밀번호 찾기</div>
@@ -72,6 +73,10 @@ function SignInNorm(props) {
                     </button>
                 </div>
             </form>
+            {
+                isCapsOn &&
+                <span className='login-pass-capslock-norm'>*Caps Lock이 켜져 있습니다.</span>
+            }
         </div>
     );
 }

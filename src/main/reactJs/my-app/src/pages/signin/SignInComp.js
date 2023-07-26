@@ -4,7 +4,7 @@ import ToastAlert from "../../api/ToastAlert";
 import {userSignIn} from "../../api/SignInApi";
 import {jwtHandleError} from "../../api/JwtHandleError";
 
-function SignInComp(props) {
+function SignInComp({capsLockChk, isCapsOn}) {
     const compIdRef = useRef('');
     const compPwRef = useRef('');
     const {enqueueSnackbar} = useSnackbar();
@@ -53,6 +53,8 @@ function SignInComp(props) {
                         type='password'
                         className='login-company-pw-input'
                         ref={compPwRef}
+                        onKeyDown={capsLockChk}
+                        onChange={handleOnCompPw}
                     />
                     <div className='login-company-finder'>Email / 비밀번호 찾기</div>
                     <button
@@ -63,6 +65,10 @@ function SignInComp(props) {
                     </button>
                 </div>
             </form>
+            {
+                isCapsOn &&
+                <span className='login-pass-capslock-comp'>*Caps Lock이 켜져 있습니다.</span>
+            }
         </div>
     );
 }
