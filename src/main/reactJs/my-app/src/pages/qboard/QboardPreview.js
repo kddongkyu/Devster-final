@@ -1,6 +1,7 @@
 // BoardPreview.js
 import React, {useEffect, useState} from 'react';
 import "./style/Board.css";
+import {NavLink} from "react-router-dom";
 
 const QboardPreview = (props) => {
 
@@ -117,8 +118,9 @@ const QboardPreview = (props) => {
     }
 
     return (
-        <div className="qboard-preview">
+        <div className="qboard-preview" >
             <div className="qboard-preview-box" />
+            <NavLink to={`/qboard/detail/${props.data.qboardDto.qb_idx}/${props.currentPage}`}>
             <img className="qboard-preview-img-profile" src={`${photoUrl}${props.data.photo}`}/>
             <div className="qboard-preview-type">
                 <b className="qboard-preview-type-text">Q&A 게시판</b>
@@ -153,6 +155,7 @@ const QboardPreview = (props) => {
                     src={require("./assets/board_preview_views_icon.svg").default}
                 />
             </div>
+            </NavLink>
         </div>
     );
 };

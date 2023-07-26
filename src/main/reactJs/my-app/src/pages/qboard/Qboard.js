@@ -186,7 +186,7 @@ const Qboard = () => {
     </div>
       <div className="qboard-list">
         {qboardList.map((data, idx) =>
-            <QboardPreview key={idx} data={data} />
+            <QboardPreview key={idx} data={data} currentPage={currentPage}/>
         )}
       </div>
       <div className="qboard-pages2">
