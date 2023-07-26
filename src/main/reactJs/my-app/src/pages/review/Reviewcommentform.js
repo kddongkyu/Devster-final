@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import './style/Reviewdetail.css';
+//
 import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
-function Reviewcommentform({rb_idx,currentPage}) {
+function Reviewcommentform({rb_idx}) {
+    console.log("111:"+rb_idx);
     const [reviewcomment,setReviewcomment]=useState('');
     const navi=useNavigate();
 
@@ -37,7 +38,7 @@ function Reviewcommentform({rb_idx,currentPage}) {
 
 
     return (
-        <div>
+        <div >
             <form className="review-detail-commnets-form" onSubmit={onSubmitEvent}>
                 <div className="review-detail-commnets-form-bo" />
                 <img
@@ -51,6 +52,7 @@ function Reviewcommentform({rb_idx,currentPage}) {
                           onChange={(e)=>setReviewcomment(e.target.value)}
                          >
                 </textarea>
+                <b>000</b>
                 <button  type='submit' className="review-detail-commnets-form-su">
                     <div className="review-detail-commnets-form-su1" />
                     <b className="review-detail-commnets-form-su2">댓글 쓰기</b>

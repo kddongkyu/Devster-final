@@ -14,6 +14,6 @@ public class ReviewCommentDetailDto {
     private String photo;
     private String nickname;
     private int replyConut;
-    private List<ReviewCommentDto> replyList;
+    private List<ReviewCommentDetailDto> replyList;
 
 }

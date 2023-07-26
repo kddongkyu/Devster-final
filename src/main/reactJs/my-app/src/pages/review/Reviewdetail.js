@@ -244,8 +244,8 @@ function Reviewdetail() {
                     />
                     <div className="review-detail-info-nickname">{reviewData.mNicname}</div>
                     <div className="review-detail-info-status">
-                        <div className="review-detail-info-status-text"> 
-                    
+                        <div className="review-detail-info-status-text">
+
                          {timeForToday(reviewData.review.rb_writeday)
                         }{` ·        `}</div>
                         <img
@@ -323,9 +323,8 @@ function Reviewdetail() {
                 alt=""
                 src="/review-detail-hr.svg"
             />
-            <Reviewcommentform  rb_idx={rb_idx} currentPage={currentPage}/>
+            <Reviewcommentform rb_idx={rb_idx}/>
             <Reviewcomment rb_idx={rb_idx}/>
-            {/*<Reviewcommentreply rb_idx={rb_idx}/>*/}
         </div>
 
     );

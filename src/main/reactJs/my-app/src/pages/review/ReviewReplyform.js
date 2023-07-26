@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './style/replyform.css'
+import './style/Reviewdetail.css';
 
 import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -41,22 +41,21 @@ function ReviewReplyform({rbc_idx,rb_idx}) {
 
     return (
         <div>
-            <form className="review-detail-commnets-form" onSubmit={onSubmitEvent}>
-                <div className="review-detail-commnets-form-bo" />
+            <form className="r-detail-commnets-form" onSubmit={onSubmitEvent}>
+                <div className="r-detail-commnets-form-bo" />
                 <img
-                    className="review-detail-commnets-form-im-icon"
+                    className="r-detail-commnets-form-im-icon"
                     alt=""
                     src=""
                 />
-                <textarea className="review-detail-commnets-form-te"
+                <textarea className="r-detail-commnets-form-te"
                           placeholder="내용을 입력해주세요"
-                          required value={reviewcomment}
+                          required value={reviewcomment} // reviewComment state 사용
                           onChange={(e)=>setReviewcomment(e.target.value)}
-                >
-                </textarea>
-                <button  type='submit' className="review-detail-commnets-form-su">
-                    <div className="review-detail-commnets-form-su1" />
-                    <b className="review-detail-commnets-form-su2">댓글 쓰기</b>
+                />
+                <button  type='submit' className="r-detail-commnets-form-su">
+                    <div className="r-detail-commnets-form-su1" />
+                    <b className="r-detail-commnets-form-su2">댓글 수정</b>
                 </button>
             </form>
         </div>

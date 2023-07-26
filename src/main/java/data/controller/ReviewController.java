@@ -124,7 +124,7 @@ public ResponseEntity<Map<String, Object>> getPagedReviews(
         }
     }
 
-    @PutMapping("/D1/comment")
+    @PutMapping("/D1/comment/{rbc_idx}")
     public ResponseEntity<String> updateComment(@RequestBody ReviewCommentDto dto) {
         boolean returnResult = reviewCommentService.update(dto);
         if(returnResult) {
@@ -134,6 +134,33 @@ public ResponseEntity<Map<String, Object>> getPagedReviews(
         }
     }
 
+    @PostMapping("/D1/comment/{m_idx}/like/{rbc_idx}")
+    public ResponseEntity<ReviewCommentDto> likeReviewcomment(@PathVariable int rbc_idx, @PathVariable int m_idx) {
+        reviewCommentService.like(m_idx, rbc_idx);
+        // 좋아요 처리 후, 필요한 데이터를 ReviewBoardDto로 변환하여 생성
+        ReviewCommentDto ReviewCommentDto = new ReviewCommentDto();  // 적절한 ReviewBoardDto 생성 방식으로 변경
+        return ResponseEntity.ok(ReviewCommentDto);
 
+    }
+
+    @PostMapping("/D1/comment/{m_idx}/dislike/{rbc_idx}")
+    public ResponseEntity<ReviewCommentDto> dislikeReviewcomment(@PathVariable int rbc_idx, @PathVariable int m_idx) {
+        reviewCommentService.dislike(m_idx, rbc_idx);
+        // 좋아요 처리 후, 필요한 데이터를 ReviewBoardDto로 변환하여 생성
+        ReviewCommentDto ReviewCommentDto = new ReviewCommentDto();  // 적절한 ReviewBoardDto 생성 방식으로 변경
+        return ResponseEntity.ok(ReviewCommentDto);
+
+    }
+    @GetMapping("/D0/comment/{m_idx}/checkGood/{rbc_idx}")
+    public ResponseEntity<Boolean> checkGoodcomment(@PathVariable int m_idx, @PathVariable int rbc_idx) {
+        boolean isGood = reviewCommentService.isAlreadyAddGoodRp(m_idx, rbc_idx);
+        return ResponseEntity.ok(isGood);
+    }
+
+    @GetMapping("/D0/comment/{m_idx}/checkBad/{rbc_idx}")
+    public ResponseEntity<Boolean> checkBadcomment(@PathVariable int m_idx, @PathVariable int rbc_idx) {
+        boolean isBad = reviewCommentService.isAlreadyAddBadRp(m_idx, rbc_idx);
+        return ResponseEntity.ok(isBad);
+    }
 
 }

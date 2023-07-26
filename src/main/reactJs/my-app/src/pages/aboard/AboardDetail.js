@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import './style//AboardDetail.css';
+import './style/AboardDetail.css';
 import jwt_decode from "jwt-decode";
 import {useNavigate, useParams} from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";

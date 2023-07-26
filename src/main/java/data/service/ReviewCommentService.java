@@ -3,10 +3,10 @@ package data.service;
 import data.dto.ReviewCommentDetailDto;
 import data.dto.ReviewCommentDto;
 import data.dto.ReviewCommentResponseDto;
-import data.entity.MemberEntity;
-import data.entity.ReviewCommentEntity;
+import data.entity.*;
 import data.repository.MemberRepository;
 import data.repository.ReviewCommentRepository;
+import data.repository.ReviewCommentlikeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,14 +23,19 @@ public class ReviewCommentService {
     private final ReviewCommentRepository reviewcommentRepository;
     private final MemberRepository memberRepository;
 
-    public ReviewCommentService(ReviewCommentRepository reviewcommentRepository,MemberRepository memberRepository)
+    private final ReviewCommentlikeRepository reviewcommentlikeRepository;
+
+    public ReviewCommentService(ReviewCommentRepository reviewcommentRepository,
+                                MemberRepository memberRepository,
+                                ReviewCommentlikeRepository reviewcommentlikeRepository)
     {
         this.reviewcommentRepository =reviewcommentRepository;
         this.memberRepository = memberRepository;
+        this.reviewcommentlikeRepository=reviewcommentlikeRepository;
     }
 
     public ReviewCommentResponseDto getAllCommentList(int rb_idx){
-        List<ReviewCommentEntity> reviewdEntityList = reviewcommentRepository.findALLByRBidxAndRBcrefEquals(rb_idx,0);
+        List<ReviewCommentEntity> reviewdEntityList = reviewcommentRepository.findALLByRBidxAndRBcrefEqualsOrderByRBcwritedayDesc(rb_idx,0);
         log.info(rb_idx + "번 게시글 댓글 리스트 가져오기 완료");
         List<ReviewCommentDetailDto> reviewCommentDetailDtoList = new ArrayList<>();
         int totalCount = reviewcommentRepository.countAllByRBidx(rb_idx);
@@ -49,10 +54,16 @@ public class ReviewCommentService {
             dto.setNickname(memberInfo.getMNickname());
             dto.setReplyConut(reviewcommentRepository.countAllByRBcref(entity.getRBcidx()));
             log.info("작성자 정보 입력완료");
-            List<ReviewCommentEntity> replyEntityList = reviewcommentRepository.findAllByRBcref(entity.getRBcidx());
-            List<ReviewCommentDto> replyDtoList = new ArrayList<>();
+            List<ReviewCommentEntity> replyEntityList = reviewcommentRepository.findAllByRBcrefOrderByRBcwritedayDesc(entity.getRBcidx());
+            List<ReviewCommentDetailDto> replyDtoList = new ArrayList<>();
             for(ReviewCommentEntity entity1 : replyEntityList) {
-                replyDtoList.add(ReviewCommentDto.toReviewCommentDto(entity1));
+                ReviewCommentDetailDto dto1 = new ReviewCommentDetailDto();
+                dto1.setReviewcommentdto((ReviewCommentDto.toReviewCommentDto(entity1)));
+
+                MemberEntity memberInfoEntity2 = memberRepository.findById(entity1.getMIdx()).get();
+                dto1.setPhoto(memberInfoEntity2.getMPhoto());
+                dto1.setNickname(memberInfoEntity2.getMNickname());
+                replyDtoList.add(dto1);
             }
             log.info("대댓글 정보 가져오기 완료");
             dto.setReplyList(replyDtoList);
@@ -98,5 +109,90 @@ public class ReviewCommentService {
             return false;
         }
     }
+
+
+    //좋아요 싫어요
+
+    private ReviewCommentlikeEntity findOrCreateRboardcommentLike(int Midx,int RBcidx){
+        return reviewcommentlikeRepository.findByMIdxAndRBcidx(Midx,RBcidx)
+                .orElse(new ReviewCommentlikeEntity(Midx,RBcidx));
+    }
+
+    public boolean isAlreadyAddGoodRp(int MIdx, int RBcidx){
+        ReviewCommentlikeEntity rboardcommnetlikeEntity=findOrCreateRboardcommentLike(MIdx, RBcidx);
+        return rboardcommnetlikeEntity.getLikestatus()==1;
+    }
+
+    public boolean isAlreadyAddBadRp(int MIdx, int RBcidx){
+        ReviewCommentlikeEntity rboardcommnetlikeEntity=findOrCreateRboardcommentLike(MIdx, RBcidx);
+        return rboardcommnetlikeEntity.getLikestatus()==2;
+    }
+
+    public void like(int MIdx, int RBcidx) {
+        try {
+            ReviewCommentlikeEntity ReviewCommentlikeEntity = findOrCreateRboardcommentLike(MIdx, RBcidx);
+
+            if (ReviewCommentlikeEntity.getLikestatus() == 1) {
+                ReviewCommentlikeEntity.setLikestatus(0);
+                reviewcommentlikeRepository.save(ReviewCommentlikeEntity);
+
+                ReviewCommentEntity ReviewCommentEntity = reviewcommentRepository.findById(RBcidx)
+                        .orElseThrow(()-> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(rb_like-1)"));
+                ReviewCommentEntity.setRBclike(ReviewCommentEntity.getRBclike()-1);
+                reviewcommentRepository.save(ReviewCommentEntity);
+
+            } else if (ReviewCommentlikeEntity.getLikestatus() == 2) {
+                throw new IllegalArgumentException("이미 싫어요가 눌려 있습니다");
+            } else {
+                ReviewCommentlikeEntity.setLikestatus(1);
+                reviewcommentlikeRepository.save(ReviewCommentlikeEntity);
+
+                // ReviewBoardEntity의 rb_like 필드 업데이트
+                ReviewCommentEntity ReviewCommentEntity = reviewcommentRepository.findById(RBcidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(rb_like+1): " + RBcidx));
+                ReviewCommentEntity.setRBclike(ReviewCommentEntity.getRBclike() + 1);
+                reviewcommentRepository.save(ReviewCommentEntity);
+            }
+        } catch (IllegalArgumentException e) {
+            log.error("review like Error(Ill)", e);
+        } catch (Exception e) {
+            log.error("review like Error(Exce)", e);
+        }
+    }
+
+    public void dislike(int MIdx, int RBcidx) {
+        try {
+            ReviewCommentlikeEntity ReviewCommentlikeEntity = findOrCreateRboardcommentLike(MIdx, RBcidx);
+
+            if (ReviewCommentlikeEntity.getLikestatus() == 1) {
+                throw new IllegalArgumentException("이미 좋아요가 눌려 있습니다");
+            } else if (ReviewCommentlikeEntity.getLikestatus() == 2) {
+                //throw new IllegalArgumentException("이미 싫어요가 눌려 있습니다");
+                ReviewCommentlikeEntity.setLikestatus(0);
+                reviewcommentlikeRepository.save(ReviewCommentlikeEntity);
+
+                ReviewCommentEntity ReviewCommentEntity = reviewcommentRepository.findById(RBcidx)
+                        .orElseThrow(()-> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(rb_dislike-1)"));
+                ReviewCommentEntity.setRBcdislike(ReviewCommentEntity.getRBcdislike()-1);
+                reviewcommentRepository.save(ReviewCommentEntity);
+
+            } else {
+                ReviewCommentlikeEntity.setLikestatus(2);
+                reviewcommentlikeRepository.save(ReviewCommentlikeEntity);
+
+                // ReviewBoardEntity의 rb_like 필드 업데이트
+                ReviewCommentEntity ReviewCommentEntity = reviewcommentRepository.findById(RBcidx)
+                        .orElseThrow(() -> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(rb_dislike+1): " + RBcidx));
+                ReviewCommentEntity.setRBcdislike(ReviewCommentEntity.getRBcdislike() + 1);
+                reviewcommentRepository.save(ReviewCommentEntity);
+            }
+        } catch (IllegalArgumentException e) {
+            log.error("review like Error(Ill)", e);
+        } catch (Exception e) {
+            log.error("review like Error(Exce)", e);
+        }
+    }
+
+
 
 }

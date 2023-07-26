@@ -213,7 +213,7 @@ public class ReviewService {
                 .orElse(new ReviewlikeEntity(MIdx,RBidx));
     }
 
-//현재 로직에선 필요가 없는데 출력하는 로직에서 필요한지 고민 필요
+
  public boolean isAlreadyAddGoodRp(int MIdx, int RBidx){
      ReviewlikeEntity rboardlikeEntity=findOrCreateRBoardLike(MIdx, RBidx);
      return rboardlikeEntity.getLikestatus()==1;

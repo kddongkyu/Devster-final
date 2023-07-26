@@ -1,6 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ReviewReplyupdateform from "./ReviewReplyupdateform";
+import axiosIns from "../../api/JwtConfig";
+import jwt_decode from "jwt-decode";
+import './style/replyform.css';
 
 function ReplyCommentItem({ reply, replyIndex }) {
+    { console.log(reply);}
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+
+    const handleUpdateClick = () => {
+        setShowUpdateForm(!showUpdateForm);
+    };
+
+    let de = jwt_decode(localStorage.getItem("accessToken"));
+    const m_idx = de.idx;
+
+    const deleteComment = (rbc_idx) => {
+        axiosIns.delete(`/api/review/D1/comment/${rbc_idx}`)
+            .then(res => {
+                console.log(res.data);  // 성공 메시지 출력
+                // fetchreviewcomment();  // 댓글 삭제 후 댓글 목록을 다시 불러옴
+                window.location.reload()
+            })
+            .catch(err => console.log(err));
+    }
+
+    const handleDeleteClick = () => {
+        if (window.confirm("댓글을 삭제하시겠습니까?")) {
+            deleteComment(reply.rbc_idx);
+        }
+    };
+
 
     const timeForToday = (value) => {
         if (!value) {
@@ -43,14 +73,15 @@ function ReplyCommentItem({ reply, replyIndex }) {
         return formattedDateWithoutTime;
     };
 
-
     return (
         <div className="review-detail-comments-all"  key={replyIndex} style={{marginLeft: '30px'}}>
             <div className="review-detail-commnets-detail-">
                 <div className="review-detail-commnets-detail-1">
-                    <div className="review-detail-commnets-detail-2">닉네임ㄴ</div>
+                    <div className="review-detail-commnets-detail-2">{reply.nickname}</div>
+
                     <div className="review-detail-commnets-detail-3">
-                        <span> {timeForToday(reply.rbc_writeday)}{` · `}</span>
+
+                        <span> {timeForToday(reply.reviewcommentdto.rbc_writeday)}{` · `}</span>
                         <span className="span">{`수정됨 `}</span>
                     </div>
                 </div>
@@ -60,26 +91,40 @@ function ReplyCommentItem({ reply, replyIndex }) {
                     src="/review-detail-commnets-detail-info-img@2x.png"
                 />
             </div>
-            <div className="review-detail-commnets-all-lik-reply">
+            <div className="review-detail-commnets-all-lik-reply" >
+                <div className="r-reply-like" style={{marginLeft: '-30px'}}>
                 <div className="review-detail-commnets-all-up-" />
                 <img
                     className="review-detail-commnets-all-up-icon"
                     alt=""
-                    src="/review-detail-commnets-all-up-icon.svg"
+                    src={require('./assets/star-like-icon.svg').default}
+
                 />
                 <div className="review-detail-commnets-all-lik1">
                     <div className="review-detail-commnets-all-box" />
-                    <div className="review-detail-commnets-all-lik2">27</div>
+                    <div className="review-detail-commnets-all-lik2">   {reply.reviewcommentdto.rbc_like}</div>
                 </div>
                 <div className="review-detail-commnets-all-dow" />
                 <img
                     className="review-detail-commnets-all-dow-icon"
                     alt=""
-                    src="/review-detail-commnets-all-down-icon.svg"
+                    src={require('./assets/star-dislike-icon.svg').default}
                 />
+                </div>
             </div>
             <div className="review-detail-commnets-all-con">
-                {reply.rbc_content}
+                {reply.reviewcommentdto.rbc_content}
+                <  br/>
+                {m_idx === reply.reviewcommentdto.m_idx &&(
+                    <>
+                <button onClick={handleDeleteClick}>삭제</button> &nbsp;&nbsp;
+                <button onClick={handleUpdateClick}>수정</button>
+                {showUpdateForm && <ReviewReplyupdateform rbc_idx={reply.reviewcommentdto.rbc_idx}
+                                                          rb_idx={reply.reviewcommentdto.rb_idx}
+                                                          currentContent={reply.reviewcommentdto.rbc_content}
+                                                           rbc_ref={reply.reviewcommentdto.rbc_idx} />}
+                    </>
+            )}
             </div>
             <div className="review-detail-commnets-hide">
                 <img

@@ -1,16 +1,20 @@
-.review-detail-commnets-hide {
-    position: relative;
-    height: auto;
-    width: 60rem;
+.r-detail-commnets-form-te{
+ resize: none;
+ margin-top: 1.5rem;
+ width: 80%;
+ height: auto;
+
+}
+.r-detail-commnets-form{
+ width: 90%;
+ margin-left: 6rem;
 }
 
-.review-detail-commnets-hide-co {
-    /* 원하는 버튼 스타일 지정 */
+.review-detail-commnets-hide-co{
+ text-align: center;
+ align-items: center;
+ display: flex;
 }
-
-.review-detail-commnets-form {
-    position: absolute;
-    top: 100%;  /* 버튼 바로 아래 위치 */
-    left: 0;
-    /* 필요한 경우 폼 스타일 지정 */
+.review-detail-commnets-hide-te{
+ padding-right: 2rem;
 }
