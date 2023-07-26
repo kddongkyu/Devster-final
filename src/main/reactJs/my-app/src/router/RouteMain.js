@@ -23,11 +23,9 @@ import {
     FboardForm,
     FboardUpdateForm,
 } from "../pages/fboard";
-
-import { Qboard, QboardForm } from "../pages/qboard";
-import { Hboard, HboardForm } from "../pages/hboard";
+import {Qboard, QboardForm} from "../pages/qboard";
+import {Hboard, HboardForm} from "../pages/hboard";
 import {Aboard, Aboarddtail, AboardForm, Aboardupdate} from "../pages/aboard";
-
 import {
     Reviewform,
     Reviewlist,
@@ -39,7 +37,6 @@ import MessageList from "../pages/message/MessageList";
 import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
 import QboardDetail from "../pages/qboard/QboardDetail";
-
 
 function RouteMain(props) {
     const location = useLocation();
@@ -66,28 +63,32 @@ function RouteMain(props) {
                 <Route path="/aboard/form" element={<AboardForm/>}/>
                 <Route path="/review/form" element={<Reviewform/>}/>
 
-        <Route
-          path="/review/detail/:rb_idx/:currentPage"
-          element={<Reviewdetail />}
-        />
-        <Route
-          path="/fboard/detail/:fb_idx/:currentPage"
-          element={<FboardDetail />}
-        />
-        <Route
-          path="/aboard/detail/:ab_idx/:currentPage"
-          element={<Aboarddtail/>}
-        />
+                <Route
+                    path="/review/detail/:rb_idx/:currentPage"
+                    element={<Reviewdetail/>}
+                />
+                <Route
+                    path="/fboard/detail/:fb_idx/:currentPage"
+                    element={<FboardDetail/>}
+                />
+                <Route
+                    path="/qboard/detail/:qb_idx/:currentPage"
+                    element={<QboardDetail/>}
+                />
 
-        <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
-        <Route
-          path="/fboard/updateform/:fb_idx/:currentPage"
-          element={<FboardUpdateForm />}
-        />
-        <Route path="/aboard/update/:ab_idx/:currentPage"
-               element={<Aboardupdate/>}
-               />
+                <Route
+                    path="/aboard/detail/:ab_idx/:currentPage"
+                    element={<Aboarddtail/>}
+                />
 
+                <Route path="/review/update/:rb_idx" element={<Reviewupdate/>}/>
+                <Route
+                    path="/fboard/updateform/:fb_idx/:currentPage"
+                    element={<FboardUpdateForm/>}
+                />
+                <Route path="/aboard/update/:ab_idx/:currentPage"
+                       element={<Aboardupdate/>}
+                />
 
                 <Route element={<MypageList/>}>
                     <Route path="/userinfo" element={<UserInfo/>}/>
