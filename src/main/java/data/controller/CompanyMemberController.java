@@ -36,6 +36,10 @@ public class CompanyMemberController {
         this.mailService = mailService;
     }
 
+    @PostMapping("/D1/check")
+    public void check() {
+    }
+
     @GetMapping("/D1")
     public ResponseEntity<List<CompanyMemberDto>> getAllCompanyMembers(){
         return new ResponseEntity<List<CompanyMemberDto>>(companyMemberService.getAllCompanyMembers(), HttpStatus.OK);
@@ -52,7 +56,7 @@ public class CompanyMemberController {
         companyMemberService.registerCompanymember(dto);
         return "기업회원 회원가입 성공";
     }
-    @PostMapping("/photo")
+    @PostMapping("/D0/photo")
     public ResponseEntity<String> uploadPhoto(@RequestBody MultipartFile upload, HttpSession session, HttpServletRequest request) {
         return new ResponseEntity<String>(companyMemberService.uploadPhoto(upload, session, request),HttpStatus.OK);
     }
@@ -67,6 +71,11 @@ public class CompanyMemberController {
     public ResponseEntity<Void> updateCompanyMember(@RequestBody CompanyMemberDto dto) {
         companyMemberService.updateCompanyMember(escapeDto(dto));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/D0/regnum")
+    public boolean isDuplicatedRegNum(@RequestBody JsonNode json) {
+        return companyMemberService.isDuplicateRegNum(json.get("regnum").asText());
     }
 
     @PostMapping("/D0/email")
@@ -85,6 +94,11 @@ public class CompanyMemberController {
     public boolean isDuplicatedCompName(@RequestBody JsonNode json) throws Exception {
         String safeCompName = StringEscapeUtils.escapeHtml4(json.get("companyName").asText());
         return companyMemberService.isDuplicatedCompName(safeCompName);
+    }
+
+    @PostMapping("/D0/hp")
+    public boolean isDuplicatedHp(@RequestBody JsonNode json) throws Exception {
+        return companyMemberService.isDuplicateHp(json.get("hp").asText());
     }
 
     @GetMapping("/D1/logout")

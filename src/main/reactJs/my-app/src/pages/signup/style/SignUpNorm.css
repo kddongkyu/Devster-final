@@ -52,7 +52,19 @@
     top: 0;
     left: calc(50% - 67.5px);
     letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor: pointer;
+}
+
+.signup-guest-choose-norm-false {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 67.5px);
+    letter-spacing: 0.01em;
     font-weight: 500;
+    color: #000;
+    cursor: pointer;
 }
 
 .signup-guest-choose-bar-icon {
@@ -68,8 +80,19 @@
     top: 0;
     left: calc(50% + 11.5px);
     letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor: pointer;
+}
+
+.signup-guest-choose-comp-false {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 11.5px);
+    letter-spacing: 0.01em;
     font-weight: 500;
     color: #000;
+    cursor: pointer;
 }
 
 .signup-guest-choose {
@@ -737,6 +760,16 @@
     font-weight: 500;
 }
 
+.signup-guest-academy-exist-text {
+    position: absolute;
+    top: 124.9rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    text-align: right;
+    display: inline-block;
+    width: 14rem;
+}
+
 .signup-guest-academy-inputbox {
     position: absolute;
     width: calc(100% - 112px);
@@ -748,6 +781,26 @@
     box-sizing: border-box;
     height: 3.9rem;
     cursor: pointer;
+    padding-left: 4.5rem;
+}
+
+.signup-guest-academy-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 127rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    cursor: pointer;
+    padding-left: 4.5rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-guest-academy-inputbox-error:focus {
+    border: 2px solid red;
 }
 
 .signup-guest-academy-search-ic-icon {
@@ -782,12 +835,9 @@
 
 .signup-guest-contract-conditio-icon {
     position: absolute;
-    top: 0;
-    left: calc(50% + 92.15px);
-    width: 4.29rem;
-    height: 2.2rem;
+    top: -0.21rem;
+    left: calc(50% + 87px);
 }
-
 .signup-guest-contract-conditio {
     position: absolute;
     top: 139rem;
@@ -805,6 +855,7 @@
     font-weight: 500;
     display: inline-block;
     width: 8.67rem;
+    cursor: pointer;
 }
 
 .signup-guest-contract-detail-b-icon {
@@ -823,51 +874,16 @@
     font-weight: 500;
     display: inline-block;
     width: 9.9rem;
+    cursor: pointer;
 }
 
 .signup-guest-contract-detail {
     position: absolute;
-    top: 144.2rem;
+    top: 144.7rem;
     left: calc(50% - 111px);
     width: 22.24rem;
     height: 1.9rem;
     color: #721ea6;
-}
-
-.signup-guest-captcha-api-box {
-    position: absolute;
-    top: 0;
-    left: calc(50% - 138px);
-    background-color: #f9f9f9;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 27.6rem;
-    height: 7.3rem;
-}
-
-.signup-guest-captcha-api-text {
-    position: absolute;
-    top: 2.7rem;
-    left: calc(50% - 109px);
-    letter-spacing: 0.01em;
-    font-weight: 500;
-}
-
-.signup-guest-captcha,
-.signup-guest-captcha-api {
-    position: absolute;
-    left: calc(50% - 138px);
-    width: 27.6rem;
-    height: 7.3rem;
-}
-
-.signup-guest-captcha-api {
-    top: 0;
-}
-
-.signup-guest-captcha {
-    top: 150.1rem;
-    color: #626567;
 }
 
 .signup-guest-submit-box {
@@ -892,11 +908,12 @@
 .signup-guest-submit {
     position: absolute;
     width: calc(100% - 112px);
-    top: 161.4rem;
+    top: 150.4rem;
     right: 5.6rem;
     left: 5.6rem;
     height: 3.9rem;
     color: #fff;
+    cursor: pointer;
 }
 
 .signup-guest-signin-link,
@@ -912,11 +929,12 @@
     left: calc(50% + 36px);
     text-decoration: underline;
     color: #721ea6;
+    cursor: pointer;
 }
 
 .signup-guest-signin {
     position: absolute;
-    top: 168.1rem;
+    top: 156.4rem;
     left: calc(50% - 73px);
     width: 14.6rem;
     height: 1.9rem;
@@ -926,7 +944,19 @@
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 175.2rem;
+    height: 166rem;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+
+.signup-guest-comp {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
     overflow: hidden;
     text-align: center;
     font-size: 1.3rem;

@@ -1,14 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import axios from "axios";
+import {useDispatch, useSelector} from 'react-redux';
+import axios from 'axios';
 import {
     setEmailRegChk,
     setEmailRegInput,
     setIsEmailSent,
     setSeconds,
     setSendingInProg
-} from "../../../../redux/normMemberSlice";
-import RegTimer from "./RegTimer";
+} from '../../../../redux/normMemberSlice';
+import {RegTimer} from "./index";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../../../api/ToastAlert";
+import {jwtHandleError} from "../../../../api/JwtHandleError";
 
 function InputEmailReg(props) {
     const dispatch = useDispatch();
@@ -19,8 +22,16 @@ function InputEmailReg(props) {
     const isEmailSent = useSelector(state => state.norm.isEmailSent);
     const emailRegChk = useSelector(state => state.norm.emailRegChk);
     const sendingInProg=useSelector(state=>state.norm.sendingInProg);
-
+    const isSubmitted = useSelector(state => state.norm.isSubmitted);
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
     const [emailRegNum, setEmailRegNum] = useState('');
+
+    useEffect(()=> {
+        if(!emailRegChk && isSubmitted) {
+            toastAlert('이메일 인증을 진행해주세요.','warning');
+        }
+    },[isSubmitted]);
 
     const handleSendButton = async () => {
         if (emailRegChk) {
@@ -40,17 +51,17 @@ function InputEmailReg(props) {
                 dispatch(setSeconds(10));
                 setEmailRegNum(res.data);
                 dispatch(setEmailRegInput(''));
-                alert(isEmailSent ? '인증번호가 재발송되었습니다.' : '인증번호가 발송되었습니다.');
+                toastAlert(isEmailSent ? '인증번호가 재발송되었습니다.' : '인증번호가 발송되었습니다.','success');
                 dispatch(setSendingInProg(false));
             } else {
                 dispatch(setIsEmailSent(false));
-                alert('인증번호 발송에 실패했습니다.\n잠시후 다시 시도해주세요.');
+                toastAlert(<>인증번호 발송에 실패했습니다.<br/>잠시후 다시 시도해주세요.</>,'warning');
                 dispatch(setSendingInProg(false));
             }
         } catch (error) {
             dispatch(setIsEmailSent(false));
             dispatch(setSendingInProg(false));
-            console.error('인증번호 발송 실패' + error.response?.status);
+            jwtHandleError(error,toastAlert);
         }
     }
 
@@ -62,10 +73,10 @@ function InputEmailReg(props) {
         if (isEmailSent && emailRegNum === emailRegInput) {
             dispatch(setEmailRegChk(true));
             dispatch(setSeconds(null));
-            alert('인증 되었습니다.');
+            toastAlert('인증 되었습니다.','success');
         } else {
             dispatch(setEmailRegChk(false));
-            alert('인증에 실패했습니다.\n인증번호를 확인해주세요.');
+            toastAlert(<>인증에 실패했습니다.<br/>인증번호를 확인해주세요.</>,'warning');
         }
     }
 
@@ -102,7 +113,7 @@ function InputEmailReg(props) {
                     </div>
                 </div>
             }
-            <div className="signup-guest-email-reg-input">
+            <div className='signup-guest-email-reg-input'>
                 <input
                     type='text'
                     className='signup-guest-email-input-reg-b'
@@ -115,8 +126,8 @@ function InputEmailReg(props) {
                     ${!isEmailSent || emailRegChk || seconds <= 0 ? 'signup-guest-button-disabled' : ''}`}
                     onClick={handleRegChk}
                 >
-                    <div className="signup-guest-email-inputbox2"/>
-                    <div className="signup-guest-email-reg-send-te1">확인</div>
+                    <div className='signup-guest-email-inputbox2'/>
+                    <div className='signup-guest-email-reg-send-te1'>확인</div>
                 </div>
             </div>
             {

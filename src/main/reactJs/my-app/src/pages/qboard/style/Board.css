@@ -1,4 +1,4 @@
-.advertise-main {
+.qboard-advertise-main {
   position: absolute;
   width: 100%;
   top: 0;
@@ -8,13 +8,13 @@
   box-sizing: border-box;
   height: 11.2rem;
 }
-.advertise-text {
+.qboard-advertise-text {
   position: absolute;
   top: 4.2rem;
   left: calc(50% - 18px);
   letter-spacing: -0.24px;
 }
-.advertise-box {
+.qboard-advertise-box {
   position: absolute;
   width: calc(100% - 30px);
   top: 7.6rem;
@@ -24,7 +24,7 @@
   font-size: 2rem;
   color: #000;
 }
-.board-name-box {
+.qboard-name-box {
   position: absolute;
   width: 100%;
   top: 0;
@@ -34,32 +34,32 @@
   background-color: #eaeff3;
   height: 6.7rem;
 }
-.board-name-text-detail,
-.board-name-text-type {
+.qboard-name-text-detail,
+.qboard-name-text-type {
   position: absolute;
   left: 0;
   letter-spacing: -0.24px;
   display: inline-block;
 }
-.board-name-text-type {
+.qboard-name-text-type {
   top: 0;
   width: 5.24rem;
   height: 2.17rem;
 }
-.board-name-text-detail {
+.qboard-name-text-detail {
   top: 2.47rem;
   font-size: 1.3rem;
   width: 15rem;
   height: 1.55rem;
 }
-.board-name-text {
+.qboard-name-text {
   position: absolute;
   top: 1.34rem;
   left: 2.7rem;
   width: 15rem;
   height: 4.02rem;
 }
-.board-name {
+.qboard-name {
   position: absolute;
   width: calc(100% - 30px);
   top: 20.6rem;
@@ -70,7 +70,7 @@
   color: #000;
   font-family: Roboto;
 }
-.board-selection-freeboard-box {
+.qboard-selection-freeboard-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -79,7 +79,7 @@
   height: 3.5rem;
   cursor: pointer;
 }
-.board-selection-freeboard-text {
+.qboard-selection-freeboard-text {
   position: absolute;
   top: 1rem;
   left: 1.02rem;
@@ -87,7 +87,7 @@
   display: inline-block;
   width: 3.94rem;
 }
-.board-selection-freeboard {
+.qboard-selection-freeboard {
   position: absolute;
   top: 0;
   left: 0;
@@ -95,7 +95,7 @@
   height: 3.5rem;
   color: #51565b;
 }
-.board-selection-qna-box {
+.qboard-selection-qna-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -106,7 +106,7 @@
   width: 6.74rem;
   height: 3.5rem;
 }
-.board-selection-qna-text {
+.qboard-selection-qna-text {
   position: absolute;
   top: 1rem;
   left: 1.02rem;
@@ -114,14 +114,14 @@
   display: inline-block;
   width: 4.45rem;
 }
-.board-selection-qna {
+.qboard-selection-qna {
   position: absolute;
   top: 0;
   left: 8.14rem;
   width: 6.74rem;
   height: 3.5rem;
 }
-.board-selection-hire-box {
+.qboard-selection-hire-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -130,7 +130,7 @@
   height: 3.5rem;
   cursor: pointer;
 }
-.board-selection-hire-text {
+.qboard-selection-hire-text {
   position: absolute;
   top: 1rem;
   left: 1.11rem;
@@ -138,14 +138,14 @@
   display: inline-block;
   width: 6.53rem;
 }
-.board-selection-hire {
+.qboard-selection-hire {
   position: absolute;
   top: 0;
   left: 17.03rem;
   width: 8.67rem;
   height: 3.5rem;
 }
-.board-selection-academy-box {
+.qboard-selection-academy-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -154,7 +154,7 @@
   height: 3.5rem;
   cursor: pointer;
 }
-.board-selection-academy-text {
+.qboard-selection-academy-text {
   position: absolute;
   top: 1rem;
   left: 0.84rem;
@@ -162,14 +162,14 @@
   display: inline-block;
   width: 5.08rem;
 }
-.board-selection-academy {
+.qboard-selection-academy {
   position: absolute;
   top: 0;
   left: 27.86rem;
   width: 6.74rem;
   height: 3.5rem;
 }
-.board-selection {
+.qboard-selection {
   position: absolute;
   top: 28.5rem;
   left: 1.5rem;
@@ -179,7 +179,7 @@
   font-size: 1.3rem;
   font-family: "Roboto Serif";
 }
-.board-write-box {
+.qboard-write-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -188,14 +188,14 @@
   width: 12rem;
   height: 3.8rem;
 }
-.board-write-icon {
+.qboard-write-icon {
   position: absolute;
   top: 1.16rem;
   left: 1.6rem;
   width: 1.4rem;
   height: 1.55rem;
 }
-.board-write-text {
+.qboard-write-text {
   position: absolute;
   top: 1.26rem;
   left: 3.6rem;
@@ -206,7 +206,7 @@
   height: 1.68rem;
   color: white;
 }
-.board-write {
+.qboard-write {
   position: absolute;
   top: 33.6rem;
   left: 1.5rem;
@@ -217,7 +217,7 @@
   color: #fff;
   font-family: "Roboto Serif";
 }
-.board-function-sort-box {
+.qboard-function-sort-box {
   position: absolute;
   top: 0;
   right: 0;
@@ -228,28 +228,28 @@
   width: 10rem;
   height: 3.6rem;
 }
-.board-function-sort-reset {
+.qboard-function-sort-reset {
   position: absolute;
   top: 1.2rem;
   right: 6.2rem;
   letter-spacing: -0.24px;
   font-weight: 500;
 }
-.board-function-sort-bar-icon {
+.qboard-function-sort-bar-icon {
   position: absolute;
   top: 0.1rem;
   right: 4.95rem;
   width: 0.1rem;
   height: 3.4rem;
 }
-.board-function-sort-by-icon {
+.qboard-function-sort-by-icon {
   position: absolute;
   top: 1.2rem;
   right: 1.6rem;
   width: 2rem;
   height: 1.35rem;
 }
-.board-function-sort {
+.qboard-function-sort {
   position: absolute;
   top: 33.6rem;
   right: 1.5rem;
@@ -258,7 +258,7 @@
   color: #000;
   font-family: Roboto;
 }
-.board-function-search-input1 {
+.qboard-function-search-input1 {
   position: absolute;
   width: 100%;
   top: 0;
@@ -272,15 +272,15 @@
   padding-left: 5rem;
   color: #626567;
 }
-.board-function-search-icon {
+.qboard-function-search-icon {
   position: absolute;
   top: 1rem;
   left: 1.3rem;
   width: 1.6rem;
   height: 1.5rem;
 }
-.board-function-search-input,
-.board-hr-icon {
+.qboard-function-search-input,
+.qboard-hr-icon {
   position: absolute;
   width: calc(100% - 30px);
   top: 38.7rem;
@@ -288,7 +288,7 @@
   left: 1.5rem;
   height: 3.5rem;
 }
-.board-hr-icon {
+.qboard-hr-icon {
   width: calc(100% - 44px);
   top: 43.45rem;
   right: 2.09rem;
@@ -297,7 +297,7 @@
   overflow: hidden;
   height: 0.1rem;
 }
-.board-pages-reset-icon {
+.qboard-pages-reset-icon {
   position: absolute;
   top: 45.2rem;
   left: 2.1rem;
@@ -305,7 +305,7 @@
   height: 2.03rem;
   cursor: pointer;
 }
-.board-pages-current {
+.qboard-pages-current {
   position: absolute;
   top: 0;
   right: 7.01rem;
@@ -314,27 +314,27 @@
   display: inline-block;
   width: 23.9rem;
 }
-.board-pages,
-.board-pages-back-icon,
-.board-pages-forward-icon {
+.qboard-pages,
+.qboard-pages-back-icon,
+.qboard-pages-forward-icon {
   position: absolute;
   top: 0.43rem;
   right: 3.12rem;
   width: 1.3rem;
   height: 1.23rem;
 }
-.board-pages,
-.board-pages-forward-icon {
+.qboard-pages,
+.qboard-pages-forward-icon {
   right: -0.06rem;
 }
-.board-pages {
+.qboard-pages {
   top: 45.2rem;
   right: 2.79rem;
   width: 30.91rem;
   height: 2.1rem;
   text-align: right;
 }
-.board-hr-icon1 {
+.qboard-hr-icon1 {
   position: absolute;
   width: calc(100% - 44px);
   top: 48.85rem;
@@ -344,7 +344,7 @@
   overflow: hidden;
   height: 0.1rem;
 }
-.board-notice-box {
+.qboard-notice-box {
   position: absolute;
   width: 100%;
   top: 0;
@@ -355,14 +355,14 @@
   box-sizing: border-box;
   height: 11.1rem;
 }
-.board-notice-preview-info-logo-icon {
+.qboard-notice-preview-info-logo-icon {
   position: absolute;
   top: 0.1rem;
   left: 0;
   width: 2rem;
   height: 1.6rem;
 }
-.board-notice-preview-info-text {
+.qboard-notice-preview-info-text {
   position: absolute;
   top: 0;
   left: 2.6rem;
@@ -370,14 +370,14 @@
   display: inline-block;
   width: 23.6rem;
 }
-.board-notice-preview-info {
+.qboard-notice-preview-info {
   position: absolute;
   top: 0;
   left: 0;
   width: 26.2rem;
   height: 1.7rem;
 }
-.board-notice-preview-subject {
+.qboard-notice-preview-subject {
   position: absolute;
   top: 2.8rem;
   left: 0.1rem;
@@ -387,7 +387,7 @@
   color: #000;
   width: 25.5rem;
 }
-.board-notice-preview-notice-bo {
+.qboard-notice-preview-notice-bo {
   position: absolute;
   top: 0;
   left: 0;
@@ -398,7 +398,7 @@
   width: 7.5rem;
   height: 2.2rem;
 }
-.board-notice-preview-notice-te {
+.qboard-notice-preview-notice-te {
   position: absolute;
   top: 0.3rem;
   left: 0.65rem;
@@ -407,7 +407,7 @@
   display: inline-block;
   width: 6.1rem;
 }
-.board-notice-preview-notice {
+.qboard-notice-preview-notice {
   position: absolute;
   top: 6.2rem;
   left: 0.3rem;
@@ -417,7 +417,7 @@
   font-size: 1.1rem;
   color: #721ea6;
 }
-.board-notice-preview-hash {
+.qboard-notice-preview-hash {
   position: absolute;
   top: 6.6rem;
   left: 8.8rem;
@@ -426,75 +426,75 @@
   display: inline-block;
   width: 17.9rem;
 }
-.board-notice-preview-views-tex {
+.qboard-notice-preview-views-tex {
   position: absolute;
   top: 0;
   right: 0;
   letter-spacing: -0.24px;
 }
-.board-notice-preview-views-ico-icon {
+.qboard-notice-preview-views-ico-icon {
   position: absolute;
   top: 0.53rem;
   right: 2.42rem;
   width: 1.25rem;
   height: 0.95rem;
 }
-.board-notice-preview-views {
+.qboard-notice-preview-views {
   position: absolute;
   top: 0;
   right: 7.4rem;
   width: 3.6rem;
   height: 1.7rem;
 }
-.board-notice-preview-icons-com2 {
+.qboard-notice-preview-icons-com2 {
   position: relative;
   border-radius: 1px;
   width: 1.15rem;
   height: 1.05rem;
 }
-.board-notice-preview-icons-com {
+.qboard-notice-preview-icons-com {
   position: absolute;
   top: 0;
   right: 3.1rem;
   width: 2.9rem;
   height: 1.7rem;
 }
-.board-notice-preview-icons-lik1 {
+.qboard-notice-preview-icons-lik1 {
   position: absolute;
   top: 0;
   right: 0;
   letter-spacing: -0.24px;
   opacity: 0.9;
 }
-.board-notice-preview-icons-lik2 {
+.qboard-notice-preview-icons-lik2 {
   position: absolute;
   top: 0.53rem;
   right: 1.02rem;
   width: 1.05rem;
   height: 0.95rem;
 }
-.board-notice-preview-icons-lik {
+.qboard-notice-preview-icons-lik {
   position: absolute;
   top: 0;
   right: 0;
   width: 2rem;
   height: 1.7rem;
 }
-.board-notice-preview-icons {
+.qboard-notice-preview-icons {
   position: absolute;
   top: 6.6rem;
   right: 0;
   width: 11rem;
   height: 1.7rem;
 }
-.board-notice-preview {
+.qboard-notice-preview {
   position: absolute;
   top: 1.6rem;
   left: 1rem;
   width: 32rem;
   height: 8.4rem;
 }
-.board-notice {
+.qboard-notice {
   position: absolute;
   width: calc(100% - 44px);
   top: 49rem;
@@ -502,9 +502,9 @@
   left: 2.2rem;
   height: 11.1rem;
 }
-.board-preview-box {
-  position: absolute;
-  height: 100%;
+.qboard-preview-box {
+  position: relative;
+  height: auto;
   width: 100%;
   top: 0;
   right: 0;
@@ -513,7 +513,7 @@
   border-bottom: 1px solid #bdc0c4;
   box-sizing: border-box;
 }
-.board-preview-img-profile {
+.qboard-preview-img-profile {
   position: absolute;
   top: 0.8rem;
   left: 0;
@@ -524,16 +524,16 @@
   width: 3.3rem;
   height: 3.3rem;
 }
-.board-preview-type-date,
-.board-preview-type-text {
+.qboard-preview-type-date,
+.qboard-preview-type-text {
   position: relative;
   letter-spacing: -0.24px;
 }
-.board-preview-type-date {
+.qboard-preview-type-date {
   color: #95969a;
 }
-.board-preview-id,
-.board-preview-type {
+.qboard-preview-id,
+.qboard-preview-type {
   position: absolute;
   left: 4.1rem;
   display: flex;
@@ -541,17 +541,17 @@
   justify-content: flex-start;
   font-size: 1.2rem;
 }
-.board-preview-type {
+.qboard-preview-type {
   top: 0.7rem;
   align-items: flex-start;
   gap: 0.6rem;
   color: #000;
 }
-.board-preview-id {
+.qboard-preview-id {
   top: 2.4rem;
   align-items: center;
 }
-.board-preview-subject {
+.qboard-preview-subject {
   position: absolute;
   top: 5.3rem;
   left: 0;
@@ -559,13 +559,13 @@
   letter-spacing: -0.24px;
   color: #000;
 }
-.board-preview-contents {
+.qboard-preview-contents {
   position: absolute;
   top: 8.6rem;
   left: 0;
   letter-spacing: -0.24px;
 }
-.board-preview-img-preview {
+.qboard-preview-img-preview {
   position: absolute;
   top: 0.9rem;
   right: 0;
@@ -576,61 +576,61 @@
   width: 9.9rem;
   height: 9.5rem;
 }
-.board-preview-likes-text {
+.qboard-preview-likes-text {
   position: absolute;
   top: 0;
   left: calc(50% - 10.5px);
   letter-spacing: -0.24px;
 }
-.board-preview-likes-icon {
+.qboard-preview-likes-icon {
   position: absolute;
   top: 0.53rem;
   left: calc(50% - 29.25px);
   width: 1.55rem;
   height: 1.39rem;
 }
-.board-preview-likes {
+.qboard-preview-likes {
   position: absolute;
   top: 12.5rem;
   left: calc(50% - 135px);
   width: 5.7rem;
   height: 2.3rem;
 }
-.board-preview-comments-icon {
+.qboard-preview-comments-icon {
   position: relative;
   border-radius: 1px;
   width: 1.55rem;
   height: 1.39rem;
 }
-.board-preview-comments {
+.qboard-preview-comments {
   position: absolute;
   top: 12.5rem;
   left: calc(50% - 30px);
   width: 5.7rem;
   height: 2.3rem;
 }
-.board-preview-views-text {
+.qboard-preview-views-text {
   position: absolute;
   top: 0;
   left: calc(50% - 9.5px);
   letter-spacing: -0.24px;
 }
-.board-preview-views-icon {
+.qboard-preview-views-icon {
   position: absolute;
   top: 0.53rem;
   left: calc(50% - 30.25px);
   width: 1.75rem;
   height: 1.35rem;
 }
-.board-preview-views {
+.qboard-preview-views {
   position: absolute;
   top: 12.5rem;
   left: calc(50% + 75px);
   width: 5.9rem;
   height: 2.3rem;
 }
-.board-preview {
-  position: absolute;
+.qboard-preview {
+  position: relative;
   width: calc(100% - 44px);
   top: 61.3rem;
   right: 2.2rem;
@@ -638,14 +638,66 @@
   height: 16.4rem;
   font-size: 1.6rem;
 }
-.board {
+.qboard {
   position: relative;
   background-color: #fff;
   width: 100%;
-  height: 83.6rem;
+  height: auto;
   overflow: hidden;
   text-align: left;
   font-size: 1.2rem;
   color: #626567;
   font-family: "Noto Sans KR";
+}
+
+.qboard-list{
+  margin-bottom: 65rem;
+}
+
+.qboard-pages-reset-icon {
+  position: absolute;
+  top: 45.2rem;
+  left: 2.1rem;
+  width: 2.04rem;
+  height: 2.03rem;
+  cursor: pointer;
+}
+.qboard-pages-current {
+  position: absolute;
+  top: 0;
+  right: 7.01rem;
+  letter-spacing: 0.5px;
+  line-height: 2.1rem;
+  display: inline-block;
+  width: 23.9rem;
+}
+.qboard-pages,
+.qboard-pages-back-icon,
+.qboard-pages-forward-icon {
+  position: absolute;
+  top: 0.43rem;
+  right: 3.12rem;
+  width: 1.3rem;
+  height: 1.23rem;
+}
+
+.qboard-pages,
+.qboard-pages-forward-icon {
+  right: -0.06rem;
+}
+.qboard-pages {
+  top: 45.2rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
+}
+
+.qboard-pages2{
+  position: absolute;
+  top: 226rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
 }

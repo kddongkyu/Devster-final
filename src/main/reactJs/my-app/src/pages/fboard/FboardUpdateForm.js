@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
@@ -8,12 +8,13 @@ function FboardUpdateForm(props) {
     const [fbPhoto, setFbPhoto] = useState("");
     const [fbContent, setFbContent] = useState("");
     const navi = useNavigate();
-    const { fb_idx, currentPage } = useParams();
+    const {fb_idx, currentPage} = useParams();
     const location = useLocation();
     const fboardData = location.state;
-
+    const [newSelectedPhotos, setNewSelectedPhotos] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [arrayFromString, setArrayFromString] = useState([]);
-    const photoUrl = process.env.REACT_APP_PHOTO+"fboard/";
+    const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
 
     let de = jwt_decode(localStorage.getItem("accessToken"));
     const m_idx = de.idx;
@@ -23,27 +24,32 @@ function FboardUpdateForm(props) {
             setFbSubject(fboardData.fboard.fb_subject);
             setFbPhoto(fboardData.fboard.fb_photo);
             setFbContent(fboardData.fboard.fb_content);
-
-            if(fboardData.fboard.fb_photo!=null){
+            if (fboardData.fboard.fb_photo != null) {
                 setArrayFromString(fboardData.fboard.fb_photo.split(","));
             }
         }
     }, [fboardData]);
 
-    // 배열을 콤마로 이어진 문자열로 변환하는 함수
-    const convertArrayToString = (arr) => {
-        console.log(arr.join(','));
-        return arr.join(',');
-    };
-    const handleImageClick = (index) => {
-        // 클릭한 이미지를 배열에서 제거하는 로직
-        const newPhotoArray = arrayFromString.filter((_, i) => i !== index);
-        setArrayFromString(newPhotoArray);
+    // 기존 사진 삭제
+    const deleteImage = useCallback((index, imageFileName) => {
+        // 이미지를 삭제하는 요청을 서버로 보내는 axios 요청
+        axiosIns
+            .delete(`/api/fboard/D1/photo/${fb_idx}/${imageFileName}`)
+            .then((res) => {
+                setArrayFromString((prevArray) => prevArray.filter((_, i) => i !== index));
+            })
+            .catch((error) => {
+                // 삭제 실패 시 에러 처리
+                console.error(error);
+            });
+    }, [arrayFromString, fb_idx]);
 
-        // // 변경된 배열을 문자열로 변환하여 setFbPhoto에 넣어줌
-        // const newPhotoString = convertArrayToString(newPhotoArray);
-        // setFbPhoto(newPhotoString);
-        console.log(arrayFromString);
+    // 추가 사진 삭제
+    const deleteNewImage = (index) => {
+        setNewSelectedPhotos((prevPhotos) => {
+            const updatedPhotos = prevPhotos.filter((_, i) => i !== index);
+            return updatedPhotos;
+        });
     };
 
     const onSubmitEvent = (e) => {
@@ -51,7 +57,7 @@ function FboardUpdateForm(props) {
 
         const dto = {
             fb_subject: fbSubject,
-            fb_photo: fbPhoto,
+            fb_photo: arrayFromString.join(','),
             fb_content: fbContent,
             m_idx: m_idx,
         };
@@ -69,33 +75,46 @@ function FboardUpdateForm(props) {
     };
 
     // 파일 업로드
-    const onUploadEvent = (e) => {
-        const uploadPhoto = new FormData();
-        uploadPhoto.append("upload", e.target.files[0]);
-        uploadPhoto.append("upload", arrayFromString[0])
+    const uploadPhoto = (e) => {
+        setIsLoading(true);
+        const upload = new FormData();
+        const maxAllowedFiles = 10;
+
+        // 업데이트된 사진 10장이내인지 확인
+        if (e.target.files.length + arrayFromString.length > maxAllowedFiles) {
+            alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
+            e.target.value = null;
+            setIsLoading(false);
+            return;
+        }
+
+        for (let i = 0; i < e.target.files.length; i++) {
+            upload.append("upload", e.target.files[i]);
+        }
+
         axiosIns({
             method: "post",
             url: `/api/fboard/D1/photo/${fb_idx}`,
-            data: uploadPhoto,
-            headers: { "Content-Type": "multipart/form-data" },
+            data: upload,
+            headers: {"Content-Type": "multipart/form-data"}
         })
             .then((res) => {
-                setFbPhoto(res.data);
+                setArrayFromString([...arrayFromString, ...res.data.split(',')]);
+                console.log(arrayFromString);
+                setIsLoading(false);
             })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
+    }
+
 
     return (
         <div>
             <form className="fboard-form" onSubmit={onSubmitEvent}>
                 <div className="advertise-box">
-                    <div className="advertise-main" />
+                    <div className="advertise-main"/>
                     <b className="advertise-text">광고</b>
                 </div>
                 <div className="fboard-name">
-                    <div className="board-name-box" />
+                    <div className="board-name-box"/>
                     <div className="fboard-name-text">
                         <div className="fboard-name-text-type">자유게시판</div>
                         <div className="fboard-name-text-detail">
@@ -124,16 +143,23 @@ function FboardUpdateForm(props) {
 
                 {/* 사진 미리보기*/}
                 <div className="fboard-form-photo-list">
-                    {arrayFromString.map((imageId, index) => (
-                        // <div className={'fboard-form-photo'+(index+1)}>
-                            <img
-                                className={'fboard-form-photo'+(index+1)} key={index}
-                                src={`${photoUrl}${imageId}`}
-                                alt={`Image ${index}`}
-                                onClick={() => handleImageClick(index)}
-                            />
-                        // </div>
+                    {([...arrayFromString, ...newSelectedPhotos]).map((imageId, index) => (
+                        <img
+                            key={index}
+                            src={typeof imageId === 'string' ? `${photoUrl}${imageId}` : URL.createObjectURL(imageId)}
+                            alt={`Image ${index}`}
+                            className={`fboard-form-photo${index + 1}`}
+                            // onClick={() => deleteImage(index, imageId)}
+                            onClick={() => {
+                                if (typeof imageId === 'string') {
+                                    deleteImage(index, imageId);
+                                } else {
+                                    deleteNewImage(index - 1);
+                                }
+                            }}
+                        />
                     ))}
+                    <div className="fboard-form-photo-list_text">삭제하고싶은 사진을 클릭하세요.</div>
                 </div>
 
                 <div className="fboard-form-fileupload">
@@ -141,12 +167,19 @@ function FboardUpdateForm(props) {
                         type="file" multiple
                         className="fboard-form-subject-rec"
                         placeholder="첨부 사진을 올려주세요."
-                        onChange={onUploadEvent}
+                        onChange={uploadPhoto}
                     />
+                    <div className="fboard-form-fileupload-cnt-tex">
+                        <img
+                            alt=""
+                            src={require("./assets/qboard_form_fileupload_icon.svg").default}
+                        />
+                        &nbsp;&nbsp;사진 {arrayFromString.length + newSelectedPhotos.length}장이 등록되었습니다.
+                    </div>
                 </div>
-                <button type='submit' className="fboard-form-btn">
-                    <div className="fboard-form-btn-child" />
-                    <div className="fboard-form-btn-text">게시글수정</div>
+                <button type='submit' className="fboard-form-btn" disabled={isLoading}>
+                    <div className={isLoading ? "fboard-form-btn-child_loading" : "fboard-form-btn-child"}/>
+                    <div className="fboard-form-btn-text">{isLoading ? "로딩중..." : "게시글수정"}</div>
                     <img
                         className="fboard-form-btn-icon"
                         alt=""

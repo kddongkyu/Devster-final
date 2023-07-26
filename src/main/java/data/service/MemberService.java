@@ -55,8 +55,9 @@ public class MemberService {
         return photo;
     }
 
-    public void resetPhoto(String photo) {
+    public void resetPhoto(String photo, HttpSession session) {
         storageService.deleteFile(bucketName,"devster/member",photo);
+        session.removeAttribute("photo");
         log.info("일반회원 사진 초기화 완료");
     }
 
@@ -141,6 +142,10 @@ public class MemberService {
     public List<AcademyInfoEntity> academyNameSearch(String name) {
         log.info("일반회원 학원명 검색 완료");
         return academyInfoRepository.findAllByAInameContains(name);
+    }
+
+    public String academyName(int ai_idx) {
+        return academyInfoRepository.findById(ai_idx).get().getAIname();
     }
 
     public boolean isDuplicateId(String id) {
