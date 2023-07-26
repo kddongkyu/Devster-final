@@ -34,10 +34,6 @@ function MessageList(props) {
             });
     };
 
-    useEffect(() => {
-        getMessageList(page);
-    }, [page]);
-
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };

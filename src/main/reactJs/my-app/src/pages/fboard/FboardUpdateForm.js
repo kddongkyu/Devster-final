@@ -8,29 +8,24 @@ function FboardUpdateForm(props) {
     const [fbPhoto, setFbPhoto] = useState("");
     const [fbContent, setFbContent] = useState("");
     const navi = useNavigate();
-    const { fb_idx, currentPage } = useParams();
+    const {fb_idx, currentPage} = useParams();
     const location = useLocation();
-    const [photoLength, setPhotoLength]=useState(0);
     const fboardData = location.state;
     const [newSelectedPhotos, setNewSelectedPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [arrayFromString, setArrayFromString] = useState([]);
-    const photoUrl = process.env.REACT_APP_PHOTO+"fboard/";
+    const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
 
     let de = jwt_decode(localStorage.getItem("accessToken"));
     const m_idx = de.idx;
-
 
     useEffect(() => {
         if (fboardData && fboardData.fboard) {
             setFbSubject(fboardData.fboard.fb_subject);
             setFbPhoto(fboardData.fboard.fb_photo);
             setFbContent(fboardData.fboard.fb_content);
-
-            if(fboardData.fboard.fb_photo!=null){
+            if (fboardData.fboard.fb_photo != null) {
                 setArrayFromString(fboardData.fboard.fb_photo.split(","));
-
-                // setPhotoLength(arrayFromString.length);
             }
         }
     }, [fboardData]);
@@ -41,18 +36,13 @@ function FboardUpdateForm(props) {
         axiosIns
             .delete(`/api/fboard/D1/photo/${fb_idx}/${imageFileName}`)
             .then((res) => {
-                // 클릭한 이미지를 배열에서 제거하는 로직
-                // const newPhotoArray = arrayFromString.filter((_, i) => i !== index);
-                // setArrayFromString(newPhotoArray);
                 setArrayFromString((prevArray) => prevArray.filter((_, i) => i !== index));
-
-                // setPhotoLength(photoLength - 1);
             })
             .catch((error) => {
                 // 삭제 실패 시 에러 처리
                 console.error(error);
             });
-    },[arrayFromString, fb_idx]);
+    }, [arrayFromString, fb_idx]);
 
     // 추가 사진 삭제
     const deleteNewImage = (index) => {
@@ -67,7 +57,7 @@ function FboardUpdateForm(props) {
 
         const dto = {
             fb_subject: fbSubject,
-            fb_photo: fbPhoto,
+            fb_photo: arrayFromString.join(','),
             fb_content: fbContent,
             m_idx: m_idx,
         };
@@ -85,59 +75,46 @@ function FboardUpdateForm(props) {
     };
 
     // 파일 업로드
-    const onUploadEvent = useCallback((e) => {
+    const uploadPhoto = (e) => {
         setIsLoading(true);
-        const uploadPhoto = new FormData();
-        const selectedFiles = e.target.files;
-        // const uploadedFiles = arrayFromString.map((imageId) => new File([], imageId));
-        // const filesToUpload = [...uploadedFiles, ...selectedFiles];
+        const upload = new FormData();
         const maxAllowedFiles = 10;
 
-        // Check if the number of files exceeds the limit
-        if (selectedFiles.length + arrayFromString.length > maxAllowedFiles) {
-            // Handle the error or inform the user that only 10 files are allowed
+        // 업데이트된 사진 10장이내인지 확인
+        if (e.target.files.length + arrayFromString.length > maxAllowedFiles) {
             alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
             e.target.value = null;
             setIsLoading(false);
             return;
         }
-        // setPhotoLength(photoLength + selectedFiles.length);
-        const newPhotos = Array.from(selectedFiles);
-        setNewSelectedPhotos([...newSelectedPhotos, ...newPhotos]);
 
-        for (let i = 0; i < selectedFiles.length; i++) {
-            uploadPhoto.append("upload", selectedFiles[i]);
+        for (let i = 0; i < e.target.files.length; i++) {
+            upload.append("upload", e.target.files[i]);
         }
+
         axiosIns({
             method: "post",
             url: `/api/fboard/D1/photo/${fb_idx}`,
-            data: uploadPhoto,
-            headers: { "Content-Type": "multipart/form-data" },
+            data: upload,
+            headers: {"Content-Type": "multipart/form-data"}
         })
             .then((res) => {
-                // 업로드된 이미지 파일명과 기존 이미지 파일명을 합침
-                // 서버 응답인 res.data가 비어있지 않은지 확인한 후에 분할합니다.
-                const updatedImageFileNames = res.data ? [...res.data.split(","), ...arrayFromString.filter(Boolean)] : arrayFromString.filter(Boolean);
-                setArrayFromString(updatedImageFileNames);
-
-            })
-            .catch((error) => {
-                console.error(error);
-            }).finally(()=>{
+                setArrayFromString([...arrayFromString, ...res.data.split(',')]);
+                console.log(arrayFromString);
                 setIsLoading(false);
-            });
-    },[arrayFromString,fb_idx, newSelectedPhotos]);
+            })
+    }
 
 
     return (
         <div>
             <form className="fboard-form" onSubmit={onSubmitEvent}>
                 <div className="advertise-box">
-                    <div className="advertise-main" />
+                    <div className="advertise-main"/>
                     <b className="advertise-text">광고</b>
                 </div>
                 <div className="fboard-name">
-                    <div className="board-name-box" />
+                    <div className="board-name-box"/>
                     <div className="fboard-name-text">
                         <div className="fboard-name-text-type">자유게시판</div>
                         <div className="fboard-name-text-detail">
@@ -177,7 +154,7 @@ function FboardUpdateForm(props) {
                                 if (typeof imageId === 'string') {
                                     deleteImage(index, imageId);
                                 } else {
-                                    deleteNewImage(index-1);
+                                    deleteNewImage(index - 1);
                                 }
                             }}
                         />
@@ -190,19 +167,18 @@ function FboardUpdateForm(props) {
                         type="file" multiple
                         className="fboard-form-subject-rec"
                         placeholder="첨부 사진을 올려주세요."
-                        onChange={onUploadEvent}
+                        onChange={uploadPhoto}
                     />
                     <div className="fboard-form-fileupload-cnt-tex">
                         <img
-                            // className="fboard-form-fileupload-icon"
                             alt=""
                             src={require("./assets/qboard_form_fileupload_icon.svg").default}
                         />
-                        &nbsp;&nbsp;사진 {arrayFromString.length}장이 등록되었습니다.
+                        &nbsp;&nbsp;사진 {arrayFromString.length + newSelectedPhotos.length}장이 등록되었습니다.
                     </div>
                 </div>
                 <button type='submit' className="fboard-form-btn" disabled={isLoading}>
-                    <div className={isLoading ? "fboard-form-btn-child_loading" : "fboard-form-btn-child"} />
+                    <div className={isLoading ? "fboard-form-btn-child_loading" : "fboard-form-btn-child"}/>
                     <div className="fboard-form-btn-text">{isLoading ? "로딩중..." : "게시글수정"}</div>
                     <img
                         className="fboard-form-btn-icon"

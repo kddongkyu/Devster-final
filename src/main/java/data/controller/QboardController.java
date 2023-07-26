@@ -25,11 +25,10 @@ public class QboardController {
         this.qboardCommentService = qboardCommentService;
     }
 
-    @GetMapping("/D0")
+    @GetMapping("/D0/list")
     public ResponseEntity<QboardResponseDto> getPagedQboard(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(qboardService.getPagedQboard(page, size), HttpStatus.OK);
+            @RequestParam(defaultValue = "1") String currentPage) {
+        return new ResponseEntity<>(qboardService.getPagedQboard(Integer.parseInt(currentPage), 10), HttpStatus.OK);
     }
 
     @PostMapping("/D1")

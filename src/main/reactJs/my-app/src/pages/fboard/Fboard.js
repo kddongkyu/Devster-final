@@ -7,21 +7,18 @@ import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 
 function Fboard(props) {
-
-    const handleRefresh = () => {
+    const handleRefresh = () => { // 새로고침 버튼용
         window.location.reload();
     };
 
     const [freeBoardList, setFreeBoardList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
     const [contentCount, setContentCount] = useState(15);
     const [subjectCount, setsubjectCount] = useState(10);
-    const navi=useNavigate();
+    const navi = useNavigate();
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
-    
     //정렬
     const [sortProperty, setSortProperty] = useState('');
     const [sortDirection, setSortDirection] = useState('');
@@ -29,8 +26,7 @@ function Fboard(props) {
     const [inputKeyword, setInputKeyword] = useState(''); // 사용자가 입력하는 검색어
     const [finalKeyword, setFinalKeyword] = useState(''); // 최종 검색어 (검색 버튼
 
-    const handleResize = () => {
-        // 화면 너비에 따라 텍스트 개수를 업데이트
+    const handleResize = () => { // 화면 너비에 따라 content 미리보기 갯수 반응형으로 변경
         const screenWidth = window.innerWidth;
         if (screenWidth >= 1000) {
             setContentCount(80);
@@ -44,7 +40,8 @@ function Fboard(props) {
             setContentCount(15);
         }
     };
-    const handleSubjectResize = () => {
+
+    const handleSubjectResize = () => { // 화면 너비에 따라 subject 미리보기 갯수 반응형으로 변경
         // 화면 너비에 따라 텍스트 개수를 업데이트
         const screenWidth = window.innerWidth;
         if (screenWidth >= 1000) {
@@ -60,16 +57,6 @@ function Fboard(props) {
         }
     };
 
-    //검색 기능
-    const handleSearchButtonClick = () => {
-        // 검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
-        const searchKeyword = inputKeyword;
-        setFinalKeyword(searchKeyword);
-        // 첫 페이지의 검색 결과를 가져옵니다.
-        setCurrentPage(1);
-    };
-
-
     useEffect(() => {
         // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
         window.addEventListener('resize', handleResize);
@@ -80,6 +67,7 @@ function Fboard(props) {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
     useEffect(() => {
         // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
         window.addEventListener('resize', handleSubjectResize);
@@ -95,19 +83,47 @@ function Fboard(props) {
         return value1.length > value2;
     };
 
-    useEffect(() => {
-        fetchFboards(currentPage);
-    }, [currentPage]);
+    //검색 기능
+    const handleSearchButtonClick = () => {
+        // 검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
+        const searchKeyword = inputKeyword;
+        setFinalKeyword(searchKeyword);
+        // 첫 페이지의 검색 결과를 가져옵니다.
+        setCurrentPage(1);
+    };
 
-    const fetchFboards = (page) => {
-        axiosIns.get('/api/fboard/D0', {params: {page: page - 1}})
-            .then(response => {
-                setFreeBoardList(response.data.freeBoardList);
-                setTotalPages(response.data.totalPages);
-            })
-            .catch(error => {
-                console.error('Error fetching fboards:', error);
+    // 엔터로 검색
+    const handleEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSearchButtonClick();
+        }
+    };
+
+    useEffect(() => {
+        const page = Math.max(1, currentPage);
+        fetchFboards(page, finalKeyword, sortProperty, sortDirection);
+    }, [currentPage, finalKeyword, sortProperty, sortDirection]);
+
+    const fetchFboards = async (page, keyword, sortProperty, sortDirection) => {
+        const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
+
+        try {
+            const response = await axiosIns.get('/api/fboard/D0', {
+                params: {
+                    page: page - 1, // Use the page parameter
+                    keyword: searchKeyword,
+                    sortProperty,
+                    sortDirection
+                }
             });
+
+            setFreeBoardList(response.data.freeBoardList);
+            setTotalPages(response.data.totalPages);
+
+        } catch (error) {
+            console.error('Error fetching fboards:', error);
+        }
+
     };
 
     useEffect(() => {
@@ -121,6 +137,7 @@ function Fboard(props) {
             });
     }, []);
 
+    // 페이징
     const goToPreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -133,11 +150,27 @@ function Fboard(props) {
         }
     };
 
+    // 정렬
+    const onClickLatest = () => {
+        setSortProperty('FBwriteDay');
+        setSortDirection('DESC');
+    };
+
+    const onClickLikes = () => {
+        setSortProperty('FBlikeCount');
+        setSortDirection('DESC');
+    };
+
+    const onClickViews = () => {
+        setSortProperty('FBreadCount');
+        setSortDirection('DESC');
+    };
+
+    // 작성시간 몇시간전으로 변경
     const timeForToday = (value) => {
         if (!value) {
             return '';
         }
-
         const valueConv = value.slice(0, -10);
         const today = new Date();
         const timeValue = new Date(valueConv);
@@ -174,16 +207,21 @@ function Fboard(props) {
         return formattedDateWithoutTime;
     };
 
+    // 사진 url 설정
     const setPhotoUrl = (value) => {
         if (value == null) {
             return require("./assets/logo-img.svg").default;
         }
         const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
-        const firstCommaIndex = value.indexOf(",");
-        const parsedPhoto = value.substring(0, firstCommaIndex);
-        const srcUrl = photoUrl + parsedPhoto;
-
-        return srcUrl;
+        if (value.includes(",")) {
+            const firstCommaIndex = value.indexOf(",");
+            const parsedPhoto = value.substring(0, firstCommaIndex);
+            const srcUrl = photoUrl + parsedPhoto;
+            return srcUrl;
+        } else {
+            const srcUrl = photoUrl + value;
+            return srcUrl;
+        }
     }
 
     return (
@@ -221,13 +259,11 @@ function Fboard(props) {
                 </NavLink>
             </div>
 
-
-            {/*<NavLink to="/fboard/form" activeClassName="active" className="fboard-write">*/}
             <div
                 className='fboard-write'
-                onClick={()=>{
+                onClick={() => {
                     //페이지 이동시 토큰여부 확인 함수
-                    JwtPageChk(navi,'/fboard/form');
+                    JwtPageChk(navi, '/fboard/form');
                 }}
             >
                 <div className="fboard-write-box"/>
@@ -238,13 +274,13 @@ function Fboard(props) {
                 />
                 <div className="fboard-write-text">글쓰기</div>
             </div>
-            {/*</NavLink>*/}
 
             <div className="fboard-function-sort">
                 <div className="fboard-function-sort-box"/>
-                <div className="fboard-function-sort-time">최신순</div>
-                <div className="fboard-function-sort-view">조회순</div>
-                <div className="fboard-function-sort-like">인기순</div>
+                <div className="fboard-function-sort-time" onClick={onClickLatest}>최신순</div>
+                <div className="fboard-function-sort-view" onClick={onClickViews}>조회순</div>
+                <div className="fboard-function-sort-like" onClick={onClickLikes}>인기순</div>
+
                 <img
                     className="fboard-function-sort-bar2-icon"
                     alt=""
@@ -264,6 +300,7 @@ function Fboard(props) {
                        value={inputKeyword}
                        placeholder='검색어를 입력해주세요'
                        onChange={(e) => setInputKeyword(e.target.value)}
+                       onKeyDown={handleEnterKeyPress}
                 />
                 <img
                     className="fboard-function-search-icon"
@@ -297,7 +334,6 @@ function Fboard(props) {
                 />
             </div>
 
-            {/* <img className="board-hr-icon1" alt="" src="/board-hr1.svg" /> */}
             <div className="fboard-notice">
                 <div className="fboard-notice-box"/>
                 <div className="fboard-notice-preview">
@@ -373,7 +409,6 @@ function Fboard(props) {
                                         {compareValues(String(fboard.fboard.fb_content), contentCount)
                                             ? fboard.fboard.fb_content.slice(0, contentCount) + "···"
                                             : fboard.fboard.fb_content}
-                                        {/*{(fboard.fboard.fb_content).slice(0, contentCount)}*/}
                                     </div>
                                     <div>
                                         <img alt=""

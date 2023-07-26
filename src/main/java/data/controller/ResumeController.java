@@ -49,11 +49,7 @@ public class ResumeController {
     @GetMapping("/D1/{m_idx}")
     public ResponseEntity<ResumeWrapper> getOneResume(@PathVariable int m_idx) {
         ResumeWrapper resumeWrapper = resumeService.getOneResume(m_idx);
-        if(resumeWrapper.getResumeDto() == null) {
-            return new ResponseEntity<ResumeWrapper>(resumeService.getOneResume(m_idx),HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<ResumeWrapper>(resumeService.getOneResume(m_idx),HttpStatus.OK);
-        }
+        return new ResponseEntity<ResumeWrapper>(resumeService.getOneResume(m_idx),HttpStatus.OK);
     }
 
     @DeleteMapping("/D1")
