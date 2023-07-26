@@ -218,17 +218,7 @@
     color: #fff;
     font-family: "Roboto Serif";
   }
-  .aboard-function-sort-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 10rem;
-    height: 3.6rem;
-  }
+
   .aboard-function-sort-reset {
     position: absolute;
     top: 1.2rem;
@@ -236,29 +226,7 @@
     letter-spacing: -0.24px;
     font-weight: 500;
   }
-  .aboard-function-sort-bar-icon {
-    position: absolute;
-    top: 0.1rem;
-    right: 4.95rem;
-    width: 0.1rem;
-    height: 3.4rem;
-  }
-  .aboard-function-sort-by-icon {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.6rem;
-    width: 2rem;
-    height: 1.35rem;
-  }
-  .aboard-function-sort {
-    position: absolute;
-    top: 33.6rem;
-    right: 1.5rem;
-    width: 10rem;
-    height: 3.6rem;
-    color: #000;
-    font-family: Roboto;
-  }
+
   .aboard-function-search-input1 {
     position: absolute;
     width: 100%;
@@ -276,7 +244,7 @@
   .aboard-function-search-icon {
     position: absolute;
     top: 1rem;
-    left: 1.3rem;
+    right: 1.3rem;
     width: 1.6rem;
     height: 1.5rem;
   }
@@ -631,7 +599,7 @@
     height: 2.3rem;
   }
   .aboard-preview {
-    position: absolute;
+    position: relative;
     width: calc(100% - 44px);
     top: 61.3rem;
     right: 2.2rem;
@@ -643,11 +611,74 @@
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 83.6rem;
+    height: 230rem;
     overflow: hidden;
     text-align: left;
     font-size: 1.2rem;
     color: #626567;
     font-family: "Noto Sans KR";
   }
-  
+.aboard-function-sort-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 15rem;
+  height: 3.6rem;
+}
+.aboard-function-sort-like,
+.aboard-function-sort-time,
+.aboard-function-sort-view {
+  position: absolute;
+  top: 1.2rem;
+  right: 10.1rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 4rem;
+  border: none;
+  background-color: #fff;
+}
+.aboard-function-sort-like,
+.aboard-function-sort-view {
+  right: 5.4rem;
+  width: 3.7rem;
+}
+.aboard-function-sort-like {
+  right: 0.2rem;
+  width: 4rem;
+}
+.aboard-function-sort-bar-icon,
+.aboard-function-sort-bar2-icon {
+  position: absolute;
+  top: 0.1rem;
+  right: 4.95rem;
+  width: 0.1rem;
+  height: 3.4rem;
+}
+.aboard-function-sort-bar-icon {
+  right: 9.95rem;
+}
+.aboard-function-sort {
+  position: absolute;
+  top: 33.5rem;
+  right: 1.5rem;
+  width: 15rem;
+  height: 3.6rem;
+  color: #484848;
+  font-family: Roboto;
+}.aboard-bottom-pages,
+ .aboard-pages {
+   position: absolute;
+   top: 45.2rem;
+   right: 2.79rem;
+   width: 30.91rem;
+   height: 2.1rem;
+   text-align: right;
+ }
+.aboard-bottom-pages {
+  top: 226.4rem;
+  right: 2.59rem;
+}

@@ -224,7 +224,6 @@ function Reviewlist(props) {
                 alt=""
                 src={require('./assets/rboard-top_pages_back.svg').default}
                 onClick={() => goToPreviousPage(finalKeyword,sortProperty,sortDirection)}
-
                 style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
             />
             <div className="review-child"/>

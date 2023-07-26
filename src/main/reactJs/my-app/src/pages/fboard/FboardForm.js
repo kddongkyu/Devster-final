@@ -7,6 +7,7 @@ import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
 import {checkToken} from "../../api/checkToken";
 
+
 function FboardForm(props) {
     const [fbSubject, setFbSubject] = useState('');
     const [fbContent, setFbContent] = useState('');
@@ -14,6 +15,7 @@ function FboardForm(props) {
     const navi = useNavigate();
     const [selectedPhotos, setSelectedPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
 
     //에러 호출용 변수
     const {enqueueSnackbar} = useSnackbar();

@@ -77,17 +77,21 @@ public class AcademyBoardController {
     @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedAcademyboard(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "ABwriteday") String sortProperty,
+            @RequestParam(defaultValue = "DESC") String sortDirection,
             HttpServletRequest request) {
-        return new ResponseEntity<>(academyBoardService.getPagedAcademyboard(page, size, keyword, request), HttpStatus.OK);
+        return new ResponseEntity<>(academyBoardService.getPagedAcademyboard(page, size, keyword, request,sortProperty,sortDirection), HttpStatus.OK);
     }
 
 
     @GetMapping("/D0/{ab_idx}")
-    public Map<String,Object> getDetailPage(@PathVariable int ab_idx, int m_idx){
-        return academyBoardService.getDetailPage(ab_idx,m_idx);
+    public Map<String,Object> getDetailPage(@PathVariable int ab_idx){
+        return academyBoardService.getDetailPage(ab_idx);
     }
+
+
 
     @DeleteMapping("/D1/{idx}")
     public ResponseEntity<Void> deleteAcademyBoard(@PathVariable Integer idx){
@@ -121,14 +125,14 @@ public class AcademyBoardController {
 
 
 
-    @PostMapping("/D1/like")   
-    public ResponseEntity<Void> likeAcademyBoard(int ab_idx, int m_idx){
+    @PostMapping("/D1/{m_idx}/like/{ab_idx}")
+    public ResponseEntity<Void> likeAcademyBoard(@PathVariable int ab_idx,@PathVariable int m_idx){
         academyBoardService.like(ab_idx,m_idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/D1/dislike")
-    public ResponseEntity<Void> dislikeAcademyBoard(int ab_idx, int m_idx){
+    @PostMapping("/D1/{m_idx}/dislike/{ab_idx}")
+    public ResponseEntity<Void> dislikeAcademyBoard(@PathVariable int ab_idx,@PathVariable int m_idx){
         academyBoardService.dislike(ab_idx,m_idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
