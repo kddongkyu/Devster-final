@@ -8,29 +8,24 @@ function FboardUpdateForm(props) {
     const [fbPhoto, setFbPhoto] = useState("");
     const [fbContent, setFbContent] = useState("");
     const navi = useNavigate();
-    const { fb_idx, currentPage } = useParams();
+    const {fb_idx, currentPage} = useParams();
     const location = useLocation();
-    const [photoLength, setPhotoLength]=useState(0);
     const fboardData = location.state;
     const [newSelectedPhotos, setNewSelectedPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [arrayFromString, setArrayFromString] = useState([]);
-    const photoUrl = process.env.REACT_APP_PHOTO+"fboard/";
+    const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
 
     let de = jwt_decode(localStorage.getItem("accessToken"));
     const m_idx = de.idx;
-
 
     useEffect(() => {
         if (fboardData && fboardData.fboard) {
             setFbSubject(fboardData.fboard.fb_subject);
             setFbPhoto(fboardData.fboard.fb_photo);
             setFbContent(fboardData.fboard.fb_content);
-
-            if(fboardData.fboard.fb_photo!=null){
+            if (fboardData.fboard.fb_photo != null) {
                 setArrayFromString(fboardData.fboard.fb_photo.split(","));
-
-                // setPhotoLength(arrayFromString.length);
             }
         }
     }, [fboardData]);
@@ -47,7 +42,7 @@ function FboardUpdateForm(props) {
                 // 삭제 실패 시 에러 처리
                 console.error(error);
             });
-    },[arrayFromString, fb_idx]);
+    }, [arrayFromString, fb_idx]);
 
     // 추가 사진 삭제
     const deleteNewImage = (index) => {
@@ -80,30 +75,30 @@ function FboardUpdateForm(props) {
     };
 
     // 파일 업로드
-    const uploadPhoto= (e)=>{
+    const uploadPhoto = (e) => {
         setIsLoading(true);
         const upload = new FormData();
         const maxAllowedFiles = 10;
-        // Check if the number of files exceeds the limit
-            if (e.target.files.length + arrayFromString.length > maxAllowedFiles) {
-                // Handle the error or inform the user that only 10 files are allowed
-                alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
-                e.target.value = null;
-                setIsLoading(false);
-                return;
-            }
 
-        for(let i =0; i<e.target.files.length; i++) {
-            upload.append("upload",e.target.files[i]);
+        // 업데이트된 사진 10장이내인지 확인
+        if (e.target.files.length + arrayFromString.length > maxAllowedFiles) {
+            alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
+            e.target.value = null;
+            setIsLoading(false);
+            return;
+        }
+
+        for (let i = 0; i < e.target.files.length; i++) {
+            upload.append("upload", e.target.files[i]);
         }
 
         axiosIns({
             method: "post",
             url: `/api/fboard/D1/photo/${fb_idx}`,
             data: upload,
-            headers: { "Content-Type": "multipart/form-data" }
-            })
-            .then((res)=>{
+            headers: {"Content-Type": "multipart/form-data"}
+        })
+            .then((res) => {
                 setArrayFromString([...arrayFromString, ...res.data.split(',')]);
                 console.log(arrayFromString);
                 setIsLoading(false);
@@ -115,11 +110,11 @@ function FboardUpdateForm(props) {
         <div>
             <form className="fboard-form" onSubmit={onSubmitEvent}>
                 <div className="advertise-box">
-                    <div className="advertise-main" />
+                    <div className="advertise-main"/>
                     <b className="advertise-text">광고</b>
                 </div>
                 <div className="fboard-name">
-                    <div className="board-name-box" />
+                    <div className="board-name-box"/>
                     <div className="fboard-name-text">
                         <div className="fboard-name-text-type">자유게시판</div>
                         <div className="fboard-name-text-detail">
@@ -159,7 +154,7 @@ function FboardUpdateForm(props) {
                                 if (typeof imageId === 'string') {
                                     deleteImage(index, imageId);
                                 } else {
-                                    deleteNewImage(index-1);
+                                    deleteNewImage(index - 1);
                                 }
                             }}
                         />
@@ -176,7 +171,6 @@ function FboardUpdateForm(props) {
                     />
                     <div className="fboard-form-fileupload-cnt-tex">
                         <img
-                            // className="fboard-form-fileupload-icon"
                             alt=""
                             src={require("./assets/qboard_form_fileupload_icon.svg").default}
                         />
@@ -184,7 +178,7 @@ function FboardUpdateForm(props) {
                     </div>
                 </div>
                 <button type='submit' className="fboard-form-btn" disabled={isLoading}>
-                    <div className={isLoading ? "fboard-form-btn-child_loading" : "fboard-form-btn-child"} />
+                    <div className={isLoading ? "fboard-form-btn-child_loading" : "fboard-form-btn-child"}/>
                     <div className="fboard-form-btn-text">{isLoading ? "로딩중..." : "게시글수정"}</div>
                     <img
                         className="fboard-form-btn-icon"

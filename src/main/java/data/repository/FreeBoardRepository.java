@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FreeBoardRepository extends JpaRepository<FreeBoardEntity, Integer> {
-
-@Query("SELECT f FROM freeboard f WHERE f.FBsubject LIKE %:keyword% OR f.FBcontent LIKE %:keyword%")
-Page<FreeBoardEntity> findByFBsubjectContainingOrFBcontentContaining(@Param("keyword") String keyword, Pageable pageable);
+    // subject, content 통합 search 메서드
+    @Query("SELECT f FROM freeboard f WHERE f.FBsubject LIKE %:keyword% OR f.FBcontent LIKE %:keyword%")
+    Page<FreeBoardEntity> findByFBsubjectContainingOrFBcontentContaining(@Param("keyword") String keyword, Pageable pageable);
 
 }
