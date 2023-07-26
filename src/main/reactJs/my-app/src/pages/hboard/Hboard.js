@@ -10,6 +10,7 @@ function Hboard(props) {
   };
 
   const [hireBoardList, setHireBoardList] = useState([]);
+  const [noticeArticle, setNoticeArticle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -93,10 +94,27 @@ function Hboard(props) {
     axiosIns
       .get("/api/hboard/D0")
       .then((response) => {
+        console.log("콘솔테스트1");
+        console.log(response.data);
         setHireBoardList(response.data.hireBoardList);
       })
       .catch((error) => {
         console.error("Error fetching hboards:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    // notice board에서 최신 글 가져오는 API 호출
+    axiosIns
+      .get("/api/nboard/D0/notice")
+      .then((response) => {
+        console.log("콘솔테스트");
+        console.log(response.data);
+        console.log(response.data.nboard);
+        setNoticeArticle(response.data.nboard);
+      })
+      .catch((error) => {
+        console.error("Error fetching notice article:", error);
       });
   }, []);
 
@@ -275,7 +293,73 @@ function Hboard(props) {
       </div>
 
       {/* <img className="board-hr-icon1" alt="" src="/board-hr1.svg" /> */}
+
       <div className="hboard-notice">
+        <div className="hboard-notice-box" />
+
+        <div key={noticeArticle.nb_idx} className="hboard-notice-preview">
+          <div className="hboard-notice-preview-info">
+            <img
+              className="board-notice-preview-info-logo-icon"
+              alt=""
+              src={
+                require("./assets/board_notice_preview_info_logo.svg").default
+              }
+            />
+            <div className="hboard-notice-preview-info-tex">
+              {/* admin_01 · 약 4시간 전 */}
+              관리자 · {timeForToday(noticeArticle.nb_writeday)}
+            </div>
+          </div>
+          <b className="hboard-notice-preview-subject">
+            {noticeArticle.nb_subject}
+          </b>
+          <div className="hboard-notice-preview-notice">
+            <div className="hboard-notice-preview-notice-b" />
+            <div className="hboard-notice-preview-notice-t">공지사항</div>
+          </div>
+          <div className="hboard-notice-preview-hash">#공지사항 # Devster</div>
+          <div className="hboard-notice-preview-icons">
+            <div className="hboard-notice-preview-views">
+              <div className="hboard-notice-preview-views-te">
+                {noticeArticle.nb_readcount}
+              </div>
+              <img
+                className="hboard-notice-preview-views-ic-icon"
+                alt=""
+                src={
+                  require("./assets/hboard_notice_preview_views_icon.svg")
+                    .default
+                }
+              />
+            </div>
+            <div className="hboard-notice-preview-icons-co">
+              <div className="hboard-notice-preview-views-te">99</div>
+              <img
+                className="hboard-notice-preview-icons-co2"
+                alt=""
+                src={
+                  require("./assets/hboard_notice_preview_icons_comments_icon.svg")
+                    .default
+                }
+              />
+            </div>
+            <div className="hboard-notice-preview-icons-li">
+              <div className="hboard-notice-preview-icons-li1">9</div>
+              <img
+                className="hboard-notice-preview-icons-li2"
+                alt=""
+                src={
+                  require("./assets/hboard_notice_preview_icons_likes_icon.svg")
+                    .default
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="hboard-notice">
         <div className="hboard-notice-box" />
         <div className="hboard-notice-preview">
           <div className="hboard-notice-preview-info">
@@ -332,7 +416,7 @@ function Hboard(props) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="hboard_list">
         {hireBoardList &&

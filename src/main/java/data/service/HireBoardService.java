@@ -215,8 +215,8 @@ public class HireBoardService {
         map.put("hb_readcount",dto.getHb_readcount());
         map.put("hb_photo",dto.getHb_photo());
         map.put("hb_writeday",dto.getHb_writeday());
-        map.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
-        map.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
+        map.put("cm_compname",hireBoardMapper.getCompName(dto.getHb_idx()));
+        map.put("cm_filename",hireBoardMapper.getCmFileName(dto.getHb_idx()));
 
 
         //북마크 추가 여부 확인 및 역시 map 에 담기 
@@ -299,7 +299,7 @@ public class HireBoardService {
             }
             
         } catch (Exception e) {
-            logger.error("Error occurred while inserting hirebookmark",e);
+            logger.error("Error occurred while bookmark",e);
         }
     }    
 

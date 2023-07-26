@@ -26,7 +26,7 @@ public class AcademyBoardDto {
     private int ab_readcount;
     private int ab_like;
     private int ab_dislike;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
+    // @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
     private Timestamp ab_writeday;
     private int ai_idx;
 
@@ -41,6 +41,7 @@ public class AcademyBoardDto {
             .ab_readcount(entity.getABreadcount())
             .ab_like(entity.getABlike())
             .ab_dislike(entity.getABdislike())
+            .ab_writeday(entity.getABwriteday())
             .ai_idx(entity.getAIidx())
             .build();
     }

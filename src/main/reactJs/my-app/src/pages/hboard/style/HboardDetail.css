@@ -24,7 +24,7 @@
   font-size: 1.25rem;
   color: #000;
 }
-.board-detail-type-hr-icon {
+.hboard-detail-type-hr-icon {
   position: absolute;
   width: calc(100% - 41px);
   top: 15.22rem;
@@ -34,14 +34,14 @@
   overflow: hidden;
   height: 0.13rem;
 }
-.board-detail-type-text {
+.hboard-detail-type-text {
   position: absolute;
-  top: 13.69rem;
-  left: 1.5rem;
-  font-size: 0.88rem;
+  top: 21.9rem;
+  left: 2.4rem;
+  font-size: 1.4rem;
   letter-spacing: -0.24px;
 }
-.notice-detail-info-profile-img-icon {
+.hboard-detail-info-profile-img-icon {
   position: absolute;
   top: 0;
   left: 0;
@@ -50,7 +50,7 @@
   height: 4.3rem;
   object-fit: cover;
 }
-.notice-detail-info-nickname {
+.hboard-detail-info-nickname {
   position: absolute;
   top: 0.2rem;
   left: 5.3rem;
@@ -64,8 +64,8 @@
 .span {
   color: #721ea6;
 }
-.notice-detail-info-status-text,
-.notice-detail-info-status-text1 {
+.hboard-detail-info-status-text,
+.hboard-detail-info-status-text1 {
   position: absolute;
   top: 2.3rem;
   left: 12.8rem;
@@ -73,44 +73,52 @@
   display: inline-block;
   width: 10rem;
 }
-.notice-detail-info-status-text1 {
+.hboard-detail-info-status-text1 {
   left: 5.4rem;
   width: 5rem;
 }
-.notice-detail-info-status-view-icon {
+.hboard-detail-info-status-view-icon {
   position: absolute;
   top: 2.75rem;
   left: 11rem;
   width: 1.4rem;
   height: 0.94rem;
 }
-.notice-detail-info {
+.hboard-detail-info {
   position: absolute;
   top: 29rem;
   left: 2.7rem;
   width: 18.8rem;
   height: 4.3rem;
 }
+.hboard-url-icon2 {
+  position: absolute;
+  top: 27.13rem;
+  right: 3.1rem;
+  width: 1.5rem;
+  height: 2.35rem;
+  cursor: pointer;
+}
 .hboard-url-icon {
   position: absolute;
   top: 27.13rem;
-  right: 3rem;
+  right: 6.3rem;
   width: 1.87rem;
   height: 2.35rem;
   cursor: pointer;
 }
-.fboard-delete-icon,
-.fboard-update-icon {
+.hboard-delete-icon,
+.hboard-update-icon {
   position: absolute;
   top: 27.13rem;
-  right: 6rem;
+  right: 9.1rem;
   width: 3.2rem;
   height: 2.35rem;
   overflow: hidden;
 }
-.fboard-delete-icon {
+.hboard-delete-icon {
   top: 27.13rem;
-  right: 10rem;
+  right: 13rem;
   width: 2.2rem;
   height: 2.35rem;
 }
@@ -127,7 +135,7 @@
   right: 0;
   letter-spacing: -0.24px;
 }
-.notice-detail-header-btn-like {
+.hboard-detail-header-btn-like {
   position: absolute;
   top: 0;
   right: 2.31rem;
@@ -141,14 +149,14 @@
   width: 0.69rem;
   height: 0.56rem;
 }
-.notice-detail-header-btn-disli {
+.hboard-detail-header-btn-disli {
   position: absolute;
   top: 0;
   right: 0;
   width: 1.81rem;
   height: 1.06rem;
 }
-.notice-detail-header-btn {
+.hboard-detail-header-btn {
   position: absolute;
   top: 19.56rem;
   right: 1.69rem;
@@ -158,7 +166,7 @@
 .p {
   margin: 0;
 }
-.board-detail-textarea-contents {
+.hboard-detail-textarea-contents {
   position: absolute;
   width: 100%;
   top: 4.19rem;
@@ -167,7 +175,7 @@
   display: inline-block;
   height: 26.94rem;
 }
-.board-detail-textarea-subject {
+.hboard-detail-textarea-subject {
   position: absolute;
   top: 0;
   left: 0;
@@ -175,7 +183,7 @@
   letter-spacing: -0.24px;
   color: #000;
 }
-.board-detail-textarea {
+.hboard-detail-textarea {
   position: absolute;
   width: calc(100% - 74px);
   top: 35.7rem;
@@ -184,8 +192,8 @@
   /*height: 49.8rem;*/
   font-size: 1.3rem;
 }
-.board-detail-listback-rec,
-.board-detail-photo {
+.hboard-detail-listback-rec,
+.hboard-detail-photo {
   position: absolute;
   background-color: #fff;
   box-sizing: border-box;
@@ -197,41 +205,41 @@
   width: 18.75rem;
   height: 18.75rem;
 }
-.board-detail-listback-rec {
+.hboard-detail-listback-rec {
   top: 0;
   left: 0;
   border-radius: 5px;
   border: 1px solid #bdc0c4;
-  width: 4.25rem;
-  height: 2.19rem;
+  width: 6.8rem;
+  height: 3.5rem;
 }
-.board-detail-listback-text {
+.hboard-detail-listback-text {
   position: absolute;
-  top: 0.5rem;
-  left: 1.94rem;
+  top: 0.8rem;
+  left: 3.1rem;
   letter-spacing: -0.24px;
   font-weight: 500;
   display: inline-block;
-  width: 2.38rem;
+  width: 3.8rem;
 }
-.board-detail-listback-icon {
+.hboard-detail-listback-icon {
   position: absolute;
-  top: 0.59rem;
-  left: 0.63rem;
-  width: 1rem;
-  height: 1.06rem;
+  top: 0.95rem;
+  left: 1rem;
+  width: 1.6rem;
+  height: 1.69rem;
   overflow: hidden;
 }
-.board-detail-listback {
+.hboard-detail-listback {
   position: absolute;
-  top: 75.31rem;
-  left: 2.56rem;
-  width: 4.31rem;
-  height: 2.19rem;
-  font-size: 0.81rem;
+  top: 120.5rem;
+  left: 4.1rem;
+  width: 6.9rem;
+  height: 3.5rem;
+  font-size: 1.3rem;
   color: #747474;
 }
-.board-detail-counter-like-box {
+.hboard-detail-counter-like-box {
   position: absolute;
   top: 0;
   right: 0;
@@ -242,21 +250,21 @@
   width: 2.13rem;
   height: 2.38rem;
 }
-.board-detail-counter-like-icon {
+.hboard-detail-counter-like-icon {
   position: absolute;
   top: 1.04rem;
   right: 0.6rem;
   width: 1.38rem;
   height: 0.52rem;
 }
-.board-detail-counter-like {
+.hboard-detail-counter-like {
   position: absolute;
   top: 0;
   right: 5.5rem;
   width: 2.13rem;
   height: 2.38rem;
 }
-.board-detail-counter-num-box {
+.hboard-detail-counter-num-box {
   position: absolute;
   top: 0;
   right: 0;
@@ -266,14 +274,14 @@
   width: 3.5rem;
   height: 2.38rem;
 }
-.board-detail-counter-num-text {
+.hboard-detail-counter-num-text {
   position: absolute;
   top: 0.63rem;
   right: 1.06rem;
   letter-spacing: -0.24px;
   font-weight: 500;
 }
-.board-detail-counter-num {
+.hboard-detail-counter-num {
   position: absolute;
   top: 0;
   right: 2.06rem;
@@ -286,22 +294,22 @@
   border: 1px solid #bdc0c4;
   box-sizing: border-box;
 }
-.board-detail-counter-dislike,
-.board-detail-counter-dislike-b {
+.hboard-detail-counter-dislike,
+.hboard-detail-counter-dislike-b {
   position: absolute;
   top: 0;
   right: 0;
-  width: 2.13rem;
-  height: 2.38rem;
+  width: 3.4rem;
+  height: 3.8rem;
 }
-.board-detail-counter {
+.hboard-detail-counter {
   position: absolute;
-  top: 75.31rem;
-  right: 2.25rem;
-  width: 7.63rem;
-  height: 2.38rem;
+  top: 120.5rem;
+  right: 3.6rem;
+  width: 12.2rem;
+  height: 3.8rem;
   text-align: center;
-  font-size: 0.81rem;
+  font-size: 1.3rem;
   color: #000;
 }
 .advertise-text1 {
@@ -614,7 +622,7 @@
   top: 139.31rem;
   text-align: center;
 }
-.fboard-detail {
+.hboard-detail {
   position: relative;
   background-color: #fff;
   border: 1px solid rgba(210, 210, 210, 0.9);
@@ -623,7 +631,7 @@
   height: 142.44rem;
   overflow: hidden;
   text-align: left;
-  font-size: 0.75rem;
+  font-size: 1.2rem;
   color: #626567;
   font-family: "Noto Sans KR";
 }

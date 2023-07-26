@@ -1,76 +1,183 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style/HboardDetail.css";
+import jwt_decode from "jwt-decode";
+import axiosIns from "../../api/JwtConfig";
+import { useNavigate, useParams } from "react-router-dom";
 
 function HboardDetail(props) {
   //currentPage , dto(subject, writeday, readcount, photo, content) 정보 갖고 와야 하고
   //bkmk , del , edit 버튼 구현 해야함
 
+  let de = jwt_decode(localStorage.getItem("accessToken"));
+  const m_idx = de.idx;
+  const [hboardData, setHboardData] = useState(null);
+  const { hb_idx, currentPage } = useParams();
+  const [isBkmk, setIsBkmk] = useState(false);
+
+  const navi = useNavigate();
+  const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
+
+  useEffect(() => {
+    console.log(m_idx);
+  }, []);
+
+  useEffect(() => {
+    // JPA로부터 데이터 가져오는 API 호출(detail 값 DTO 가져오기 )
+    const url = `/api/hboard/D0/${hb_idx}`;
+    axiosIns
+      .get(url, { params: { m_idx: m_idx } })
+      .then((response) => {
+        console.log("axios테스트");
+        console.log(response);
+        console.log(response.data);
+        console.log(response.data.isAlreadyAddBkmk);
+        setHboardData(response.data);
+        //북마크 이미 눌렀는지 여부를 첫 렌더링 때 저장
+        setIsBkmk(response.data.isAlreadyAddBkmk);
+      })
+      .catch((error) => {
+        console.error("Error fetching hboard detail:", error);
+      });
+  }, []);
+
+  //북마크
+
+  const addbkmk = (m_idx, hb_idx) => {
+    m_idx = Number(m_idx);
+    hb_idx = Number(hb_idx);
+    console.log(m_idx);
+    console.log(hb_idx);
+    console.log("파라미터 값 테스트");
+    axiosIns
+      .post(`/api/hboard/D1/${m_idx}/increaseBkmk/${hb_idx}`)
+      .then((response) => {
+        if (isBkmk == false) {
+          setIsBkmk(true);
+        } else if (isBkmk == true) {
+          setIsBkmk(false);
+        }
+      })
+      .catch((error) => {
+        alert("북마크 요청 실패");
+        console.error("북마크 요청 실패:", error);
+      });
+  };
+
+  const hboardNavigation = () => {
+    const url = "/hboard";
+    window.location.href = url;
+  };
+
+  const timeForToday = (value) => {
+    if (!value) {
+      return "";
+    }
+
+    const valueConv = value.slice(0, -10);
+    const today = new Date();
+    const timeValue = new Date(valueConv);
+
+    // timeValue를 한국 시간대로 변환
+    const timeValueUTC = new Date(timeValue.toISOString());
+    const offset = timeValue.getTimezoneOffset() * 60 * 1000; // 분 단위를 밀리초 단위로 변환
+    const timeValueKST = new Date(timeValueUTC.getTime() - offset);
+
+    const betweenTime = Math.floor(
+      (today.getTime() - timeValueKST.getTime()) / 1000 / 60
+    );
+    if (betweenTime < 1) return "방금 전";
+    if (betweenTime < 60) {
+      return `${betweenTime}분 전`;
+    }
+    console.log(betweenTime);
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간 전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 8) {
+      return `${betweenTimeDay}일 전`;
+    }
+
+    const year = String(timeValue.getFullYear()).slice(0, 4);
+    const month = String(timeValue.getMonth() + 1).padStart(2, "0");
+    const day = String(timeValue.getDate()).padStart(2, "0");
+
+    const formattedDateWithoutTime = `${year}-${month}-${day}`;
+
+    return formattedDateWithoutTime;
+  };
+
   return (
-    <div className="fboard-detail">
+    <div className="hboard-detail">
       <div className="advertise-box">
         <div className="advertise-main" />
         <b className="advertise-text">광고</b>
       </div>
       <img
-        className="board-detail-type-hr-icon"
+        className="hboard-detail-type-hr-icon"
         alt=""
         src="/board-detail-type-hr.svg"
       />
-      <div className="board-detail-type-text">채용게시판</div>
-      <div className="notice-detail-info">
+      <div className="hboard-detail-type-text">채용게시판</div>
+      <div className="hboard-detail-info">
         <img
-          className="notice-detail-info-profile-img-icon"
+          className="hboard-detail-info-profile-img-icon"
           alt=""
-          src="/notice-detail-info-profile-img@2x.png"
+          src={hboardData?.cm_filename}
         />
-        <div className="notice-detail-info-nickname">닉네임</div>
-        <div className="notice-detail-info-status-text">
-          <span>{`  400 · `}</span>
-          <span className="span">{`수정됨 `}</span>
+        <div className="hboard-detail-info-nickname">
+          {hboardData?.cm_compname}
         </div>
-        <div className="notice-detail-info-status-text1">{`2일 전 ·         `}</div>
+        <div className="hboard-detail-info-status-text">
+          <span>{hboardData?.hb_readcount}</span>
+          {/* <span className="span">{`수정됨 `}</span> */}
+        </div>
+        <div className="hboard-detail-info-status-text1">
+          {timeForToday(hboardData?.hb_writeday)}
+        </div>
         <img
-          className="notice-detail-info-status-view-icon"
+          className="hboard-detail-info-status-view-icon"
           alt=""
-          src={require("./assets/notice_detail_info_status_views.svg").default}
+          src={require("./assets/hire_detail_info_status_views.svg").default}
         />
       </div>
+      <img
+        className="hboard-url-icon2"
+        style={isBkmk ? { backgroundColor: "#F5EFF9" } : {}}
+        alt=""
+        src={require("./assets/Vector.svg").default}
+        onClick={() => addbkmk(m_idx, hb_idx)}
+      />
       <img
         className="hboard-url-icon"
         alt=""
         src={require("./assets/hboard_url_icon.svg").default}
       />
-      <img
-        className="fboard-update-icon"
-        alt=""
-        src={require("./assets/fboard_update_icon.svg").default}
-      />
-      <img
-        className="fboard-delete-icon"
-        alt=""
-        src={require("./assets/fboard_delete_icon.svg").default}
-      />
-      <div className="notice-detail-header-btn">
-        <div className="notice-detail-header-btn-like">
-          {/* <img
-            className="board-detail-header-btn-like-i-icon"
+      {m_idx === hboardData?.cm_idx && (
+        <>
+          <img
+            className="hboard-update-icon"
             alt=""
-            src="/board-detail-header-btn-like-icon.svg"
-          /> */}
-          {/* <div className="board-detail-header-btn-like-t">180</div> */}
-        </div>
-        <div className="notice-detail-header-btn-disli">
-          {/* <img
-            className="board-detail-header-btn-dislik-icon"
+            src={require("./assets/fboard_update_icon.svg").default}
+          />
+          <img
+            className="hboard-delete-icon"
             alt=""
-            src="/board-detail-header-btn-dislike-icon.svg"
-          /> */}
-          {/* <div className="board-detail-header-btn-like-t">20</div> */}
-        </div>
+            src={require("./assets/fboard_delete_icon.svg").default}
+          />
+        </>
+      )}
+      <div className="hboard-detail-header-btn">
+        <div className="hboard-detail-header-btn-like"></div>
+        <div className="hboard-detail-header-btn-disli"></div>
       </div>
-      <div className="board-detail-textarea">
-        <div className="board-detail-textarea-contents">
-          <p className="p">
+      <div className="hboard-detail-textarea">
+        <div className="hboard-detail-textarea-contents">
+          {hboardData?.hb_content}
+          {/* <p className="p">
             지방자치단체는 주민의 복리에 관한 사무를 처리하고 재산을 관리하며,
             법령의 범위안에서 자치에 관한 규정을 제정할 수 있다. 국회에 제출된
             법률
@@ -95,181 +202,50 @@ function HboardDetail(props) {
             파면함에 그친다. 그러나, 이에 의하여 민사상이나 형사상의 책임이
             면제되지는 아니한다. 국회의원의 수는 법률로 정하되, 200인 이상으로
             한다.
-          </p>
+          </p> */}
         </div>
-        <b className="board-detail-textarea-subject">
-          지방자치단체는 주민의 복리
+        <b className="hboard-detail-textarea-subject">
+          {/* 지방자치단체는 주민의 복리 */}
+          {hboardData?.hb_subject}
         </b>
       </div>
-      <div className="board-detail-photo" />
-      <div className="board-detail-listback">
-        <div className="board-detail-listback-rec" />
-        <div className="board-detail-listback-text">목록</div>
+      <div className="hboard-detail-photo" />
+      <div className="hboard-detail-listback" onClick={hboardNavigation}>
+        <div className="hboard-detail-listback-rec" />
+        <div className="hboard-detail-listback-text">목록</div>
         <img
-          className="board-detail-listback-icon"
+          className="hboard-detail-listback-icon"
           alt=""
-          src={require("./assets/board_detail_listback_icon.svg").default}
+          src={require("./assets/hboard_detail_listback_icon.svg").default}
         />
       </div>
-      <div className="board-detail-counter">
-        <div className="board-detail-counter-like">
-          <div className="board-detail-counter-like-box" />
+      {/* <div className="hboard-detail-counter">
+        <div className="hboard-detail-counter-like">
+          <div className="hboard-detail-counter-like-box" />
           <img
-            className="board-detail-counter-like-icon"
+            className="hboard-detail-counter-like-icon"
             alt=""
-            src={require("./assets/board_detail_counter_like.svg").default}
+            src={require("./assets/hboard_detail_counter_like.svg").default}
           />
         </div>
-        <div className="board-detail-counter-num">
-          <div className="board-detail-counter-num-box" />
-          <div className="board-detail-counter-num-text">565</div>
+        <div className="hboard-detail-counter-num">
+          <div className="hboard-detail-counter-num-box" />
+          <div className="hboard-detail-counter-num-text">565</div>
         </div>
-        <div className="board-detail-counter-dislike">
-          <div className="board-detail-counter-dislike-b" />
+        <div className="hboard-detail-counter-dislike">
+          <div className="hboard-detail-counter-dislike-b" />
           <img
-            className="board-detail-counter-like-icon"
+            className="hboard-detail-counter-like-icon"
             alt=""
-            src={require("./assets/board_detail_counter_dislike.svg").default}
+            src={require("./assets/hboard_detail_counter_dislike.svg").default}
           />
         </div>
-      </div>
+      </div> */}
       <div className="advertise-box1">
         <div className="advertise-main" />
         <b className="advertise-text1">광고 2</b>
       </div>
       <img className="board-detail-hr-icon" alt="" src="/board-detail-hr.svg" />
-      {/* <div className="board-detail-comments-counts">nn개의 댓글</div>
-      <div className="board-detail-commnets-form">
-        <div className="board-detail-commnets-form-box" />
-        <img
-          className="board-detail-commnets-form-img-icon"
-          alt=""
-          src="/board-detail-commnets-form-img@2x.png"
-        />
-        <div className="board-detail-commnets-form-tex" />
-      </div>
-      <div className="board-detail-commnets-submit-b">
-        <div className="board-detail-commnets-form-sub" />
-        <b className="board-detail-commnets-form-sub1">댓글 쓰기</b>
-      </div>
-      <div className="board-detail-commnets-detail-i">
-        <div className="board-detail-recom-info-text">
-          <div className="board-detail-recom-info-counts">댓글 1</div>
-          <div className="board-detail-recom-info-date">
-            <span>{`약  6시간 전 · `}</span>
-            <span className="span">{`수정됨 `}</span>
-          </div>
-        </div>
-        <img
-          className="board-detail-commnets-detail-i-icon"
-          alt=""
-          src="/board-detail-commnets-detail-info-img@2x.png"
-        />
-      </div>
-      <div className="board-detail-commnets-all-like">
-        <div className="board-detail-commnets-all-up">
-          <div className="board-detail-commnets-all-up-b" />
-          <img
-            className="board-detail-commnets-all-up-i-icon"
-            alt=""
-            src="/board-detail-commnets-all-up-icon.svg"
-          />
-        </div>
-        <div className="board-detail-recom-likes-count">
-          <div className="board-detail-commnets-all-box" />
-          <div className="board-detail-commnets-all-like2">27</div>
-        </div>
-        <div className="board-detail-commnets-all-down">
-          <div className="board-detail-recom-down-box" />
-          <img
-            className="board-detail-commnets-all-down-icon"
-            alt=""
-            src="/board-detail-commnets-all-down-icon.svg"
-          />
-        </div>
-      </div>
-      <div className="board-detail-commnets-all-cont">
-        <p className="p">
-          모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을
-          박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는
-        </p>
-        <p className="p">&nbsp;</p>
-        <p className="p">
-          {" "}
-          제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야 한다.
-        </p>
-        <p className="p">선거에 관한 경비는 법률이 정하는 경우를 제외하고</p>
-        <p className="p">&nbsp;</p>
-        <p className="p">&nbsp;</p>
-        <p className="p">
-          는 정당 또는 후보자에게 부담시킬 수 없다. 행정각부의
-        </p>
-        <p className="p">&nbsp;</p>
-        <p className="p">
-          {" "}
-          설치·조직과 직무범위는 법률로 정한다. 대통령은 국가의 원수이며, 외국에
-          대하여 국가를 대표한다.
-        </p>
-      </div>
-      <div className="board-detail-commnets-hide">
-        <img
-          className="board-detail-commnets-hide-ico-icon"
-          alt=""
-          src="/board-detail-commnets-hide-icon.svg"
-        />
-        <div className="board-detail-commnets-hide-tex">댓글 모두 숨기기</div>
-        <div className="board-detail-commnets-hide-com">댓글 쓰기</div>
-      </div>
-      <div className="board-detail-recom-box" />
-      <div className="board-detail-recom-info">
-        <div className="board-detail-recom-info-text">
-          <div className="board-detail-recom-info-counts">대댓글 1</div>
-          <div className="board-detail-recom-info-date">
-            <span>{`약  1시간 전 · `}</span>
-            <span className="span">{`수정됨 `}</span>
-          </div>
-        </div>
-        <img
-          className="board-detail-commnets-detail-i-icon"
-          alt=""
-          src="/board-detail-recom-info-img@2x.png"
-        />
-      </div>
-      <div className="board-detail-recom-likes">
-        <div className="board-detail-commnets-all-up">
-          <div className="board-detail-commnets-all-up-b" />
-          <img
-            className="board-detail-commnets-all-up-i-icon"
-            alt=""
-            src="/board-detail-recom-up-icon.svg"
-          />
-        </div>
-        <div className="board-detail-recom-likes-count">
-          <div className="board-detail-commnets-all-box" />
-          <div className="board-detail-commnets-all-like2">27</div>
-        </div>
-        <div className="board-detail-commnets-all-down">
-          <div className="board-detail-recom-down-box" />
-          <img
-            className="board-detail-commnets-all-down-icon"
-            alt=""
-            src="/board-detail-recom-down-icon.svg"
-          />
-        </div>
-      </div>
-      <div className="board-detail-recom-textarea">
-        <p className="p">
-          모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을
-          박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는
-        </p>
-        <p className="p">&nbsp;</p>
-        <p className="p">
-          {" "}
-          제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야 한다.
-        </p>
-        <p className="p">선거에 관한 경비는 법률이 정하는 경우를</p>
-      </div>
-      <div className="board-detail-recom-recom-form">{`댓글 쓰기 `}</div> */}
     </div>
   );
 }

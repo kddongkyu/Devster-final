@@ -13,7 +13,7 @@
                  JOIN companymember cm ON hb.cm_idx = cm.cm_idx
         WHERE hb.hb_idx = #{hb_idx};
     </select>
-    <select id="getCompPhoto" parameterType="int" resultType="String">
+    <select id="getCmFileName" parameterType="int" resultType="String">
         SELECT cm.cm_filename
         FROM hireboard hb
                  JOIN companymember cm ON hb.cm_idx = cm.cm_idx
@@ -23,7 +23,7 @@
         update hireboard set hb_readcount=hb_readcount+1 where hb_idx=#{hb_idx}
     </update>
     <select id="getBkmkInfoBym_idx" resultType="integer">
-        SELECT bookmarkStatus
+        SELECT bkmk
         FROM hirebookmark
         WHERE m_idx = #{m_idx} AND hb_idx = #{hb_idx};
     </select>

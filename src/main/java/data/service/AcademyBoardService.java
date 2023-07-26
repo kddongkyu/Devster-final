@@ -167,7 +167,7 @@ public class AcademyBoardService {
                 .map(academyBoardEntity -> {
                     MemberEntity memberInfo = memberRepository.findById(academyBoardEntity.getMIdx()).orElse(null);
                     Map<String, Object> academyboardMemberInfo = new HashMap<>();
-                    academyboardMemberInfo.put("academyboard", AcademyBoardDto.toAcademyBoardDto(academyBoardEntity));
+                    academyboardMemberInfo.put("aboard", AcademyBoardDto.toAcademyBoardDto(academyBoardEntity));
 
                     if (memberInfo != null) {
                         academyboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());

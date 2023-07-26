@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/academyboard")
+@RequestMapping("/api/aboard")
 public class AcademyBoardController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -77,7 +77,7 @@ public class AcademyBoardController {
     @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedAcademyboard(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
             HttpServletRequest request) {
         return new ResponseEntity<>(academyBoardService.getPagedAcademyboard(page, size, keyword, request), HttpStatus.OK);

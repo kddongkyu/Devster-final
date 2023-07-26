@@ -127,9 +127,10 @@ public class HireBoardController {
     }
     
 
-    @GetMapping("/D1/increaseBkmk")
-    public void increaseBkmk(Integer hb_idx, Integer m_idx){
+    @PostMapping("/D1/{m_idx}/increaseBkmk/{hb_idx}")
+    public void increaseBkmk(@PathVariable int hb_idx, @PathVariable int m_idx){
         hireBoardService.addBkmk(hb_idx,m_idx);
+        System.out.println("addBkmk 테스트");
     }
 
     public HireBoardDto escapeDto(HireBoardDto dto){

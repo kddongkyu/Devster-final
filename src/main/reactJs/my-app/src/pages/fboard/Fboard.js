@@ -1,6 +1,6 @@
 import "./style/Fboard.css";
 import { Link, NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import axiosIns from "../../api/JwtConfig";
 
@@ -15,6 +15,12 @@ function Fboard(props) {
 
   const [contentCount, setContentCount] = useState(15);
   const [subjectCount, setsubjectCount] = useState(10);
+  //정렬
+  const [sortProperty, setSortProperty] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  //검색
+  const [inputKeyword, setInputKeyword] = useState(""); // 사용자가 입력하는 검색어
+  const [finalKeyword, setFinalKeyword] = useState(""); // 최종 검색어 (검색 버튼
 
   const handleResize = () => {
     // 화면 너비에 따라 텍스트 개수를 업데이트
@@ -45,6 +51,15 @@ function Fboard(props) {
     } else {
       setsubjectCount(10);
     }
+  };
+
+  //검색 기능
+  const handleSearchButtonClick = () => {
+    // 검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
+    const searchKeyword = inputKeyword;
+    setFinalKeyword(searchKeyword);
+    // 첫 페이지의 검색 결과를 가져옵니다.
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -245,11 +260,18 @@ function Fboard(props) {
       </div>
 
       <div className="fboard-function-search-input">
-        <input type="text" className="fboard-function-search-input1" />
+        <input
+          className="fboard-function-search-input1"
+          type="text"
+          value={inputKeyword}
+          placeholder="검색어를 입력해주세요"
+          onChange={(e) => setInputKeyword(e.target.value)}
+        />
         <img
           className="fboard-function-search-icon"
           alt=""
           src={require("./assets/board_function_search_icon2.svg").default}
+          onClick={handleSearchButtonClick}
         />
       </div>
       {/* <img className="board-hr-icon" alt="" src="/board-hr.svg" /> */}
