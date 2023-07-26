@@ -431,7 +431,12 @@
   top: 56.9rem;
   left: calc(50% - 175px);
   width: 35rem;
-  height: 13.9rem;
+  height: 15.9rem;
+}
+.fboard-form-photo-list_text{
+  position: absolute;
+  top: 13.9rem;
+  left: calc(50% - 175px);
 }
 .fboard-form-fileupload-placeho {
   position: absolute;
@@ -462,7 +467,7 @@
 .fboard-form-fileupload {
   position: absolute;
   width: calc(100% - 40px);
-  top: 72.4rem;
+  top: 74.4rem;
   right: 2rem;
   left: 2rem;
   height: 6.4rem;
@@ -473,6 +478,15 @@
   right: 0;
   border-radius: 5px;
   background-color: #721ea6;
+  width: 11.8rem;
+  height: 3.3rem;
+}
+.fboard-form-btn-child_loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: #ADADAD;
   width: 11.8rem;
   height: 3.3rem;
 }

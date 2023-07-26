@@ -176,6 +176,8 @@
     margin-top: 5rem;
     background-color: #fff;
     box-sizing: border-box;
+    /*new*/
+    margin-bottom: 50rem;
 }
 .board-detail-photo {
     /*top: 88rem;*/
@@ -194,7 +196,8 @@
     color: #000;
 }
 .board-detail-textarea {
-    position: absolute;
+    position: relative;
+
     width: calc(100% - 74px);
     top: 35.7rem;
     right: 3.7rem;
@@ -204,9 +207,11 @@
 }
 
 /* 하단 */
-/*.board-detail-listbackcounter{*/
-/*    display: flex;*/
-/*}*/
+.board-detail-listbackcounter{
+    position: relative;
+    display: flex;
+    margin-top: 5rem;
+}
 
 
 .board-detail-listback-rec{
@@ -241,9 +246,10 @@
     overflow: hidden;
 }
 .board-detail-listback {
-    position: absolute;
-    top: 120.5rem;
-    left: 4.1rem;
+    position: relative;
+    /*margin-top: 5rem;*/
+    /*top: 120.5rem;*/
+    /*left: 4.1rem;*/
     width: 6.9rem;
     height: 3.5rem;
     font-size: 1.3rem;
@@ -313,10 +319,12 @@
     height: 3.8rem;
 }
 .board-detail-counter {
-    position: absolute;
-    top: 120.5rem;
-    right: 3.6rem;
-    width: 12.2rem;
+    position: relative;
+    width: calc(100% - 20px);
+    /*margin-top: 5rem;*/
+    /*top: 120.5rem;*/
+    /*right: 3.6rem;*/
+    /*width: 12.2rem;*/
     height: 3.8rem;
     text-align: center;
     font-size: 1.3rem;
@@ -339,11 +347,13 @@
     color: #000;
 }
 .advertise-box2 {
-    position: absolute;
+    position: relative;
     width: calc(100% - 30px);
-    top: 128rem;
-    right: 1.5rem;
-    left: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    /*top: 128rem;*/
+    /*right: 1.5rem;*/
+    /*left: 1.5rem;*/
     height: 11.2rem;
     font-size: 2rem;
     color: #000;
@@ -643,12 +653,12 @@
     text-align: center;
 }
 .fboard-detail {
-    position: relative;
+    /*position: relative;*/
     background-color: #fff;
     border: 1px solid rgba(210, 210, 210, 0.9);
     box-sizing: border-box;
     width: 100%;
-    height: 227.9rem;
+    /*height: 227.9rem;*/
     overflow: hidden;
     text-align: left;
     font-size: 1.2rem;
