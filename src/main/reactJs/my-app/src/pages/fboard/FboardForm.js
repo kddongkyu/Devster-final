@@ -10,7 +10,6 @@ import { checkToken } from "../../api/checkToken";
 
 function FboardForm(props) {
   const [fbSubject, setFbSubject] = useState("");
-  const [fbPhoto, setFbPhoto] = useState("");
   const [fbContent, setFbContent] = useState("");
   const [photoLength, setPhotoLength] = useState(0);
   const navi = useNavigate();
@@ -20,35 +19,27 @@ function FboardForm(props) {
   //에러 호출용 변수
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
-
   //디코딩 함수
   const de = checkToken();
 
-  const dto = {
-    fb_subject: fbSubject,
-    // fb_photo: fbPhoto,
-    fb_content: fbContent,
-    m_idx: de.idx,
+  const onSubmitEvent = (e) => {
+    e.preventDefault();
+    const dto = {
+      fb_subject: fbSubject,
+      fb_content: fbContent,
+      m_idx: de.idx,
+    };
+    axiosIns
+      .post("/api/fboard/D1", dto)
+      .then((res) => {
+        // 성공적으로 등록된 경우, 목록으로 이동
+        navi("/fboard");
+      })
+      .catch((error) => {
+        // 등록 실패 시 에러 처리
+        console.error(error);
+      });
   };
-
-  axiosIns
-    .post("/api/fboard/D1", dto)
-    .then((res) => {
-      // 성공적으로 등록된 경우, 목록으로 이동
-      navi("/fboard");
-    })
-    .catch((error) => {
-      // 등록 실패 시 에러 처리
-      console.error(error);
-    });
-}
-
-//파일 업로드
-const onUploadEvent = (e) => {
-  setIsLoading(true);
-  const uploadPhoto = new FormData();
-  const files = e.target.files;
-  const maxAllowedFiles = 10;
 
   //파일 업로드
   const onUploadEvent = (e) => {
@@ -57,8 +48,8 @@ const onUploadEvent = (e) => {
     const files = e.target.files;
     const maxAllowedFiles = 10;
 
-    // Check if the number of files exceeds the limit
-    if (files.length + photoLength > maxAllowedFiles) {
+    // 10장이내인지 확인
+    if (files.length > maxAllowedFiles) {
       // Handle the error or inform the user that only 10 files are allowed
       alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
       e.target.value = null;
@@ -66,9 +57,9 @@ const onUploadEvent = (e) => {
       return;
     }
 
-    setPhotoLength(photoLength + files.length);
+    setPhotoLength(files.length);
     const newPhotos = Array.from(files);
-    setSelectedPhotos([...selectedPhotos, ...newPhotos]);
+    setSelectedPhotos([...newPhotos]);
 
     for (let i = 0; i < files.length; i++) {
       uploadPhoto.append("upload", files[i]);
@@ -80,16 +71,7 @@ const onUploadEvent = (e) => {
       data: uploadPhoto,
       headers: { "Content-Type": "multipart/form-data" },
     })
-      .then((res) => {
-        // setFbPhoto(res.data);
-        // // 추가: 업로드가 완료되면 fbPhoto 상태를 dto에 설정
-        // const dto = {
-        //     fb_subject: fbSubject,
-        //     fb_photo: res.data.join(","), // 여러장의 사진 URL을 쉼표로 구분하여 문자열로 설정
-        //     fb_content: fbContent,
-        //     m_idx: de.idx
-        // };
-      })
+      .then((res) => {})
       .catch((error) => {
         //axios용 에러함수
         jwtHandleError(error, toastAlert);
@@ -153,7 +135,6 @@ const onUploadEvent = (e) => {
           />
           <div className="fboard-form-fileupload-cnt-tex">
             <img
-              // className="fboard-form-fileupload-icon"
               alt=""
               src={require("./assets/qboard_form_fileupload_icon.svg").default}
             />
@@ -182,6 +163,6 @@ const onUploadEvent = (e) => {
       </form>
     </div>
   );
-};
+}
 
 export default FboardForm;
