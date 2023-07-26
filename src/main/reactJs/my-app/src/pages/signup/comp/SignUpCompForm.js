@@ -2,6 +2,7 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 import '../style/SignUpComp.css';
 import {
+    InputCmCp, InputCmCpReg,
     InputCmName,
     InputCompEmail,
     InputCompEmailReg,
@@ -58,7 +59,8 @@ function SignUpCompForm(props) {
                 </div>
                     <InputCompTele/>
                     <InputCmName/>
-
+                    <InputCmCp/>
+                    <InputCmCpReg/>
             </div>
         </div>
     );

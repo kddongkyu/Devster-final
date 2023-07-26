@@ -7,8 +7,11 @@ const initialState = {
     cm_pass: '',
     cm_tele: '',
     cm_name: '',
+    cm_cp: '',
     seconds: null,
+    cpSeconds: null,
     emailRegInput: '',
+    cpRegInput:'',
 
 
     regChk: false,
@@ -16,6 +19,8 @@ const initialState = {
     emailChk: false,
     emailRegChk: false,
     passChk: false,
+    cpChk: false,
+    cpRegChk: false,
 
 
     regIsValid: false,
@@ -24,10 +29,13 @@ const initialState = {
     passIsValid: false,
     teleIsValid: false,
     nameIsValid: false,
+    cpIsValid: false,
 
 
     isEmailSent: false,
     sendingInProg: false,
+    isCpSent: false,
+    cpSendingInProg: false,
 
 
     isSubmitted: false,
@@ -49,18 +57,28 @@ export const compMemberSlice = createSlice({
         setCm_pass: (state, action) => {
             state.cm_pass = action.payload;
         },
+        setCm_tele: (state, action) => {
+            state.cm_tele = action.payload;
+        },
+        setCm_name: (state, action) => {
+            state.cm_name = action.payload;
+        },
+        setCm_cp: (state, action) => {
+            state.cm_cp = action.payload;
+        },
         setSeconds: (state, action) => {
             state.seconds = action.payload;
+        },
+        setCpSeconds: (state, action) => {
+            state.cpSeconds = action.payload;
         },
         setEmailRegInput: (state, action) => {
             state.emailRegInput = action.payload;
         },
-        setCm_tele: (state, action) => {
-            state.cm_tele = action.payload
+        setCpRegInput:(state,action)=> {
+            state.cpRegInput=action.payload;
         },
-        setCm_name: (state, action) => {
-            state.cm_name = action.payload
-        },
+
 
 
         setRegChk: (state, action) => {
@@ -78,6 +96,13 @@ export const compMemberSlice = createSlice({
         setPassChk: (state, action) => {
             state.passChk = action.payload;
         },
+        setCpRegChk: (state, action) => {
+            state.cpRegChk = action.payload;
+        },
+        setCpChk: (state, action) => {
+            state.cpChk = action.payload;
+        },
+
 
 
         setRegIsValid: (state, action) => {
@@ -98,6 +123,9 @@ export const compMemberSlice = createSlice({
         setNameIsValid: (state, action) => {
             state.nameIsValid = action.payload;
         },
+        setCpIsValid: (state, action) => {
+            state.cpIsValid = action.payload;
+        },
 
 
 
@@ -106,6 +134,12 @@ export const compMemberSlice = createSlice({
         },
         setSendingInProg: (state, action) => {
             state.sendingInProg = action.payload;
+        },
+        setIsCpSent: (state, action) => {
+            state.isCpSent = action.payload;
+        },
+        setCpSendingInProg: (state, action) => {
+            state.cpSendingInProg = action.payload;
         },
 
 
@@ -122,10 +156,14 @@ export const {
     setCm_pass,
     setCm_tele,
     setCm_name,
+    setCm_cp,
 
 
     setSeconds,
+    setCpSeconds,
     setEmailRegInput,
+    setCpRegInput,
+
 
 
     setRegChk,
@@ -133,6 +171,8 @@ export const {
     setEmailChk,
     setEmailRegChk,
     setPassChk,
+    setCpChk,
+    setCpRegChk,
 
 
     setRegIsValid,
@@ -141,9 +181,12 @@ export const {
     setPassIsValid,
     setTeleIsValid,
     setNameIsValid,
+    setCpIsValid,
 
     setIsEmailSent,
     setSendingInProg,
+    setIsCpSent,
+    setCpSendingInProg,
 
     setIsSubmitted,
 } = compMemberSlice.actions;
