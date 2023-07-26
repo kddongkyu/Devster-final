@@ -121,6 +121,12 @@ function InputRegNumber(props) {
         dispatch(setRegIsValid(false));
     }
 
+    const handleRegKeyDown = (e) => {
+        if(e.key === '-' || e.key === ' ') {
+            e.preventDefault();
+        }
+    }
+
     useEffect(() => {
         console.log('regIsValid changed', regIsValid);
     }, [regIsValid]);
@@ -139,6 +145,7 @@ function InputRegNumber(props) {
                 className={`${isInputValid ? 'signup-company-compreg-inputbo' : 'signup-company-compreg-inputbo-error'}`}
                 value={cm_reg}
                 onChange={handleRegChange}
+                onKeyDown={handleRegKeyDown}
             />
             <div
                 className={`signup-company-compreg-confirm

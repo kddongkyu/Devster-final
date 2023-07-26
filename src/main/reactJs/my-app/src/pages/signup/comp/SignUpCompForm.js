@@ -9,8 +9,9 @@ import {
     InputCompname,
     InputCompPass,
     InputCompPassChk,
-    InputCompTele
+    InputCompTele, InputFirstAddr, InputPost, InputSecondAddr
 } from "./inputs";
+import {SignUpCompContract, SignUpCompSubmit} from "../index";
 
 function SignUpCompForm(props) {
     const navi = useNavigate();
@@ -57,10 +58,30 @@ function SignUpCompForm(props) {
                     <InputCompPass/>
                     <InputCompPassChk/>
                 </div>
-                    <InputCompTele/>
-                    <InputCmName/>
+                <div className='signup-comp-addr-position-box'>
+                    <InputPost/>
+                    <InputFirstAddr/>
+                    <InputSecondAddr/>
+                </div>
+                <InputCompTele/>
+                <InputCmName/>
+                <div className='signup-comp-rep-position-box'>
                     <InputCmCp/>
                     <InputCmCpReg/>
+                </div>
+                <div className='signup-comp-cont-position-box'>
+                    <div className='signup-comp-hr1'/>
+                    <SignUpCompContract/>
+                    <SignUpCompSubmit/>
+                    <div className='signup-comp-signin'>
+                        <div className='signup-comp-signin-text'>이미 회원이신가요?</div>
+                        <div
+                            className='signup-comp-signin-link'
+                            onClick={() => navi('/signin')}
+                        >로그인
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

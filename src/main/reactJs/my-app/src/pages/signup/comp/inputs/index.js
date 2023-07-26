@@ -12,3 +12,7 @@ export {default as InputCmCp} from './InputCmCp';
 export {default as InputCmCpReg} from './InputCmCpReg';
 export {default as CpRegTimer} from './CpRegTimer';
 export {default as CpReset} from './CpReset';
+export {default as InputPost} from './InputPost';
+export {default as AddrSearch} from './AddrSearch';
+export {default as InputFirstAddr} from './InputFirstAddr';
+export {default as InputSecondAddr} from './InputSecondAddr';

@@ -30,7 +30,7 @@ function InputCmCpReg(props) {
 
     useEffect(() => {
         if (!cpRegChk && isSubmitted) {
-            toastAlert('이메일 인증을 진행해주세요.', 'warning');
+            toastAlert('휴대폰 인증을 진행해주세요.', 'warning');
         }
     }, [isSubmitted]);
 
@@ -42,15 +42,16 @@ function InputCmCpReg(props) {
             dispatch(setCpSendingInProg(true));
             const res = await axios({
                 method: 'post',
-                url: '/api/compmember/D0/email/validation',
-                data: JSON.stringify({cm_cp: cm_cp}),
+                url: '/api/compmember/D0/sms',
+                data: JSON.stringify({number: cm_cp}),
                 headers: {'Content-Type': 'application/json'}
             });
 
             if (res?.status === 200) {
                 dispatch(setIsCpSent(true));
-                dispatch(setCpSeconds(10));
+                dispatch(setCpSeconds(180));
                 setCpRegNum(res.data);
+                console.log(res.data);
                 dispatch(setCpRegInput(''));
                 toastAlert(isCpSent ? '인증번호가 재발송되었습니다.' : '인증번호가 발송되었습니다.', 'success');
                 dispatch(setCpSendingInProg(false));
@@ -71,13 +72,15 @@ function InputCmCpReg(props) {
     }
 
     const handleRegChk = () => {
-        if (isCpSent && cpRegNum === cpRegInput) {
+        if (isCpSent && cpRegNum === Number(cpRegInput)) {
             dispatch(setCpRegChk(true));
             dispatch(setCpSeconds(null));
             toastAlert('인증 되었습니다.', 'success');
+            console.log(cpRegNum,cpRegInput);
         } else {
             dispatch(setCpRegChk(false));
             toastAlert(<>인증에 실패했습니다.<br/>인증번호를 확인해주세요.</>, 'warning');
+            console.log(cpRegNum,cpRegInput);
         }
     }
 
@@ -90,12 +93,12 @@ function InputCmCpReg(props) {
             {
                 !cpSendingInProg &&
                 <div
-                    className={`signup-comp-email-reg-send
+                    className={`signup-comp-cp-reg-send
                 ${cpIsValid && !cpRegChk ? '' : 'signup-comp-button-disabled'}`}
                     onClick={cpIsValid ? () => handleSendButton() : null}
                 >
-                    <div className='signup-comp-email-inputbox1'/>
-                    <div className='signup-comp-email-reg-send-te'>
+                    <div className='signup-comp-cp-inputbox1'/>
+                    <div className='signup-comp-cp-reg-send-te'>
                         {
                             !isCpSent && !cpRegChk ? '인증번호 전송' : '재전송'
                         }
@@ -105,30 +108,30 @@ function InputCmCpReg(props) {
             {
                 cpSendingInProg &&
                 <div
-                    className={`signup-comp-email-reg-send
+                    className={`signup-comp-cp-reg-send
                 ${cpIsValid && !cpRegChk ? '' : 'signup-comp-button-disabled'}`}
                 >
-                    <div className='signup-comp-email-inputbox1'/>
-                    <div className='signup-comp-email-reg-send-te'>
-                        <div className='signup-comp-email-reg-send-inprogress'></div>
+                    <div className='signup-comp-cp-inputbox1'/>
+                    <div className='signup-comp-cp-reg-send-te'>
+                        <div className='signup-comp-cp-reg-send-inprogress'></div>
                     </div>
                 </div>
             }
-            <div className='signup-comp-email-reg-input'>
+            <div className='signup-comp-cp-reg-input'>
                 <input
                     type='text'
-                    className='signup-comp-email-input-reg-b'
+                    className='signup-comp-cp-input-reg-b'
                     disabled={!isCpSent || cpRegChk || cpSeconds <= 0}
                     value={cpRegInput}
                     onChange={handleEmailRegChange}
                 />
                 <div
-                    className={`signup-comp-email-reg-chk
+                    className={`signup-comp-cp-reg-chk
                     ${!isCpSent || cpRegChk || cpSeconds <= 0 ? 'signup-comp-button-disabled' : ''}`}
                     onClick={handleRegChk}
                 >
-                    <div className='signup-comp-email-inputbox2'/>
-                    <div className='signup-comp-email-reg-send-te1'>확인</div>
+                    <div className='signup-comp-cp-inputbox2'/>
+                    <div className='signup-comp-cp-reg-send-te1'>확인</div>
                 </div>
             </div>
             {

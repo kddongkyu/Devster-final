@@ -13,7 +13,6 @@ function isTokenExpired(token) {
 async function refreshAccessToken(refreshToken) {
     const accessToken = localStorage.getItem('accessToken');
     const memberType = jwt_decode(accessToken).type;
-    console.log(memberType);
     let tokenUrl = '';
 
     if (memberType === 'normal') {

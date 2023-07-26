@@ -1,5 +1,5 @@
 import "./style/QboardForm.css";
-const QboardForm = () => {
+const QboardForm = (props) => {
   return (
     <div className="qboard-form">
       <div className="advertise-box">

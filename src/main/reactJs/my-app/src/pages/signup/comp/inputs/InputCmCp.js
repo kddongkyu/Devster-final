@@ -33,19 +33,19 @@ function InputCmCp(props) {
         try {
             const res = await axios({
                 method: 'post',
-                url: '/api/compmember/D0/email',
-                data: JSON.stringify({cm_cp: cm_cp}),
+                url: '/api/compmember/D0/hp',
+                data: JSON.stringify({hp: cm_cp}),
                 headers: {'Content-Type': 'application/json'}
             });
             if (res?.status === 200) {
                 if (res.data === false) {
                     dispatch(setCpIsValid(true));
                     setIsInputValid(true);
-                    setErrorMessage(cpRegChk ? '인증 되었습니다.' : '사용 가능한 이메일입니다.');
+                    setErrorMessage(cpRegChk ? '인증 되었습니다.' : '사용 가능한 번호입니다.');
                 } else {
                     dispatch(setCpIsValid(false));
                     setIsInputValid(false);
-                    setErrorMessage('이미 사용중인 이메일입니다.');
+                    setErrorMessage('이미 사용중인 번호입니다.');
                 }
             }
         } catch (error) {
@@ -59,14 +59,14 @@ function InputCmCp(props) {
     useEffect(() => {
         if (isCpTouched) {
             const timer = setTimeout(() => {
-                const cpPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(cm_cp);
+                const cpPattern = /^01[016789]\d{7,8}$/.test(cm_cp);
                 const isCpValid = cm_cp.trim() !== '' && cpPattern;
                 dispatch(setCpChk(isCpValid));
                 if (!cm_cp.trim()) {
                     setErrorMessage('필수 입력 항목입니다.');
                     setIsInputValid(false);
                 } else if (!isCpValid) {
-                    setErrorMessage('이메일을 확인해주세요.');
+                    setErrorMessage('번호를 확인해주세요.');
                     setIsInputValid(false);
                 } else {
                     checkCp()
@@ -76,12 +76,19 @@ function InputCmCp(props) {
         }
     }, [cm_cp, dispatch, isCpTouched, checkCp]);
 
-    const handleEmailChange = (e) => {
+    const handleCpChange = (e) => {
         if (!isCpTouched) {
             setIsCpTouched(true);
         }
-        dispatch(setCm_cp(e.target.value));
+        const pureCm_cp=((e.target.value).replace(/-/g, '')).trim();
+        dispatch(setCm_cp(pureCm_cp));
         dispatch(setCpIsValid(false));
+    }
+
+    const handleCpKeyDown=(e)=> {
+        if(e.key === '-' || e.key === ' ') {
+            e.preventDefault();
+        }
     }
 
     useEffect(() => {
@@ -90,14 +97,14 @@ function InputCmCp(props) {
 
     return (
         <div>
-            <div className='signup-comp-email-text'>
+            <div className='signup-comp-cp-text'>
                 <span>담당자 연락처</span>
                 <span className='signup-comp-input-name'> *</span>
             </div>
             {
                 isCpTouched &&
                 <div
-                    className={`signup-comp-email-exist-text
+                    className={`signup-comp-cp-exist-text
                     ${isInputValid ? 'signup-comp-text-color-confirm' : 'signup-comp-text-color-error'}`}
                 >
                     {errorMessage}
@@ -106,10 +113,11 @@ function InputCmCp(props) {
             <div>
                 <input
                     type='text'
-                    className={`${isInputValid ? 'signup-comp-email-inputbox' : 'signup-comp-email-inputbox-error'}`}
+                    className={`${isInputValid ? 'signup-comp-cp-inputbox' : 'signup-comp-cp-inputbox-error'}`}
                     disabled={isCpSent || cpSendingInProg}
                     value={cm_cp}
-                    onChange={handleEmailChange}
+                    onChange={handleCpChange}
+                    onKeyDown={handleCpKeyDown}
                 />
                 <CpReset/>
             </div>

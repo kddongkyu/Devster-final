@@ -27,7 +27,7 @@ function InputCompTele(props) {
                     setErrorMessage('필수 입력 항목입니다.');
                     setIsInputValid(false);
                 } else if (!isTeleValid) {
-                    setErrorMessage('전화번호를 확인해주세요.');
+                    setErrorMessage('번호를 확인해주세요.');
                     setIsInputValid(false);
                 } else {
                     setErrorMessage('');
@@ -38,7 +38,7 @@ function InputCompTele(props) {
         }
     }, [cm_tele, dispatch, isTeleTouched]);
 
-    const handleNameChange = (e) => {
+    const handleTeleChange = (e) => {
         if (!isTeleTouched) {
             setIsTeleTouched(true);
         }
@@ -47,12 +47,18 @@ function InputCompTele(props) {
         dispatch(setTeleIsValid(false));
     }
 
+    const handleTeleKeyDown=(e) => {
+        if(e.key === '-' || e.key === ' ') {
+            e.preventDefault();
+        }
+    }
+
     useEffect(() => {
         console.log('teleIsValid changed:', teleIsValid);
     }, [teleIsValid]);
 
     return (
-        <div style={{position:"relative",top:'11rem'}}>
+        <div className='signup-comp-tele-position'>
             <div className='signup-comp-tele-text'>
                 <span>회사 연락처</span>
                 <span className='signup-comp-input-name'> *</span>
@@ -68,7 +74,8 @@ function InputCompTele(props) {
                 className={`${isInputValid ? 'signup-comp-tele-inputbox' : 'signup-comp-tele-inputbox-error'}`}
                 value={cm_tele}
                 required
-                onChange={handleNameChange}
+                onChange={handleTeleChange}
+                onKeyDown={handleTeleKeyDown}
             />
         </div>
     );

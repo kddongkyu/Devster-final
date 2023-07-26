@@ -44,7 +44,7 @@ function SignUpNormSubmit(props) {
                 formData.append('m_nickname', m_nickname);
                 formData.append('ai_idx', ai_idx);
                 formData.append('ai_name', ai_name);
-                console.log(formData)
+
                 const res = await axios({
                     method: 'post',
                     url: '/api/member/D0',

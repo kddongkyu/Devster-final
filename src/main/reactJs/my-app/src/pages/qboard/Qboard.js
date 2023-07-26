@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import QboardPreview from "./QboardPreview";
 import axiosIns from "../../api/JwtConfig";
 
-const Qboard = () => {
+const Qboard = (props) => {
 
   const [qboardList, setQboardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);

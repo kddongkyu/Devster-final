@@ -1,40 +1,40 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setCpRegChk, setSeconds} from "../../../../redux/compMemberSlice";
+import {setCpRegChk, setCpSeconds} from "../../../../redux/compMemberSlice";
 
 function CpRegTimer(props) {
     const dispatch = useDispatch();
-    const seconds = useSelector(state => state.comp.seconds);
-    const isEmailSent = useSelector(state => state.comp.isEmailSent);
+    const cpSeconds = useSelector(state => state.comp.cpSeconds);
+    const isCpSent = useSelector(state => state.comp.isCpSent);
 
-    const minutes = Math.floor(seconds / 60);
-    const displaySeconds = seconds % 60;
+    const minutes = Math.floor(cpSeconds / 60);
+    const displayCpSeconds = cpSeconds % 60;
     let timerMessage = '';
 
     useEffect(() => {
-        if (isEmailSent && seconds > 0) {
+        if (isCpSent && cpSeconds > 0) {
             const regTimer = setTimeout(() => {
-                dispatch(setSeconds(seconds - 1));
+                dispatch(setCpSeconds(cpSeconds - 1));
                 console.log(regTimer);
             }, 1000);
             return () => clearTimeout(regTimer);
-        } else if (seconds <= 0) {
+        } else if (cpSeconds <= 0) {
             dispatch(setCpRegChk(false));
         }
-    }, [isEmailSent, seconds]);
+    }, [isCpSent, cpSeconds]);
 
-    if (isEmailSent && seconds > 0) {
+    if (isCpSent && cpSeconds > 0) {
         timerMessage = `남은 인증시간 : 
             ${minutes < 10 ? '0' : ''}${minutes}:
-            ${displaySeconds < 10 ? '0' : ''}${displaySeconds}`;
-    } else if (seconds <= 0) {
+            ${displayCpSeconds < 10 ? '0' : ''}${displayCpSeconds}`;
+    } else if (cpSeconds <= 0) {
         timerMessage = '인증시간이 만료되었습니다.';
     }
 
     return (
         <div
-            className={`signup-comp-email-reg-timelef
-            ${seconds >= 60 ? '' : 'signup-comp-text-color-error'}`}>
+            className={`signup-comp-cp-reg-timelef
+            ${cpSeconds >= 60 ? '' : 'signup-comp-text-color-error'}`}>
             {timerMessage}
         </div>
     );

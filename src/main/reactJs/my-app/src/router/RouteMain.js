@@ -37,6 +37,7 @@ import MessageList from "../pages/message/MessageList";
 import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
 import QboardDetail from "../pages/qboard/QboardDetail";
+import OAuth from "../api/OAuth";
 
 function RouteMain(props) {
     const location = useLocation();
@@ -113,6 +114,7 @@ function RouteMain(props) {
             <Route path="/csignup" element={<SignUpCompForm/>}/>
             <Route path="/grats" element={<Grats/>}/>
             <Route path="/devchat/:ai_idx" element={<DevChat/>}/>
+            <Route path="/oauth2/authorization/kakao" element={<OAuth/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
     );

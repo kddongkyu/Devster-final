@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../style/Terms.css';
+import '../../style/CompTerms.css';
 
 function TermsOfPrivate({privateModal, setPrivateModal}) {
 
@@ -17,20 +17,20 @@ function TermsOfPrivate({privateModal, setPrivateModal}) {
             onClick={closeOnPrivateModal}
         >
             <div
-                className='signup-guest-service-modal-box'
+                className='signup-comp-service-modal-box'
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="signup-guest-service-modal">
-                    <div className='signup-guest-service-subject'>
-                        <div className='signup-guest-service-subject-text'>개인정보처리방침</div>
+                <div className="signup-comp-service-modal">
+                    <div className='signup-comp-service-subject'>
+                        <div className='signup-comp-service-subject-text'>개인정보처리방침</div>
                     </div>
                     <img
                         alt=''
                         src={require('../../assets/menu_modal_close.svg').default}
-                        className='signup-guest-menu-modal-close'
+                        className='signup-comp-menu-modal-close'
                         onClick={closeOnPrivateModal}
                     />
-                    <div className='signup-guest-service-terms'>
+                    <div className='signup-comp-service-terms'>
                         <div><br/></div>
                         <div>[차례]</div>
                         <div><br/></div>

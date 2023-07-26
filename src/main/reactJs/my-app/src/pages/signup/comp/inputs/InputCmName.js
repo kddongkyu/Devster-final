@@ -51,7 +51,7 @@ function InputCmName(props) {
     }, [nameIsValid]);
 
     return (
-        <div>
+        <div className='signup-comp-cmname-position'>
             <div className='signup-comp-cmname-text'>
                 <span>담당자명</span>
                 <span className='signup-comp-input-name'> *</span>

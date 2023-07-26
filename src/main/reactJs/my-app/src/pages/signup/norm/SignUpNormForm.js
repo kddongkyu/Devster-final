@@ -1,6 +1,5 @@
 import React from 'react';
 import {SignUpNormContract, SignUpNormSubmit} from "../index";
-
 import {useNavigate} from "react-router-dom";
 import {
     InputAcademy,

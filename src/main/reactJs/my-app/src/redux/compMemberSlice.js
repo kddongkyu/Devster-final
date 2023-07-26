@@ -8,11 +8,14 @@ const initialState = {
     cm_tele: '',
     cm_name: '',
     cm_cp: '',
+    cm_post: '',
+    cm_addr: '',
+    cm_addrFirst: '',
+    cm_addrSecond: '',
     seconds: null,
     cpSeconds: null,
     emailRegInput: '',
-    cpRegInput:'',
-
+    cpRegInput: '',
 
     regChk: false,
     compChk: false,
@@ -22,7 +25,6 @@ const initialState = {
     cpChk: false,
     cpRegChk: false,
 
-
     regIsValid: false,
     compIsValid: false,
     emailIsValid: false,
@@ -30,14 +32,16 @@ const initialState = {
     teleIsValid: false,
     nameIsValid: false,
     cpIsValid: false,
-
+    postIsValid: false,
+    firstAddrValid: false,
+    secondAddrValid:false,
+    contractValid:false,
 
     isEmailSent: false,
     sendingInProg: false,
     isCpSent: false,
     cpSendingInProg: false,
-
-
+    isSelectedTouched: false,
     isSubmitted: false,
 }
 
@@ -66,6 +70,18 @@ export const compMemberSlice = createSlice({
         setCm_cp: (state, action) => {
             state.cm_cp = action.payload;
         },
+        setCm_post: (state, action) => {
+            state.cm_post = action.payload;
+        },
+        setCm_addr: (state, action) => {
+            state.cm_addr = action.payload;
+        },
+        setCm_addrFirst: (state, action) => {
+            state.cm_addrFirst = action.payload;
+        },
+        setCm_addrSecond: (state, action) => {
+            state.cm_addrSecond = action.payload;
+        },
         setSeconds: (state, action) => {
             state.seconds = action.payload;
         },
@@ -75,10 +91,9 @@ export const compMemberSlice = createSlice({
         setEmailRegInput: (state, action) => {
             state.emailRegInput = action.payload;
         },
-        setCpRegInput:(state,action)=> {
-            state.cpRegInput=action.payload;
+        setCpRegInput: (state, action) => {
+            state.cpRegInput = action.payload;
         },
-
 
 
         setRegChk: (state, action) => {
@@ -104,7 +119,6 @@ export const compMemberSlice = createSlice({
         },
 
 
-
         setRegIsValid: (state, action) => {
             state.regIsValid = action.payload;
         },
@@ -126,7 +140,18 @@ export const compMemberSlice = createSlice({
         setCpIsValid: (state, action) => {
             state.cpIsValid = action.payload;
         },
-
+        setPostIsValid: (state, action) => {
+            state.postIsValid = action.payload;
+        },
+        setFirstAddrValid: (state, action) => {
+            state.firstAddrValid = action.payload;
+        },
+        setSecondAddrValid:(state,action) => {
+            state.secondAddrValid=action.payload;
+        },
+        setContractValid:(state,action) => {
+            state.contractValid=action.payload;
+        },
 
 
         setIsEmailSent: (state, action) => {
@@ -141,8 +166,9 @@ export const compMemberSlice = createSlice({
         setCpSendingInProg: (state, action) => {
             state.cpSendingInProg = action.payload;
         },
-
-
+        setIsSelectedTouched: (state, action) => {
+            state.isSelectedTouched = action.payload;
+        },
         setIsSubmitted: (state, action) => {
             state.isSubmitted = action.payload;
         },
@@ -157,14 +183,16 @@ export const {
     setCm_tele,
     setCm_name,
     setCm_cp,
+    setCm_post,
+    setCm_addr,
+    setCm_addrFirst,
+    setCm_addrSecond,
 
 
     setSeconds,
     setCpSeconds,
     setEmailRegInput,
     setCpRegInput,
-
-
 
     setRegChk,
     setCompChk,
@@ -174,7 +202,6 @@ export const {
     setCpChk,
     setCpRegChk,
 
-
     setRegIsValid,
     setCompIsValid,
     setEmailIsValid,
@@ -182,11 +209,17 @@ export const {
     setTeleIsValid,
     setNameIsValid,
     setCpIsValid,
+    setPostIsValid,
+    setFirstAddrValid,
+    setSecondAddrValid,
+    setContractValid,
+
 
     setIsEmailSent,
     setSendingInProg,
     setIsCpSent,
     setCpSendingInProg,
+    setIsSelectedTouched,
 
     setIsSubmitted,
 } = compMemberSlice.actions;
