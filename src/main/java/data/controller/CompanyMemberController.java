@@ -95,8 +95,8 @@ public class CompanyMemberController {
     }
 
     @PatchMapping("/D1")
-    public ResponseEntity<String> confirmRole(@RequestBody JsonNode json, HttpServletRequest request) {
-        return new ResponseEntity<String>(companyMemberService.confirmRole(request,json.get("sign").asBoolean()),HttpStatus.OK);
+    public ResponseEntity<String> confirmRole(@RequestBody JsonNode json) {
+        return new ResponseEntity<String>(companyMemberService.confirmRole(json.get("cm_idx").asInt(),json.get("sign").asBoolean()),HttpStatus.OK);
     }
 
     @PostMapping("/D0/sms")

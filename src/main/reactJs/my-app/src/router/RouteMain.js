@@ -14,6 +14,10 @@ import {
   Withdrawal,
   NoticeAdmin,
   MemberSignupApproval,
+  NBoardDetail,
+  NboardForm,
+  NboardUpdateForm,
+  CompanySignupApproval,
 } from "../pages/mypage";
 import { SignIn } from "../pages/signin";
 import { SignUpNorm } from "../pages/signup";
@@ -82,12 +86,23 @@ function RouteMain(props) {
           <Route path="/mypage/notice" element={<Notice />} />
           <Route path="/notice/admin" element={<NoticeAdmin />} />
           <Route path="/member/approval" element={<MemberSignupApproval />} />
+          <Route path="/company/approval" element={<CompanySignupApproval />} />
         </Route>
 
         <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
           <Route path="/updateresume" element={<ResumeUpdateform />} />
         </Route>
+
+        <Route
+          path="/nboard/detail/:nb_idx/:currentPage"
+          element={<NBoardDetail />}
+        />
+        <Route path="/nboard/form" element={<NboardForm />} />
+        <Route
+          path="/nboard/updateform/:nb_idx/:currentPage"
+          element={<NboardUpdateForm />}
+        />
 
         <Route path="/jwttest" element={<JwtTest />} />
       </Route>

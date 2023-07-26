@@ -9,3 +9,7 @@ export { default as MypageListUser } from "./MypageListUser";
 export { default as Withdrawal } from "./Withdrawal";
 export { default as MemberSignupApproval } from "./MemberSignupApproval";
 export { default as NoticeAdmin } from "./NoticeAdmin";
+export { default as NBoardDetail } from "./NBoardDetail";
+export { default as NboardForm } from "./NboardForm";
+export { default as NboardUpdateForm } from "./NboardUpdateForm";
+export { default as CompanySignupApproval } from "./CompanySignupApproval";

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./style/MemberSignupApproval.css";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import MenuModal from "./MenuModal";
 
@@ -12,11 +11,12 @@ function MemberSignupApproval(props) {
   console.log(memberList);
 
   const list = async () => {
-    const listUrl = "/member";
+    const listUrl = "/api/member/D1";
 
     try {
       const response = await axiosIns.get(listUrl);
       setMemberList(response.data);
+      console.log(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -34,6 +34,24 @@ function MemberSignupApproval(props) {
   const openMenuBar = (image) => {
     setSelectedMemberImage(image);
     setIsMenuOpen(true);
+  };
+
+  const handleApprove = async (memberId) => {
+    try {
+      await axiosIns.patch(`/api/member/D1`, { m_idx: memberId, sign: true });
+      list();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleReject = async (memberId) => {
+    try {
+      await axiosIns.patch(`/api/member/D1`, { m_idx: memberId, sign: false });
+      list();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -55,8 +73,10 @@ function MemberSignupApproval(props) {
                   />
                   <div>{item.m_name}</div>
                   <div>{item.ai_name}</div>
-                  <button>승인</button>
-                  <button>반려</button>
+                  <button onClick={() => handleApprove(item.m_idx)}>
+                    승인
+                  </button>
+                  <button onClick={() => handleReject(item.m_idx)}>반려</button>
                 </div>
               ))
           )}

@@ -70,7 +70,7 @@
   .notice-options {
     top: 8.2rem;
     right: 0.8rem;
-    width: 15.7rem;
+    width: 100%;
     height: 3.6rem;
   }
   .notice-content-box1 {
@@ -112,7 +112,7 @@
     letter-spacing: -0.24px;
     display: inline-block;
     color: #000;
-    width: 12.3rem;
+    width: auto;
     height: 1.91rem;
   }
   .notice-content-badge {
@@ -125,6 +125,7 @@
     box-sizing: border-box;
     width: 6.3rem;
     height: 1.87rem;
+    text-align: center;
   }
   .notice-content-hashtag,
   .number-likes {
@@ -222,7 +223,7 @@
     width: 4rem;
     height: 1.36rem;
   }
-  .content-notice {
+  .content-notice-1 {
     position: absolute;
     width: calc(100% - 14px);
     top: 14.4rem;
@@ -260,3 +261,133 @@
     left: 1.5rem;
     height: 25.82rem;
   }
+
+  .content-notice-2,
+  .content-notice-3,
+  .content-notice-4,
+  .content-notice-5,
+  .content-notice-6,
+  .content-notice-7,
+  .content-notice-8,
+  .content-notice-9,
+  .content-notice-10{
+    position: absolute;
+    top: 28.4rem;
+    width: calc(100% - 14px);
+    right: 0.7rem;
+    left: 0.7rem;
+    height: 11.22rem;
+    color: #626567;
+    font-family: "Noto Sans KR";
+    border-bottom: 1px solid #D2D2D2;
+  }
+
+  .nboard-pages-reset-icon {
+    position: absolute;
+    top: 0;
+    right: 15rem;
+    width: 2.04rem;
+    height: 2.03rem;
+    cursor: pointer;
+}
+
+.nboard-pages-current {
+  position: absolute;
+  top: 0;
+  right: 7.01rem;
+  letter-spacing: 0.5px;
+  line-height: 2.1rem;
+  display: inline-block;
+  /* width: 23.9rem; */
+}
+
+.nboard-pages-back-icon, .nboard-pages-forward-icon {
+  position: absolute;
+  top: 0.43rem;
+  right: 3.12rem;
+  width: 1.3rem;
+  height: 1.23rem;
+}
+
+.nboard-pages-forward-icon {
+  right: -0.06rem;
+}
+
+.content-notice-3{
+  top: 42.4rem;
+}
+.content-notice-4{
+  top: 56.4rem;
+}
+.content-notice-5{
+  top: 70.4rem;
+}
+.content-notice-6{
+  top: 84.4rem;
+}
+.content-notice-7{
+  top: 98.4rem;
+}
+.content-notice-8{
+  top: 112.4rem;
+}
+.content-notice-9{
+  top: 126.4rem;
+}
+.content-notice-10{
+  top: 140.4rem;
+}
+
+.nboard-pages2 {
+  position: absolute;
+  top: 153rem;
+  right: 1rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
+}
+
+.nboard-write {
+  position: absolute;
+  top: 76px;
+  left: 1.5rem;
+  width: 10.5rem;
+  height: 3.8rem;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #fff;
+  font-family: "Roboto Serif";
+}
+
+.nboard-write-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #721ea6;
+  width: 10.5rem;
+  height: 3.8rem;
+  z-index: 1;
+}
+
+.nboard-write-icon {
+  position: absolute;
+  top: 1.16rem;
+  left: 1.3rem;
+  width: 1.4rem;
+  height: 1.55rem;
+  z-index: 10;
+}
+
+.nboard-write-text {
+  position: absolute;
+  top: 1.26rem;
+  left: 2.8rem;
+  letter-spacing: -0.24px;
+  font-weight: 600;
+  display: inline-block;
+  width: 6.4rem;
+  height: 1.68rem;
+  color: white;
+  z-index: 100;
+}

@@ -168,8 +168,27 @@ public class MemberService {
         return photo;
     }
 
-    public String confirmRole(HttpServletRequest request, boolean sign) {
-        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+//    public String confirmRole(HttpServletRequest request, boolean sign) {
+//        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+//        MemberEntity member = memberRepository.findById(m_idx).get();
+//
+//        if(sign) {
+//            storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
+//            member.authorizeUser();
+//            member.setMFilename("no");
+//            memberRepository.save(member);
+//            log.info("일반 회원 USER 승급 승인");
+//            return "일반 회원 USER 승급 승인";
+//        } else {
+//            storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
+//            member.setMFilename("no");
+//            memberRepository.save(member);
+//            log.info("일반 회원 USER 승급 반려");
+//            return "일반 회원 USER 승급 반려";
+//        }
+//    }
+
+    public String confirmRole(int m_idx,boolean sign) {
         MemberEntity member = memberRepository.findById(m_idx).get();
 
         if(sign) {
