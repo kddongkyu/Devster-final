@@ -4,6 +4,7 @@ import data.dto.FreeBoardDto;
 import data.entity.FreeBoardEntity;
 import data.entity.FreeBoardLikeEntity;
 import data.entity.MemberEntity;
+import data.entity.ReviewEntity;
 import data.repository.FreeBoardLikeRepository;
 import data.repository.FreeBoardRepository;
 import data.repository.MemberRepository;
@@ -80,11 +81,20 @@ public class FreeBoardService {
         log.info("FreeBoard 사진 초기화 완료");
     }
 
-    public Map<String, Object> getPagedFboard(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("FBwriteDay").descending());
-        Page<FreeBoardEntity> result = freeBoardRepository.findAll(pageable);
+    public Map<String, Object> getPagedFboard(int page, int size, String sortProperty, String sortDirection, String keyword) {
 
-        List<Map<String, Object>> freeBoardList = result
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortProperty));
+        Page<FreeBoardEntity> result;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            result = freeBoardRepository.findByFBsubjectContainingOrFBcontentContaining(keyword, pageable);
+            log.info("Keyword: " + keyword);
+        } else {
+            result = freeBoardRepository.findAll(pageable);
+        }
+
+      List<Map<String, Object>> freeBoardList = result
                 .getContent()
                 .stream()
                 .map(freeBoardEntity -> {
@@ -153,7 +163,8 @@ public class FreeBoardService {
                 FreeBoardEntity existingEntity = e.get();
                 existingEntity.setFBsubject(dto.getFb_subject());
                 existingEntity.setFBcontent(dto.getFb_content());
-//                existingEntity.setFBphoto(dto.getFb_photo());
+                existingEntity.setFBphoto(dto.getFb_photo());
+
                 freeBoardRepository.save(existingEntity);
             }
 
@@ -163,35 +174,14 @@ public class FreeBoardService {
         }
     }
 
-public void updatePhoto(Integer fb_idx, List<MultipartFile> uploads) {
-    // Step 1: FreeBoardEntity를 fb_idx를 기준으로 데이터베이스에서 조회합니다.
-    Optional<FreeBoardEntity> entityOptional = freeBoardRepository.findById(fb_idx);
+public String updatePhoto(Integer fb_idx, List<MultipartFile> uploads) {
+      List<String> uploadedFileNames = new ArrayList<>();
 
-    // Step 2: 조회된 entity가 존재하는지 확인합니다.
-    if (entityOptional.isPresent()) {
-        FreeBoardEntity entity = entityOptional.get();
-
-        // Step 3: 업로드할 새로운 사진들을 업로드하고, 파일명을 entity에 설정합니다.
-        List<String> uploadedFileNames = new ArrayList<>();
-
-        for (MultipartFile upload : uploads) {
-            String uploadedFileName = storageService.uploadFile(bucketName, "devster/fboard", upload);
-            uploadedFileNames.add(uploadedFileName);
+        for(MultipartFile files : uploads) {
+            uploadedFileNames.add(storageService.uploadFile(bucketName, "devster/fboard", files));
         }
-        // 추가: List<String> 형태를 문자열로 변환하여 설정합니다.
-        String fbPhotoString = String.join(",", uploadedFileNames);
-        entity.setFBphoto((entity.getFBphoto())+","+fbPhotoString);
-
-        // Step 4: 업데이트된 entity를 데이터베이스에 저장합니다.
-        freeBoardRepository.save(entity);
-
-        // Step 5: 업데이트가 완료되면 로그를 남깁니다.
         log.info(fb_idx + " FreeBoard 사진 업데이트 완료");
-    } else {
-        // Step 7: fb_idx에 해당하는 FreeBoardEntity가 존재하지 않는 경우, 오류 처리 또는 예외 처리를 수행할 수 있습니다.
-        // 여기서는 오류 처리를 생략하고 로그만 남깁니다.
-        log.error("FreeBoardEntity with fb_idx " + fb_idx + " not found.");
-    }
+        return String.join(",", uploadedFileNames);
 }
 
     public void deletePhoto(Integer fb_idx, String imageFileName) {
@@ -270,9 +260,9 @@ public void updatePhoto(Integer fb_idx, List<MultipartFile> uploads) {
                 freeBoardRepository.save(freeBoardEntity);
             }
         } catch (IllegalArgumentException e) {
-            log.error("review like Error(Ill)", e);
+            log.error("fboard like Error(Ill)", e);
         } catch (Exception e) {
-            log.error("review like Error(Exce)", e);
+            log.error("fboard like Error(Exce)", e);
         }
     }
     public void dislike(int MIdx, int FBidx) {
@@ -299,9 +289,9 @@ public void updatePhoto(Integer fb_idx, List<MultipartFile> uploads) {
                 freeBoardRepository.save(freeBoardEntity);
             }
         } catch (IllegalArgumentException e) {
-            log.error("review like Error(Ill)", e);
+            log.error("fboard like Error(Ill)", e);
         } catch (Exception e) {
-            log.error("review like Error(Exce)", e);
+            log.error("fboard like Error(Exce)", e);
         }
     }
 

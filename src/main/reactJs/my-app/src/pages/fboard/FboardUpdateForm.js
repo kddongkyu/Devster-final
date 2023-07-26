@@ -41,12 +41,7 @@ function FboardUpdateForm(props) {
         axiosIns
             .delete(`/api/fboard/D1/photo/${fb_idx}/${imageFileName}`)
             .then((res) => {
-                // 클릭한 이미지를 배열에서 제거하는 로직
-                // const newPhotoArray = arrayFromString.filter((_, i) => i !== index);
-                // setArrayFromString(newPhotoArray);
                 setArrayFromString((prevArray) => prevArray.filter((_, i) => i !== index));
-
-                // setPhotoLength(photoLength - 1);
             })
             .catch((error) => {
                 // 삭제 실패 시 에러 처리
@@ -67,7 +62,7 @@ function FboardUpdateForm(props) {
 
         const dto = {
             fb_subject: fbSubject,
-            fb_photo: fbPhoto,
+            fb_photo: arrayFromString.join(','),
             fb_content: fbContent,
             m_idx: m_idx,
         };
@@ -85,48 +80,35 @@ function FboardUpdateForm(props) {
     };
 
     // 파일 업로드
-    const onUploadEvent = useCallback((e) => {
+    const uploadPhoto= (e)=>{
         setIsLoading(true);
-        const uploadPhoto = new FormData();
-        const selectedFiles = e.target.files;
-        // const uploadedFiles = arrayFromString.map((imageId) => new File([], imageId));
-        // const filesToUpload = [...uploadedFiles, ...selectedFiles];
+        const upload = new FormData();
         const maxAllowedFiles = 10;
-
         // Check if the number of files exceeds the limit
-        if (selectedFiles.length + arrayFromString.length > maxAllowedFiles) {
-            // Handle the error or inform the user that only 10 files are allowed
-            alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
-            e.target.value = null;
-            setIsLoading(false);
-            return;
-        }
-        // setPhotoLength(photoLength + selectedFiles.length);
-        const newPhotos = Array.from(selectedFiles);
-        setNewSelectedPhotos([...newSelectedPhotos, ...newPhotos]);
+            if (e.target.files.length + arrayFromString.length > maxAllowedFiles) {
+                // Handle the error or inform the user that only 10 files are allowed
+                alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
+                e.target.value = null;
+                setIsLoading(false);
+                return;
+            }
 
-        for (let i = 0; i < selectedFiles.length; i++) {
-            uploadPhoto.append("upload", selectedFiles[i]);
+        for(let i =0; i<e.target.files.length; i++) {
+            upload.append("upload",e.target.files[i]);
         }
+
         axiosIns({
             method: "post",
             url: `/api/fboard/D1/photo/${fb_idx}`,
-            data: uploadPhoto,
-            headers: { "Content-Type": "multipart/form-data" },
-        })
-            .then((res) => {
-                // 업로드된 이미지 파일명과 기존 이미지 파일명을 합침
-                // 서버 응답인 res.data가 비어있지 않은지 확인한 후에 분할합니다.
-                const updatedImageFileNames = res.data ? [...res.data.split(","), ...arrayFromString.filter(Boolean)] : arrayFromString.filter(Boolean);
-                setArrayFromString(updatedImageFileNames);
-
+            data: upload,
+            headers: { "Content-Type": "multipart/form-data" }
             })
-            .catch((error) => {
-                console.error(error);
-            }).finally(()=>{
+            .then((res)=>{
+                setArrayFromString([...arrayFromString, ...res.data.split(',')]);
+                console.log(arrayFromString);
                 setIsLoading(false);
-            });
-    },[arrayFromString,fb_idx, newSelectedPhotos]);
+            })
+    }
 
 
     return (
@@ -190,7 +172,7 @@ function FboardUpdateForm(props) {
                         type="file" multiple
                         className="fboard-form-subject-rec"
                         placeholder="첨부 사진을 올려주세요."
-                        onChange={onUploadEvent}
+                        onChange={uploadPhoto}
                     />
                     <div className="fboard-form-fileupload-cnt-tex">
                         <img
@@ -198,7 +180,7 @@ function FboardUpdateForm(props) {
                             alt=""
                             src={require("./assets/qboard_form_fileupload_icon.svg").default}
                         />
-                        &nbsp;&nbsp;사진 {arrayFromString.length}장이 등록되었습니다.
+                        &nbsp;&nbsp;사진 {arrayFromString.length + newSelectedPhotos.length}장이 등록되었습니다.
                     </div>
                 </div>
                 <button type='submit' className="fboard-form-btn" disabled={isLoading}>

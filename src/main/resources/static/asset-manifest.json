@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.5017af7e.css",
-    "main.js": "/static/js/main.6b0e3db6.js",
+    "main.css": "/static/css/main.6106b0d6.css",
+    "main.js": "/static/js/main.3fa793e6.js",
     "static/js/27.262d8d9e.chunk.js": "/static/js/27.262d8d9e.chunk.js",
     "static/media/noimage.png": "/static/media/noimage.d3031ee351e2f27b0068.png",
     "static/media/qboard_form_fileupload_icon.svg": "/static/media/qboard_form_fileupload_icon.1ff1b289b82433289b276200c54a0a4e.svg",
@@ -18,7 +18,7 @@
     "static/media/board_function_sort_by.svg": "/static/media/board_function_sort_by.87c5b153f58f0bda714717aec2c494be.svg",
     "static/media/icon_notice_list.svg": "/static/media/icon_notice_list.5d95088a43cd6758f79fa90033f84cf8.svg",
     "static/media/close-ring.svg": "/static/media/close-ring.a9c8e0ee9752d611e9fd0dcd91ce9a8d.svg",
-    "static/media/signup_success_icon.svg": "/static/media/signup_success_icon.e2e70ba5848f26d063c4555001c8d898.svg",
+    "static/media/signup_success_icon.svg": "/static/media/signup_success_icon.8493862edebed3823eb510ae94ba16de.svg",
     "static/media/hboard_function_search_icon.svg": "/static/media/hboard_function_search_icon.6c78a31d7db1ebd46216498d20bde871.svg",
     "static/media/board_function_search_icon2.svg": "/static/media/board_function_search_icon2.a0aff27e4ab2b2396bb05f807b292b86.svg",
     "static/media/main_img_icon.svg": "/static/media/main_img_icon.c67b924ce11d44ac8c84668dfe6ab218.svg",
@@ -50,6 +50,7 @@
     "static/media/board_pages_reset.svg": "/static/media/board_pages_reset.d27669e4fa76fa5d59523a4f40dc5650.svg",
     "static/media/main_review_stars_icon.svg": "/static/media/main_review_stars_icon.704a3b428e082ece7da834b6f5cd3259.svg",
     "static/media/signup_guest_academy_search_icon.svg": "/static/media/signup_guest_academy_search_icon.ab02c0e3e28cad97d7a06d046016f2e7.svg",
+    "static/media/textmsg_searchbar_search_icon.svg": "/static/media/textmsg_searchbar_search_icon.6cc69ae7fb7839b2ff951f2613d5e460.svg",
     "static/media/board_detail_header_btn_like_icon.svg": "/static/media/board_detail_header_btn_like_icon.8572c1ed9e1686933d98dbaacf11d59a.svg",
     "index.html": "/index.html",
     "static/media/signup_default_img.svg": "/static/media/signup_default_img.b73e09add6b8f7ca2b018925886046a6.svg",
@@ -86,7 +87,7 @@
     "static/media/hboard_pages_back.svg": "/static/media/hboard_pages_back.64b97960e11257d655171a4459a431e3.svg",
     "static/media/resume-add-button.svg": "/static/media/resume-add-button.4ea4b5e3a32e5fc27b54124b6d7496d7.svg",
     "static/media/Review_modal_close.svg": "/static/media/Review_modal_close.83a0a1eabaf841cf0501515ae093267a.svg",
-    "static/media/menu_modal_close.svg": "/static/media/menu_modal_close.99947f18b42d9af8cbc89b60bffb6044.svg",
+    "static/media/menu_modal_close.svg": "/static/media/menu_modal_close.df6f68fcf760ffb3e4d90928b10d5f55.svg",
     "static/media/board_detail_commnets_hide_icon.svg": "/static/media/board_detail_commnets_hide_icon.5405f6c069979a7dae82150c5f525cea.svg",
     "static/media/notice_cotent_shape.svg": "/static/media/notice_cotent_shape.724f86441de01327afa45450bad2d029.svg",
     "static/media/header-icon-list.svg": "/static/media/header-icon-list.666ee629829707905ae5a1faeb286521.svg",
@@ -99,6 +100,7 @@
     "static/media/star-dislike-icon.svg": "/static/media/star-dislike-icon.72074d887b48b0b151bdc00ebfce6b5c.svg",
     "static/media/star-like-icon.svg": "/static/media/star-like-icon.3d804ad65626a1297c655cb37e6b1087.svg",
     "static/media/reviewupdate-vecter.svg": "/static/media/reviewupdate-vecter.f0c353abef061b97265543e62363d152.svg",
+    "static/media/message_form_btn_icon.svg": "/static/media/message_form_btn_icon.2446936b669128c4ddadcb50776a617a.svg",
     "static/media/footer-info-service-bar.svg": "/static/media/footer-info-service-bar.b517a790dc2a0f1341c078d5f0650172.svg",
     "static/media/main_more_icon.svg": "/static/media/main_more_icon.e7b8cf58f192fdf3e4156b0585b036f6.svg",
     "static/media/login-type-select-bar.svg": "/static/media/login-type-select-bar.827c51805321fd8a5e7837e102f93f86.svg",
@@ -110,7 +112,7 @@
     "static/media/signup_guest_choose_bar.svg": "/static/media/signup_guest_choose_bar.a6f59f3a433feb36adbd5f717353e3b2.svg"
   },
   "entrypoints": [
-    "static/css/main.5017af7e.css",
-    "static/js/main.6b0e3db6.js"
+    "static/css/main.6106b0d6.css",
+    "static/js/main.3fa793e6.js"
   ]
 }

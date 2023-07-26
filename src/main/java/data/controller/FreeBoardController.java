@@ -28,8 +28,11 @@ public class FreeBoardController {
     @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedFboard(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(freeBoardService.getPagedFboard(page, size), HttpStatus.OK);
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "FBwriteDay") String sortProperty,
+            @RequestParam(defaultValue = "DESC") String sortDirection,
+            @RequestParam(required = false) String keyword){
+        return new ResponseEntity<>(freeBoardService.getPagedFboard(page, size, sortProperty, sortDirection, keyword), HttpStatus.OK);
     }
 
 
@@ -67,9 +70,8 @@ public class FreeBoardController {
     }
 
     @PostMapping("/D1/photo/{fb_idx}")
-    public ResponseEntity<Void> updatePhoto(@PathVariable Integer fb_idx,@RequestBody List<MultipartFile> upload) {
-        freeBoardService.updatePhoto(fb_idx,upload);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> updatePhoto(@PathVariable Integer fb_idx,@RequestBody List<MultipartFile> upload) {
+        return new ResponseEntity<String>(freeBoardService.updatePhoto(fb_idx,upload),HttpStatus.OK);
     }
     @DeleteMapping("/D1/photo/{fb_idx}/{imageFileName}")
     public ResponseEntity<Void> deletePhoto(@PathVariable Integer fb_idx, @PathVariable String imageFileName) {

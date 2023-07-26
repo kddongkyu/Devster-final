@@ -44,8 +44,9 @@ function FboardForm (props)  {
         const files = e.target.files;
         const maxAllowedFiles = 10;
 
+
         // Check if the number of files exceeds the limit
-        if (files.length + photoLength > maxAllowedFiles) {
+        if (files.length > maxAllowedFiles) {
             // Handle the error or inform the user that only 10 files are allowed
             alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
             e.target.value = null;
@@ -53,9 +54,11 @@ function FboardForm (props)  {
             return;
         }
 
-        setPhotoLength(photoLength + files.length);
+
+        setPhotoLength(files.length);
         const newPhotos = Array.from(files);
-        setSelectedPhotos([...selectedPhotos, ...newPhotos]);
+        // setSelectedPhotos([...selectedPhotos, ...newPhotos]);
+        setSelectedPhotos([...newPhotos]);
 
         for (let i = 0; i < files.length; i++) {
             uploadPhoto.append("upload", files[i]);

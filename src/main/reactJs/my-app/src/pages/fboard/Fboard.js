@@ -63,6 +63,14 @@ function Fboard(props) {
         setCurrentPage(1);
     };
 
+    // 엔터로 검색
+    const handleEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSearchButtonClick();
+        }
+    };
+
+
 
     useEffect(() => {
         // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
@@ -74,6 +82,7 @@ function Fboard(props) {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
     useEffect(() => {
         // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
         window.addEventListener('resize', handleSubjectResize);
@@ -90,18 +99,30 @@ function Fboard(props) {
     };
 
     useEffect(() => {
-        fetchFboards(currentPage);
-    }, [currentPage]);
+        const page = Math.max(1, currentPage);
+        fetchFboards(page, finalKeyword, sortProperty, sortDirection);
+    }, [currentPage, finalKeyword, sortProperty, sortDirection]);
 
-    const fetchFboards = (page) => {
-        axiosIns.get('/api/fboard/D0', {params: {page: page-1}})
-            .then(response => {
-                setFreeBoardList(response.data.freeBoardList);
-                setTotalPages(response.data.totalPages);
-            })
-            .catch(error => {
-                console.error('Error fetching fboards:', error);
+    const fetchFboards = async (page, keyword, sortProperty, sortDirection) => {
+        const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
+
+        try {
+            const response = await axiosIns.get('/api/fboard/D0', {
+                params: {
+                    page: page - 1, // Use the page parameter
+                    keyword: searchKeyword,
+                    sortProperty,
+                    sortDirection
+                }
             });
+
+            setFreeBoardList(response.data.freeBoardList);
+            setTotalPages(response.data.totalPages);
+
+        } catch (error) {
+            console.error('Error fetching fboards:', error);
+        }
+
     };
 
     useEffect(() => {
@@ -125,6 +146,22 @@ function Fboard(props) {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
+    };
+
+    // 정렬
+    const onClickLatest = () => {
+        setSortProperty('FBwriteDay');
+        setSortDirection('DESC');
+    };
+
+    const onClickLikes = () => {
+        setSortProperty('FBlikeCount');
+        setSortDirection('DESC');
+    };
+
+    const onClickViews = () => {
+        setSortProperty('FBreadCount');
+        setSortDirection('DESC');
     };
 
     const timeForToday = (value) => {
@@ -173,11 +210,16 @@ function Fboard(props) {
             return require("./assets/logo-img.svg").default;
         }
         const photoUrl = process.env.REACT_APP_PHOTO+"fboard/";
-        const firstCommaIndex = value.indexOf(",");
-        const parsedPhoto = value.substring(0, firstCommaIndex);
-        const srcUrl = photoUrl + parsedPhoto;
 
-        return srcUrl;
+        if (value.includes(",")) {
+            const firstCommaIndex = value.indexOf(",");
+            const parsedPhoto = value.substring(0, firstCommaIndex);
+            const srcUrl = photoUrl + parsedPhoto;
+            return srcUrl;
+        } else {
+            const srcUrl = photoUrl + value;
+            return srcUrl;
+        }
     }
 
     return (
@@ -228,9 +270,9 @@ function Fboard(props) {
 
             <div className="fboard-function-sort">
                 <div className="fboard-function-sort-box" />
-                <div className="fboard-function-sort-time">최신순</div>
-                <div className="fboard-function-sort-view">조회순</div>
-                <div className="fboard-function-sort-like">인기순</div>
+                <div className="fboard-function-sort-time" onClick={onClickLatest}>최신순</div>
+                <div className="fboard-function-sort-view" onClick={onClickViews}>조회순</div>
+                <div className="fboard-function-sort-like" onClick={onClickLikes}>인기순</div>
                 <img
                     className="fboard-function-sort-bar2-icon"
                     alt=""
@@ -250,6 +292,7 @@ function Fboard(props) {
                        value={inputKeyword}
                        placeholder='검색어를 입력해주세요'
                        onChange={(e) => setInputKeyword(e.target.value)}
+                       onKeyDown={handleEnterKeyPress}
                 />
                 <img
                     className="fboard-function-search-icon"

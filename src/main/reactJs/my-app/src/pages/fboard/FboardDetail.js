@@ -203,6 +203,12 @@ function FboardDetail(props) {
         window.location.href = url;
     };
 
+    const handleNicknameClick = () => {
+        // recv_nick은 이 컴포넌트에서 사용할 수 있는 형태로 가져옵니다.
+        const recv_nick = fboardData.mNicname;
+        navi(`/message/form/${recv_nick}`);
+    };
+
 
     const timeForToday = (value) => {
         if (!value) {
@@ -247,9 +253,9 @@ function FboardDetail(props) {
 
     return (
         <div className="fboard-detail">
-            <div className="advertise-box">
-                <div className="advertise-main" />
-                <b className="advertise-text">광고</b>
+            <div className="fboard-advertise-box">
+                <div className="fboard-advertise-main" />
+                <b className="fboard-advertise-text">광고</b>
             </div>
 
             {/*<img*/}
@@ -264,8 +270,11 @@ function FboardDetail(props) {
                     className="fboard-detail-info-profile-img-icon"
                     alt=""
                     src={fboardData.mPhoto}
+                    onClick={handleNicknameClick}
                 />
-                <div className="fboard-detail-info-nickname" >{fboardData.mNicname}</div>
+                <div className="fboard-detail-info-nickname"
+                onClick={handleNicknameClick}>{fboardData.mNicname}</div>
+
                 <div className="fboard-detail-info-status-text">
                     <span>{fboardData.fboard.fb_readcount}</span>
                     {/*<span className="span">{`수정됨 `}</span>*/}
@@ -318,12 +327,12 @@ function FboardDetail(props) {
             </div>
 
 
-            <div className="board-detail-textarea">
-                <div className="board-detail-textarea-subject">
+            <div className="fboard-detail-textarea">
+                <div className="fboard-detail-textarea-subject">
                     {fboardData.fboard.fb_subject}
                 </div>
 
-                <div className="board-detail-textarea-contents">
+                <div className="fboard-detail-textarea-contents">
                    <pre style={{marginBottom:"5rem"}}>
                        {fboardData.fboard.fb_content}
                    </pre>
@@ -342,48 +351,48 @@ function FboardDetail(props) {
 
 
                     {/* 여기서부터 밑으로 정렬 */}
-                    <div className="board-detail-listbackcounter">
-                        <div className="board-detail-listback" onClick={fboardNavigation}>
-                            <div className="board-detail-listback-rec" />
-                            <div className="board-detail-listback-text">목록</div>
+                    <div className="fboard-detail-listbackcounter">
+                        <div className="fboard-detail-listback" onClick={fboardNavigation}>
+                            <div className="fboard-detail-listback-rec" />
+                            <div className="fboard-detail-listback-text">목록</div>
                             <img
-                                className="board-detail-listback-icon"
+                                className="fboard-detail-listback-icon"
                                 alt=""
                                 src={require("./assets/boarddetail/board_detail_listback_icon.svg").default}
                             />
                         </div>
-                        <div className="board-detail-counter">
-                            <div className="board-detail-counter-like">
-                                <div className="board-detail-counter-like-box"
+                        <div className="fboard-detail-counter">
+                            <div className="fboard-detail-counter-like">
+                                <div className="fboard-detail-counter-like-box"
                                      style={isGood ? { backgroundColor: '#F5EFF9' } : {}}
                                      onClick={()=>handlelike(m_idx,fb_idx)}/>
                                 <img
-                                    className="board-detail-counter-like-icon"
+                                    className="fboard-detail-counter-like-icon"
                                     alt=""
                                     src={require("./assets/boarddetail/review_detail_counter_like_icon.svg").default}
                                 />
                             </div>
-                            <div className="board-detail-counter-num">
-                                <div className="board-detail-counter-num-box" />
-                                <div className="board-detail-counter-num-text">
+                            <div className="fboard-detail-counter-num">
+                                <div className="fboard-detail-counter-num-box" />
+                                <div className="fboard-detail-counter-num-text">
                                     {fboardData.fboard.fb_like - fboardData.fboard.fb_dislike}
                                 </div>
                             </div>
-                            <div className="board-detail-counter-dislike">
-                                <div className="board-detail-counter-dislike-b"
+                            <div className="fboard-detail-counter-dislike">
+                                <div className="fboard-detail-counter-dislike-b"
                                      style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
                                      onClick={()=>handleDislike(m_idx,fb_idx)}/>
                                 <img
-                                    className="board-detail-counter-like-icon"
+                                    className="fboard-detail-counter-like-icon"
                                     alt=""
                                     src={require("./assets/boarddetail/review_detail_counter_dislike_icon.svg").default}
                                 />
                             </div>
                         </div>
                     </div>
-                    <div className="advertise-box2">
-                        <div className="advertise-main" />
-                        <b className="advertise-text1">광고 2</b>
+                    <div className="fboard-advertise-box2">
+                        <div className="fboard-advertise-main" />
+                        <b className="fboard-advertise-text1">광고 2</b>
                     </div>
 
                 </div> {/* photolist div */}

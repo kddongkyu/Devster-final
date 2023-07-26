@@ -1,5 +1,5 @@
 /* 상단 */
-.advertise-main {
+.fboard-advertise-main {
     position: absolute;
     width: 100%;
     top: 0;
@@ -9,13 +9,13 @@
     box-sizing: border-box;
     height: 11.2rem;
 }
-.advertise-text {
+.fboard-advertise-text {
     position: absolute;
     top: 4.2rem;
     left: calc(50% - 18px);
     letter-spacing: -0.24px;
 }
-.advertise-box {
+.fboard-advertise-box {
     position: absolute;
     width: calc(100% - 30px);
     top: 7.6rem;
@@ -161,7 +161,7 @@
 }
 
 /* 중단 */
-.board-detail-textarea-contents {
+.fboard-detail-textarea-contents {
     position: relative;
     width: 100%;
     top: 6.7rem;
@@ -187,7 +187,7 @@
     height: 30rem;
     position: relative;
 }
-.board-detail-textarea-subject {
+.fboard-detail-textarea-subject {
     position: absolute;
     top: 0;
     left: 0;
@@ -195,7 +195,7 @@
     letter-spacing: -0.24px;
     color: #000;
 }
-.board-detail-textarea {
+.fboard-detail-textarea {
     position: relative;
 
     width: calc(100% - 74px);
@@ -207,20 +207,20 @@
 }
 
 /* 하단 */
-.board-detail-listbackcounter{
+.fboard-detail-listbackcounter{
     position: relative;
     display: flex;
     margin-top: 5rem;
 }
 
 
-.board-detail-listback-rec{
+.fboard-detail-listback-rec{
     position: absolute;
     background-color: #fff;
     box-sizing: border-box;
 }
 
-.board-detail-listback-rec {
+.fboard-detail-listback-rec {
     top: 0;
     left: 0;
     border-radius: 5px;
@@ -228,7 +228,7 @@
     width: 6.8rem;
     height: 3.5rem;
 }
-.board-detail-listback-text {
+.fboard-detail-listback-text {
     position: absolute;
     top: 0.8rem;
     left: 3.1rem;
@@ -237,7 +237,7 @@
     display: inline-block;
     width: 3.8rem;
 }
-.board-detail-listback-icon {
+.fboard-detail-listback-icon {
     position: absolute;
     top: 0.95rem;
     left: 1rem;
@@ -245,7 +245,7 @@
     height: 1.69rem;
     overflow: hidden;
 }
-.board-detail-listback {
+.fboard-detail-listback {
     position: relative;
     /*margin-top: 5rem;*/
     /*top: 120.5rem;*/
@@ -255,7 +255,7 @@
     font-size: 1.3rem;
     color: #747474;
 }
-.board-detail-counter-like-box {
+.fboard-detail-counter-like-box {
     position: absolute;
     top: 0;
     right: 0;
@@ -266,21 +266,21 @@
     width: 3.4rem;
     height: 3.8rem;
 }
-.board-detail-counter-like-icon {
+.fboard-detail-counter-like-icon {
     position: absolute;
     top: 1.66rem;
     right: 0.96rem;
     width: 1.38rem;
     height: 0.83rem;
 }
-.board-detail-counter-like {
+.fboard-detail-counter-like {
     position: absolute;
     top: 0;
     right: 8.8rem;
     width: 3.4rem;
     height: 3.8rem;
 }
-.board-detail-counter-num-box {
+.fboard-detail-counter-num-box {
     position: absolute;
     top: 0;
     right: 0;
@@ -290,35 +290,35 @@
     width: 5.6rem;
     height: 3.8rem;
 }
-.board-detail-counter-num-text {
+.fboard-detail-counter-num-text {
     position: absolute;
     top: 1rem;
     right: 1.7rem;
     letter-spacing: -0.24px;
     font-weight: 500;
 }
-.board-detail-counter-num {
+.fboard-detail-counter-num {
     position: absolute;
     top: 0;
     right: 3.3rem;
     width: 5.6rem;
     height: 3.8rem;
 }
-.board-detail-counter-dislike-b {
+.fboard-detail-counter-dislike-b {
     border-radius: 0 5px 5px 0;
     background-color: #fff;
     border: 1px solid #bdc0c4;
     box-sizing: border-box;
 }
-.board-detail-counter-dislike,
-.board-detail-counter-dislike-b {
+.fboard-detail-counter-dislike,
+.fboard-detail-counter-dislike-b {
     position: absolute;
     top: 0;
     right: 0;
     width: 3.4rem;
     height: 3.8rem;
 }
-.board-detail-counter {
+.fboard-detail-counter {
     position: relative;
     width: calc(100% - 20px);
     /*margin-top: 5rem;*/
@@ -330,13 +330,13 @@
     font-size: 1.3rem;
     color: #000;
 }
-.advertise-text1 {
+.fboard-advertise-text1 {
     position: absolute;
     top: 4.2rem;
     left: calc(50% - 27px);
     letter-spacing: -0.24px;
 }
-.advertise-box1 {
+.fboard-advertise-box1 {
     position: absolute;
     width: calc(100% - 30px);
     top: 127.9rem;
@@ -346,7 +346,7 @@
     font-size: 2rem;
     color: #000;
 }
-.advertise-box2 {
+.fboard-advertise-box2 {
     position: relative;
     width: calc(100% - 30px);
     margin-top: 3rem;
