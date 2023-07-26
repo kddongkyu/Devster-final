@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setEmailRegChk, setIsEmailSent, setSeconds} from "../../../../redux/normMemberSlice";
+import {setEmailRegChk, setSeconds} from "../../../../redux/normMemberSlice";
 
 function RegTimer(props) {
     const dispatch = useDispatch();

@@ -1,15 +1,22 @@
 import React from 'react';
-import {SignUpNormContract, SignUpNormUpload} from "../index";
-import InputName from "./inputs/InputName";
-import InputId from "./inputs/InputId";
-import InputEmail from "./inputs/InputEmail";
-import InputEmailReg from "./inputs/InputEmailReg";
-import InputPass from "./inputs/InputPass";
-import InputPassChk from "./inputs/InputPassChk";
-import InputNickname from "./inputs/InputNickname";
-import InputAcademy from "./inputs/InputAcademy";
+import {SignUpNormContract, SignUpNormSubmit} from "../index";
+
+import {useNavigate} from "react-router-dom";
+import {
+    InputAcademy,
+    InputEmail,
+    InputEmailReg,
+    InputId,
+    InputName,
+    InputNickname,
+    InputPass,
+    InputPassChk,
+    InputUpload
+} from "./inputs";
 
 function SignUpNormForm(props) {
+    const navi = useNavigate();
+
     return (
         <div>
             <div>
@@ -20,7 +27,7 @@ function SignUpNormForm(props) {
             <div className='signup-guest-hr'/>
             <div>
                 <b className='signup-guest-signup-text'>Devster 회원가입</b>
-                <SignUpNormUpload/>
+                <InputUpload/>
                 <InputName/>
                 <InputId/>
                 <InputEmail/>
@@ -31,6 +38,15 @@ function SignUpNormForm(props) {
                 <InputAcademy/>
                 <div className='signup-guest-hr1'/>
                 <SignUpNormContract/>
+                <SignUpNormSubmit/>
+                <div className='signup-guest-signin'>
+                    <div className='signup-guest-signin-text'>이미 회원이신가요?</div>
+                    <div
+                        className='signup-guest-signin-link'
+                        onClick={() => navi('/signin')}
+                    >로그인
+                    </div>
+                </div>
             </div>
         </div>
     );

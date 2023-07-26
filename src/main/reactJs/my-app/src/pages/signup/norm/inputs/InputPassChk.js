@@ -7,12 +7,18 @@ function InputPassChk(props) {
     const m_pass = useSelector(state => state.norm.m_pass);
     const passIsValid = useSelector(state => state.norm.passIsValid);
     const passChk=useSelector(state=>state.norm.passChk);
-
+    const isSubmitted = useSelector(state => state.norm.isSubmitted);
     const [m_passChk, setM_passChk] = useState('');
     const [isPassChkTouched, setIsPassChkTouched] = useState(false);
     const [isCapsOn, setIsCapsOn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isInputValid, setIsInputValid] = useState(true);
+
+    useEffect(()=> {
+        if(!passChk && isSubmitted) {
+            setIsPassChkTouched(true);
+        }
+    },[isSubmitted]);
 
     useEffect(() => {
         if (isPassChkTouched) {

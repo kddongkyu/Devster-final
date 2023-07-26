@@ -42,7 +42,7 @@ public class MemberEntity {
     @Column(name = "m_nickname")
     private String MNickname;
 
-    @Column(name = "m_photo", insertable = false)
+    @Column(name = "m_photo")
     private String MPhoto;
 
     @Column(name = "m_filename", insertable = false)

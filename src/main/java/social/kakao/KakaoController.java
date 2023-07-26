@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import social.naver.NaverReturnData;
 
-import javax.persistence.Column;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -37,7 +36,7 @@ public class KakaoController {
     }
 
     @GetMapping("/oauth2/callback/kakao")
-    private ResponseEntity<String> kakaoCallBack(String code) {
+    private ResponseEntity<?> kakaoCallBack(String code) {
 
         // POST 방식으로 key=value 데이터를 요청 (카카오쪽으로)
         // 이 때 필요한 라이브러리가 RestTemplate, 얘를 쓰면 http 요청을 편하게 할 수 있다.
@@ -80,7 +79,7 @@ public class KakaoController {
         return kakaoData(kakaoToken.getAccess_token());
     }
 
-    private ResponseEntity<String> kakaoData(String accessToken) {
+    private ResponseEntity<?> kakaoData(String accessToken) {
         RestTemplate rt = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -96,80 +95,73 @@ public class KakaoController {
                 String.class // 요청 시 반환되는 데이터 타입
         );
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode;
+        try {
+            jsonNode = objectMapper.readTree(response.getBody());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("getUser : JSON 변환 중 에러 발생");
+        }
 
-        MemberEntity returnMember = getUser(response.getBody());
-
-        log.info(returnMember.toString());
-
-        deleteToken(accessToken);
-
-        int m_idx = returnMember.getMIdx();
-
-        String accessTokenKakao = jwtService.generateAccessToken(m_idx,"normal");
-        String refreshTokenKakao = jwtService.generateRefreshToken("normal");
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Authorization", "Bearer " + accessTokenKakao);
-        responseHeaders.add("Authorization-Refresh", refreshTokenKakao);
-
-        log.info("로그인에 성공하였습니다. 회원 인덱스 번호 : {}", m_idx);
-        log.info("로그인에 성공하였습니다. AccessToken : {}", accessTokenKakao);
-
-        memberRepository.findById(m_idx)
-                .ifPresent(member -> {
-                    member.setMRefreshtoken(refreshTokenKakao);
-                    memberRepository.saveAndFlush(member);
-                });
-
-        // 클라이언트에게 보낼 응답 바디. 필요한 정보가 있다면 이 부분 수정
-        String responseBody = "카카오 로그인 accessToken, refreshToken 발급";
-
-        // ResponseEntity 객체 반환
-        return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
-    }
-
-   private MemberEntity getUser(String data) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    JsonNode jsonNode;
-    try {
-        jsonNode = objectMapper.readTree(data);
-    } catch (JsonProcessingException e) {
-        throw new RuntimeException("getUser : JSON 변환 중 에러 발생");
-    }
-
-       KakaoReturnData kakaoReturnData = new KakaoReturnData();
+        KakaoReturnData kakaoReturnData = new KakaoReturnData();
         kakaoReturnData.setId(jsonNode.path("id").asText());
         kakaoReturnData.setNickname(jsonNode.path("properties").path("nickname").asText());
         kakaoReturnData.setEmail(jsonNode.path("kakao_account").path("email").asText());
 
-    MemberEntity findUser = memberRepository.findByMSocialTypeAndMSocialid(SocialType.KAKAO, kakaoReturnData.getId()).orElse(null);
+        Optional<MemberEntity> optionalReturnMember = memberRepository.findByMSocialTypeAndMSocialid(SocialType.KAKAO, kakaoReturnData.getId());
+        Optional<MemberEntity> optionalReturnMember2 = memberRepository.findByMEmail(kakaoReturnData.getEmail());
 
-    if(findUser == null) {
-        log.info("카카오 신규 회원가입 요청");
-        return saveUser(kakaoReturnData);
+
+        log.info(optionalReturnMember.toString());
+
+        if(optionalReturnMember.isPresent()) {
+            MemberEntity returnMember = optionalReturnMember.get();
+            //카카오 가입정보 있음.
+
+            deleteToken(accessToken);
+
+            int m_idx = returnMember.getMIdx();
+
+            String accessTokenKakao = jwtService.generateAccessToken(m_idx,"normal");
+            String refreshTokenKakao = jwtService.generateRefreshToken("normal");
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Authorization", "Bearer " + accessTokenKakao);
+            responseHeaders.add("Authorization-Refresh", refreshTokenKakao);
+
+            log.info("로그인에 성공하였습니다. 회원 인덱스 번호 : {}", m_idx);
+            log.info("로그인에 성공하였습니다. AccessToken : {}", accessTokenKakao);
+
+            memberRepository.findById(m_idx)
+                    .ifPresent(member -> {
+                        member.setMRefreshtoken(refreshTokenKakao);
+                        memberRepository.saveAndFlush(member);
+                    });
+
+            // 클라이언트에게 보낼 응답 바디. 필요한 정보가 있다면 이 부분 수정
+            String responseBody = "카카오 로그인 accessToken, refreshToken 발급";
+
+            // ResponseEntity 객체 반환
+            log.info("카카오 계정 있음.");
+            return new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
+        } else if(optionalReturnMember2.isPresent()) {
+            log.info("이미 사용중인 이메일");
+            String socialType = String.valueOf(optionalReturnMember2.get().getMSocialType());
+            if (socialType.equals("NAVER")) {
+                log.info("네이버로 이미 가입된 이메일.");
+                return new ResponseEntity<>("이미 네이버로 가입된 이메일 입니다.", HttpStatus.IM_USED);
+            } else {
+                log.info("일반회원으로 이미 가입된 이메일");
+                return new ResponseEntity<>("이미 일반회원으로 가입된 이메일입니다.", HttpStatus.IM_USED);
+            }
+        }else {
+            // 카카오 가입정보 없음. 추가 정보 기입후 가입해야함.
+            log.info("카카오 계정 없음.");
+            log.info(kakaoReturnData.toString());
+            return new ResponseEntity<>(kakaoReturnData,HttpStatus.NO_CONTENT);
+        }
     }
-    log.info("카카오 기존 회원 정보 반환");
-    return findUser;
-}
 
-    private MemberEntity saveUser(KakaoReturnData kakaoReturnData) {
-        MemberEntity savedMember = memberRepository.save(
-                MemberEntity.builder()
-                        .MId("Kakao-"+kakaoReturnData.getEmail())
-                        .MSocialid(kakaoReturnData.getId())
-                        .MSocialType(SocialType.KAKAO)
-                        .MEmail(kakaoReturnData.getEmail())
-                        .MName(kakaoReturnData.getNickname())
-                        .AIidx(100)
-                        .AIname("카카오 코딩 스쿨")
-                        .MNickname("카카오 가입 테스트 닉네임")
-                        .build()
-        );
-
-        log.info("카카오 신규 회원가입 성공");
-
-        return savedMember;
-    }
 
     private void deleteToken(String accessToken) {
         RestTemplate rt = new RestTemplate();

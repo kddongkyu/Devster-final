@@ -28,23 +28,26 @@ public class FreeBoardController {
     @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedFboard(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return new ResponseEntity<>(freeBoardService.getPagedFboard(page, size), HttpStatus.OK);
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "FBwriteDay") String sortProperty,
+            @RequestParam(defaultValue = "DESC") String sortDirection,
+            @RequestParam(required = false) String keyword) {
+        return new ResponseEntity<>(freeBoardService.getPagedFboard(page, size, sortProperty, sortDirection, keyword), HttpStatus.OK);
     }
 
 
     @PostMapping("/D1")
-    public ResponseEntity<FreeBoardDto> insertFreeBoard(@RequestBody FreeBoardDto dto, HttpSession session){
-        return new ResponseEntity<FreeBoardDto>(freeBoardService.insertFreeBoard(dto,session), HttpStatus.OK);
+    public ResponseEntity<FreeBoardDto> insertFreeBoard(@RequestBody FreeBoardDto dto, HttpSession session) {
+        return new ResponseEntity<FreeBoardDto>(freeBoardService.insertFreeBoard(dto, session), HttpStatus.OK);
     }
 
     @PostMapping("/D1/photo/upload")
     public ResponseEntity<List<String>> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
-        return new ResponseEntity<List<String>>(freeBoardService.uploadPhoto(upload, session),HttpStatus.OK);
+        return new ResponseEntity<List<String>>(freeBoardService.uploadPhoto(upload, session), HttpStatus.OK);
     }
 
     @PutMapping("/D1/photo/reset")
-    public ResponseEntity<Void> resetPhoto(String photo){
+    public ResponseEntity<Void> resetPhoto(String photo) {
         freeBoardService.resetPhoto(photo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -55,9 +58,9 @@ public class FreeBoardController {
     }
 
     @DeleteMapping("/D1/{fb_idx}")
-    public ResponseEntity<Void> deleteById(@PathVariable int fb_idx){
+    public ResponseEntity<Void> deleteById(@PathVariable int fb_idx) {
         freeBoardService.deleteById(fb_idx);
-        return  new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/D1/{fb_idx}")
@@ -67,8 +70,13 @@ public class FreeBoardController {
     }
 
     @PostMapping("/D1/photo/{fb_idx}")
-    public ResponseEntity<Void> updatePhoto(@PathVariable Integer fb_idx, @RequestBody MultipartFile upload) {
-        freeBoardService.updatePhoto(fb_idx,upload);
+    public ResponseEntity<String> updatePhoto(@PathVariable Integer fb_idx, @RequestBody List<MultipartFile> upload) {
+        return new ResponseEntity<String>(freeBoardService.updatePhoto(fb_idx, upload), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/D1/photo/{fb_idx}/{imageFileName}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable Integer fb_idx, @PathVariable String imageFileName) {
+        freeBoardService.deletePhoto(fb_idx, imageFileName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
