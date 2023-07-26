@@ -1,0 +1,20 @@
+.r-detail-commnets-form-te{
+ resize: none;
+ margin-top: 1.5rem;
+ width: 80%;
+ height: auto;
+
+}
+.r-detail-commnets-form{
+ width: 90%;
+ margin-left: 6rem;
+}
+
+.review-detail-commnets-hide-co{
+ text-align: center;
+ align-items: center;
+ display: flex;
+}
+.review-detail-commnets-hide-te{
+ padding-right: 2rem;
+}

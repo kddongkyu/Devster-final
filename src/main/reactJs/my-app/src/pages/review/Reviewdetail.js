@@ -4,7 +4,7 @@ import axiosIns from "../../api/JwtConfig";
 import {Link, useParams} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import StarRating from "./StarRating";
-import {Reviewcomment} from "./index";
+import {Reviewcomment, Reviewcommentform, Reviewcommentreply} from "./index";
 function Reviewdetail() {
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
@@ -244,8 +244,8 @@ function Reviewdetail() {
                     />
                     <div className="review-detail-info-nickname">{reviewData.mNicname}</div>
                     <div className="review-detail-info-status">
-                        <div className="review-detail-info-status-text"> 
-                    
+                        <div className="review-detail-info-status-text">
+
                          {timeForToday(reviewData.review.rb_writeday)
                         }{` ·        `}</div>
                         <img
@@ -308,6 +308,10 @@ function Reviewdetail() {
                         src={require('./assets/review_detail_counter_dislike_icon.svg').default}
                     />
                 </div>
+                <div className="review-detail-headline">
+                    <div className="review-detail-headline-box" />
+                    <div className="review-detail-he뷰adline-text">리뷰게시판</div>
+                </div>
 
             </div>
             <div className="advertise-box1">
@@ -319,8 +323,8 @@ function Reviewdetail() {
                 alt=""
                 src="/review-detail-hr.svg"
             />
-
-        <Reviewcomment rb_idx={rb_idx}/>
+            <Reviewcommentform rb_idx={rb_idx}/>
+            <Reviewcomment rb_idx={rb_idx}/>
         </div>
 
     );

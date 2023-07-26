@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
-//
+import './style/Reviewdetail.css';
+
 import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
-function Reviewcommentform({rb_idx}) {
-    console.log("111:"+rb_idx);
+
+
+function ReviewReplyform({rbc_idx,rb_idx}) {
+
     const [reviewcomment,setReviewcomment]=useState('');
     const navi=useNavigate();
 
@@ -20,7 +23,8 @@ function Reviewcommentform({rb_idx}) {
         const dto = {
             rbc_content:reviewcomment,
             m_idx:de.idx,
-            rb_idx:rb_idx
+            rb_idx:rb_idx,
+            rbc_ref:rbc_idx
         };
 //console.log(dto)
         axiosIns.post("/api/review/D1/comment", dto)
@@ -35,31 +39,27 @@ function Reviewcommentform({rb_idx}) {
             });
     }
 
-
-
     return (
-        <div >
-            <form className="review-detail-commnets-form" onSubmit={onSubmitEvent}>
-                <div className="review-detail-commnets-form-bo" />
+        <div>
+            <form className="r-detail-commnets-form" onSubmit={onSubmitEvent}>
+                <div className="r-detail-commnets-form-bo" />
                 <img
-                    className="review-detail-commnets-form-im-icon"
+                    className="r-detail-commnets-form-im-icon"
                     alt=""
                     src=""
                 />
-                <textarea className="review-detail-commnets-form-te"
-                placeholder="내용을 입력해주세요"
-                required value={reviewcomment}
+                <textarea className="r-detail-commnets-form-te"
+                          placeholder="내용을 입력해주세요"
+                          required value={reviewcomment} // reviewComment state 사용
                           onChange={(e)=>setReviewcomment(e.target.value)}
-                         >
-                </textarea>
-                <b>000</b>
-                <button  type='submit' className="review-detail-commnets-form-su">
-                    <div className="review-detail-commnets-form-su1" />
-                    <b className="review-detail-commnets-form-su2">댓글 쓰기</b>
+                />
+                <button  type='submit' className="r-detail-commnets-form-su">
+                    <div className="r-detail-commnets-form-su1" />
+                    <b className="r-detail-commnets-form-su2">댓글 수정</b>
                 </button>
             </form>
         </div>
     );
 }
 
-export default Reviewcommentform;
+export default ReviewReplyform;
