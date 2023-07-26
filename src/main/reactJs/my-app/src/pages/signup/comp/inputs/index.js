@@ -1,0 +1,10 @@
+export {default as InputRegNumber} from './InputRegNumber';
+export {default as InputCompname} from './InputCompname';
+export {default as InputCompEmail} from './InputCompEmail';
+export {default as InputCompEmailReg} from './InputCompEmailReg';
+export {default as CompEmailReset} from './CompEmailReset';
+export {default as CompRegTimer} from './CompRegTimer';
+export {default as InputCompPass} from './InputCompPass';
+export {default as InputCompPassChk} from './InputCompPassChk';
+export {default as InputCompTele} from './InputCompTele';
+export {default as InputCmName} from './InputCmName';

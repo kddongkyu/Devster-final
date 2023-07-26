@@ -1,0 +1,144 @@
+.message-form-header-rec {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 10px;
+    background-color: #eaeff3;
+    height: 6.7rem;
+}
+.message-form-header-name {
+    position: absolute;
+    top: 2.3rem;
+    left: 13.5rem;
+    letter-spacing: -0.24px;
+}
+.message-form-header {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 8.3rem;
+    right: 1.3rem;
+    left: 1.7rem;
+    height: 6.7rem;
+    font-size: 1.8rem;
+    color: #000;
+    font-weight: bold;
+    font-family: Roboto;
+}
+.message-form-content-rec {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 19.4rem;
+}
+.message-form-content-text {
+    position: absolute;
+    width: calc(100% - 42.74px);
+    top: 1.1rem;
+    left: 1.5rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    height: 2.2rem;
+}
+.message-form-content {
+    position: absolute;
+    width: calc(100% - 40px);
+    top: 21rem;
+    right: 2rem;
+    left: 2rem;
+    height: 19.4rem;
+}
+.message-form-subject-rec {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+.div {
+    position: absolute;
+    top: 1rem;
+    left: 1.39rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 20.74rem;
+}
+.message-form-subjec {
+    position: absolute;
+    width: calc(100% - 40px);
+    top: 15.9rem;
+    right: 2rem;
+    left: 2rem;
+    height: 3.9rem;
+}
+.message-form-btn-outline {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 5px;
+    background-color: #721ea6;
+    width: 10rem;
+    height: 3.3rem;
+}
+.message-form-btn-text {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.5rem;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    display: inline-block;
+    width: 7.2rem;
+    height: 1.6rem;
+}
+.message-form-btn-icon {
+    position: absolute;
+    top: 0.5rem;
+    right: 6.9rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    overflow: hidden;
+}
+.message-form-btn {
+    position: absolute;
+    top: 42.9rem;
+    right: 2rem;
+    width: 10rem;
+    height: 3.3rem;
+    text-align: center;
+    color: #fff;
+    border: none;
+}
+.moblie {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 39rem;
+    height: 84.4rem;
+    overflow: hidden;
+    display: none;
+}
+.message-form {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 48.9rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.3rem;
+    color: #626567;
+    font-family: "Noto Sans KR";
+}

@@ -1,8 +1,13 @@
 import "./style/FboardForm.css";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { checkToken } from "../../api/checkToken";
+
 function FboardForm(props) {
   const [fbSubject, setFbSubject] = useState("");
   const [fbPhoto, setFbPhoto] = useState("");
@@ -12,30 +17,38 @@ function FboardForm(props) {
   const [selectedPhotos, setSelectedPhotos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  let de = jwt_decode(localStorage.getItem("accessToken"));
-  console.log(de.idx);
+  //에러 호출용 변수
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
 
-  const onSubmitEvent = (e) => {
-    e.preventDefault();
+  //디코딩 함수
+  const de = checkToken();
 
-    const dto = {
-      fb_subject: fbSubject,
-      // fb_photo: fbPhoto,
-      fb_content: fbContent,
-      m_idx: de.idx,
-    };
-
-    axiosIns
-      .post("/api/fboard/D1", dto)
-      .then((res) => {
-        // 성공적으로 등록된 경우, 목록으로 이동
-        navi("/fboard");
-      })
-      .catch((error) => {
-        // 등록 실패 시 에러 처리
-        console.error(error);
-      });
+  const dto = {
+    fb_subject: fbSubject,
+    // fb_photo: fbPhoto,
+    fb_content: fbContent,
+    m_idx: de.idx,
   };
+
+  axiosIns
+    .post("/api/fboard/D1", dto)
+    .then((res) => {
+      // 성공적으로 등록된 경우, 목록으로 이동
+      navi("/fboard");
+    })
+    .catch((error) => {
+      // 등록 실패 시 에러 처리
+      console.error(error);
+    });
+}
+
+//파일 업로드
+const onUploadEvent = (e) => {
+  setIsLoading(true);
+  const uploadPhoto = new FormData();
+  const files = e.target.files;
+  const maxAllowedFiles = 10;
 
   //파일 업로드
   const onUploadEvent = (e) => {
@@ -68,10 +81,18 @@ function FboardForm(props) {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then((res) => {
-        // Handle the response if needed
+        // setFbPhoto(res.data);
+        // // 추가: 업로드가 완료되면 fbPhoto 상태를 dto에 설정
+        // const dto = {
+        //     fb_subject: fbSubject,
+        //     fb_photo: res.data.join(","), // 여러장의 사진 URL을 쉼표로 구분하여 문자열로 설정
+        //     fb_content: fbContent,
+        //     m_idx: de.idx
+        // };
       })
-      .finally(() => {
-        setIsLoading(false);
+      .catch((error) => {
+        //axios용 에러함수
+        jwtHandleError(error, toastAlert);
       });
   };
 
@@ -110,7 +131,6 @@ function FboardForm(props) {
             onChange={(e) => setFbContent(e.target.value)}
           ></textarea>
         </div>
-
         {/* 사진 미리보기*/}
         <div className="fboard-form-photo-list">
           {selectedPhotos.map((photo, index) => (
@@ -162,6 +182,6 @@ function FboardForm(props) {
       </form>
     </div>
   );
-}
+};
 
 export default FboardForm;

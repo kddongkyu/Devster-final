@@ -1,4 +1,7 @@
-export {default as SignUpNorm} from './norm/SignUpNorm';
+export {default as SignUpNorm} from './SignUp';
 export {default as SignUpNormForm} from './norm/SignUpNormForm';
-export {default as SignUpNormUpload} from './norm/inputs/InputUpload';
 export {default as SignUpNormContract} from './norm/SignUpNormContract';
+export {default as SignUpNormSubmit} from './norm/SignUpNormSubmit';
+export {default as Grats} from './Grats';
+
+export {default as SignUpCompForm} from './comp/SignUpCompForm';

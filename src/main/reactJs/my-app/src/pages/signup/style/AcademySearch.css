@@ -53,6 +53,7 @@
     left: calc(50% + 61px);
     width: 7.8rem;
     height: 3.9rem;
+    cursor: pointer;
 }
 
 .signup-guest-academy-modal-sea {
@@ -101,11 +102,12 @@
     font-weight: bold;
 }
 
-.sigup-guest-academy-modal-res-none-etc {
+.signup-guest-academy-modal-res-none-etc {
     color: #721ea6;
     font-size: 1.6rem;
     text-decoration: underline;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .signup-guest-academy-modal-res-none {
@@ -123,6 +125,7 @@
     left: calc(50% - 70px);
     width: 13.9rem;
     height: 3.9rem;
+    cursor: pointer;
 }
 
 .signup-academy-crop-modal-canc-box {
@@ -148,7 +151,12 @@
     color: white;
 }
 
-.sigup-academy-modal {
+.signup-academy-crop-button-disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.signup-academy-modal {
     position: relative;
     background-color: #fff;
     width: 100%;
@@ -162,7 +170,7 @@
     box-shadow: 0px 0px 100px 2000px rgba(0, 0, 0, .5);
 }
 
-.sigup-academy-modal-box {
+.signup-academy-modal-box {
     width: 96%;
     height: 62.5vh;
     z-index: 999;
@@ -182,7 +190,7 @@
     }
 }
 
-.sigup-academy-modal-box {
+.signup-academy-modal-box {
     animation: modal-fadein 0.3s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
 }
 

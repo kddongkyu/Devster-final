@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setM_pass, setPassIsValid} from "../../../../redux/normMemberSlice";
 
@@ -6,12 +6,18 @@ function InputPass(props) {
     const dispatch = useDispatch();
     const m_pass = useSelector(state => state.norm.m_pass);
     const passIsValid = useSelector(state => state.norm.passIsValid);
-
+    const isSubmitted = useSelector(state => state.norm.isSubmitted);
     const [isPassTouched, setIsPassTouched] = useState(false);
     const [isCapsOn, setIsCapsOn] = useState(false);
     const [strengthLevel, setStrengthLevel] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
     const [isInputValid, setIsInputValid] = useState(true);
+
+    useEffect(()=>{
+        if(!passIsValid && isSubmitted) {
+            setIsPassTouched(true);
+        }
+    },[isSubmitted]);
 
     useEffect(() => {
         if (isPassTouched) {
@@ -27,7 +33,7 @@ function InputPass(props) {
                     setErrorMessage('비밀번호를 확인해주세요.');
                     setIsInputValid(false);
                 } else if (strengthLevel <= 1 && passPattern) {
-                    setErrorMessage('비밀번호는 "중"이상 사용 가능합니다.');
+                    setErrorMessage('"중"이상 사용 가능합니다.');
                     setIsInputValid(false);
                 } else {
                     setErrorMessage('');

@@ -5,6 +5,7 @@ import {SignInComp, SignInNorm} from './index';
 function SignIn(props) {
     const [normMember, setNormMember] = useState(true);
     const [compMember, setCompMember] = useState(false);
+    const [isCapsOn, setIsCapsOn] = useState(false);
 
     const selectNormMember = () => {
         setNormMember(true);
@@ -14,6 +15,10 @@ function SignIn(props) {
     const selectCompMember = () => {
         setNormMember(false);
         setCompMember(true);
+    }
+
+    const capsLockChk = (e) => {
+        setIsCapsOn(e.getModifierState('CapsLock'));
     }
 
     return (
@@ -33,21 +38,35 @@ function SignIn(props) {
                 <p className='devster'>주니어 개발자들이 모인 커뮤니티 플랫폼입니다.</p>
             </div>
             <div className='login-type-select'>
-                <div className={`${normMember ? 'login-type-select-norm' : 'login-type-select-norm-false'}`}
-                     onClick={selectNormMember}>일반회원
+                <div
+                    className={`${normMember ? 'login-type-select-norm' : 'login-type-select-norm-false'}`}
+                    onClick={selectNormMember}
+                >
+                    일반회원
                 </div>
                 <img
                     className='login-type-select-bar-icon'
                     alt=''
                     src={require('./assets/login-type-select-bar.svg').default}
                 />
-                <div className={`${compMember ? 'login-type-select-comp' : 'login-type-select-comp-false'}`}
-                     onClick={selectCompMember}>기업회원
+                <div
+                    className={`${compMember ? 'login-type-select-comp' : 'login-type-select-comp-false'}`}
+                    onClick={selectCompMember}
+                >
+                    기업회원
                 </div>
             </div>
-            {normMember && <SignInNorm/>}
-            {compMember && <SignInComp/>}
-            <div className={`${normMember?'login-signuplink':'login-signuplink-comp'}`}>
+            {
+                normMember &&
+                <SignInNorm capsLockChk={capsLockChk} isCapsOn={isCapsOn}/>
+            }
+            {
+                compMember &&
+                <SignInComp capsLockChk={capsLockChk} isCapsOn={isCapsOn}/>
+            }
+            <div
+                className={`${normMember ? 'login-signuplink' : 'login-signuplink-comp'}`}
+            >
                 <div className='login-signuplink-text'>아직 회원이 아니신가요?</div>
                 <div className='login-signuplink-signup'>회원가입</div>
             </div>

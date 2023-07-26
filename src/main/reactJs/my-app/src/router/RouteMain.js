@@ -16,7 +16,7 @@ import {
   MemberSignupApproval,
 } from "../pages/mypage";
 import { SignIn } from "../pages/signin";
-import { SignUpNorm } from "../pages/signup";
+import { Grats, SignUpCompForm, SignUpNorm } from "../pages/signup";
 import {
   Fboard,
   FboardDetail,
@@ -33,6 +33,10 @@ import {
   Reviewdetail,
 } from "../pages/review";
 import JwtTest from "../pages/test/JwtTest";
+import MessageList from "../pages/message/MessageList";
+import MessageDetail from "../pages/message/MessageDetail";
+import MessageForm from "../pages/message/MessageForm";
+import QboardDetail from "../pages/qboard/QboardDetail";
 
 function RouteMain(props) {
   const location = useLocation();
@@ -68,8 +72,8 @@ function RouteMain(props) {
           element={<FboardDetail />}
         />
         <Route
-          path="/hboard/detail/:hb_idx/:currentPage"
-          element={<HboardDetail />}
+          path="/qboard/detail/:qb_idx/:currentPage"
+          element={<QboardDetail />}
         />
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
@@ -89,6 +93,11 @@ function RouteMain(props) {
         </Route>
 
         <Route>
+          <Route path="/message" element={<MessageList />} />
+        </Route>
+        <Route path="/message/detail/:mes_idx" element={<MessageDetail />} />
+        <Route path="/message/form/:recv_nick" element={<MessageForm />} />
+        <Route>
           <Route path="/myresume/form" element={<Resumeform />} />
           <Route path="/updateresume" element={<ResumeUpdateform />} />
         </Route>
@@ -98,6 +107,8 @@ function RouteMain(props) {
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />
+      <Route path="/csignup" element={<SignUpCompForm />} />
+      <Route path="/grats" element={<Grats />} />
       <Route path="/devchat/:ai_idx" element={<DevChat />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

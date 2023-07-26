@@ -1,0 +1,65 @@
+.signup-guest-service-modal {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+    border-radius: 10px;
+    box-shadow: 0px 0px 100px 2000px rgba(0, 0, 0, .5);
+    padding-top:3rem;
+}
+
+.signup-guest-service-subject {
+    font-size: 1.6rem;
+    width:20rem;
+    margin:0 auto;
+    padding-bottom: 2rem;
+}
+
+.signup-guest-service-subject-text {
+    text-align: center;
+}
+
+.signup-guest-menu-modal-close {
+    position: absolute;
+    top:2.2rem;
+    right: 2.2rem;
+    cursor: pointer;
+}
+
+.signup-guest-service-terms {
+    width: 85%;
+    height:80%;
+    overflow: auto;
+    margin:0 auto;
+}
+
+.signup-guest-service-modal>div {
+    text-align: left;
+}
+
+.signup-guest-service-modal-box {
+    width: 96%;
+    height: 50vh;
+    z-index: 999;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes modal-fadein {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+.signup-guest-service-modal-box {
+    animation: modal-fadein 0.3s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
+}
