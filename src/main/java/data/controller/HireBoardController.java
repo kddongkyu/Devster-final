@@ -87,6 +87,25 @@ public class HireBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    @PutMapping("/compmember/hboard/D1/{hb_idx}")
+    public ResponseEntity<HireBoardDto> updateHireBoard(@PathVariable int hb_idx, @RequestBody HireBoardDto dto) {
+        hireBoardService.updateHireBoard(hb_idx,dto);
+        return new ResponseEntity<HireBoardDto>(HttpStatus.OK);
+    }
+
+    @PostMapping("/compmember/hboard/D1/photo/{hb_idx}")
+    public ResponseEntity<String> updatePhoto(@PathVariable Integer hb_idx, @RequestBody List<MultipartFile> upload){
+        return new ResponseEntity<String>(hireBoardService.updatePhoto(hb_idx,upload),HttpStatus.OK);
+    }
+
+    @DeleteMapping("compmember/hboard/D1/photo/{hb_idx}/{imageFileName}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable Integer hb_idx, @PathVariable String imageFileName){
+        hireBoardService.deletePhoto(hb_idx, imageFileName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @GetMapping("/compmember/hboard/D1/form/{idx}")
     public ResponseEntity<HireBoardDto> updateHireBoardForm(@PathVariable Integer idx){
         return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
@@ -94,10 +113,10 @@ public class HireBoardController {
 
 
 
-    @PutMapping("/compmember/hboard/D1/hireupdate")
-    public void update(@RequestBody HireBoardDto dto){
-        hireBoardService.updateHireBoard(escapeDto(dto));
-    }
+    // @PutMapping("/compmember/hboard/D1/hireupdate")
+    // public void update(@RequestBody HireBoardDto dto){
+    //     hireBoardService.updateHireBoard(escapeDto(dto));
+    // }
     
 
     @PostMapping("/hboard/D1/{m_idx}/increaseBkmk/{hb_idx}")

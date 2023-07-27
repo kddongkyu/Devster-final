@@ -71,7 +71,9 @@ function FboardForm(props) {
       data: uploadPhoto,
       headers: { "Content-Type": "multipart/form-data" },
     })
-      .then((res) => {})
+      .then((res) => {
+        setIsLoading(false);
+      })
       .catch((error) => {
         //axios용 에러함수
         jwtHandleError(error, toastAlert);

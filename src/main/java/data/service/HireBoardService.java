@@ -2,6 +2,7 @@ package data.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.persistence.EntityNotFoundException;
@@ -243,15 +245,68 @@ public class HireBoardService {
     //     }
     // }
 
-    public void updateHireBoard(HireBoardDto dto){
-        try {
-            HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
-            hireBoardRepository.save(entity);
-        } catch (Exception e) {
-            logger.error("Error occurred while updating hireboard",e);
-            throw e;
+    // public void updateHireBoard(HireBoardDto dto){
+    //     try {
+    //         HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
+    //         hireBoardRepository.save(entity);
+    //     } catch (Exception e) {
+    //         logger.error("Error occurred while updating hireboard",e);
+    //         throw e;
+    //     }
+    // }
+
+    public void updateHireBoard(int hb_idx, HireBoardDto dto){
+        try{
+            Optional<HireBoardEntity> e = hireBoardRepository.findById(hb_idx);
+            if(e.isPresent()){
+                HireBoardEntity existingEntity = e.get();
+                existingEntity.setHBsubject(dto.getHb_subject());
+                existingEntity.setHBcontent(dto.getHb_content());
+                existingEntity.setHBphoto(dto.getHb_photo());
+
+                hireBoardRepository.save(existingEntity);
+                }
+            } catch (Exception e) {
+                log.error("update HireBoard Error",e);
+                throw e;
+            }
         }
-    }
+    
+    // 사진 업데이트 여러장 
+        public String updatePhoto(Integer hb_idx, List<MultipartFile> uploads){
+        List<String> uploadedFileNames = new ArrayList<>();
+        for (MultipartFile files : uploads){
+            uploadedFileNames.add(storageService.uploadFile(bucketName, "devster/hboard",files));
+        }
+        log.info(hb_idx + "HireBoard 사진 업데이트 완료");
+        return String.join(",",uploadedFileNames);
+    }    
+
+    //업데이트시 기존 사진 삭제 로직
+    public void deletePhoto(Integer hb_idx, String imageFileName){
+        Optional<HireBoardEntity> entityOptional = hireBoardRepository.findById(hb_idx);
+        if(entityOptional.isPresent()){
+            HireBoardEntity entity = entityOptional.get();
+            String existingPhotos = entity.getHBphoto();
+            List<String> existingPhotosList = Arrays.asList(existingPhotos.split(","));
+            List<String> updatedPhotosList = new ArrayList<>();
+            for (String photo : existingPhotosList){
+                if(!photo.equals(imageFileName)){
+                    updatedPhotosList.add(photo);
+                }
+            }
+            entity.setHBphoto(String.join(",", updatedPhotosList));
+            hireBoardRepository.save(entity);
+            storageService.deleteFile(bucketName,"devster/hboard",imageFileName);
+            log.info(hb_idx + " HireBoard 이미지 삭제 완료");
+        } else {
+            log.error("HireBoardEntity with hb_idx " + hb_idx + " not found.");
+        }
+    } 
+    
+
+
+
 
  
 

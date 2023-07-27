@@ -99,7 +99,7 @@
   font-family: Roboto;
 }
 .hboard-form-subject-rec {
-  position: relative;
+  position: absolute;
   width: 100%;
   top: 0;
   right: 0;
@@ -306,8 +306,14 @@
   top: 56.9rem;
   left: calc(50% - 175px);
   width: 35rem;
-  height: 13.9rem;
+  height: 15.9rem;
 }
+.hboard-form-photo-list_text {
+  position: absolute;
+  top: 13.9rem;
+  left: calc(50% - 175px);
+}
+
 .moblie {
   position: absolute;
   top: 0;
