@@ -33,6 +33,7 @@
   top: 0;
   left: 0;
 } */
+
 .hboard-name-box {
   position: absolute;
   width: 100%;
@@ -159,19 +160,19 @@
 }
 .hboard-form-fileupload-placeho {
   position: absolute;
-  top: 0.63rem;
-  left: 2.9rem;
+  top: 1rem;
+  left: 4.64rem;
   letter-spacing: 0.01em;
   font-weight: 500;
   display: inline-block;
-  width: 16.73rem;
+  width: 26.77rem;
 }
 .hboard-form-fileupload-icon {
   position: absolute;
-  top: 0.88rem;
-  left: 1.16rem;
-  width: 1.09rem;
-  height: 0.75rem;
+  top: 1.4rem;
+  left: 1.85rem;
+  width: 1.74rem;
+  height: 1.2rem;
 }
 .hboard-form-fileupload-cnt-tex {
   position: absolute;
@@ -200,6 +201,17 @@
   width: 11.8rem;
   height: 3.3rem;
 }
+
+.hboard-form-btn-child_loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: #adadad;
+  width: 11.8rem;
+  height: 3.3rem;
+}
+
 .hboard-form-btn-text {
   position: absolute;
   top: 0.7rem;
@@ -295,6 +307,15 @@
   left: calc(50% - 175px);
   width: 35rem;
   height: 13.9rem;
+}
+.moblie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 39rem;
+  height: 84.4rem;
+  overflow: hidden;
+  display: none;
 }
 .hboard-form {
   position: relative;

@@ -22,11 +22,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.servlet.http.HttpSession;
+
 
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/hboard")
+@RequestMapping("/api")
 public class HireBoardController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -43,22 +45,21 @@ public class HireBoardController {
     private String bucketName;
 
 
-    @PostMapping("/D1/upload")
-    public String photoUpload(MultipartFile upload)
-    {
-        if(photo!=null){
-            storageService.deleteFile(bucketName,"devster/hboard",photo);
-        }
-        photo=storageService.uploadFile(bucketName,"devster/hboard",upload);
-        return photo;
+    @PostMapping("/compmember/hboard/D1")
+    public ResponseEntity<HireBoardDto> insertFreeBoard(@RequestBody HireBoardDto dto, HttpSession session) {
+        return new ResponseEntity<HireBoardDto>(hireBoardService.insertHireBoard(dto, session), HttpStatus.OK);
     }
 
-    @PostMapping("/D1/insert")
-    public void insert(@RequestBody HireBoardDto dto){
-        hireBoardService.insertHireBoard(escapeDto(dto));
+    @PostMapping("/compmember/hboard/D1/photo/upload")
+    public ResponseEntity<List<String>> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
+        return new ResponseEntity<List<String>>(hireBoardService.uploadPhoto(upload, session), HttpStatus.OK);
     }
 
-
+    @PutMapping("/compmember/hboard/D1/photo/reset")
+    public ResponseEntity<Void> resetPhoto(String photo) {
+        hireBoardService.resetPhoto(photo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     // @PostMapping
     // public ResponseEntity<HireBoardDto> insert(@RequestBody HireBoardDto dto){
@@ -83,7 +84,7 @@ public class HireBoardController {
     //     return hireBoardService.list(currentPage);
     // }    
 
-    @GetMapping("/D0")
+    @GetMapping("/hboard/D0")
     public ResponseEntity<Map<String, Object>> getPagedHboard(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
@@ -97,20 +98,26 @@ public class HireBoardController {
     //     return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
     // }
 
-    @GetMapping("/D0/{hb_idx}")
+    // @GetMapping("/hboard/D0/{hb_idx}/{m_idx}")
+    // public Map<String,Object> getDetailPage(@PathVariable int hb_idx, @PathVariable int m_idx){
+    //     return hireBoardService.getDetailPage(hb_idx,m_idx);
+    // }
+
+
+    @GetMapping("/hboard/D0/{hb_idx}")
     public Map<String,Object> getDetailPage(@PathVariable int hb_idx, int m_idx){
         return hireBoardService.getDetailPage(hb_idx,m_idx);
     }
 
 
 
-    @DeleteMapping("/D1/{idx}")
+    @DeleteMapping("/compmember/hboard/D1/{idx}")
     public ResponseEntity<Void> deleteHireBoard(@PathVariable Integer idx){
         hireBoardService.deleteHireBoard(idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/D1/form/{idx}")
+    @GetMapping("/compmember/hboard/D1/form/{idx}")
     public ResponseEntity<HireBoardDto> updateHireBoardForm(@PathVariable Integer idx){
         return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
     }
@@ -121,13 +128,13 @@ public class HireBoardController {
     //     return new ResponseEntity<>(HttpStatus.OK);
     // }
 
-    @PutMapping("/D1/hireupdate")
+    @PutMapping("/compmember/hboard/D1/hireupdate")
     public void update(@RequestBody HireBoardDto dto){
         hireBoardService.updateHireBoard(escapeDto(dto));
     }
     
 
-    @PostMapping("/D1/{m_idx}/increaseBkmk/{hb_idx}")
+    @PostMapping("compmember/hboard/D1/{m_idx}/increaseBkmk/{hb_idx}")
     public void increaseBkmk(@PathVariable int hb_idx, @PathVariable int m_idx){
         hireBoardService.addBkmk(hb_idx,m_idx);
         System.out.println("addBkmk 테스트");

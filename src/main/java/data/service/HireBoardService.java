@@ -12,6 +12,7 @@ import data.entity.HireBookmarkEntity;
 import data.repository.CompanyMemberRepository;
 import data.repository.HireBoardRepository;
 import data.repository.HireBookmarkRepository;
+import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 import data.mapper.HireBoardMapper;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
 
 
 @Service
+@Slf4j
 public class HireBoardService {
 
     
@@ -65,10 +68,44 @@ public class HireBoardService {
     }
 
 
-    public void insertHireBoard(HireBoardDto dto){ 
-        HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
-            hireBoardRepository.save(entity);
+    public HireBoardDto insertHireBoard(HireBoardDto dto, HttpSession session) {
+        try {
+            if (session.getAttribute("photo") != null) {
+                dto.setHb_photo(session.getAttribute("photo").toString());
+            }
+            HireBoardEntity hireBoard = HireBoardEntity.toHireBoardEntity(dto);
+            hireBoardRepository.save(hireBoard);
+            session.removeAttribute("photo");
+            return dto;
+        } catch (Exception e) {
+            log.error("insert HireBoard Error", e);
+            throw e;
+        }
     }
+
+    public List<String> uploadPhoto(List<MultipartFile> upload, HttpSession session) {
+        List<String> fullPhoto = new ArrayList<>();
+        for (MultipartFile photo : upload) {
+            fullPhoto.add(storageService.uploadFile(bucketName, "devster/hboard", photo));
+        }
+        if (session.getAttribute("photo") != null) {
+            storageService.deleteFile(bucketName, "devster/hboard", session.getAttribute("photo").toString());
+        }
+        session.setAttribute("photo", String.join(",", fullPhoto));
+        log.info("HireBoard 사진 업로드 완료");
+        return fullPhoto;
+    }
+
+    public void resetPhoto(String photo) {
+        storageService.deleteFile(bucketName, "devster/hboard", photo);
+        log.info("HireBoard 사진 초기화 완료");
+    }
+
+
+
+
+
+
 
 
     public Map<String, Object> getPagedHboard(int page, int size,String keyword) {
@@ -108,70 +145,7 @@ public class HireBoardService {
     }
 
 
-    // public Map<String,Object> list(int currentPage){
-    
-    //     //페이징처리
-    //     int totalCount;//총갯수
-    //     int perPage=10;//한페이지당 출력할 글갯수
-    //     int perBlock=5;//출력할 페이지갯수
-    //     int startNum;//db에서 가져올 시작번호
-    //     int startPage;//출력할 시작페이지
-    //     int endPage;//출력할 끝페이지
-    //     int totalPage;//총 페이지수
-    //     int no;//출력할 시작번호
 
-    //     //총갯수
-    //     totalCount = (int)hireBoardRepository.count();
-    //      //총 페이지수
-    //     totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
-    //     //시작페이지
-    //     startPage=(currentPage-1)/perBlock*perBlock+1;
-    //     //끝페이지
-    //     endPage=startPage+perBlock-1;
-    //     if(endPage>totalPage)
-    //         endPage=totalPage;
-    //     //시작번호
-    //     startNum=(currentPage-1)*perPage;    
-    //     //각페이지당 출력할 번호
-    //     no=totalCount-(currentPage-1)*perPage;
-
-    //     Map<String, Integer> map=new HashMap<>();
-    //     map.put("start", startNum);
-    //     map.put("perpage", perPage);
-    //     List<Map<String,Object>> fullList = new ArrayList<>();
-    //     List<HireBoardDto> list = hireBoardMapper.getPagingList(map);
-        
-    //     for(HireBoardDto dto : list){
-    //         Map<String,Object> dmap = new HashMap<>();
-    //         dmap.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
-    //         dmap.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
-    //         dmap.put("hb_subject",dto.getHb_subject());
-    //         dmap.put("hb_content",dto.getHb_content());
-    //         dmap.put("hb_readcount",dto.getHb_readcount());
-    //         dmap.put("hb_writeday",dto.getHb_writeday());
-    //         dmap.put("hb_photo",dto.getHb_photo());
-    //         fullList.add(dmap);
-    //     }
-
-    //     //출력할 페이지번호들을 Vector에 담아서 보내기
-    //     Vector<Integer> parr=new Vector<>();
-    //     for(int i=startPage;i<=endPage;i++){
-    //         parr.add(i);
-    //     }
-
-    //     //필요한 변수들을 Map 에 담아서 보낸다
-    //     Map<String,Object> smap=new HashMap<>();
-    //     smap.put("totalCount",totalCount);
-    //     smap.put("list",fullList);
-    //     smap.put("parr",parr);
-    //     smap.put("startPage",startPage);
-    //     smap.put("endPage",endPage);
-    //     smap.put("no",no);
-    //     smap.put("totalPage",totalPage);
-
-    //     System.out.println(smap);
-    //     return  smap;
-    // } 
 
 
     public List<HireBoardDto> getPagingList(int start, int perpage) {

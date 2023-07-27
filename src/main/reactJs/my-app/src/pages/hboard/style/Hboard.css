@@ -438,6 +438,14 @@
   position: relative;
   letter-spacing: -0.24px;
 }
+
+/* .hboard-preview-views-edit
+  .hboard-preview-view-icon-edit
+  .hboard-preview-views-text-edit {
+  position: absolute;
+  letter-spacing: -0.24px;
+} */
+
 .hboard-preview-type-date {
   color: #95969a;
 }
@@ -633,7 +641,7 @@
   position: relative;
   background-color: #fff;
   width: 100%;
-  height: 230rem;
+  height: 232rem;
   overflow: hidden;
   text-align: left;
   font-size: 1.2rem;

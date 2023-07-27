@@ -1,8 +1,10 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate, redirect } from "react-router-dom";
 import "./style/Hboard.css";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
+import { JwtPageChk } from "../../api/JwtPageChk";
+import { checkToken } from "../../api/checkToken";
 
 function Hboard(props) {
   const handleRefresh = () => {
@@ -13,9 +15,12 @@ function Hboard(props) {
   const [noticeArticle, setNoticeArticle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const navi = useNavigate();
   const [contentCount, setContentCount] = useState(15); //텍스트의 초기 개수
   const [subjectCount, setsubjectCount] = useState(10);
+
+  //디코딩 함수
+  const de = checkToken();
 
   const handleResize = () => {
     // 화면 너비에 따라 텍스트 개수를 업데이트
@@ -151,7 +156,6 @@ function Hboard(props) {
     if (betweenTime < 60) {
       return `${betweenTime}분 전`;
     }
-    console.log(betweenTime);
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
@@ -172,16 +176,21 @@ function Hboard(props) {
     return formattedDateWithoutTime;
   };
 
+  // 사진 url 설정
   const setPhotoUrl = (value) => {
     if (value == null) {
       return require("./assets/logo-img.svg").default;
     }
     const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
-    const firstCommaIndex = value.indexOf(",");
-    const parsedPhoto = value.substring(0, firstCommaIndex);
-    const srcUrl = photoUrl + parsedPhoto;
-
-    return srcUrl;
+    if (value.includes(",")) {
+      const firstCommaIndex = value.indexOf(",");
+      const parsedPhoto = value.substring(0, firstCommaIndex);
+      const srcUrl = photoUrl + parsedPhoto;
+      return srcUrl;
+    } else {
+      const srcUrl = photoUrl + value;
+      return srcUrl;
+    }
   };
 
   return (
@@ -204,9 +213,10 @@ function Hboard(props) {
           to="/fboard"
           activeClassName="active"
           className="fboard-selection-freeboard"
-        ></NavLink>
-        <div className="board-selection-freeboard-box" />
-        <div className="board-selection-freeboard-text">자유</div>
+        >
+          <div className="board-selection-freeboard-box" />
+          <div className="board-selection-freeboard-text">자유</div>
+        </NavLink>
         <NavLink
           to="/qboard"
           activeClassName="active"
@@ -229,10 +239,12 @@ function Hboard(props) {
         </NavLink>
       </div>
 
-      <NavLink
-        to="/hboard/form"
-        activeClassName="active"
+      <div
         className="hboard-write"
+        onClick={() => {
+          JwtPageChk(navi, "/hboard/form");
+        }}
+        style={{ cursor: "pointer" }}
       >
         <div className="hboard-write-box" />
         <img
@@ -241,7 +253,7 @@ function Hboard(props) {
           src={require("./assets/hboard_write_icon.svg").default}
         />
         <div className="hboard-write-text">글쓰기</div>
-      </NavLink>
+      </div>
 
       <div className="fboard-function-sort">
         <div className="fboard-function-sort-box" />
@@ -311,7 +323,13 @@ function Hboard(props) {
               관리자 · {timeForToday(noticeArticle.nb_writeday)}
             </div>
           </div>
-          <b className="hboard-notice-preview-subject">
+          <b
+            className="hboard-notice-preview-subject"
+            onClick={() => {
+              JwtPageChk(navi, `api/nboard/D0/${noticeArticle.nb_idx}`);
+            }}
+            style={{ cursor: "pointer" }}
+          >
             {noticeArticle.nb_subject}
           </b>
           <div className="hboard-notice-preview-notice">
@@ -359,65 +377,6 @@ function Hboard(props) {
         </div>
       </div>
 
-      {/* <div className="hboard-notice">
-        <div className="hboard-notice-box" />
-        <div className="hboard-notice-preview">
-          <div className="hboard-notice-preview-info">
-            <img
-              className="board-notice-preview-info-logo-icon"
-              alt=""
-              src={
-                require("./assets/board_notice_preview_info_logo.svg").default
-              }
-            />
-            <div className="hboard-notice-preview-info-tex">
-              admin_01 · 약 4시간 전
-            </div>
-          </div>
-          <b className="hboard-notice-preview-subject">DEVSTER 공지사항</b>
-          <div className="hboard-notice-preview-notice">
-            <div className="hboard-notice-preview-notice-b" />
-            <div className="hboard-notice-preview-notice-t">공지사항</div>
-          </div>
-          <div className="hboard-notice-preview-hash">#공지사항 # Devster</div>
-          <div className="hboard-notice-preview-icons">
-            <div className="hboard-notice-preview-views">
-              <div className="hboard-notice-preview-views-te">800</div>
-              <img
-                className="hboard-notice-preview-views-ic-icon"
-                alt=""
-                src={
-                  require("./assets/hboard_notice_preview_views_icon.svg")
-                    .default
-                }
-              />
-            </div>
-            <div className="hboard-notice-preview-icons-co">
-              <div className="hboard-notice-preview-views-te">99</div>
-              <img
-                className="hboard-notice-preview-icons-co2"
-                alt=""
-                src={
-                  require("./assets/hboard_notice_preview_icons_comments_icon.svg")
-                    .default
-                }
-              />
-            </div>
-            <div className="hboard-notice-preview-icons-li">
-              <div className="hboard-notice-preview-icons-li1">9</div>
-              <img
-                className="hboard-notice-preview-icons-li2"
-                alt=""
-                src={
-                  require("./assets/hboard_notice_preview_icons_likes_icon.svg")
-                    .default
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <div className="hboard_list">
         {hireBoardList &&
           hireBoardList.map((hboard) => {
@@ -431,15 +390,44 @@ function Hboard(props) {
                   <b className="hboard-preview-type-text">채용게시판</b>
                   <div className="hboard-preview-type-date">
                     {timeForToday(hboard.hboard.hb_writeday)}
+                    &nbsp;&nbsp;&nbsp;
+                    <img
+                      src={
+                        require("./assets/hboard_preview_views_icon.svg")
+                          .default
+                      }
+                    />
+                    &nbsp;
+                    {hboard.hboard.hb_readcount}
                   </div>
+                  {/* <div className="hboard-preview-views-edit">
+                    <div className="hboard-preview-views-text-edit">
+                      {hboard.hboard.hb_readcount}
+                    </div>
+                    <img
+                      className="hboard-preview-views-icon-edit"
+                      alt=""
+                      src={
+                        require("./assets/hboard_preview_views_icon.svg")
+                          .default
+                      }
+                    />
+                  </div> */}
                 </div>
                 <div className="hboard-preview-id">
                   <div className="hboard-preview-type-text">
                     {hboard.cmCompname}
                   </div>
                 </div>
-                <NavLink
-                  to={`/hboard/detail/${hboard.hboard.hb_idx}/${currentPage}`}
+
+                <div
+                  onClick={() => {
+                    JwtPageChk(
+                      navi,
+                      `/hboard/detail/${hboard.hboard.hb_idx}/${de.idx}/${currentPage}`
+                    );
+                  }}
+                  style={{ cursor: "pointer" }}
                 >
                   <b className="hboard-preview-subject">
                     {compareValues(
@@ -458,49 +446,13 @@ function Hboard(props) {
                       : hboard.hboard.hb_content}
                     {/* {hboard.hboard.hb_content.slice(0, contentCount)} */}
                   </div>
-                  <div className="hboard-preview-img-preview">
+                  <div>
                     <img
                       alt=""
                       src={setPhotoUrl(hboard.hboard.hb_photo)}
                       className="hboard-preview-img-preview"
                     />
                   </div>
-                </NavLink>
-
-                <div className="hboard-preview-likes">
-                  <div className="hboard-preview-likes-text">
-                    {hboard.hboard.hb_like - hboard.hboard.hb_dislike}
-                  </div>
-                  <img
-                    className="hboard-preview-likes-icon"
-                    alt=""
-                    src={
-                      require("./assets/hboard_preview_likes_icon.svg").default
-                    }
-                  />
-                </div>
-                <div className="hboard-preview-comments">
-                  <div className="hboard-preview-likes-text">99</div>
-                  <img
-                    className="hboard-preview-comments-icon"
-                    alt=""
-                    src={
-                      require("./assets/hboard_preview_comments_icon.svg")
-                        .default
-                    }
-                  />
-                </div>
-                <div className="hboard-preview-views">
-                  <div className="hboard-preview-views-text">
-                    {hboard.hboard.hb_readcount}
-                  </div>
-                  <img
-                    className="hboard-preview-views-icon"
-                    alt=""
-                    src={
-                      require("./assets/hboard_preview_views_icon.svg").default
-                    }
-                  />
                 </div>
               </div>
             );

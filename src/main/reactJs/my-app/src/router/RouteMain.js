@@ -76,6 +76,11 @@ function RouteMain(props) {
           element={<QboardDetail />}
         />
 
+        <Route
+          path="/hboard/detail/:hb_idx/:m_idx/:currentPage"
+          element={<HboardDetail />}
+        />
+
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
         <Route
           path="/fboard/updateform/:fb_idx/:currentPage"

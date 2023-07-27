@@ -3,35 +3,44 @@ import "./style/HboardDetail.css";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import { useNavigate, useParams } from "react-router-dom";
+import { checkToken } from "../../api/checkToken";
 
 function HboardDetail(props) {
   //currentPage , dto(subject, writeday, readcount, photo, content) 정보 갖고 와야 하고
   //bkmk , del , edit 버튼 구현 해야함
 
-  let de = jwt_decode(localStorage.getItem("accessToken"));
+  // let de = jwt_decode(localStorage.getItem("accessToken"));
+  //디코딩 함수
+  const de = checkToken();
   const m_idx = de.idx;
+
   const [hboardData, setHboardData] = useState(null);
   const { hb_idx, currentPage } = useParams();
   const [isBkmk, setIsBkmk] = useState(false);
+  const [arrayFromString, setArrayFromString] = useState([]);
 
   const navi = useNavigate();
   const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
 
   useEffect(() => {
-    console.log(m_idx);
+    console.log(de.idx);
   }, []);
 
   useEffect(() => {
     // JPA로부터 데이터 가져오는 API 호출(detail 값 DTO 가져오기 )
     const url = `/api/hboard/D0/${hb_idx}`;
     axiosIns
-      .get(url, { params: { m_idx: m_idx } })
+      .get(url, { params: { m_idx: de.idx } })
       .then((response) => {
         console.log("axios테스트");
         console.log(response);
         console.log(response.data);
         console.log(response.data.isAlreadyAddBkmk);
+        console.log(response.data.hb_photo);
         setHboardData(response.data);
+        if (response.data.hb_photo != null) {
+          setArrayFromString(response.data.hb_photo.split(","));
+        }
         //북마크 이미 눌렀는지 여부를 첫 렌더링 때 저장
         setIsBkmk(response.data.isAlreadyAddBkmk);
       })
@@ -174,42 +183,32 @@ function HboardDetail(props) {
         <div className="hboard-detail-header-btn-like"></div>
         <div className="hboard-detail-header-btn-disli"></div>
       </div>
+
       <div className="hboard-detail-textarea">
         <div className="hboard-detail-textarea-contents">
           {hboardData?.hb_content}
-          {/* <p className="p">
-            지방자치단체는 주민의 복리에 관한 사무를 처리하고 재산을 관리하며,
-            법령의 범위안에서 자치에 관한 규정을 제정할 수 있다. 국회에 제출된
-            법률
-          </p>
-          <p className="p">&nbsp;</p>
-          <p className="p">&nbsp;</p>
-          <p className="p">&nbsp;</p>
-          <p className="p">
-            안 기타의 의안은 회기중에 의결되지 못한 이유로 폐기되지 아니한다.
-            다만, 국회의원의 임기가 만료된 때에는 그러하지 아니하다. 사법권은
-            법관으로 구
-          </p>
-          <p className="p">&nbsp;</p>
-          <p className="p">&nbsp;</p>
-          <p className="p">성된 법원에 속한다.</p>
-          <p className="p">헌법재판소에서 법률의 위헌결정</p>
-          <p className="p">&nbsp;</p>
-          <p className="p">&nbsp;</p>
-          <p className="p">
-            , 탄핵의 결정, 정당해산의 결정 또는 헌법소원에 관한 인용결정을 할
-            때에는 재판관 6인 이상의 찬성이 있어야 한다. 탄핵결정은 공직으로부터
-            파면함에 그친다. 그러나, 이에 의하여 민사상이나 형사상의 책임이
-            면제되지는 아니한다. 국회의원의 수는 법률로 정하되, 200인 이상으로
-            한다.
-          </p> */}
         </div>
         <b className="hboard-detail-textarea-subject">
           {/* 지방자치단체는 주민의 복리 */}
           {hboardData?.hb_subject}
         </b>
       </div>
-      <div className="hboard-detail-photo" />
+
+      {/* <div className="hboard-detail-photo" /> */}
+
+      <div className="hboard-detail-photo-list">
+        {arrayFromString.map((imageId, index) => (
+          <div>
+            <img
+              className="hboard-detail-photo"
+              key={index}
+              src={`${photoUrl}${imageId}`}
+              alt={`Image ${index}`}
+            />
+          </div>
+        ))}
+      </div>
+
       <div className="hboard-detail-listback" onClick={hboardNavigation}>
         <div className="hboard-detail-listback-rec" />
         <div className="hboard-detail-listback-text">목록</div>
@@ -219,33 +218,17 @@ function HboardDetail(props) {
           src={require("./assets/hboard_detail_listback_icon.svg").default}
         />
       </div>
-      {/* <div className="hboard-detail-counter">
-        <div className="hboard-detail-counter-like">
-          <div className="hboard-detail-counter-like-box" />
-          <img
-            className="hboard-detail-counter-like-icon"
-            alt=""
-            src={require("./assets/hboard_detail_counter_like.svg").default}
-          />
-        </div>
-        <div className="hboard-detail-counter-num">
-          <div className="hboard-detail-counter-num-box" />
-          <div className="hboard-detail-counter-num-text">565</div>
-        </div>
-        <div className="hboard-detail-counter-dislike">
-          <div className="hboard-detail-counter-dislike-b" />
-          <img
-            className="hboard-detail-counter-like-icon"
-            alt=""
-            src={require("./assets/hboard_detail_counter_dislike.svg").default}
-          />
-        </div>
-      </div> */}
+
       <div className="advertise-box1">
         <div className="advertise-main" />
         <b className="advertise-text1">광고 2</b>
       </div>
-      <img className="board-detail-hr-icon" alt="" src="/board-detail-hr.svg" />
+
+      <img
+        className="hboard-detail-hr-icon"
+        alt=""
+        src="/board-detail-hr.svg"
+      />
     </div>
   );
 }
