@@ -1,19 +1,25 @@
 import "./style/AboardForm.css";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
-const AboardForm = () => {
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import {jwtHandleError} from "../../api/JwtHandleError";
+import {checkToken} from "../../api/checkToken";
 
+function AboardForm(props) {
     const [abSubject,setAbSubject]=useState('');
     const [abContent,setAbContent]=useState('');
-    const [photoLength,setPhotolength]=useState('');
-    //const [selectedPhotos,setSelectedPhotos]=useState('');
-    const navi=useNavigate();
+    const [photoLength,setPhotoLength]=useState(0);
+    const navi = useNavigate();
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-
-    let de = jwt_decode(localStorage.getItem('accessToken'));
-    console.log(de.idx);
+    //에러 호출용 변수
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
+    //디코딩 함수
+    const de = checkToken();
 
     const onSubmitEvnet=(e)=>{
         e.preventDefault();
@@ -28,18 +34,33 @@ const AboardForm = () => {
             .then(res =>{
                 navi("/aboard");
             })
-            .catch(errer =>{
-                console.error("aboarderrer"+errer);
+            .catch(error =>{
+                jwtHandleError(error, toastAlert);
             });
     }
 
 
     const onUploadEvent=(e)=>{
+        setIsLoading(true);
         const uploadPhoto=new FormData();
-        setPhotolength(e.target.files.length);
+        const files = e.target.files;
+        const maxAllowedFiles = 10;
 
-        for(let i=0;i<e.target.files.length; i++){
-            uploadPhoto.append("upload",e.target.files[i]);
+        // 10장이내인지 확인
+        if (files.length > maxAllowedFiles) {
+            // Handle the error or inform the user that only 10 files are allowed
+            toastAlert("사진은 최대 10장까지만 업로드 가능합니다.", "warning");
+            e.target.value = null;
+            setIsLoading(false);
+            return;
+        }
+
+        setPhotoLength(files.length);
+        const newPhotos = Array.from(files);
+        setSelectedPhotos([...newPhotos]);
+
+        for(let i=0;i<files.length; i++){
+            uploadPhoto.append("upload",files[i]);
         }
 
         axiosIns({
@@ -48,19 +69,23 @@ const AboardForm = () => {
             data:uploadPhoto,
             headers:{'Content-Type':'multipart/form-data'}
         }).then(res=>{
-           // setAbphoto(res.data);
+            setIsLoading(false);
+        }).catch(error => {
+            //axios용 에러함수
+            jwtHandleError(error, toastAlert);
         });
     }
 
 
 
   return (
+      <div>
       <form className="aboard-form" onSubmit={onSubmitEvnet}>
           <div className="advertise-box">
               <div className="advertise-main" />
               <b className="advertise-text">광고</b>
           </div>
-          <div className="moblie" />
+
           <div className="aboard-name">
               <div className="aboard-name-box" />
               <div className="aboard-name-text">
@@ -70,6 +95,7 @@ const AboardForm = () => {
                   </div>
               </div>
           </div>
+
           <div className="aboard-form-subject">
               <input className="aboard-form-subject-rec"
                      type="text"
@@ -87,6 +113,17 @@ const AboardForm = () => {
                         onChange={(e)=>setAbContent(e.target.value)}>
               </textarea>
           </div>
+
+          <div className="aboard-form-photo-list">
+              {selectedPhotos.map((photo, index) => (
+                  <img
+                      key={index}
+                      src={URL.createObjectURL(photo)}
+                      alt={`미리보기 ${index + 1}`}
+                      className={`aboard-form-photo${index + 1}`}
+                  />
+              ))}
+          </div>
           <div className="aboard-form-fileupload">
               <input className="aboard-form-subject-rec"
                      type="file"
@@ -94,47 +131,30 @@ const AboardForm = () => {
                      multiple
                      onChange={onUploadEvent}
               />
+              <div className="aboard-form-fileupload-cnt-tex">
               <img
                   className="aboard-form-fileupload-icon"
                   alt=""
                   src={require("./assets/qboard_form_fileupload_icon.svg").default}
               />
-              <div className="aboard-form-fileupload-cnt-tex">
                   &nbsp;&nbsp;사진 {photoLength}장이 등록되었습니다.
               </div>
           </div>
-          <button type="submit" className="aboard-form-btn">
-              <div className="aboard-form-btn-child" />
-              <div className="aboard-form-btn-text">게시글등록</div>
+
+          <button type="submit" className="aboard-form-btn"
+                  disabled={isLoading}>
+              <div className={isLoading ? "aboard-form-btn-child_loading" : "aboard-form-btn-child"} />
+              <div className="aboard-form-btn-text">
+                  {isLoading ? "로딩중..." : "게시글등록"}
+              </div>
               <img
                   className="aboard-form-btn-icon"
                   alt=""
                   src={require("./assets/qboard_form_btn_icon.svg").default}
               />
           </button>
-          {/* 사진 미리보기*/}
-          <div className="aboard-form-photo-list">
-              {/*{selectedPhotos.map((photo, index) => (*/}
-              {/*    <img*/}
-              {/*        key={index}*/}
-              {/*        src={URL.createObjectURL(photo)}*/}
-              {/*        alt={`미리보기 ${index + 1}`}*/}
-              {/*        className={`fboard-form-photo${index + 1}`}*/}
-              {/*    />*/}
-              {/*))}*/}
-
-              <div className="aboard-form-photo1" />
-              <div className="aboard-form-photo2" />
-              <div className="aboard-form-photo3" />
-              <div className="aboard-form-photo4" />
-              <div className="aboard-form-photo5" />
-              <div className="aboard-form-photo6" />
-              <div className="aboard-form-photo7" />
-              <div className="aboard-form-photo8" />
-              <div className="aboard-form-photo9" />
-              <div className="aboard-form-photo10" />
-          </div>
       </form>
+      </div>
   );
 };
 

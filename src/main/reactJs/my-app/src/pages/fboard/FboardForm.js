@@ -51,7 +51,7 @@ function FboardForm(props) {
         // 10장이내인지 확인
         if (files.length > maxAllowedFiles) {
             // Handle the error or inform the user that only 10 files are allowed
-            alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
+           toastAlert("사진은 최대 10장까지만 업로드 가능합니다.", "warning");
             e.target.value = null;
             setIsLoading(false);
             return;

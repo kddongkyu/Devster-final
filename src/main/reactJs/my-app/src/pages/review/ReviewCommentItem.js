@@ -157,10 +157,6 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
             <div className="review-detail-commnets-detail-">
                 <div className="review-detail-commnets-detail-1">
                     <div className="review-detail-commnets-detail-2">{comment.nickname}</div>
-                    <div className="review-detail-commnets-detail-3">
-                        <span>{timeForToday(comment.reviewcommentdto.rbc_writeday)}{` · `}</span>
-                        {/*<span className="span">{`수정됨 `}</span>*/}
-                    </div>
                 </div>
                 <img
                     className="review-detail-commnets-detail-icon"
@@ -194,8 +190,11 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                 <br/>
                 {m_idx === comment.reviewcommentdto.m_idx &&(
                     <>
-                <button onClick={handleDeleteClick}>삭제</button> &nbsp;&nbsp;
-                <button onClick={handleUpdateClick}>수정</button>
+                        <div className="review-detail-commnets-btns">
+                            {/* 이 부분 시간나면 닉네임 옆으로 옮기기 */}
+                            <div className="review-detail-commnets-btns-delete" onClick={handleDeleteClick}>삭제</div> &nbsp;&nbsp;
+                            <div className="review-detail-commnets-btns-update" onClick={handleUpdateClick}>수정</div>
+                        </div>
                 {showUpdateForm && <ReviewReplyupdateform rbc_idx={comment.reviewcommentdto.rbc_idx}
                                                           rb_idx={comment.reviewcommentdto.rb_idx}
                                                           currentContent={comment.reviewcommentdto.rbc_content} />}
@@ -206,11 +205,16 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                 {comment.replyConut != 0 ? (
                     <div className="review-detail-commnets-hide-te"
                          onClick={() => toggleReplyComments(comment.reviewcommentdto.rbc_idx)}
-                    >댓글 모두 숨기기</div>
+                    >
+                        <img alt=""
+                             src={require('./assets/review_detail_commnets_all_up_icon.svg').default}
+                            className="review-detail-commnets-hide-img"/>
+                        &nbsp;&nbsp;답글 숨기기</div>
                 ) : ""}
 
-                <button className="review-detail-commnets-hide-co" onClick={handleReplyButtonClick}>댓글 쓰기</button>
-                {showReplyForm && <ReviewReplyform rbc_idx={comment.reviewcommentdto.rbc_idx} rb_idx={comment.reviewcommentdto.rb_idx} />}
+                <div className="review-detail-commnets-hide-co" onClick={handleReplyButtonClick}>답글 쓰기</div>
+                {showReplyForm &&
+                    <ReviewReplyform rbc_idx={comment.reviewcommentdto.rbc_idx} rb_idx={comment.reviewcommentdto.rb_idx} />}
             </div>
         </div>
     );

@@ -15,7 +15,8 @@ function FboardDetail(props) {
     const toastAlert = ToastAlert(enqueueSnackbar);
     //디코딩 함수
     const de = checkToken();
-    const m_idx = de.idx;
+    // const m_idx = de.idx;
+    const [m_idx, setM_idx] = useState();
     const [fboardData, setFboardData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const {fb_idx, currentPage} = useParams();
@@ -34,6 +35,7 @@ function FboardDetail(props) {
                     setArrayFromString(response.data.fboard.fb_photo.split(","));
                 }
                 setIsLoading(false);
+                setM_idx(de.idx);
 
                 if (m_idx && fb_idx) {
                     axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)

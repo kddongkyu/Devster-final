@@ -1,20 +1,74 @@
-.r-detail-commnets-form-te{
- resize: none;
- margin-top: 1.5rem;
- width: 80%;
- height: auto;
-
-}
-.r-detail-commnets-form{
- width: 90%;
- margin-left: 6rem;
+.r-detail-commnets-form {
+    width: 90%;
+    margin-left: 2.7rem;
 }
 
-.review-detail-commnets-hide-co{
- text-align: center;
- align-items: center;
- display: flex;
+.r-detail-commnets-form-te {
+    resize: none;
+    margin-top: 1.5rem;
+    width: 100%;
+    height: auto;
+    border: 1px solid #adadad;
+    padding-left: 0.5rem;
+    padding-top: 0.2rem;
+    border-radius: 5px;
 }
-.review-detail-commnets-hide-te{
- padding-right: 2rem;
+
+.r-detail-reply-form-te {
+    resize: none;
+    margin-top: 1.5rem;
+    width: 93%;
+    height: auto;
+    border: 1px solid #adadad;
+    padding-left: 0.5rem;
+    padding-top: 0.2rem;
+    border-radius: 5px;
+}
+
+.r-detail-commnets-form-te:focus {
+    outline: none;
+    border: 0.2rem solid #721ea6;
+}
+
+.r-detail-reply-form-te:focus {
+    outline: none;
+    border: 0.2rem solid #721ea6;
+}
+
+
+.review-detail-commnets-hide-co {
+    text-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.review-detail-commnets-hide-te {
+    padding-right: 2rem;
+}
+
+.r-detail-commnets-form-su {
+    width: 100%;
+    text-align: right;
+}
+.r-detail-commnets-form-su-text {
+    border: none;
+    background: none;
+    outline: none;
+    color: #721ea6;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.r-detail-reply-form-su {
+    width: 100%;
+    text-align: right;
+    padding-right: 2.5rem;
+}
+.r-detail-reply-form-su-text{
+    border: none;
+    background: none;
+    outline: none;
+    color: #721ea6;
+    cursor: pointer;
+
 }

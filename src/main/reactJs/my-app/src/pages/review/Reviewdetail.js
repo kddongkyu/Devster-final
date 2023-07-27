@@ -310,7 +310,7 @@ function Reviewdetail() {
                 </div>
                 <div className="review-detail-headline">
                     <div className="review-detail-headline-box" />
-                    <div className="review-detail-he뷰adline-text">리뷰게시판</div>
+                    <div className="review-detail-headline-text">리뷰게시판</div>
                 </div>
 
             </div>

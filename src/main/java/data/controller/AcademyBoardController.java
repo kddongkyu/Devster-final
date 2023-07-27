@@ -31,10 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
-
-
-
 @RestController
 @CrossOrigin
 @RequestMapping("/api/academyboard")
@@ -48,17 +44,17 @@ public class AcademyBoardController {
     private NcpObjectStorageService storageService;
 
     @PostMapping("/D1")
-    public ResponseEntity<AcademyBoardDto> insertAcademyBoard(@RequestBody AcademyBoardDto dto, HttpSession session, HttpServletRequest request){
-        return new ResponseEntity<AcademyBoardDto>(academyBoardService.insertAcademyBoard(dto,session,request), HttpStatus.OK);
+    public ResponseEntity<AcademyBoardDto> insertAcademyBoard(@RequestBody AcademyBoardDto dto, HttpSession session, HttpServletRequest request) {
+        return new ResponseEntity<AcademyBoardDto>(academyBoardService.insertAcademyBoard(dto, session, request), HttpStatus.OK);
     }
 
     @PostMapping("/D1/photo/upload")
     public ResponseEntity<List<String>> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
-        return new ResponseEntity<List<String>>(academyBoardService.uploadPhoto(upload, session),HttpStatus.OK);
+        return new ResponseEntity<List<String>>(academyBoardService.uploadPhoto(upload, session), HttpStatus.OK);
     }
 
     @PutMapping("/D1/photo/reset")
-    public ResponseEntity<Void> resetPhoto(String photo){
+    public ResponseEntity<Void> resetPhoto(String photo) {
         academyBoardService.resetPhoto(photo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -82,19 +78,27 @@ public class AcademyBoardController {
             @RequestParam(defaultValue = "ABwriteday") String sortProperty,
             @RequestParam(defaultValue = "DESC") String sortDirection,
             HttpServletRequest request) {
-        return new ResponseEntity<>(academyBoardService.getPagedAcademyboard(page, size, keyword, request,sortProperty,sortDirection), HttpStatus.OK);
+        return new ResponseEntity<>(academyBoardService.getPagedAcademyboard(page, size, keyword, request, sortProperty, sortDirection), HttpStatus.OK);
     }
 
 
-    @GetMapping("/D0/{ab_idx}")
-    public Map<String,Object> getDetailPage(@PathVariable int ab_idx){
-        return academyBoardService.getDetailPage(ab_idx);
+    //    @GetMapping("/D0/{ab_idx}")
+//    public Map<String,Object> getDetailPage(@PathVariable int ab_idx){
+//        return academyBoardService.getDetailPage(ab_idx);
+//    }
+//    @GetMapping("/D0/{ab_idx}")
+//    public ResponseEntity<Map<String, Object>> getDetailPage(@PathVariable int ab_idx) {
+//        return new ResponseEntity<>(academyBoardService.getDetailPage(ab_idx), HttpStatus.OK);
+//    }
+
+    @GetMapping("/D1/{ab_idx}")
+    public ResponseEntity<Map<String, Object>> getOneAboard(@PathVariable int ab_idx) {
+        return new ResponseEntity<>(academyBoardService.getOneAboard(ab_idx), HttpStatus.OK);
     }
 
 
-
-    @DeleteMapping("/D1/{idx}")
-    public ResponseEntity<Void> deleteAcademyBoard(@PathVariable Integer idx){
+    @DeleteMapping("/D1/{ab_idx}")
+    public ResponseEntity<Void> deleteAcademyBoard(@PathVariable Integer idx) {
         academyBoardService.deleteAcademyBoard(idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -111,29 +115,28 @@ public class AcademyBoardController {
     //     return new ResponseEntity<>(HttpStatus.OK);
     // }
 
-    @PutMapping("/D1/{fb_idx}")
+    @PutMapping("/D1/{ab_idx}")
     public ResponseEntity<AcademyBoardDto> updateAcademyBoard(@PathVariable int ab_idx, @RequestBody AcademyBoardDto dto) {
         academyBoardService.updateAcademyBoard(ab_idx, dto);
         return new ResponseEntity<AcademyBoardDto>(HttpStatus.OK);
     }
 
-    @PostMapping("/D1/photo/{fb_idx}")
+    @PostMapping("/D1/photo/{ab_idx}")
     public ResponseEntity<Void> updatePhoto(@PathVariable Integer ab_idx, @RequestBody MultipartFile upload) {
-        academyBoardService.updatePhoto(ab_idx,upload);
+        academyBoardService.updatePhoto(ab_idx, upload);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-
     @PostMapping("/D1/{m_idx}/like/{ab_idx}")
-    public ResponseEntity<Void> likeAcademyBoard(@PathVariable int ab_idx,@PathVariable int m_idx){
-        academyBoardService.like(ab_idx,m_idx);
+    public ResponseEntity<Void> likeAcademyBoard(@PathVariable int ab_idx, @PathVariable int m_idx) {
+        academyBoardService.like(ab_idx, m_idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/D1/{m_idx}/dislike/{ab_idx}")
-    public ResponseEntity<Void> dislikeAcademyBoard(@PathVariable int ab_idx,@PathVariable int m_idx){
-        academyBoardService.dislike(ab_idx,m_idx);
+    public ResponseEntity<Void> dislikeAcademyBoard(@PathVariable int ab_idx, @PathVariable int m_idx) {
+        academyBoardService.dislike(ab_idx, m_idx);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -151,7 +154,7 @@ public class AcademyBoardController {
     }
 
 
-    public AcademyBoardDto escapeDto(AcademyBoardDto dto){
+    public AcademyBoardDto escapeDto(AcademyBoardDto dto) {
         dto.setAb_content(StringEscapeUtils.escapeHtml4(dto.getAb_content()));
         dto.setAb_subject(StringEscapeUtils.escapeHtml4(dto.getAb_subject()));
 

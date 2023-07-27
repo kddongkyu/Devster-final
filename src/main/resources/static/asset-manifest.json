@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.3fee7dce.css",
-    "main.js": "/static/js/main.a1614ff3.js",
+    "main.css": "/static/css/main.16f38de6.css",
+    "main.js": "/static/js/main.82980926.js",
     "static/js/27.262d8d9e.chunk.js": "/static/js/27.262d8d9e.chunk.js",
     "static/media/noimage.png": "/static/media/noimage.d3031ee351e2f27b0068.png",
     "static/media/qboard_form_fileupload_icon.svg": "/static/media/qboard_form_fileupload_icon.1ff1b289b82433289b276200c54a0a4e.svg",
@@ -94,6 +94,7 @@
     "static/media/resume-add-button.svg": "/static/media/resume-add-button.4ea4b5e3a32e5fc27b54124b6d7496d7.svg",
     "static/media/Review_modal_close.svg": "/static/media/Review_modal_close.83a0a1eabaf841cf0501515ae093267a.svg",
     "static/media/menu_modal_close.svg": "/static/media/menu_modal_close.df6f68fcf760ffb3e4d90928b10d5f55.svg",
+    "static/media/review_detail_commnets_all_up_icon.svg": "/static/media/review_detail_commnets_all_up_icon.fa8661b92df5b046eb2e1d1b095ac27c.svg",
     "static/media/board_detail_commnets_hide_icon.svg": "/static/media/board_detail_commnets_hide_icon.5405f6c069979a7dae82150c5f525cea.svg",
     "static/media/notice_cotent_shape.svg": "/static/media/notice_cotent_shape.724f86441de01327afa45450bad2d029.svg",
     "static/media/header-icon-list.svg": "/static/media/header-icon-list.666ee629829707905ae5a1faeb286521.svg",
@@ -122,7 +123,7 @@
     "static/media/signup_guest_choose_bar.svg": "/static/media/signup_guest_choose_bar.a6f59f3a433feb36adbd5f717353e3b2.svg"
   },
   "entrypoints": [
-    "static/css/main.3fee7dce.css",
-    "static/js/main.a1614ff3.js"
+    "static/css/main.16f38de6.css",
+    "static/js/main.82980926.js"
   ]
 }

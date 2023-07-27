@@ -74,7 +74,7 @@ function ReplyCommentItem({ reply, replyIndex }) {
     };
 
     return (
-        <div className="review-detail-comments-all"  key={replyIndex} style={{marginLeft: '30px'}}>
+        <div className="review-detail-reply-all"  key={replyIndex} style={{marginLeft: '30px'}}>
             <div className="review-detail-commnets-detail-">
                 <div className="review-detail-commnets-detail-1">
                     <div className="review-detail-commnets-detail-2">{reply.nickname}</div>
@@ -82,7 +82,6 @@ function ReplyCommentItem({ reply, replyIndex }) {
                     <div className="review-detail-commnets-detail-3">
 
                         <span> {timeForToday(reply.reviewcommentdto.rbc_writeday)}{` · `}</span>
-                        <span className="span">{`수정됨 `}</span>
                     </div>
                 </div>
                 <img
@@ -92,7 +91,7 @@ function ReplyCommentItem({ reply, replyIndex }) {
                 />
             </div>
             <div className="review-detail-commnets-all-lik-reply" >
-                <div className="r-reply-like" style={{marginLeft: '-30px'}}>
+                <div className="r-reply-like">
                 <div className="review-detail-commnets-all-up-" />
                 <img
                     className="review-detail-commnets-all-up-icon"
@@ -117,8 +116,10 @@ function ReplyCommentItem({ reply, replyIndex }) {
                 <  br/>
                 {m_idx === reply.reviewcommentdto.m_idx &&(
                     <>
-                <button onClick={handleDeleteClick}>삭제</button> &nbsp;&nbsp;
-                <button onClick={handleUpdateClick}>수정</button>
+                        <div className="review-detail-commnets-btns">
+                            <div className="review-detail-commnets-btns-delete" onClick={handleDeleteClick}>삭제</div> &nbsp;&nbsp;
+                            <div className="review-detail-commnets-btns-update" onClick={handleUpdateClick}>수정</div>
+                        </div>
                 {showUpdateForm && <ReviewReplyupdateform rbc_idx={reply.reviewcommentdto.rbc_idx}
                                                           rb_idx={reply.reviewcommentdto.rb_idx}
                                                           currentContent={reply.reviewcommentdto.rbc_content}
