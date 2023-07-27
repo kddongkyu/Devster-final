@@ -58,7 +58,10 @@ function RouteMain(props) {
                 <Route path="/review" element={<Reviewlist/>}/>
 
                 <Route path="/fboard/form" element={<FboardForm/>}/>
-                <Route path="/qboard/form" element={<QboardForm/>}/>
+                <Route path="/qboard/form" element={<QboardForm/>}>
+                    <Route path=":qb_idx/:currentPage" element={<QboardForm/>}/>
+                </Route>
+
                 <Route path="/hboard/form" element={<HboardForm/>}/>
                 <Route path="/aboard/form" element={<AboardForm/>}/>
                 <Route path="/review/form" element={<Reviewform/>}/>
