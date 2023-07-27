@@ -21,7 +21,7 @@ function Reviewcomment(props) {
         axiosIns.get(`/api/review/D0/comment/${props.rb_idx}`)
             .then(res => {
                 console.log(res.data);  // 서버로부터 받은 전체 응답을 출력합니다.
-          //      console.log(res.data.reviewCommentDetailDtoList[2].replyConut);
+                //      console.log(res.data.reviewCommentDetailDtoList[2].replyConut);
                 setTotalCount(res.data.totalCount);
                 setReviewcommentlist(res.data.reviewCommentDetailDtoList);  // "reviewCommentDetailDtoList"라는 이름의 배열을 사용한다고 가정
             })

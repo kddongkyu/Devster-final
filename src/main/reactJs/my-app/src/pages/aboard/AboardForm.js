@@ -78,84 +78,84 @@ function AboardForm(props) {
 
 
 
-  return (
-      <div>
-      <form className="aboard-form" onSubmit={onSubmitEvnet}>
-          <div className="advertise-box">
-              <div className="advertise-main" />
-              <b className="advertise-text">광고</b>
-          </div>
+    return (
+        <div>
+            <form className="aboard-form" onSubmit={onSubmitEvnet}>
+                <div className="advertise-box">
+                    <div className="advertise-main" />
+                    <b className="advertise-text">광고</b>
+                </div>
 
-          <div className="aboard-name">
-              <div className="aboard-name-box" />
-              <div className="aboard-name-text">
-                  <b className="aboard-name-text-type">학원별 게시판</b>
-                  <div className="aboard-name-text-detail">
-                      학원 인증이 완료된 학생만 열람할 수 있는 게시판입니다.
-                  </div>
-              </div>
-          </div>
+                <div className="aboard-name">
+                    <div className="aboard-name-box" />
+                    <div className="aboard-name-text">
+                        <b className="aboard-name-text-type">학원별 게시판</b>
+                        <div className="aboard-name-text-detail">
+                            학원 인증이 완료된 학생만 열람할 수 있는 게시판입니다.
+                        </div>
+                    </div>
+                </div>
 
-          <div className="aboard-form-subject">
-              <input className="aboard-form-subject-rec"
-                     type="text"
-                     placeholder="제목을 입력해주세요."
-                     required
-                     onChange={(e)=>setAbSubject(e.target.value)}
-                     value={abSubject}
-              />
+                <div className="aboard-form-subject">
+                    <input className="aboard-form-subject-rec"
+                           type="text"
+                           placeholder="제목을 입력해주세요."
+                           required
+                           onChange={(e)=>setAbSubject(e.target.value)}
+                           value={abSubject}
+                    />
 
-          </div>
-          <div className="aboard-form-content">
+                </div>
+                <div className="aboard-form-content">
               <textarea className="aboard-form-content-rec"
                         placeholder="내용을 입력해주세요."
                         required value={abContent}
                         onChange={(e)=>setAbContent(e.target.value)}>
               </textarea>
-          </div>
+                </div>
 
-          <div className="aboard-form-photo-list">
-              {selectedPhotos.map((photo, index) => (
-                  <img
-                      key={index}
-                      src={URL.createObjectURL(photo)}
-                      alt={`미리보기 ${index + 1}`}
-                      className={`aboard-form-photo${index + 1}`}
-                  />
-              ))}
-          </div>
-          <div className="aboard-form-fileupload">
-              <input className="aboard-form-subject-rec"
-                     type="file"
-                     placeholder="첨부 사진을 올려주세요"
-                     multiple
-                     onChange={onUploadEvent}
-              />
-              <div className="aboard-form-fileupload-cnt-tex">
-              <img
-                  className="aboard-form-fileupload-icon"
-                  alt=""
-                  src={require("./assets/qboard_form_fileupload_icon.svg").default}
-              />
-                  &nbsp;&nbsp;사진 {photoLength}장이 등록되었습니다.
-              </div>
-          </div>
+                <div className="aboard-form-photo-list">
+                    {selectedPhotos.map((photo, index) => (
+                        <img
+                            key={index}
+                            src={URL.createObjectURL(photo)}
+                            alt={`미리보기 ${index + 1}`}
+                            className={`aboard-form-photo${index + 1}`}
+                        />
+                    ))}
+                </div>
+                <div className="aboard-form-fileupload">
+                    <input className="aboard-form-subject-rec"
+                           type="file"
+                           placeholder="첨부 사진을 올려주세요"
+                           multiple
+                           onChange={onUploadEvent}
+                    />
+                    <div className="aboard-form-fileupload-cnt-tex">
+                        <img
+                            className="aboard-form-fileupload-icon"
+                            alt=""
+                            src={require("./assets/qboard_form_fileupload_icon.svg").default}
+                        />
+                        &nbsp;&nbsp;사진 {photoLength}장이 등록되었습니다.
+                    </div>
+                </div>
 
-          <button type="submit" className="aboard-form-btn"
-                  disabled={isLoading}>
-              <div className={isLoading ? "aboard-form-btn-child_loading" : "aboard-form-btn-child"} />
-              <div className="aboard-form-btn-text">
-                  {isLoading ? "로딩중..." : "게시글등록"}
-              </div>
-              <img
-                  className="aboard-form-btn-icon"
-                  alt=""
-                  src={require("./assets/qboard_form_btn_icon.svg").default}
-              />
-          </button>
-      </form>
-      </div>
-  );
+                <button type="submit" className="aboard-form-btn"
+                        disabled={isLoading}>
+                    <div className={isLoading ? "aboard-form-btn-child_loading" : "aboard-form-btn-child"} />
+                    <div className="aboard-form-btn-text">
+                        {isLoading ? "로딩중..." : "게시글등록"}
+                    </div>
+                    <img
+                        className="aboard-form-btn-icon"
+                        alt=""
+                        src={require("./assets/qboard_form_btn_icon.svg").default}
+                    />
+                </button>
+            </form>
+        </div>
+    );
 };
 
 export default AboardForm;

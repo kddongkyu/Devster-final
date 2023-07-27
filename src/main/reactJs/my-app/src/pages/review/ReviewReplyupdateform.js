@@ -51,7 +51,7 @@ function ReviewReplyupdateform({rbc_idx,rb_idx,currentContent,rbc_ref}) {
                           onChange={(e)=>setRbc_content(e.target.value)}
                 />
                 <div className="r-detail-reply-form-su">
-                    <button type='submit' className="r-detail-reply-form-su-text">답글등록</button>
+                    <button type='submit' className="r-detail-reply-form-su-text">답글수정</button>
                 </div>
             </form>
         </div>

@@ -54,7 +54,7 @@ function ReviewReplyform({rbc_idx,rb_idx}) {
                           onChange={(e)=>setReviewcomment(e.target.value)}
                 />
                 <div className="r-detail-commnets-form-su">
-                    <button type='submit' className="r-detail-commnets-form-su-text">댓글등록</button>
+                    <button type='submit' className="r-detail-commnets-form-su-text">답글등록</button>
                 </div>
             </form>
         </div>

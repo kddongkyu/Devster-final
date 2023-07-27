@@ -12,4 +12,5 @@ import java.util.List;
 public class ReviewCommentResponseDto {
     private List<ReviewCommentDetailDto> reviewCommentDetailDtoList;
     private int totalCount;
+//    private String totalCountDisplay;
 }
