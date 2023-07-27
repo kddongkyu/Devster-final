@@ -16,4 +16,5 @@ public interface HireBoardMapper {
     public String getCmFileName(int hb_idx);
     public void updateReadCount(int hb_idx);
     public Integer getBkmkInfoBym_idx(Map<String,Integer> map);
+    public int getCmIdx(int hb_idx);
 }

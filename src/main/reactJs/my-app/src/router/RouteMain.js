@@ -24,7 +24,12 @@ import {
   FboardUpdateForm,
 } from "../pages/fboard";
 import { Qboard, QboardForm } from "../pages/qboard";
-import { Hboard, HboardForm, HboardDetail } from "../pages/hboard";
+import {
+  Hboard,
+  HboardForm,
+  HboardDetail,
+  HboardUpdateForm,
+} from "../pages/hboard";
 import { Aboard, AboardForm } from "../pages/aboard";
 import {
   Reviewform,
@@ -77,7 +82,7 @@ function RouteMain(props) {
         />
 
         <Route
-          path="/hboard/detail/:hb_idx/:m_idx/:currentPage"
+          path="/hboard/detail/:hb_idx/:currentPage"
           element={<HboardDetail />}
         />
 
@@ -85,6 +90,10 @@ function RouteMain(props) {
         <Route
           path="/fboard/updateform/:fb_idx/:currentPage"
           element={<FboardUpdateForm />}
+        />
+        <Route
+          path="hboard/updateform/:hb_idx/:currentPage"
+          element={<HboardUpdateForm />}
         />
 
         <Route element={<MypageList />}>

@@ -61,28 +61,7 @@ public class HireBoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // @PostMapping
-    // public ResponseEntity<HireBoardDto> insert(@RequestBody HireBoardDto dto){
-    //     dto.setHb_photo(photo);
-    //     photo=null;
-    //     return new ResponseEntity<HireBoardDto>(hireBoardService.insertHireBoard(escapeDto(dto)),HttpStatus.OK);
-    // }
-
-
-    // @GetMapping
-    // public ResponseEntity<List<HireBoardDto>> getAllData(@RequestParam(defaultValue="1") int currentPage){
-    //     return new ResponseEntity<List<HireBoardDto>>(hireBoardService.getAllData(), HttpStatus.OK);
-    // }
-
-    // @GetMapping("/list")
-    // public Map<String,Object> list(int currentPage){
-    //     return hireBoardService.list(currentPage);
-    // }
-
-    // @GetMapping("/D0/list")
-    // public Map<String,Object> list(@RequestParam(defaultValue = "1") int currentPage){
-    //     return hireBoardService.list(currentPage);
-    // }    
+ 
 
     @GetMapping("/hboard/D0")
     public ResponseEntity<Map<String, Object>> getPagedHboard(
@@ -93,15 +72,6 @@ public class HireBoardController {
         }
     
 
-    // @GetMapping("/{idx}")
-    // public ResponseEntity<HireBoardDto> getDetailPage(@PathVariable Integer idx){
-    //     return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
-    // }
-
-    // @GetMapping("/hboard/D0/{hb_idx}/{m_idx}")
-    // public Map<String,Object> getDetailPage(@PathVariable int hb_idx, @PathVariable int m_idx){
-    //     return hireBoardService.getDetailPage(hb_idx,m_idx);
-    // }
 
 
     @GetMapping("/hboard/D0/{hb_idx}")
@@ -122,11 +92,7 @@ public class HireBoardController {
         return new ResponseEntity<HireBoardDto>(hireBoardService.findByHbIdx(idx),HttpStatus.OK);
     }
 
-    // @PostMapping
-    // public ResponseEntity<Void> update(@RequestBody HireBoardDto dto, MultipartFile upload){
-    //     hireBoardService.updateHireBoard(escapeDto(dto),upload);
-    //     return new ResponseEntity<>(HttpStatus.OK);
-    // }
+
 
     @PutMapping("/compmember/hboard/D1/hireupdate")
     public void update(@RequestBody HireBoardDto dto){
@@ -134,7 +100,7 @@ public class HireBoardController {
     }
     
 
-    @PostMapping("compmember/hboard/D1/{m_idx}/increaseBkmk/{hb_idx}")
+    @PostMapping("/hboard/D1/{m_idx}/increaseBkmk/{hb_idx}")
     public void increaseBkmk(@PathVariable int hb_idx, @PathVariable int m_idx){
         hireBoardService.addBkmk(hb_idx,m_idx);
         System.out.println("addBkmk 테스트");

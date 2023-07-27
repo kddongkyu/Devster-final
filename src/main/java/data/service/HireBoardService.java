@@ -191,6 +191,7 @@ public class HireBoardService {
         map.put("hb_writeday",dto.getHb_writeday());
         map.put("cm_compname",hireBoardMapper.getCompName(dto.getHb_idx()));
         map.put("cm_filename",hireBoardMapper.getCmFileName(dto.getHb_idx()));
+        map.put("cm_idx",hireBoardMapper.getCmIdx(dto.getHb_idx()));
 
 
         //북마크 추가 여부 확인 및 역시 map 에 담기 

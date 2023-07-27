@@ -424,7 +424,7 @@ function Hboard(props) {
                   onClick={() => {
                     JwtPageChk(
                       navi,
-                      `/hboard/detail/${hboard.hboard.hb_idx}/${de.idx}/${currentPage}`
+                      `/hboard/detail/${hboard.hboard.hb_idx}/${currentPage}`
                     );
                   }}
                   style={{ cursor: "pointer" }}
