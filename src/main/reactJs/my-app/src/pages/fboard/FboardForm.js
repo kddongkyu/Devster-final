@@ -2,7 +2,6 @@ import "./style/FboardForm.css";
 import {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
@@ -38,7 +37,7 @@ function FboardForm(props) {
             })
             .catch(error => {
                 // 등록 실패 시 에러 처리
-                console.error(error);
+                jwtHandleError(error, toastAlert);
             });
     }
 
@@ -72,7 +71,7 @@ function FboardForm(props) {
             data: uploadPhoto,
             headers: {'Content-Type': 'multipart/form-data'}
         }).then(res => {
-
+            setIsLoading(false);
         }).catch(error => {
             //axios용 에러함수
             jwtHandleError(error, toastAlert);
