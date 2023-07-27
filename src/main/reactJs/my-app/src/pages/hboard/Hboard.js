@@ -131,22 +131,6 @@ function Hboard(props) {
     }
   };
 
-  // useEffect(() => {
-  //   fetchHboards(currentPage);
-  // }, [currentPage]);
-
-  // const fetchHboards = (page) => {
-  //   axiosIns
-  //     .get("/api/hboard/D0", { params: { page: page - 1 } })
-  //     .then((response) => {
-  //       setHireBoardList(response.data.hireBoardList);
-  //       setTotalPages(response.data.totalPages);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching hboards:", error);
-  //     });
-  // };
-
   useEffect(() => {
     // JPA로부터 데이터 가져오는 API 호출
     axiosIns
@@ -189,12 +173,12 @@ function Hboard(props) {
 
   //정렬
   const onClickLatest = () => {
-    setSortProperty("HBwriteDay");
+    setSortProperty("HBwriteday");
     setSortDirection("DESC");
   };
 
   const onClickViews = () => {
-    setSortProperty("HBreadCount");
+    setSortProperty("HBreadcount");
     setSortDirection("DESC");
   };
 
@@ -277,10 +261,10 @@ function Hboard(props) {
         <NavLink
           to="/fboard"
           activeClassName="active"
-          className="fboard-selection-freeboard"
+          className="hboard-selection-freeboard"
         >
-          <div className="board-selection-freeboard-box" />
-          <div className="board-selection-freeboard-text">자유</div>
+          <div className="hboard-selection-freeboard-box" />
+          <div className="hboard-selection-freeboard-text">자유</div>
         </NavLink>
         <NavLink
           to="/qboard"
@@ -297,7 +281,7 @@ function Hboard(props) {
         <NavLink
           to="/aboard"
           activeClassName="active"
-          className="fboard-selection-academy"
+          className="hboard-selection-academy"
         >
           <div className="hboard-selection-qna-box" />
           <div className="hboard-selection-academy-text">학원별</div>
@@ -343,21 +327,22 @@ function Hboard(props) {
         /> */}
       </div>
 
-      <div className="hboard-function-search-input" />
-      <input
-        className="hboard-function-search-input1"
-        type="text"
-        value={inputKeyword}
-        placeholder="검색어를 입력해주세요"
-        onChange={(e) => setInputKeyword(e.target.value)}
-        onKeyDown={handleEnterKeyPress}
-      />
-      <img
-        className="hboard-function-search-icon"
-        alt=""
-        src={require("./assets/hboard_function_search_icon.svg").default}
-        onClick={handleSearchButtonClick}
-      />
+      <div className="hboard-function-search-input">
+        <input
+          className="hboard-function-search-input1"
+          type="text"
+          value={inputKeyword}
+          placeholder="검색어를 입력해주세요"
+          onChange={(e) => setInputKeyword(e.target.value)}
+          onKeyDown={handleEnterKeyPress}
+        />
+        <img
+          className="hboard-function-search-icon"
+          alt=""
+          src={require("./assets/hboard_function_search_icon.svg").default}
+          onClick={handleSearchButtonClick}
+        />
+      </div>
       <img
         className="hboard-pages-reset-icon"
         alt=""
@@ -478,19 +463,6 @@ function Hboard(props) {
                     &nbsp;
                     {hboard.hboard.hb_readcount}
                   </div>
-                  {/* <div className="hboard-preview-views-edit">
-                    <div className="hboard-preview-views-text-edit">
-                      {hboard.hboard.hb_readcount}
-                    </div>
-                    <img
-                      className="hboard-preview-views-icon-edit"
-                      alt=""
-                      src={
-                        require("./assets/hboard_preview_views_icon.svg")
-                          .default
-                      }
-                    />
-                  </div> */}
                 </div>
                 <div className="hboard-preview-id">
                   <div className="hboard-preview-type-text">

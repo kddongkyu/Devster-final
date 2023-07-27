@@ -44,20 +44,20 @@
 }
 .hboard-name-text-type {
   top: 0;
-  width: 19.3rem;
+  width: 13.7rem;
   height: 2.2rem;
 }
 .hboard-name-text-detail {
   top: 2.5rem;
   font-size: 1.3rem;
-  width: 29.3rem;
+  width: 31.1rem;
   height: 1.6rem;
 }
 .hboard-name-text {
   position: absolute;
   top: 1.3rem;
-  left: 2.7rem;
-  width: 29.3rem;
+  left: 2.1rem;
+  width: 31.1rem;
   height: 4.1rem;
 }
 .hboard-name {
@@ -71,7 +71,7 @@
   color: #000;
   font-family: Roboto;
 }
-.board-selection-freeboard-box {
+.hboard-selection-freeboard-box {
   position: absolute;
   top: 0;
   left: 0;
@@ -79,7 +79,7 @@
   width: 5.97rem;
   height: 3.5rem;
 }
-.board-selection-freeboard-text {
+.hboard-selection-freeboard-text {
   position: absolute;
   top: 1rem;
   left: 1.02rem;
@@ -102,6 +102,7 @@
   border-radius: 5px;
   width: 6.74rem;
   height: 3.5rem;
+  cursor: pointer;
 }
 .hboard-selection-qna-text {
   position: absolute;
@@ -123,15 +124,15 @@
   top: 0;
   left: 0;
   border-radius: 5px;
+  width: 8.67rem;
+  height: 3.5rem;
+  cursor: pointer;
   background-color: #f3f4f6;
   border: 1px solid #d2d2d2;
-  box-sizing: border-box;
-  width: 8.77rem;
-  height: 3.5rem;
 }
 .hboard-selection-hire-text {
   position: absolute;
-  top: 0.9rem;
+  top: 1rem;
   left: 1.11rem;
   letter-spacing: -0.24px;
   display: inline-block;
@@ -139,9 +140,9 @@
 }
 .hboard-selection-hire {
   position: absolute;
-  top: 0.1rem;
-  left: 16.93rem;
-  width: 8.77rem;
+  top: 0;
+  left: 17.03rem;
+  width: 8.67rem;
   height: 3.5rem;
 }
 .hboard-selection-academy-text {
@@ -158,6 +159,7 @@
   left: 27.76rem;
   width: 6.74rem;
   height: 3.5rem;
+  cursor: pointer;
 }
 .hboard-selection {
   position: absolute;
@@ -207,30 +209,42 @@
   color: #fff;
   font-family: "Roboto Serif";
 }
-.hboard-function-search-input {
+.hboard-function-search-input1 {
   position: absolute;
-  width: calc(100% - 30px);
-  top: 38.8rem;
-  right: 1.5rem;
-  left: 1.5rem;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
   border-radius: 5px;
   background-color: #fff;
   border: 1px solid #721ea6;
   box-sizing: border-box;
   height: 3.5rem;
+  padding-left: 2rem;
+  color: #626567;
 }
+
 .hboard-function-search-icon {
   position: absolute;
-  top: 39.8rem;
-  left: 2.8rem;
+  top: 1rem;
+  right: 1.5rem;
   width: 1.6rem;
   height: 1.5rem;
   cursor: pointer;
 }
-.board-hr-icon {
+
+.board-hr-icon,
+.hboard-function-search-input {
   position: absolute;
+  width: calc(100% - 30px);
+  top: 38.7rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 3.5rem;
+}
+.board-hr-icon {
   width: calc(100% - 44px);
-  top: 43.55rem;
+  top: 43.45rem;
   right: 2.09rem;
   left: 2.31rem;
   max-width: 100%;
@@ -243,6 +257,7 @@
   left: 2.1rem;
   width: 2.04rem;
   height: 2.03rem;
+  cursor: pointer;
 }
 .board-hr-icon1 {
   position: absolute;
@@ -550,9 +565,9 @@
 .hboard-preview {
   position: relative;
   width: calc(100% - 44px);
-  top: 61.4rem;
-  right: 2.2rem;
-  left: 2.2rem;
+  top: 61.3rem;
+  right: 2.3rem;
+  left: 2.1rem;
   height: 16.4rem;
   font-size: 1.6rem;
 }
@@ -599,13 +614,22 @@
 }
 .hboard-function-sort {
   position: absolute;
-  top: 33.7rem;
+  top: 33.6rem;
   right: 1.5rem;
   width: 15rem;
   height: 3.6rem;
   color: #484848;
   font-family: Roboto;
 }
+.hboard-pages-reset-icon {
+  position: absolute;
+  top: 45.2rem;
+  left: 2.1rem;
+  width: 2.04rem;
+  height: 2.03rem;
+  cursor: pointer;
+}
+
 .hboard-pages-current {
   position: absolute;
   top: 0;
@@ -615,6 +639,8 @@
   display: inline-block;
   width: 23.9rem;
 }
+
+.hboard-pages,
 .hboard-pages-back-icon,
 .hboard-pages-forward-icon {
   position: absolute;
@@ -623,26 +649,23 @@
   width: 1.3rem;
   height: 1.23rem;
 }
+
+.hboard-pages,
 .hboard-pages-forward-icon {
   right: -0.06rem;
 }
-.hboard-pages,
-.hboard-pages1 {
-  position: absolute;
-  top: 45.5rem;
+
+.hboard-pages {
+  top: 45.2rem;
   right: 2.79rem;
   width: 30.91rem;
   height: 2.1rem;
   text-align: right;
 }
-.hboard-pages1 {
-  top: 45.3rem;
-}
 .hboard {
   position: relative;
   background-color: #fff;
   width: 100%;
-  height: 232rem;
   overflow: hidden;
   text-align: left;
   font-size: 1.2rem;
@@ -650,11 +673,14 @@
   font-family: "Noto Sans KR";
 }
 
+.hboard_list {
+  margin-bottom: 65rem;
+}
+
 .hboard-pages2 {
-  position: absolute;
-  top: 228rem;
-  right: 2.79rem;
-  width: 30.91rem;
+  position: relative;
+  margin-top: 1rem;
+  width: calc(100% - 2.79rem);
   height: 2.1rem;
   text-align: right;
 }

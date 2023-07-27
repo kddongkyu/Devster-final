@@ -110,34 +110,36 @@ public class HireBoardService {
 
 
 
-    public Map<String, Object> getPagedHboard(int page, int size,String keyword) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("HBwriteday").descending());
+    public Map<String, Object> getPagedHboard(int page, int size, String sortProperty, String sortDirection, String keyword) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);    
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction,sortProperty));
         Page<HireBoardEntity> result;
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            result = hireBoardRepository.findByHBsubjectContaining(keyword, pageable);
-               logger.info("Keyword: " + keyword);
+            result = hireBoardRepository.findByHBsubjectContainingOrHBcontentContaining(keyword, pageable);
+            log.info("Keyword: " + keyword);
         } else {
             result = hireBoardRepository.findAll(pageable);
         }
 
-        List<Map<String, Object>> hiresWithCompanyInfo = result
+        List<Map<String, Object>> hireBoardList = result
                 .getContent()
                 .stream()
                 .map(hireBoardEntity -> {
                     CompanyMemberEntity companyMemberInfo = companyMemberRepository.findById(hireBoardEntity.getCMidx()).orElse(null);
-                    Map<String, Object> hireWithCompanyInfo = new HashMap<>();
-                    hireWithCompanyInfo.put("hboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
+                    Map<String, Object> hboardMemberInfo = new HashMap<>();
+                    hboardMemberInfo.put("hboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
+                    
                     if (companyMemberInfo != null) {
-                        hireWithCompanyInfo.put("cmCompname", companyMemberInfo.getCMcompname());
-                        hireWithCompanyInfo.put("cmPhoto", companyMemberInfo.getCMfilename());
+                        hboardMemberInfo.put("cmCompname", companyMemberInfo.getCMcompname());
+                        hboardMemberInfo.put("cmPhoto", companyMemberInfo.getCMfilename());
                     }
-                    return hireWithCompanyInfo;
+                    return hboardMemberInfo;
                 })
                 .collect(Collectors.toList());
 
         Map<String, Object> response = new HashMap<>();
-        response.put("hireBoardList", hiresWithCompanyInfo);
+        response.put("hireBoardList", hireBoardList);
         response.put("totalElements", result.getTotalElements());
         response.put("totalPages", result.getTotalPages());
         response.put("currentPage", result.getNumber() + 1);

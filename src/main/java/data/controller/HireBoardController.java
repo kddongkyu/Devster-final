@@ -67,8 +67,10 @@ public class HireBoardController {
     public ResponseEntity<Map<String, Object>> getPagedHboard(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "HBwriteday") String sortProperty,
+        @RequestParam(defaultValue = "DESC") String sortDirection,
         @RequestParam(required = false) String keyword){
-            return new ResponseEntity<>(hireBoardService.getPagedHboard(page,size,keyword),HttpStatus.OK);
+            return new ResponseEntity<>(hireBoardService.getPagedHboard(page, size, sortProperty, sortDirection, keyword),HttpStatus.OK);
         }
     
 
