@@ -5,9 +5,12 @@ import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
 import { JwtPageChk } from "../../api/JwtPageChk";
 import { checkToken } from "../../api/checkToken";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function Hboard(props) {
   const handleRefresh = () => {
+    //새로고침 버튼용
     window.location.reload();
   };
 
@@ -18,6 +21,15 @@ function Hboard(props) {
   const navi = useNavigate();
   const [contentCount, setContentCount] = useState(15); //텍스트의 초기 개수
   const [subjectCount, setsubjectCount] = useState(10);
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
+  //정렬
+  const [sortProperty, setSortProperty] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  //검색
+  const [inputKeyword, setInputKeyword] = useState(""); //사용자가 입력하는 검색어
+  const [finalKeyword, setFinalKeyword] = useState(""); //최종 검색어 (검색버튼)
 
   //디코딩 함수
   const de = checkToken();
@@ -78,29 +90,68 @@ function Hboard(props) {
     return value1.length > value2;
   };
 
-  useEffect(() => {
-    fetchHboards(currentPage);
-  }, [currentPage]);
-
-  const fetchHboards = (page) => {
-    axiosIns
-      .get("/api/hboard/D0", { params: { page: page - 1 } })
-      .then((response) => {
-        setHireBoardList(response.data.hireBoardList);
-        setTotalPages(response.data.totalPages);
-      })
-      .catch((error) => {
-        console.error("Error fetching hboards:", error);
-      });
+  //검색 기능
+  const handleSearchButtonClick = () => {
+    //검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
+    const searchKeyword = inputKeyword;
+    setFinalKeyword(searchKeyword);
+    //첫 페이지의 검색 결과를 가져옵니다.
+    setCurrentPage(1);
   };
+  //엔터로 검색
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchButtonClick();
+    }
+  };
+
+  useEffect(() => {
+    const page = Math.max(1, currentPage);
+    fetchHboards(page, finalKeyword, sortProperty, sortDirection);
+  }, [currentPage, finalKeyword, sortProperty, sortDirection]);
+
+  const fetchHboards = async (page, keyword, sortProperty, sortDirection) => {
+    const searchKeyword =
+      keyword && keyword.trim() !== "" ? keyword.trim() : null;
+
+    try {
+      const response = await axiosIns.get("/api/hboard/D0", {
+        params: {
+          page: page - 1, //Use the page parameter
+          keyword: searchKeyword,
+          sortProperty,
+          sortDirection,
+        },
+      });
+
+      setHireBoardList(response.data.hireBoardList);
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching hboards:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchHboards(currentPage);
+  // }, [currentPage]);
+
+  // const fetchHboards = (page) => {
+  //   axiosIns
+  //     .get("/api/hboard/D0", { params: { page: page - 1 } })
+  //     .then((response) => {
+  //       setHireBoardList(response.data.hireBoardList);
+  //       setTotalPages(response.data.totalPages);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching hboards:", error);
+  //     });
+  // };
 
   useEffect(() => {
     // JPA로부터 데이터 가져오는 API 호출
     axiosIns
       .get("/api/hboard/D0")
       .then((response) => {
-        console.log("콘솔테스트1");
-        console.log(response.data);
         setHireBoardList(response.data.hireBoardList);
       })
       .catch((error) => {
@@ -123,6 +174,7 @@ function Hboard(props) {
       });
   }, []);
 
+  //페이징
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -135,11 +187,24 @@ function Hboard(props) {
     }
   };
 
+  //정렬
+  const onClickLatest = () => {
+    setSortProperty("HBwriteDay");
+    setSortDirection("DESC");
+  };
+
+  const onClickViews = () => {
+    setSortProperty("HBreadCount");
+    setSortDirection("DESC");
+  };
+
+  //작성시간 몇 시간전으로 변경
   const timeForToday = (value) => {
     if (!value) {
       return "";
     }
 
+    //timeValue를 한국 시간대로 변환
     const valueConv = value.slice(0, -10);
     const today = new Date();
     const timeValue = new Date(valueConv);
@@ -239,47 +304,60 @@ function Hboard(props) {
         </NavLink>
       </div>
 
-      <div
-        className="hboard-write"
-        onClick={() => {
-          JwtPageChk(navi, "/hboard/form");
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        <div className="hboard-write-box" />
-        <img
-          className="hboard-write-icon"
-          alt=""
-          src={require("./assets/hboard_write_icon.svg").default}
-        />
-        <div className="hboard-write-text">글쓰기</div>
-      </div>
+      {de.type === "company" && (
+        <div
+          className="hboard-write"
+          onClick={() => {
+            JwtPageChk(navi, "/hboard/form");
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          <div className="hboard-write-box" />
+          <img
+            className="hboard-write-icon"
+            alt=""
+            src={require("./assets/hboard_write_icon.svg").default}
+          />
+          <div className="hboard-write-text">글쓰기</div>
+        </div>
+      )}
 
-      <div className="fboard-function-sort">
-        <div className="fboard-function-sort-box" />
-        <div className="fboard-function-sort-time">최신순</div>
-        <div className="fboard-function-sort-view">조회순</div>
-        <div className="fboard-function-sort-like">인기순</div>
+      <div className="hboard-function-sort">
+        <div className="hboard-function-sort-box" />
+        <div className="hboard-function-sort-time" onClick={onClickLatest}>
+          최신순
+        </div>
+        <div className="hboard-function-sort-view" onClick={onClickViews}>
+          조회순
+        </div>
+        {/* <div className="fboard-function-sort-like">인기순</div> */}
         <img
           className="fboard-function-sort-bar2-icon"
           alt=""
           src={require("./assets/hboard_function_sort_bar.svg").default}
         />
-        <img
+        {/* <img
           className="fboard-function-sort-bar-icon"
           alt=""
           src={require("./assets/hboard_function_sort_bar2.svg").default}
-        />
+        /> */}
       </div>
 
       <div className="hboard-function-search-input" />
-      <input type="text" className="hboard-function-search-input1" />
+      <input
+        className="hboard-function-search-input1"
+        type="text"
+        value={inputKeyword}
+        placeholder="검색어를 입력해주세요"
+        onChange={(e) => setInputKeyword(e.target.value)}
+        onKeyDown={handleEnterKeyPress}
+      />
       <img
         className="hboard-function-search-icon"
         alt=""
         src={require("./assets/hboard_function_search_icon.svg").default}
+        onClick={handleSearchButtonClick}
       />
-      {/* <img className="board-hr-icon" alt="" src="/board-hr.svg" /> */}
       <img
         className="hboard-pages-reset-icon"
         alt=""

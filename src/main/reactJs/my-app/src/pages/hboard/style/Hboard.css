@@ -225,6 +225,7 @@
   left: 2.8rem;
   width: 1.6rem;
   height: 1.5rem;
+  cursor: pointer;
 }
 .board-hr-icon {
   position: absolute;
@@ -563,7 +564,7 @@
   background-color: #fff;
   border: 1px solid #bdc0c4;
   box-sizing: border-box;
-  width: 15rem;
+  width: 10rem;
   height: 3.6rem;
 }
 .hboard-function-sort-like,
@@ -571,14 +572,14 @@
 .hboard-function-sort-view {
   position: absolute;
   top: 1.2rem;
-  right: 10.1rem;
+  right: 5.1rem;
   letter-spacing: -0.24px;
   display: inline-block;
   width: 4rem;
 }
 .hboard-function-sort-like,
 .hboard-function-sort-view {
-  right: 5.4rem;
+  right: 0.2rem;
   width: 3.7rem;
 }
 .hboard-function-sort-like {
