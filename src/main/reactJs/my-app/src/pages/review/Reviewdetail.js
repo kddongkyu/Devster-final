@@ -4,7 +4,7 @@ import axiosIns from "../../api/JwtConfig";
 import {Link, useParams} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import StarRating from "./StarRating";
-import {Reviewcomment} from "./index";
+import {Reviewcomment, Reviewcommentform, Reviewcommentreply} from "./index";
 function Reviewdetail() {
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
@@ -211,6 +211,10 @@ function Reviewdetail() {
                 <div className="advertise-main" />
                 <b className="advertise-text">광고</b>
             </div>
+            <div className="review-detail-headline">
+                <div className="review-detail-headline-box" />
+                <div className="review-detail-headline-text">리뷰게시판</div>
+            </div>
             <div className="review-detail-comp">
                 <div className="review-detail-comp-box" />
                 <div className="review-detail-comp-info">
@@ -244,10 +248,10 @@ function Reviewdetail() {
                     />
                     <div className="review-detail-info-nickname">{reviewData.mNicname}</div>
                     <div className="review-detail-info-status">
-                        <div className="review-detail-info-status-text"> 
-                    
-                         {timeForToday(reviewData.review.rb_writeday)
-                        }{` ·        `}</div>
+                        <div className="review-detail-info-status-text">
+
+                            {timeForToday(reviewData.review.rb_writeday)
+                            }{`   ·        `}</div>
                         <img
                             className="review-detail-info-status-view-icon"
                             alt=""
@@ -266,13 +270,13 @@ function Reviewdetail() {
                 />
                 {m_idx === reviewData.review.m_idx &&(
                     <>
-                <Link to={`/review/update/${reviewData.review.rb_idx}`}>
-                <img className="review-edit-icon" alt=""
-                     src={require('./assets/review-edit.svg').default}/>
-                </Link>
-                <img className="review-trash-icon" alt=""
-                     src={require('./assets/review-trash.svg').default}
-                     onClick={() => deleteReview(rb_idx)} />
+                        <Link to={`/review/update/${reviewData.review.rb_idx}`}>
+                            <img className="review-edit-icon" alt=""
+                                 src={require('./assets/review-edit.svg').default}/>
+                        </Link>
+                        <img className="review-trash-icon" alt=""
+                             src={require('./assets/review-trash.svg').default}
+                             onClick={() => deleteReview(rb_idx)} />
                     </>
                 )}
             </div>
@@ -280,7 +284,7 @@ function Reviewdetail() {
                 <div className="review-detail-body-text">
                     {reviewData.review.rb_content}
                 </div>
-                <b className="review-detail-body-subject">{reviewData.review.rb_subject}</b>
+                <div className="review-detail-body-subject">{reviewData.review.rb_subject}</div>
             </div>
             <div className="review-detail-counter">
                 <div className="review-detail-counter-like">
@@ -309,18 +313,15 @@ function Reviewdetail() {
                     />
                 </div>
 
+
             </div>
             <div className="advertise-box1">
                 <div className="advertise-main" />
                 <b className="advertise-text1">광고 2</b>
             </div>
-            <img
-                className="review-detail-hr-icon"
-                alt=""
-                src="/review-detail-hr.svg"
-            />
 
-        <Reviewcomment rb_idx={rb_idx}/>
+            <Reviewcommentform rb_idx={rb_idx}/>
+            <Reviewcomment rb_idx={rb_idx}/>
         </div>
 
     );

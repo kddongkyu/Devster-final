@@ -25,26 +25,6 @@ function HboardDetail(props) {
   const navi = useNavigate();
   const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
 
-  // useEffect(() => {
-  //   // JPA로부터 데이터 가져오는 API 호출(detail 값 DTO 가져오기 )
-  //   const url = `/api/hboard/D0/${hb_idx}`;
-  //   axiosIns
-  //     .get(url, { params: { m_idx: de.idx } })
-  //     .then((response) => {
-  //       console.log(response);
-  //       setHboardData(response.data);
-  //       if (response.data.hb_photo != null) {
-  //         setArrayFromString(response.data.hb_photo.split(","));
-  //       }
-  //       //북마크 이미 눌렀는지 여부를 첫 렌더링 때 저장
-  //       setIsBkmk(response.data.isAlreadyAddBkmk);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       jwtHandleError(error, toastAlert);
-  //     });
-  // }, []);
-
   const fetchHboard = useCallback(
     (hb_idx, currentPage = null) => {
       // JPA로부터 데이터 가져오는 API 호출(detail 값 DTO 가져오기 )
@@ -204,14 +184,6 @@ function HboardDetail(props) {
         }
         onClick={() => addbkmk(m_idx, hb_idx)}
       />
-
-      {/* <img
-        className="hboard-url-icon2"
-        style={isBkmk ? { backgroundColor: "#F5EFF9" } : {}}
-        alt=""
-        src={require("./assets/Vector.svg").default}
-        onClick={() => addbkmk(m_idx, hb_idx)}
-      /> */}
 
       <img
         className="hboard-url-icon"

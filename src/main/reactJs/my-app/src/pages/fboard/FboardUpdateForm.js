@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
+import ToastAlert from "../../api/ToastAlert";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { checkToken } from "../../api/checkToken";
+import { useSnackbar } from "notistack";
 
 function FboardUpdateForm(props) {
   const [fbSubject, setFbSubject] = useState("");
@@ -15,8 +18,11 @@ function FboardUpdateForm(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [arrayFromString, setArrayFromString] = useState([]);
   const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
-
-  let de = jwt_decode(localStorage.getItem("accessToken"));
+  //에러 호출용 변수
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+  //디코딩 함수
+  const de = checkToken();
   const m_idx = de.idx;
 
   useEffect(() => {
@@ -43,7 +49,7 @@ function FboardUpdateForm(props) {
         })
         .catch((error) => {
           // 삭제 실패 시 에러 처리
-          console.error(error);
+          jwtHandleError(error, toastAlert);
         });
     },
     [arrayFromString, fb_idx]
@@ -75,7 +81,7 @@ function FboardUpdateForm(props) {
       })
       .catch((error) => {
         // 업데이트 실패 시 에러 처리
-        console.error(error);
+        jwtHandleError(error, toastAlert);
       });
   };
 
@@ -104,7 +110,6 @@ function FboardUpdateForm(props) {
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       setArrayFromString([...arrayFromString, ...res.data.split(",")]);
-      console.log(arrayFromString);
       setIsLoading(false);
     });
   };

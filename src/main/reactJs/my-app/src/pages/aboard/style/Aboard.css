@@ -34,8 +34,8 @@
   background-color: #eaeff3;
   height: 6.7rem;
 }
-.board-name-text-detail,
-.board-name-text-type {
+.aboard-name-text-detail,
+.aboard-name-text-type {
   position: absolute;
   left: 0;
   letter-spacing: -0.24px;
@@ -43,10 +43,12 @@
 }
 .board-name-text-type {
   top: 0;
-  width: 21.1rem;
+  /*width: 21.1rem;*/
+  /*height: 2.2rem;*/
+  width: 13.7rem;
   height: 2.2rem;
 }
-.board-name-text-detail {
+.aboard-name-text-detail {
   top: 2.5rem;
   font-size: 1.3rem;
   color: #721ea6;
@@ -79,6 +81,7 @@
   width: 5.97rem;
   height: 3.5rem;
   cursor: pointer;
+  box-sizing: border-box;
 }
 .aboard-selection-freeboard-tex {
   position: absolute;
@@ -208,6 +211,7 @@
   color: white;
 }
 .aboard-write {
+  cursor: pointer;
   position: absolute;
   top: 33.6rem;
   left: 1.5rem;
@@ -218,57 +222,15 @@
   color: #fff;
   font-family: "Roboto Serif";
 }
-.aboard-function-sort-box {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 5px;
-  background-color: #fff;
-  border: 1px solid #bdc0c4;
-  box-sizing: border-box;
-  width: 15rem;
-  height: 3.6rem;
-}
-.aboard-function-sort-like,
-.aboard-function-sort-time,
-.aboard-function-sort-view {
+
+.aboard-function-sort-reset {
   position: absolute;
   top: 1.2rem;
-  right: 10.1rem;
+  right: 6.2rem;
   letter-spacing: -0.24px;
-  display: inline-block;
-  width: 4rem;
+  font-weight: 500;
 }
-.aboard-function-sort-like,
-.aboard-function-sort-view {
-  right: 5.6rem;
-  width: 3.7rem;
-}
-.aboard-function-sort-like {
-  right: 0.3rem;
-  width: 4rem;
-}
-.aboard-function-sort-bar-icon,
-.aboard-function-sort-bar2-icon {
-  position: absolute;
-  top: 0.1rem;
-  right: 4.95rem;
-  width: 0.2rem;
-  height: 3.4rem;
-}
-.aboard-function-sort-bar-icon {
-  right: 9.95rem;
-}
-.aboard-function-sort {
-  position: absolute;
-  top: 33.6rem;
-  right: 1.5rem;
-  width: 15rem;
-  height: 3.6rem;
-  color: #484848;
-  font-family: Roboto;
-  cursor: pointer;
-}
+
 .aboard-function-search-input1 {
   position: absolute;
   width: 100%;
@@ -280,13 +242,13 @@
   border: 1px solid #721ea6;
   box-sizing: border-box;
   height: 3.5rem;
-  padding-left: 5rem;
+  padding-left: 2rem;
   color: #626567;
 }
 .aboard-function-search-icon {
   position: absolute;
   top: 1rem;
-  left: 1.3rem;
+  right: 1.3rem;
   width: 1.6rem;
   height: 1.5rem;
 }
@@ -644,8 +606,8 @@
   position: relative;
   width: calc(100% - 44px);
   top: 61.3rem;
-  right: 2.3rem;
-  left: 2.1rem;
+  right: 2.2rem;
+  left: 2.2rem;
   height: 16.4rem;
   font-size: 1.6rem;
 }
@@ -653,7 +615,6 @@
   position: relative;
   background-color: #fff;
   width: 100%;
-  height: 230rem;
   overflow: hidden;
   text-align: left;
   font-size: 1.2rem;
@@ -661,11 +622,80 @@
   font-family: "Noto Sans KR";
 }
 
+.aboard_list {
+  margin-bottom: 65rem;
+}
+/* 아래 페이징 -> width 변경 */
 .aboard-pages2 {
+  position: relative;
+  /*margin-top: 1rem;*/
+  width: calc(100% - 2.79rem);
+  height: 2.1rem;
+  text-align: right;
+}
+.aboard-function-sort-box {
   position: absolute;
-  top: 226rem;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: #fff;
+
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 15rem;
+  height: 3.6rem;
+}
+.aboard-function-sort-like,
+.aboard-function-sort-time,
+.aboard-function-sort-view {
+  position: absolute;
+  top: 1.2rem;
+  right: 10.1rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 4rem;
+  border: none;
+  background-color: #fff;
+}
+.aboard-function-sort-like,
+.aboard-function-sort-view {
+  right: 5.4rem;
+  width: 3.7rem;
+}
+.aboard-function-sort-like {
+  right: 0.2rem;
+  width: 4rem;
+}
+.aboard-function-sort-bar-icon,
+.aboard-function-sort-bar2-icon {
+  position: absolute;
+  top: 0.1rem;
+  right: 4.95rem;
+  width: 0.1rem;
+  height: 3.4rem;
+}
+.aboard-function-sort-bar-icon {
+  right: 9.95rem;
+}
+.aboard-function-sort {
+  position: absolute;
+  top: 33.5rem;
+  right: 1.5rem;
+  width: 15rem;
+  height: 3.6rem;
+  color: #484848;
+  font-family: Roboto;
+}
+.aboard-bottom-pages,
+.aboard-pages {
+  position: absolute;
+  top: 45.2rem;
   right: 2.79rem;
   width: 30.91rem;
   height: 2.1rem;
   text-align: right;
 }
+/*.aboard-bottom-pages {*/
+/*  top: 226.4rem;*/
+/*  right: 2.59rem;*/
+/*}*/

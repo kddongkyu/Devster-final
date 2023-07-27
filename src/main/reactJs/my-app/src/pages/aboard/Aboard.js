@@ -1,22 +1,37 @@
-import { NavLink } from "react-router-dom";
 import "./style/Aboard.css";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
+import { JwtPageChk } from "../../api/JwtPageChk";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import { jwtHandleError } from "../../api/JwtHandleError";
 
 function Aboard(props) {
+  const [acacemyBoardList, setAcacemyBoardList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  // 미리보기 글자수
+  const [contentCount, setContentCount] = useState(15);
+  const [subjectCount, setsubjectCount] = useState(10);
+  //정렬
+  const [sortProperty, setSortProperty] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  //검색
+  const [inputKeyword, setInputKeyword] = useState(""); // 사용자가 입력하는 검색어
+  const [finalKeyword, setFinalKeyword] = useState(""); // 최종 검색어 (검색 버튼
+  // 추가 수정사항
+  const navi = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
+  // 새로고침
   const handleRefresh = () => {
     window.location.reload();
   };
 
-  const [academyBoardList, setAcademyBoardList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  const [contentCount, setContentCount] = useState(15);
-  const [subjectCount, setsubjectCount] = useState(10);
-
+  // 글자수 미리보기로 자르기
   const handleResize = () => {
-    // 화면 너비에 따라 텍스트 개수를 업데이트
     const screenWidth = window.innerWidth;
     if (screenWidth >= 1000) {
       setContentCount(80);
@@ -30,8 +45,8 @@ function Aboard(props) {
       setContentCount(15);
     }
   };
+
   const handleSubjectResize = () => {
-    // 화면 너비에 따라 텍스트 개수를 업데이트
     const screenWidth = window.innerWidth;
     if (screenWidth >= 1000) {
       setsubjectCount(50);
@@ -56,6 +71,7 @@ function Aboard(props) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   useEffect(() => {
     // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
     window.addEventListener("resize", handleSubjectResize);
@@ -71,46 +87,86 @@ function Aboard(props) {
     return value1.length > value2;
   };
 
-  useEffect(() => {
-    fetchAboards(currentPage);
-  }, [currentPage]);
+  // 검색기능
+  const handleSearchButtonClick = () => {
+    // 검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
+    const searchKeyword = inputKeyword;
+    setFinalKeyword(searchKeyword);
+    // 첫 페이지의 검색 결과를 가져옵니다.
+    setCurrentPage(1);
+  };
 
-  const fetchAboards = (page) => {
-    axiosIns
-      .get("/api/aboard/D0", { params: { page: page - 1 } })
-      .then((response) => {
-        setAcademyBoardList(response.data.academyBoardList);
-        setTotalPages(response.data.totalPages);
-      })
-      .catch((error) => {
-        console.error("Error fetching aboards:", error);
+  // 엔터로 검색
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchButtonClick();
+    }
+  };
+
+  const fetchacdemy = async (page, keyword, sortProperty, sortDirection) => {
+    const searchKeyword =
+      keyword && keyword.trim() !== "" ? keyword.trim() : null;
+    console.log(sortDirection, sortProperty);
+    try {
+      const response = await axiosIns.get("/api/academyboard/D0", {
+        params: {
+          page: page - 1, // Use the page parameter
+          keyword: searchKeyword,
+          sortProperty,
+          sortDirection,
+        },
       });
+
+      setAcacemyBoardList(response.data.academyBoardList); // Typo 수정 (acacemy -> academy)
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      jwtHandleError(error, toastAlert);
+    }
   };
 
   useEffect(() => {
-    // JPA로부터 데이터 가져오는 API 호출
-    axiosIns
-      .get("/api/aboard/D0")
-      .then((response) => {
-        setAcademyBoardList(response.data.academyBoardList);
-      })
-      .catch((error) => {
-        console.error("Error fetching aboards:", error);
-      });
-  }, []);
+    // Ensure currentPage is at least 1
+    const page = Math.max(1, currentPage);
+    fetchacdemy(page, finalKeyword, sortProperty, sortDirection);
+  }, [currentPage, finalKeyword, sortProperty, sortDirection]);
 
+  // 정렬
+  const onClickLatest = () => {
+    // fetchReviews(currentPage, finalKeyword, 'RBwriteday', 'DESC');
+    setSortProperty("ABwriteday");
+    setSortDirection("DESC");
+  };
+
+  const onClickLikes = () => {
+    setSortProperty("ABlike");
+    setSortDirection("DESC");
+    //  fetchReviews(currentPage, finalKeyword, 'RBlike', 'DESC');
+  };
+
+  const onClickViews = () => {
+    // fetchReviews(currentPage, finalKeyword, 'RBreadcount', 'DESC');
+    setSortProperty("ABreadcount");
+    setSortDirection("DESC");
+  };
+
+  // 페이징
   const goToPreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      const newPage = currentPage - 1;
+      fetchacdemy(newPage, finalKeyword, sortProperty, sortDirection);
+      setCurrentPage(newPage);
     }
   };
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      const newPage = currentPage + 1;
+      fetchacdemy(newPage, finalKeyword, sortProperty, sortDirection);
+      setCurrentPage(newPage);
     }
   };
 
+  // 작성시간 몇시간전으로 변경
   const timeForToday = (value) => {
     if (!value) {
       return "";
@@ -132,7 +188,7 @@ function Aboard(props) {
     if (betweenTime < 60) {
       return `${betweenTime}분 전`;
     }
-    console.log(betweenTime);
+    //console.log(betweenTime);
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
@@ -153,16 +209,21 @@ function Aboard(props) {
     return formattedDateWithoutTime;
   };
 
+  // 사진 url 설정
   const setPhotoUrl = (value) => {
     if (value == null) {
       return require("./assets/logo-img.svg").default;
     }
-    const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
-    const firstCommaIndex = value.indexOf(",");
-    const parsedPhoto = value.substring(0, firstCommaIndex);
-    const srcUrl = photoUrl + parsedPhoto;
-
-    return srcUrl;
+    const photoUrl = process.env.REACT_APP_PHOTO + "aboard/";
+    if (value.includes(",")) {
+      const firstCommaIndex = value.indexOf(",");
+      const parsedPhoto = value.substring(0, firstCommaIndex);
+      const srcUrl = photoUrl + parsedPhoto;
+      return srcUrl;
+    } else {
+      const srcUrl = photoUrl + value;
+      return srcUrl;
+    }
   };
 
   return (
@@ -174,8 +235,8 @@ function Aboard(props) {
       <div className="aboard-name">
         <div className="aboard-name-box" />
         <div className="aboard-name-text">
-          <b className="board-name-text-type">학원별 게시판</b>
-          <div className="board-name-text-detail">
+          <b className="aboard-name-text-type">학원별 게시판</b>
+          <div className="aboard-name-text-detail">
             인증이 완료된 사용자만 열람할 수 있는 게시판입니다.
           </div>
         </div>
@@ -211,10 +272,12 @@ function Aboard(props) {
           <div className="aboard-selection-academy-text">학원별</div>
         </div>
       </div>
-      <NavLink
-        to="/aboard/form"
-        activeClassName="active"
+      <div
         className="aboard-write"
+        onClick={() => {
+          //페이지 이동시 토큰여부 확인 함수
+          JwtPageChk(navi, "/aboard/form");
+        }}
       >
         <div className="aboard-write-box" />
         <img
@@ -223,30 +286,44 @@ function Aboard(props) {
           src={require("./assets/board_write_icon.svg").default}
         />
         <div className="aboard-write-text">글쓰기</div>
-      </NavLink>
+      </div>
       <div className="aboard-function-sort">
         <div className="aboard-function-sort-box" />
-        <div className="aboard-function-sort-time">최신순</div>
-        <div className="aboard-function-sort-view">조회순</div>
-        <div className="aboard-function-sort-like">인기순</div>
+        <button className="aboard-function-sort-time" onClick={onClickLatest}>
+          최신순
+        </button>
+        <button className="aboard-function-sort-view" onClick={onClickViews}>
+          조회순
+        </button>
+        <button className="aboard-function-sort-like" onClick={onClickLikes}>
+          인기순
+        </button>
         <img
           className="aboard-function-sort-bar2-icon"
           alt=""
-          src={require("./assets/aboard_function_sort_bar.svg").default}
+          src={require("./assets/aboard_function_sort_bar2.svg").default}
         />
         <img
           className="aboard-function-sort-bar-icon"
           alt=""
-          src={require("./assets/aboard_function_sort_bar2.svg").default}
+          src={require("./assets/aboard_function_sort_bar.svg").default}
         />
       </div>
 
       <div className="aboard-function-search-input">
-        <input type="text" className="aboard-function-search-input1" />
+        <input
+          type="text"
+          className="aboard-function-search-input1"
+          value={inputKeyword}
+          placeholder="검색어를 입력해주세요"
+          onChange={(e) => setInputKeyword(e.target.value)}
+          onKeyDown={handleEnterKeyPress}
+        />
         <img
           className="aboard-function-search-icon"
           alt=""
           src={require("./assets/board_function_search_icon2.svg").default}
+          onClick={handleSearchButtonClick}
         />
       </div>
       <img className="aboard-hr-icon" alt="" src="/aboard-hr.svg" />
@@ -261,19 +338,40 @@ function Aboard(props) {
         <img
           className="aboard-pages-back-icon"
           alt=""
-          src={require("./assets/board_pages_back.svg").default}
-          onClick={goToPreviousPage}
+          src={require("./assets/aboard_pages_back.svg").default}
+          onClick={() =>
+            goToPreviousPage(finalKeyword, sortProperty, sortDirection)
+          }
           style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
         />
         <img
           className="aboard-pages-forward-icon"
           alt=""
           src={require("./assets/board_pages_forward.svg").default}
-          onClick={goToNextPage}
+          onClick={() =>
+            goToNextPage(finalKeyword, sortProperty, sortDirection)
+          }
           style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
         />
       </div>
-      <img className="aboard-hr-icon1" alt="" src="/aboard-hr1.svg" />
+      {/*<div className="aboard-bottom-pages">*/}
+      {/*    <div className="aboard-pages-current">{`${currentPage} / ${totalPages} 페이지`}</div>*/}
+      {/*    <img*/}
+      {/*        className="aboard-pages-forward-icon"*/}
+      {/*        alt=""*/}
+      {/*        src={require("./assets/board_pages_forward.svg").default}*/}
+      {/*        onClick={() => goToNextPage(finalKeyword, sortProperty, sortDirection)}*/}
+      {/*        style={{opacity: currentPage === totalPages ? 0.5 : 1}}*/}
+      {/*    />*/}
+      {/*    <img*/}
+      {/*        className="aboard-pages-back-icon"*/}
+      {/*        alt=""*/}
+      {/*        src={require("./assets/aboard_pages_back.svg").default}*/}
+      {/*        onClick={() => goToPreviousPage(finalKeyword, sortProperty, sortDirection)}*/}
+      {/*        style={{opacity: currentPage === 1 ? 0.5 : 1}}*/}
+      {/*    />*/}
+      {/*</div>*/}
+      {/*<img className="aboard-hr-icon1" alt="" src="/aboard-hr1.svg"/>*/}
       <div className="aboard-notice">
         <div className="aboard-notice-box" />
         <div className="aboard-notice-preview">
@@ -327,18 +425,22 @@ function Aboard(props) {
       </div>
 
       <div className="aboard_list">
-        {academyBoardList &&
-          academyBoardList.map((aboard) => {
+        {acacemyBoardList &&
+          acacemyBoardList.map((aboard) => {
             return (
-              <div key={aboard.aboard.ab_idx} className="aboard-preview">
+              <div className="aboard-preview" key={aboard.academyboard.ab_idx}>
                 <div className="aboard-preview-box" />
-                <div className="aboard-preview-img-profile">
-                  <img alt="" src={aboard.mPhoto} />
-                </div>
+                <img
+                  className="aboard-preview-img-profile"
+                  alt=""
+                  src={setPhotoUrl(aboard.mPhoto)}
+                />
                 <div className="aboard-preview-type">
-                  <b className-="aboard-preview-type-text">학원별게시판</b>
+                  <b className="aboard-preview-type-text">
+                    {aboard.AIname} 게시판
+                  </b>
                   <div className="aboard-preview-type-date">
-                    {timeForToday(aboard.aboard.ab_writeday)}
+                    {timeForToday(aboard.academyboard.ab_writeday)}
                   </div>
                 </div>
                 <div className="aboard-preview-id">
@@ -347,28 +449,30 @@ function Aboard(props) {
                   </div>
                 </div>
                 <NavLink
-                  to={`/aboard/detail/${aboard.aboard.ab_idx}/${currentPage}`}
+                  to={`/aboard/detail/${aboard.academyboard.ab_idx}/${currentPage}`}
                 >
                   <b className="aboard-preview-subject">
                     {compareValues(
-                      String(aboard.aboard.ab_subject),
+                      String(aboard.academyboard.ab_subject),
                       subjectCount
                     )
-                      ? aboard.aboard.ab_subject.slice(0, subjectCount) + "···"
-                      : aboard.aboard.ab_content}
+                      ? aboard.academyboard.ab_subject.slice(0, subjectCount) +
+                        "···"
+                      : aboard.academyboard.ab_subject}
                   </b>
                   <div className="aboard-preview-contents">
                     {compareValues(
-                      String(aboard.aboard.ab_content),
+                      String(aboard.academyboard.ab_content),
                       contentCount
                     )
-                      ? aboard.aboard.ab_content.slice(0, contentCount) + "···"
-                      : aboard.aboard.ab_content}
+                      ? aboard.academyboard.ab_content.slice(0, contentCount) +
+                        "···"
+                      : aboard.academyboard.ab_content}
                   </div>
                   <div>
                     <img
                       alt=""
-                      src={setPhotoUrl(aboard.aboard.ab_photo)}
+                      src={setPhotoUrl(aboard.academyboard.ab_photo)}
                       className="aboard-preview-img-preview"
                     />
                   </div>
@@ -376,7 +480,8 @@ function Aboard(props) {
 
                 <div className="aboard-preview-likes">
                   <div className="aboard-preview-likes-text">
-                    {aboard.aboard.ab_like - aboard.aboard.ab_dislike}
+                    {aboard.academyboard.ab_like -
+                      aboard.academyboard.ab_dislike}
                   </div>
                   <img
                     className="aboard-preview-likes-icon"
@@ -387,7 +492,7 @@ function Aboard(props) {
                   />
                 </div>
                 <div className="aboard-preview-comments">
-                  <div className="aboard-preview-likes-text">99</div>
+                  <div className="aboard-preview-likes-text">99.9k</div>
                   <img
                     className="aboard-preview-comments-icon"
                     alt=""
@@ -399,7 +504,7 @@ function Aboard(props) {
                 </div>
                 <div className="aboard-preview-views">
                   <div className="aboard-preview-views-text">
-                    {aboard.aboard.ab_readcount}
+                    {aboard.academyboard.ab_readcount}
                   </div>
                   <img
                     className="aboard-preview-views-icon"
@@ -413,67 +518,28 @@ function Aboard(props) {
             );
           })}
       </div>
-
       <div className="aboard-pages2">
         <div className="aboard-pages-current">{`${currentPage} / ${totalPages} 페이지`}</div>
         <img
           className="aboard-pages-back-icon"
           alt=""
           src={require("./assets/board_pages_back.svg").default}
-          onClick={goToPreviousPage}
+          onClick={() =>
+            goToPreviousPage(finalKeyword, sortProperty, sortDirection)
+          }
           style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
         />
         <img
           className="aboard-pages-forward-icon"
           alt=""
           src={require("./assets/board_pages_forward.svg").default}
-          onClick={goToNextPage}
-          stype={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
+          onClick={() =>
+            goToNextPage(finalKeyword, sortProperty, sortDirection)
+          }
+          style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
         />
       </div>
     </div>
-
-    //   <div className="aboard-preview">
-    //     <div className="aboard-preview-box" />
-    //     <div className="aboard-preview-img-profile" />
-    //     <div className="aboard-preview-type">
-    //       <b className="aboard-preview-type-text">게시판명길이최대로</b>
-    //       <div className="aboard-preview-type-date">작성시간</div>
-    //     </div>
-    //     <div className="aboard-preview-id">
-    //       <div className="aboard-preview-type-text">아이디명최대로</div>
-    //     </div>
-    //     <b className="aboard-preview-subject">제목 일이삼사오육칠팔구...</b>
-    //     <div className="aboard-preview-contents">
-    //       본문 일이삼사오육칠팔구십일이...
-    //     </div>
-    //     <div className="aboard-preview-img-preview" />
-    //     <div className="aboard-preview-likes">
-    //       <div className="aboard-preview-likes-text">99.9k</div>
-    //       <img
-    //         className="aboard-preview-likes-icon"
-    //         alt=""
-    //         src={require("./assets/board_preview_likes_icon.svg").default}
-    //       />
-    //     </div>
-    //     <div className="aboard-preview-comments">
-    //       <div className="aboard-preview-likes-text">99.9k</div>
-    //       <img
-    //         className="aboard-preview-comments-icon"
-    //         alt=""
-    //         src={require("./assets/board_preview_comments_icon.svg").default}
-    //       />
-    //     </div>
-    //     <div className="aboard-preview-views">
-    //       <div className="aboard-preview-views-text">99.9k</div>
-    //       <img
-    //         className="aboard-preview-views-icon"
-    //         alt=""
-    //         src={require("./assets/board_preview_views_icon.svg").default}
-    //       />
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 

@@ -110,20 +110,6 @@ const HboardUpdateForm = () => {
     });
   };
 
-  // const onUploadEvent = (e) => {
-  //   const uploadFile = new FormData();
-  //   uploadFile.append("upload", e.target.files[0]);
-  //   axiosIns({
-  //     method: "post",
-  //     url: "/hboard/upload",
-  //     data: uploadFile,
-  //     headers: { "Content-type": "multipart/form-data" },
-  //   }).then((res) => {
-  //     console.log(res.data);
-  //     setHb_photo(res.data);
-  //   });
-  // };
-
   return (
     <div>
       <form className="hboard-form" onSubmit={onSubmitEvent}>

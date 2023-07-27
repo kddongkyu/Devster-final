@@ -1,5 +1,7 @@
 package data.service;
 
+import data.entity.AcademyInfoEntity;
+import data.repository.AcademyInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -51,15 +53,19 @@ public class AcademyBoardService {
 
     private final AcademyBoardMapper academyBoardMapper;
 
+    private final AcademyInfoRepository academyInfoRepository;
+
     private final JwtService jwtService;
 
-    public AcademyBoardService(AcademyBoardRepository academyBoardRepository,  MemberRepository memberRepository, NcpObjectStorageService storageService, AcademylikeRepository academylikeRepository,AcademyBoardMapper academyBoardMapper,JwtService jwtService) {
+    public AcademyBoardService(AcademyBoardRepository academyBoardRepository,  MemberRepository memberRepository, NcpObjectStorageService storageService, AcademylikeRepository academylikeRepository,AcademyBoardMapper academyBoardMapper,JwtService jwtService,
+                               AcademyInfoRepository academyInfoRepository ) {
         this.academyBoardRepository = academyBoardRepository;
         this.academylikeRepository = academylikeRepository;
         this.memberRepository = memberRepository;
         this.storageService = storageService;
         this.academyBoardMapper = academyBoardMapper;
         this.jwtService = jwtService;
+        this.academyInfoRepository = academyInfoRepository;
 
     }
     
@@ -72,9 +78,15 @@ public class AcademyBoardService {
             int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
             int AIidx = memberRepository.findById(m_idx).get().getAIidx();
 
+
+            if(session.getAttribute("photo")!=null){
+                dto.setAb_photo(session.getAttribute("photo").toString());
+            }
+
             dto.setAi_idx(AIidx);
             AcademyBoardEntity academyBoard = AcademyBoardEntity.toAcademyBoardEntity(dto);
             academyBoardRepository.save(academyBoard);
+            session.removeAttribute("photo");
             return dto;
         } catch (Exception e){
             log.error("insert AcademyBoard Error",e);
@@ -144,11 +156,12 @@ public class AcademyBoardService {
     //     }
     // }    
 
-    public Map<String, Object> getPagedAcademyboard(int page, int size, String keyword, HttpServletRequest request) {
+    public Map<String, Object> getPagedAcademyboard(int page, int size, String keyword, HttpServletRequest request, String sortProperty, String sortDirection) {
         int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
         int AIidx = memberRepository.findById(m_idx).get().getAIidx();
 
-        Pageable pageable = PageRequest.of(page,size,Sort.by("ABwriteday").descending());
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortProperty));
         Page<AcademyBoardEntity> result;
 
         if(keyword!=null && !keyword.trim().isEmpty()){
@@ -166,12 +179,19 @@ public class AcademyBoardService {
                 .stream()
                 .map(academyBoardEntity -> {
                     MemberEntity memberInfo = memberRepository.findById(academyBoardEntity.getMIdx()).orElse(null);
+                    AcademyInfoEntity academyInfo= academyInfoRepository.findById(academyBoardEntity.getAIidx()).orElse(null);
                     Map<String, Object> academyboardMemberInfo = new HashMap<>();
                     academyboardMemberInfo.put("aboard", AcademyBoardDto.toAcademyBoardDto(academyBoardEntity));
 
                     if (memberInfo != null) {
                         academyboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
                         academyboardMemberInfo.put("mNicname", memberInfo.getMNickname());
+                    }
+
+                    if(academyInfo != null){
+                        academyboardMemberInfo.put("AIidx",academyInfo.getAIidx());
+                        academyboardMemberInfo.put("AIname",academyInfo.getAIname());
+
                     }
                     return academyboardMemberInfo;
                 })
@@ -202,32 +222,63 @@ public class AcademyBoardService {
         }
     } 
 
-    public Map<String,Object> getDetailPage(int ab_idx, int m_idx){
-         //readcount 추가 
-         academyBoardMapper.updateReadCount(ab_idx);
+//    public Map<String,Object> getDetailPage(int ab_idx, int m_idx){
+//         //readcount 추가
+//         academyBoardMapper.updateReadCount(ab_idx);
+//
+//        AcademyBoardEntity entity = academyBoardRepository.findById((Integer)ab_idx)
+//            .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + ab_idx));
+//        AcademyBoardDto dto = AcademyBoardDto.toAcademyBoardDto(entity);
+//
+//         //필요한 변수들을 Map 에 담아서 보낸다
+//         Map<String,Object> map=new HashMap<>();
+//         map.put("ab_subject",dto.getAb_subject());
+//         map.put("ab_content",dto.getAb_content());
+//         map.put("ab_readcount",dto.getAb_readcount());
+//         map.put("ab_photo",dto.getAb_photo());
+//         map.put("ab_writeday",dto.getAb_writeday());
+//         map.put("ab_like",dto.getAb_like());
+//         map.put("ab_dislike",dto.getAb_dislike());
+//         map.put("ai_idx",dto.getAi_idx());
+//
+//
+//
+//         map.put("cm_compname",academyBoardMapper.selectNickNameOfMidx(m_idx));
+//         map.put("cm_filename",academyBoardMapper.selectPhotoOfMidx(m_idx));
+//
+//
+//
+//        return map;
+//    }
+public Map<String,Object> getDetailPage(int ab_idx){
+        try{
 
-        AcademyBoardEntity entity = academyBoardRepository.findById((Integer)ab_idx)
-            .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + ab_idx));
-        AcademyBoardDto dto = AcademyBoardDto.toAcademyBoardDto(entity);  
+            AcademyBoardEntity aboard = academyBoardRepository.findById(ab_idx)
+                    .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + ab_idx));
+           aboard.setABreadcount(aboard.getABreadcount()+1);
+           academyBoardRepository.save(aboard);
 
-         //필요한 변수들을 Map 에 담아서 보낸다
-         Map<String,Object> map=new HashMap<>();
-         map.put("ab_subject",dto.getAb_subject());
-         map.put("ab_content",dto.getAb_content());
-         map.put("ab_readcount",dto.getAb_readcount());
-         map.put("ab_photo",dto.getAb_photo());
-         map.put("ab_writeday",dto.getAb_writeday());
-         map.put("ab_like",dto.getAb_like());
-         map.put("ab_dislike",dto.getAb_dislike());
-         map.put("ai_idx",dto.getAi_idx());
+            // AIname 가져오기
+        AcademyInfoEntity academyInfo = academyInfoRepository.findById(aboard.getAIidx()).orElse(null);
+        MemberEntity memberInfo = memberRepository.findById(aboard.getMIdx()).orElse(null);
 
-         map.put("cm_compname",academyBoardMapper.selectNickNameOfMidx(m_idx));
-         map.put("cm_filename",academyBoardMapper.selectPhotoOfMidx(m_idx));
+            Map<String, Object> aboarddetailInfo = new HashMap<>();
+            aboarddetailInfo.put("aboard",AcademyBoardDto.toAcademyBoardDto(aboard));
+            if (memberInfo != null) {
+                aboarddetailInfo.put("mPhoto", memberInfo.getMPhoto());
+                aboarddetailInfo.put("mNicname", memberInfo.getMNickname());
+            }
+            if(academyInfo !=null){
+                aboarddetailInfo.put("ciNamge",academyInfo.getAIname());
+            }
+            return aboarddetailInfo;
+        }catch (Exception e){
+            log.error("Error finding one aboarddetail", e);
+            throw e;
+        }
+        }
 
 
-
-        return map;
-    }
 
 
     // public void updateAcademyBoard(AcademyBoardDto dto,MultipartFile upload,int currentPage){
@@ -294,7 +345,7 @@ public class AcademyBoardService {
 
     
 
-    @Transactional
+
     private AcademylikeEntity findOrCreateABoardLike(int ABidx,int MIdx){
             return academylikeRepository.findByABidxAndMIdx(ABidx,MIdx)
                 .orElse(new AcademylikeEntity(ABidx,MIdx));

@@ -13,7 +13,8 @@ spring:
     password: bit4!@#$
   servlet:
     multipart:
-      max-file-size: 20MB
+      max-file-size: 50MB
+      max-request-size: 50MB
   jpa:
     properties:
       hibernate:
@@ -39,10 +40,10 @@ aws:
 jwt:
   secretKey: HellOImFakerIAgrreLGBTIlikeTeaMC0OKYoUKMowWhatImsaYinGIdONtKnowHAHeHaaaCutEMeaRonGGGG12312TQLVKFKasd
   access:
-    expiration: 310 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    expiration: 3600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
     header: Authorization
   refresh:
-    expiration: 1200000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
+    expiration: 7200000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
     header: Authorization-refresh
 naver:
   login:

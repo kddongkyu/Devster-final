@@ -2,7 +2,6 @@ import "./style/FboardForm.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
@@ -37,7 +36,7 @@ function FboardForm(props) {
       })
       .catch((error) => {
         // 등록 실패 시 에러 처리
-        console.error(error);
+        jwtHandleError(error, toastAlert);
       });
   };
 
@@ -57,13 +56,36 @@ function FboardForm(props) {
       return;
     }
 
-    setPhotoLength(files.length);
-    const newPhotos = Array.from(files);
-    setSelectedPhotos([...newPhotos]);
+    //파일 업로드
+    const onUploadEvent = (e) => {
+      setIsLoading(true);
+      const uploadPhoto = new FormData();
+      const files = e.target.files;
+      const maxAllowedFiles = 10;
 
-    for (let i = 0; i < files.length; i++) {
-      uploadPhoto.append("upload", files[i]);
-    }
+      // 10장이내인지 확인
+      if (files.length > maxAllowedFiles) {
+        // Handle the error or inform the user that only 10 files are allowed
+        alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
+        e.target.value = null;
+        setIsLoading(false);
+        return;
+      }
+
+      axiosIns({
+        method: "post",
+        url: "/api/fboard/D1/photo/upload",
+        data: uploadPhoto,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then((res) => {
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          //axios용 에러함수
+          jwtHandleError(error, toastAlert);
+        });
+    };
 
     axiosIns({
       method: "post",
