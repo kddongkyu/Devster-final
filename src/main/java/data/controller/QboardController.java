@@ -27,8 +27,11 @@ public class QboardController {
 
     @GetMapping("/D0/list")
     public ResponseEntity<QboardResponseDto> getPagedQboard(
-            @RequestParam(defaultValue = "1") String currentPage) {
-        return new ResponseEntity<>(qboardService.getPagedQboard(Integer.parseInt(currentPage), 10), HttpStatus.OK);
+            @RequestParam(defaultValue = "0") String currentPage,
+            @RequestParam(defaultValue = "QBwriteDay") String sortProperty,
+            @RequestParam(defaultValue = "DESC") String sortDirection,
+            @RequestParam(required = false) String keyword) {
+        return new ResponseEntity<>(qboardService.getPagedQboard(Integer.parseInt(currentPage), 10,sortProperty,sortDirection,keyword), HttpStatus.OK);
     }
 
     @PostMapping("/D1")
@@ -37,13 +40,19 @@ public class QboardController {
     }
 
     @PostMapping("/D1/photo/upload")
-    public ResponseEntity<List<String>> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
-        return new ResponseEntity<List<String>>(qboardService.uploadPhoto(upload, session),HttpStatus.OK);
+    public ResponseEntity<String> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
+        return new ResponseEntity<String>(qboardService.uploadPhoto(upload, session),HttpStatus.OK);
     }
 
     @PutMapping("/D1/photo/reset")
     public ResponseEntity<Void> resetPhoto(String photo){
         qboardService.resetPhoto(photo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/D1/photo/{imageFileName}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable String imageFileName) {
+        qboardService.deletePhoto(imageFileName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -59,13 +68,13 @@ public class QboardController {
     }
 
     @PutMapping("/D1/{qb_idx}")
-    public ResponseEntity<Void> updateFreeBoard(@PathVariable int qb_idx, @RequestBody QboardDto dto) {
+    public ResponseEntity<Void> updateQBoard(@PathVariable int qb_idx, @RequestBody QboardDto dto) {
         qboardService.updateQboard(qb_idx, dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/D1/photo/{qb_idx}")
-    public ResponseEntity<Void> updatePhoto(@PathVariable Integer qb_idx, @RequestBody MultipartFile upload) {
+    public ResponseEntity<Void> updatePhoto(@PathVariable Integer qb_idx, @RequestBody List<MultipartFile> upload) {
         qboardService.updatePhoto(qb_idx,upload);
         return new ResponseEntity<>(HttpStatus.OK);
     }

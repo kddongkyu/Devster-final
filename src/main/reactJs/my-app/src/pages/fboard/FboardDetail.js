@@ -290,6 +290,7 @@ function FboardDetail(props) {
                     />
                 </>
             )}
+
             <div className="fboard-detail-header-btn">
                 <div className="fboard-detail-header-btn-like">
                     <img

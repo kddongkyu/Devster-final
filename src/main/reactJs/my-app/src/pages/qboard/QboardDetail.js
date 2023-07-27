@@ -9,10 +9,6 @@ import {useSnackbar} from "notistack";
 
 function QboardDetail(props) {
 
-    useEffect(()=> {
-        getDetailData();
-    },[])
-
     //에러 호출용 변수
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
@@ -28,24 +24,29 @@ function QboardDetail(props) {
 
     const navi = useNavigate();
     const photoUrl = process.env.REACT_APP_PHOTO+"qboard/";
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
 
-    const getDetailData = () =>{
-        axiosIns.get(`/api/qboard/D0/${qb_idx}`)
-            .then(response => {
-                console.log(response.data.qboardDto);
-                setQboardData(response.data.qboardDto);
-                setM_photo(response.data.photo);
-                setM_nickname(response.data.nickname);
-                if(qboardData && qboardData.qb_photo!=null){
-                    setArrayFromString(qboardData.qb_photo.split(","));
-                }
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching qboard:', error);
-            });
-    }
+    useEffect(() => {
+        const getDetailData = () => {
+            axiosIns.get(`/api/qboard/D0/${qb_idx}`)
+                .then(response => {
+                    console.log(response.data.qboardDto);
+                    setM_photo(response.data.photo);
+                    setM_nickname(response.data.nickname);
+                    setQboardData(response.data.qboardDto);
+                    if(response.data.qboardDto.qb_photo){
+                        setArrayFromString(response.data.qboardDto.qb_photo.split(","));
+                    }
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error('Error fetching qboard:', error);
+                });
+        };
+
+        getDetailData();
+    }, [qb_idx]);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -69,10 +70,10 @@ function QboardDetail(props) {
         window.location.href = url;
     };
 
-    // const navigateToPurchase = useCallback(() => {
-    //     const updateFormUrl = `/qboard/updateform/${qb_idx}/${currentPage}`;
-    //     navi(updateFormUrl, {state: qboardData}); // fboardData를 state로 전달
-    // }, [qb_idx, currentPage, qboardData, navi]);
+    const updateNavigation = () => {
+        const url = `/qboard/form/${qb_idx}/${currentPage}`;
+        window.location.href = url;
+    };
 
     const handleNicknameClick = () => {
         // recv_nick은 이 컴포넌트에서 사용할 수 있는 형태로 가져옵니다.
@@ -134,7 +135,7 @@ function QboardDetail(props) {
                 <img
                     className="qboard-detail-info-profile-img-icon"
                     alt=""
-                    src={m_photo}
+                    src={`${profileUrl}${m_photo}`}
                     onClick={handleNicknameClick}
                 />
                 <div className="qboard-detail-info-nickname" onClick={handleNicknameClick}>{m_nickname}</div>
@@ -159,7 +160,7 @@ function QboardDetail(props) {
                         className="qboard-update-icon"
                         alt=""
                         src={require("./assets/boarddetail/edit.svg").default}
-                        // onClick={navigateToPurchase}
+                        onClick={()=>updateNavigation()}
                     />
                     <img
                         className="qboard-delete-icon"
@@ -182,7 +183,7 @@ function QboardDetail(props) {
                 </div>
 
                 <div className="qboard-detail-photo-list">
-                    {arrayFromString.map((imageId, index) => (
+                    {arrayFromString && arrayFromString.map((imageId, index) => (
                         <div>
                             <img
                                 className="qboard-detail-photo" key={index}
@@ -211,138 +212,6 @@ function QboardDetail(props) {
                 </div>
             </div>
 
-            {/*<div className="qboard-detail-comments-counts">nn개의 댓글</div>*/}
-            {/*<div className="qboard-detail-commnets-form">*/}
-            {/*    <div className="qboard-detail-commnets-form-box" />*/}
-            {/*    <img*/}
-            {/*        className="qboard-detail-commnets-form-img-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/notice_detail_info_profile_img.png").default}*/}
-            {/*    />*/}
-            {/*    <div className="qboard-detail-commnets-form-tex" />*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-commnets-submit-b">*/}
-            {/*    <div className="qboard-detail-commnets-form-sub" />*/}
-            {/*    <b className="qboard-detail-commnets-form-sub1">댓글 쓰기</b>*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-commnets-detail-i">*/}
-            {/*    <div className="qboard-detail-recom-info-text">*/}
-            {/*        <div className="qboard-detail-recom-info-counts">댓글 1</div>*/}
-            {/*        <div className="qboard-detail-recom-info-date">*/}
-            {/*            <span>{`약  6시간 전 · `}</span>*/}
-            {/*            <span className="span">{`수정됨 `}</span>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <img*/}
-            {/*        className="qboard-detail-commnets-detail-i-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/notice_detail_info_profile_img.png").default}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-commnets-all-like">*/}
-            {/*    <div className="qboard-detail-commnets-all-up">*/}
-            {/*        <div className="qboard-detail-commnets-all-up-b" />*/}
-            {/*        <img*/}
-            {/*            className="qboard-detail-commnets-all-up-i-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_up.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*    <div className="qboard-detail-recom-likes-count">*/}
-            {/*        <div className="qboard-detail-commnets-all-box" />*/}
-            {/*        <div className="qboard-detail-commnets-all-like2">27</div>*/}
-            {/*    </div>*/}
-            {/*    <div className="qboard-detail-commnets-all-down">*/}
-            {/*        <div className="qboard-detail-recom-down-box" />*/}
-            {/*        <img*/}
-            {/*            className="qboard-detail-commnets-all-down-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_down.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-commnets-all-cont">*/}
-            {/*    <p className="p">*/}
-            {/*        모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을*/}
-            {/*        박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는*/}
-            {/*    </p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        {" "}*/}
-            {/*        제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야 한다.*/}
-            {/*    </p>*/}
-            {/*    <p className="p">선거에 관한 경비는 법률이 정하는 경우를 제외하고</p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        는 정당 또는 후보자에게 부담시킬 수 없다. 행정각부의*/}
-            {/*    </p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        {" "}*/}
-            {/*        설치·조직과 직무범위는 법률로 정한다. 대통령은 국가의 원수이며, 외국에*/}
-            {/*        대하여 국가를 대표한다.*/}
-            {/*    </p>*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-commnets-hide">*/}
-            {/*    <img*/}
-            {/*        className="qboard-detail-commnets-hide-ico-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/board_detail_commnets_hide_icon.svg").default}*/}
-            {/*    />*/}
-            {/*    <div className="qboard-detail-commnets-hide-tex">댓글 모두 숨기기</div>*/}
-            {/*    <div className="qboard-detail-commnets-hide-com">댓글 쓰기</div>*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-recom-box" />*/}
-            {/*<div className="qboard-detail-recom-info">*/}
-            {/*    <div className="qboard-detail-recom-info-text">*/}
-            {/*        <div className="qboard-detail-recom-info-counts">대댓글 1</div>*/}
-            {/*        <div className="qboard-detail-recom-info-date">*/}
-            {/*            <span>{`약  1시간 전 · `}</span>*/}
-            {/*            <span className="span">{`수정됨 `}</span>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <img*/}
-            {/*        className="qboard-detail-commnets-detail-i-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/notice_detail_info_profile_img.png").default}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-recom-likes">*/}
-            {/*    <div className="qboard-detail-commnets-all-up">*/}
-            {/*        <div className="qboard-detail-commnets-all-up-b" />*/}
-            {/*        <img*/}
-            {/*            className="qboard-detail-commnets-all-up-i-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_up.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*    <div className="qboard-detail-recom-likes-count">*/}
-            {/*        <div className="qboard-detail-commnets-all-box" />*/}
-            {/*        <div className="qboard-detail-commnets-all-like2">27</div>*/}
-            {/*    </div>*/}
-            {/*    <div className="qboard-detail-commnets-all-down">*/}
-            {/*        <div className="qboard-detail-recom-down-box" />*/}
-            {/*        <img*/}
-            {/*            className="qboard-detail-commnets-all-down-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_down.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-recom-textarea">*/}
-            {/*    <p className="p">*/}
-            {/*        모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을*/}
-            {/*        박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는*/}
-            {/*    </p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        {" "}*/}
-            {/*        제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야 한다.*/}
-            {/*    </p>*/}
-            {/*    <p className="p">선거에 관한 경비는 법률이 정하는 경우를</p>*/}
-            {/*</div>*/}
-            {/*<div className="qboard-detail-recom-recom-form">{`댓글 쓰기 `}</div>*/}
         </div>
     );
 }

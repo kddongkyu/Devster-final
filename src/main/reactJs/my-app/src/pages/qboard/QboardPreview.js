@@ -106,7 +106,7 @@ const QboardPreview = (props) => {
     };
 
     const setPhotoUrl = (value) => {
-        if (value == null) {
+        if (!value) {
             return require("./assets/logo-img.svg").default;
         }
         const photoUrl = process.env.REACT_APP_PHOTO+"qboard/";

@@ -187,7 +187,8 @@
 
 }
 
- /* 중단 */ .qboard-detail-textarea-contents {
+ /* 중단 */
+.qboard-detail-textarea-contents {
      position: relative;
      width: 100%;
      top: 6.7rem;
@@ -195,6 +196,13 @@
      letter-spacing: -0.24px;
      display: inline-block;
 }
+
+.qboard-detail-textarea-contents pre {
+     white-space: pre-wrap;       /* CSS3 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+     overflow-wrap: break-word;   /* Modern browsers */
+}
+
 
 .qboard-detail-photo-list {
      position: relative;
@@ -214,7 +222,7 @@
 }
 
 .qboard-detail-textarea-subject {
-     position: absolute;
+     position: relative;
      top: 0;
      left: 0;
      font-size: 1.8rem;
