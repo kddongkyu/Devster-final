@@ -68,10 +68,10 @@
 }
 .review-write-subject-box-icon {
     position: absolute;
-    width: calc(100% - 83px);
+    width: calc(100% - 97px);
     top: 2.9rem;
     right: 0;
-    left: 8.3rem;
+    left: 10rem;
     border-radius: 5px;
     max-width: 100%;
     overflow: hidden;
@@ -83,9 +83,9 @@
     top: 2.9rem;
     left: 0;
     border-radius: 5px;
-    width: 8.3rem;
+    width: 10rem;
     height: 3.9rem;
-    padding-left: 1.5rem;
+    /*padding-left: 1.5rem;*/
 }
 .review-write-subject {
     position: absolute;
@@ -152,6 +152,7 @@
     height: 19.4rem;
     padding-left: 2rem;
     padding-top: 2rem;
+    resize: none;
 }
 .review-content-text {
     position: absolute;

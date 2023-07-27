@@ -6,10 +6,14 @@ import './style/Reviewdetail.css';
 import jwt_decode from "jwt-decode";
 
 function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
-    const [isGood, setIsGood] = useState(false);
-    const [isBad, setIsBad] = useState(false);
+
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [isGood, setIsGood] = useState(false);
+    const [isBad, setIsBad] = useState(false);
+    const dislike=comment.reviewcommentdto.rbc_dislike;
+    const [likeCount, setLikeCount] = useState(comment.likeDislikeDifference);
+
 
     let de = jwt_decode(localStorage.getItem("accessToken"));
     const m_idx = de.idx;
@@ -17,7 +21,7 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
 
 
     const fetchReview = useCallback((rbc_idx) => {
-            if(m_idx && rbc_idx) {
+        if(m_idx && rbc_idx) {
             axiosIns.get(`/api/review/D0/comment/${m_idx}/checkGood/${rbc_idx}`)
                 .then(res => {
                     setIsGood(res.data);
@@ -25,19 +29,19 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                 console.log(err);
             });
 
-            axiosIns.get(`/api/review/D0/comment/${m_idx}/checkBad/${comment.reviewcommentdto.rbc_idx}`)
+            axiosIns.get(`/api/review/D0/comment/${m_idx}/checkBad/${rbc_idx}`)
                 .then(res => {
                     setIsBad(res.data);
                 }).catch(err => {
                 console.log(err);
             });
-            }
-        }, [comment.reviewcommentdto.rbc_idx, m_idx]);
+        }
+    }, [comment.reviewcommentdto.rbc_idx, m_idx]);
 
 
     useEffect(() => {
         fetchReview(rbc_idx);
-    }, [rbc_idx, fetchReview]);
+    }, [rbc_idx, fetchReview,likeCount]);
 
 
     //대댓글 숨기는 기능
@@ -64,6 +68,7 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
             deleteComment(comment.reviewcommentdto.rbc_idx);
         }
     };
+
     //좋아요 싫어요 체크
 
     const handleLikeClick = (m_idx, rbc_idx) => {
@@ -72,16 +77,17 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
             .then(response => {
                 if (response.data === 2) {
                     // 이미 좋아요가 눌려있으면 좋아요 취소
-                  setIsBad(false);
-                    window.location.reload();
+                    setIsBad(false);
+                    setLikeCount(response.data.likeCount);
+                    console.log("sssss"+response.data)
                 }else{
                     axiosIns.get(`/api/review/D0/comment/${m_idx}/checkGood/${rbc_idx}`)
                         .then(response => {
                             if (response.data === 1) {
                                 axiosIns.post(`/api/review/D1/comment/${m_idx}/like/${rbc_idx}`)
                                     .then(response => {
-                                      setIsGood(false);
-                                        window.location.reload();
+                                        setIsGood(false);
+                                        setLikeCount(response.data.likeCount);
                                     })
                                     .catch(error => {
                                         console.error('좋아요 요청 실패:', error);
@@ -91,8 +97,8 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                                 axiosIns.post(`/api/review/D1/comment/${m_idx}/like/${rbc_idx}`)
                                     .then(response => {
                                         console.log('좋아요 요청 성공:', response.data);
-                                      setIsGood(true);
-                                        window.location.reload();
+                                        setIsGood(true);
+                                        setLikeCount(response.data.likeCount);
                                     })
                                     .catch(error => {
                                         console.error('좋아요 요청 실패:', error);
@@ -109,6 +115,49 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
             });
     };
 
+
+    const handleDislikeClick = (m_idx, rbc_idx) => {
+        // 먼저 좋아요 상태를 체크합니다.
+        axiosIns.get(`/api/review/D0/comment/${m_idx}/checkGood/${rbc_idx}`)
+            .then(response => {
+                if (response.data === 1) {
+                    setIsGood(false);
+                    setLikeCount(response.data.likeCount);
+                } else {
+                    // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
+                    axiosIns.get(`/api/review/D0/comment/${m_idx}/checkBad/${rbc_idx}`)
+                        .then(response => {
+                            if (response.data === 2) {
+                                axiosIns.post(`/api/review/D1/comment/${m_idx}/dislike/${rbc_idx}`)
+                                    .then(response => {
+                                        setIsBad(false);
+                                        setLikeCount(response.data.likeCount);
+                                    })
+                                    .catch(error => {
+                                        console.error('싫어요 요청 실패:', error);
+                                    });
+                            } else {
+                                // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
+                                axiosIns.post(`/api/review/D1/comment/${m_idx}/dislike/${rbc_idx}`)
+                                    .then(response => {
+                                        console.log('싫어요 요청 성공:', response.data);
+                                        setIsBad(true);
+                                        setLikeCount(response.data.likeCount);
+                                    })
+                                    .catch(error => {
+                                        console.error('싫어요 요청 실패:', error);
+                                    });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('싫어요 상태 체크 실패:', error);
+                        });
+                }
+            })
+            .catch(error => {
+                console.error('좋아요 상태 체크 실패:', error);
+            });
+    };
 
 
     const timeForToday = (value) => {
@@ -158,8 +207,7 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                 <div className="review-detail-commnets-detail-1">
                     <div className="review-detail-commnets-detail-2">{comment.nickname}</div>
                     <div className="review-detail-commnets-detail-3">
-                        <span>{timeForToday(comment.reviewcommentdto.rbc_writeday)}{` · `}</span>
-                        {/*<span className="span">{`수정됨 `}</span>*/}
+                        <span>{timeForToday(comment.reviewcommentdto.rbc_writeday)}</span>
                     </div>
                 </div>
                 <img
@@ -170,22 +218,29 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
             </div>
 
             <div className="review-detail-commnets-all-lik">
-                <div className="review-detail-commnets-all-up-" style={isGood ? { backgroundColor: '#F5EFF9' } : {}}
+                <div className="review-detail-commnets-all-up-"
+                     style={isGood ? { backgroundColor: '#F5EFF9' } : {}}
                      onClick={()=>handleLikeClick(m_idx,rbc_idx)}/>
                 <img
                     className="review-detail-commnets-all-up-icon"
                     alt=""
                     src={require('./assets/star-like-icon.svg').default}
+                    onClick={()=>handleLikeClick(m_idx,rbc_idx)}
                 />
                 <div className="review-detail-commnets-all-lik1">
                     <div className="review-detail-commnets-all-box" />
-                    <div className="review-detail-commnets-all-lik2">{comment.reviewcommentdto.rbc_like}</div>
+                    <div className="review-detail-commnets-all-lik2">
+                        {likeCount < 0 ? "-" + dislike : likeCount}
+                    </div>
                 </div>
-                <div className="review-detail-commnets-all-dow" />
+                <div className="review-detail-commnets-all-dow"
+                     style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
+                     onClick={()=>handleDislikeClick(m_idx,rbc_idx)}/>
                 <img
                     className="review-detail-commnets-all-dow-icon"
                     alt=""
                     src={require('./assets/star-dislike-icon.svg').default}
+                    onClick={()=>handleDislikeClick(m_idx,rbc_idx)}
                 />
             </div>
 
@@ -194,11 +249,14 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                 <br/>
                 {m_idx === comment.reviewcommentdto.m_idx &&(
                     <>
-                <button onClick={handleDeleteClick}>삭제</button> &nbsp;&nbsp;
-                <button onClick={handleUpdateClick}>수정</button>
-                {showUpdateForm && <ReviewReplyupdateform rbc_idx={comment.reviewcommentdto.rbc_idx}
-                                                          rb_idx={comment.reviewcommentdto.rb_idx}
-                                                          currentContent={comment.reviewcommentdto.rbc_content} />}
+                        <div className="review-detail-commnets-btns">
+                            {/* 이 부분 시간나면 닉네임 옆으로 옮기기 */}
+                            <div className="review-detail-commnets-btns-delete" onClick={handleDeleteClick}>삭제</div> &nbsp;&nbsp;
+                            <div className="review-detail-commnets-btns-update" onClick={handleUpdateClick}>수정</div>
+                        </div>
+                        {showUpdateForm && <ReviewReplyupdateform rbc_idx={comment.reviewcommentdto.rbc_idx}
+                                                                  rb_idx={comment.reviewcommentdto.rb_idx}
+                                                                  currentContent={comment.reviewcommentdto.rbc_content} />}
                     </>
                 )}
             </div>
@@ -206,11 +264,16 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                 {comment.replyConut != 0 ? (
                     <div className="review-detail-commnets-hide-te"
                          onClick={() => toggleReplyComments(comment.reviewcommentdto.rbc_idx)}
-                    >댓글 모두 숨기기</div>
+                    >
+                        <img alt=""
+                             src={require('./assets/review_detail_commnets_all_up_icon.svg').default}
+                             className="review-detail-commnets-hide-img"/>
+                        &nbsp;&nbsp;답글 숨기기</div>
                 ) : ""}
 
-                <button className="review-detail-commnets-hide-co" onClick={handleReplyButtonClick}>댓글 쓰기</button>
-                {showReplyForm && <ReviewReplyform rbc_idx={comment.reviewcommentdto.rbc_idx} rb_idx={comment.reviewcommentdto.rb_idx} />}
+                <div className="review-detail-commnets-hide-co" onClick={handleReplyButtonClick}>답글 쓰기</div>
+                {showReplyForm &&
+                    <ReviewReplyform rbc_idx={comment.reviewcommentdto.rbc_idx} rb_idx={comment.reviewcommentdto.rb_idx} />}
             </div>
         </div>
     );

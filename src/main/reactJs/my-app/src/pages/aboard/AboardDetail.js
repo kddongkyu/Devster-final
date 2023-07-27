@@ -26,9 +26,9 @@ function AboardDetail(props) {
                 console.log(response.data);
                 setAboardData(response.data);
                 console.log(response.data);
-                if(response.data.aboard.ab_photo != null){
-                     setArrayFromString(response.data.ab_photo.split(","));
-                }
+                // if(response.data.aboard.ab_photo != null){
+                //      setArrayFromString(response.data.ab_photo.split(","));
+                // }
                 setIsLoading(false);
 
                 if (m_idx && ab_idx) {
@@ -72,103 +72,7 @@ function AboardDetail(props) {
         return <div>Loading...</div>;
     }
 
-    // 좋아요 싫어요
-    const handlelike = (m_idx, ab_idx) => {
-        // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/academyboard/D1/${m_idx}/checkBad/${ab_idx}`)
-            .then(response => {
-                if (response.data === 2) {
-                    // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    fetchAboard(ab_idx, currentPage);
-                } else {
-                    // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/academyboard/D1/${m_idx}/checkGood/${ab_idx}`)
-                        .then(response => {
-                            if (response.data === 1) {
-                                // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                                alert("이미 좋아요가 눌려 있습니다");
-                                axiosIns.post(`/api/academyboard/D1/${m_idx}/like/${ab_idx}`)
-                                    .then(response => {
-                                        fetchAboard(ab_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        alert("좋아요 요청 실패");
-                                        console.error('좋아요 요청 실패:', error);
-                                    });
-                            } else {
-                                // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                axiosIns.post(`/api/academyboard/D1/${m_idx}/like/${ab_idx}`)
-                                    .then(response => {
-                                        console.log('좋아요 요청 성공:', response.data);
-                                        fetchAboard(ab_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        console.error('좋아요 요청 실패:', error);
-                                    });
-                            }
-                        })
-                        .catch(error => {
-                            console.error('좋아요 상태 체크 실패:', error);
-                        });
-                }
-            })
-            .catch(error => {
-                console.error('싫어요 상태 체크 실패:', error);
-            });
-    };
 
-
-    const handleDislike = (m_idx, ab_idx) => {
-        // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/academyboard/D1/${m_idx}/checkGood/${ab_idx}`)
-            .then(response => {
-                if (response.data === 1) {
-                    // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    fetchAboard(ab_idx, currentPage);
-                } else {
-                    // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/academyboard/D1/${m_idx}/checkBad/${ab_idx}`)
-                        .then(response => {
-                            if (response.data === 2) {
-                                // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                                alert("이미 싫어요가 눌려 있습니다");
-                                axiosIns.post(`/api/academyboard/D1/${m_idx}/dislike/${ab_idx}`)
-                                    .then(response => {
-                                        fetchAboard(ab_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        alert("싫어요 요청 실패");
-                                        console.error('싫어요 요청 실패:', error);
-                                    });
-                            } else {
-                                // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                axiosIns.post(`/api/academyboard/D1/${m_idx}/dislike/${ab_idx}`)
-                                    .then(response => {
-                                        console.log('싫어요 요청 성공:', response.data);
-                                        fetchAboard(ab_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        alert("싫어요 요청 실패");
-                                        console.error('싫어요 요청 실패:', error);
-                                    });
-                            }
-                        })
-                        .catch(error => {
-                            console.error('싫어요 상태 체크 실패:', error);
-                        });
-                }
-            })
-            .catch(error => {
-                console.error('좋아요 상태 체크 실패:', error);
-            });
-    };
-
-
-    let result = aboardDate.aboard.ab_like - aboardDate.aboard.ab_dislike;
-
-    if (aboardDate.aboard.ab_like <= aboardDate.aboard.ab_dislike) {
-        result = - result;
-    }
 
     const deleteAboard = (ab_idx) => {
         if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
@@ -325,12 +229,12 @@ function AboardDetail(props) {
                   alt=""
                   src={require("./assets/aboarddetail/aboard_detail_counter_like_icon.svg").default}
 
-                  onClick={()=>handlelike(m_idx,ab_idx)}/>
+          />
               />
             </div>
             <div className="aboard-detail-counter-num">
               <div className="aboard-detail-counter-num-box" />
-              <div className="aboard-detail-counter-num-text">{result}</div>
+              <div className="aboard-detail-counter-num-text"></div>
             </div>
             <div className="aboard-detail-counter-dislike">
               <div className="aboard-detail-counter-dislike-"
@@ -340,7 +244,7 @@ function AboardDetail(props) {
                   alt=""
                   src={require("./assets/aboarddetail/aboard_detail_counter_dislike_icon.svg").default}
 
-                  onClick={()=>handleDislike(m_idx,ab_idx)}/>
+                 />
               />
             </div>
           </div>

@@ -2,15 +2,9 @@ package data.service;
 
 import data.dto.CompanyInfoDto;
 import data.dto.ReviewDto;
-import data.entity.CompanyInfoEntity;
-import data.entity.MemberEntity;
-import data.entity.ReviewEntity;
-import data.entity.ReviewlikeEntity;
+import data.entity.*;
 import data.mapper.ReviewMapper;
-import data.repository.CompanyInfoRepository;
-import data.repository.MemberRepository;
-import data.repository.ReviewRepository;
-import data.repository.ReviewlikeRepository;
+import data.repository.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +27,16 @@ public class ReviewService {
     private final ReviewMapper reviewMapper;
     private final MemberRepository memberRepository;
 
+    private final ReviewCommentRepository reviewCommentRepository;
 
     public ReviewService(ReviewRepository reviewRepository, ReviewlikeRepository ReviewlikeRepository, CompanyInfoRepository companyInfoRepository,
-                         ReviewMapper reviewMapper,MemberRepository memberRepository)  {
+                         ReviewMapper reviewMapper,MemberRepository memberRepository,ReviewCommentRepository reviewCommentRepository)  {
         this.reviewRepository = reviewRepository;
         this.ReviewlikeRepository=ReviewlikeRepository;
         this.CompanyInfoRepository=companyInfoRepository;
         this.reviewMapper = reviewMapper;
         this.memberRepository = memberRepository;
-
+        this.reviewCommentRepository= reviewCommentRepository;
     }
 
     public ReviewDto insertReview(ReviewDto dto) {
@@ -98,8 +93,13 @@ public class ReviewService {
                 .map(reviewEntity -> {
                     CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(reviewEntity.getCIidx()).orElse(null);
                     MemberEntity memberInfo = memberRepository.findById(reviewEntity.getMIdx()).orElse(null);
+                    // 댓글 수 가져오기 로직 추가
+                    int reviewCommentCount = reviewCommentRepository.countAllByRBidx(reviewEntity.getRBidx());
+
                     Map<String, Object> reviewWithCompanyInfo = new HashMap<>();
                     reviewWithCompanyInfo.put("review", ReviewDto.toReviewDto(reviewEntity));
+                    //댓글 수 가져오기 로직 추가
+                    reviewWithCompanyInfo.put("reviewCommentCount", reviewCommentCount);
                     if (memberInfo != null) {
                         reviewWithCompanyInfo.put("mPhoto", memberInfo.getMPhoto());
                         reviewWithCompanyInfo.put("mNicname", memberInfo.getMNickname());
@@ -137,6 +137,7 @@ public class ReviewService {
 
             Map<String, Object> reviewWithAdditionalInfo = new HashMap<>();
             reviewWithAdditionalInfo.put("review", ReviewDto.toReviewDto(review));
+
 
             if (memberInfo != null) {
                 reviewWithAdditionalInfo.put("mPhoto", memberInfo.getMPhoto());

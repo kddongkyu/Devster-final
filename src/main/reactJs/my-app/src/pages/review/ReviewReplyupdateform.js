@@ -45,15 +45,14 @@ function ReviewReplyupdateform({rbc_idx,rb_idx,currentContent,rbc_ref}) {
                     alt=""
                     src=""
                 />
-                <textarea className="r-detail-commnets-form-te"
+                <textarea className="r-detail-reply-form-te"
                           placeholder="내용을 입력해주세요"
                           required value={rbc_content} // reviewComment state 사용
                           onChange={(e)=>setRbc_content(e.target.value)}
                 />
-                <button  type='submit' className="r-detail-commnets-form-su">
-                    <div className="r-detail-commnets-form-su1" />
-                    <b className="r-detail-commnets-form-su2">댓글 수정</b>
-                </button>
+                <div className="r-detail-reply-form-su">
+                    <button type='submit' className="r-detail-reply-form-su-text">답글수정</button>
+                </div>
             </form>
         </div>
     );

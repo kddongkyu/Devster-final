@@ -1,14 +1,20 @@
 import React, {useEffect,useState} from 'react';
 import './style/Reviewlist.css';
 import axiosIns from "../../api/JwtConfig";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import StarRating from "./StarRating";
-
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import {JwtPageChk} from "../../api/JwtPageChk";
+import {jwtHandleError} from "../../api/JwtHandleError";
 
 function Reviewlist(props) {
     const [reviews, setReviews] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
     const [totalPages,setTotalPages]=useState(1);
+    const navi = useNavigate();
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
     //정렬
     const [sortProperty, setSortProperty] = useState('');
     const [sortDirection, setSortDirection] = useState('');
@@ -29,6 +35,12 @@ function Reviewlist(props) {
         setFinalKeyword(searchKeyword);
         // 첫 페이지의 검색 결과를 가져옵니다.
         setCurrentPage(1);
+    };
+    // 엔터로 검색
+    const handleEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSearchButtonClick();
+        }
     };
 
 
@@ -53,15 +65,16 @@ function Reviewlist(props) {
             });
 
             setReviews(response.data.reviews);
-            console.log(setReviews);
+            console.log(response.data);
             setTotalPages(response.data.totalPages);
 
         } catch (error) {
-            console.error('Error fetching reviews:', error);
+            //axios용 에러함수
+            jwtHandleError(error, toastAlert);
         }
     };
 
-
+//정렬
     const onClickLatest = () => {
        // fetchReviews(currentPage, finalKeyword, 'RBwriteday', 'DESC');
         setSortProperty('RBwriteday');
@@ -82,7 +95,7 @@ function Reviewlist(props) {
     };
 
 
-
+//페이징
 
     const goToPreviousPage = () => {
         if (currentPage > 1) {
@@ -101,7 +114,7 @@ function Reviewlist(props) {
     };
 
 
-
+//타입
     const reviewTypes = {
         1: '면접',
         2: '코딩',
@@ -165,9 +178,14 @@ function Reviewlist(props) {
                     코딩테스트 / 면접 / 합격 후기 게시판
                 </div>
             </div>
-            <NavLink to={`/review/form`}>
+
                 <button className="review-headerbar-btn">
-                    <div className="review-headerbar-rec"/>
+                    <div className="review-headerbar-rec"
+                         onClick={()=>{
+                             //페이지 이동시 토큰 여부 확인 함수
+                             JwtPageChk(navi,'/review/form');
+                         }}
+                        />
                     <div className="review-headerbar-btn-text">{`후기작성 `}</div>
                     <img
                         className="review-headerbar-btn-icon"
@@ -175,13 +193,13 @@ function Reviewlist(props) {
                         src={require('./assets/review_headerbar_btn_icon.svg').default}
                     />
                 </button>
-            </NavLink>
             <div className="review-function-search-input">
                 <input className="review-function-search-input1"
                        value={inputKeyword}
                        placeholder='검색어를 입력해주세요'
                        onChange={(e) => setInputKeyword(e.target.value)}
-                />
+                       onKeyDown={handleEnterKeyPress}
+                    />
                 <img
                     className="review-list-search-icon"
                     alt=""
@@ -254,7 +272,7 @@ function Reviewlist(props) {
                         <div className="review-bottom-bar"/>
                         <div className="review-list-box-icons">
                             <div className="review-list-box-header-comment-parent">
-                                <div className="review-list-box-header-comment">9.9k</div>
+                                <div className="review-list-box-header-comment">{review.reviewCommentCount}</div>
                                 <img
                                     className="review-list-box-header-comment-icon"
                                     alt=""

@@ -22,7 +22,7 @@ function Reviewcommentform({rb_idx}) {
             m_idx:de.idx,
             rb_idx:rb_idx
         };
-//console.log(dto)
+
         axiosIns.post("/api/review/D1/comment", dto)
             .then(res => {
                 // 성공적으로 등록된 경우, 목록으로 이동

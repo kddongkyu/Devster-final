@@ -40,8 +40,8 @@ function ReviewReplyform({rbc_idx,rb_idx}) {
     }
 
     return (
-        <div>
-            <form className="r-detail-commnets-form" onSubmit={onSubmitEvent}>
+        <div className="r-detail-commnets-form">
+            <form onSubmit={onSubmitEvent}>
                 <div className="r-detail-commnets-form-bo" />
                 <img
                     className="r-detail-commnets-form-im-icon"
@@ -53,10 +53,9 @@ function ReviewReplyform({rbc_idx,rb_idx}) {
                           required value={reviewcomment} // reviewComment state 사용
                           onChange={(e)=>setReviewcomment(e.target.value)}
                 />
-                <button  type='submit' className="r-detail-commnets-form-su">
-                    <div className="r-detail-commnets-form-su1" />
-                    <b className="r-detail-commnets-form-su2">댓글 수정</b>
-                </button>
+                <div className="r-detail-commnets-form-su">
+                    <button type='submit' className="r-detail-commnets-form-su-text">답글등록</button>
+                </div>
             </form>
         </div>
     );

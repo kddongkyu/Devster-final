@@ -293,7 +293,7 @@
 .review-detail-hr-icon {
     position: absolute;
     width: calc(100% - 40px);
-    top: 108.24rem;
+    /*top: 20.24rem;*/
     right: 2rem;
     left: 2rem;
     max-width: 100%;
@@ -325,7 +325,7 @@
     top: 0;
     left: calc(50% - 42.5px);
     background-color: #fff;
-    width: 8.5rem;
+    width: 100%;
     height: 2rem;
 }
 .review-detail-headline-text {
@@ -338,7 +338,7 @@
 }
 .review-detail-headline {
     position: absolute;
-    top: 10.1rem;
+    top: 20.1rem;
     left: calc(50% - 40px);
     width: 8.5rem;
     height: 2rem;
@@ -375,7 +375,7 @@
     letter-spacing: 1px;
     line-height: 2.1rem;
     display: inline-block;
-    width: 9.96rem;
+    width: 15.96rem;
 }
 /*d-----------------------------*/
 
@@ -585,14 +585,25 @@
     margin-bottom: 3rem;
 }
 
-.review-detail-commnets-hide-co,
+.review-detail-commnets-hide-co{
+    position: relative;
+    top: 0;
+    float: left;
+    /*left: 17.8rem;*/
+    letter-spacing: -0.24px;
+    color: #626567;
+    cursor: pointer;
+    /*padding-left: 2rem;*/
+}
 .review-detail-commnets-hide-te {
     position: relative;
     top: 0;
     float: left;
     /*left: 17.8rem;*/
     letter-spacing: -0.24px;
-    padding-left: 2rem;
+    color: #626567;
+    cursor: pointer;
+    /*padding-left: 2rem;*/
     /*padding-bottom: 2rem;*/
 }
 /*.review-detail-commnets-hide-co {*/
@@ -602,8 +613,8 @@
 .review-detail-commnets-hide {
     position: relative;
     top: auto;
-    left: 0.6rem;
-    width: 20rem;
+    /*left: 0.6rem;*/
+    width: 90%;
     height: auto;
     text-align: center;
     font-size: 1.1rem;
@@ -618,3 +629,54 @@
     font-size: 1.2rem;
     color: #1c1c1c;
 }
+
+/* 장수현 test */
+.review-detail-commnets-btns{
+    display: flex;
+    margin-top: 3rem;
+    /*width: calc(100% - 20px);*/
+}
+
+.review-detail-commnets-btns-delete{
+    display: inline-block;
+    color: #721ea6;
+    cursor: pointer;
+}
+
+.review-detail-commnets-btns-update{
+    display: inline-block;
+    margin-left: 1rem;
+    color: #721ea6;
+    cursor: pointer;
+}
+.review-detail-reply-all {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 90%;
+    height: auto;
+    margin-bottom: 1rem;
+    /*border-left: 1px solid #adadad;*/
+}
+.review-detail-reply-all:before {
+    content: "";
+    position: absolute;
+    left: -2rem; /* 세로선을 왼쪽으로 5px 이동시킵니다. */
+    top: 0;
+    height: 90%;
+    width: 1px;
+    background-color: #e3e3e5; /* 세로선의 색상을 정의합니다. */
+}
+
+.review-detail-commnets-hide-img{
+    width: 1rem;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+

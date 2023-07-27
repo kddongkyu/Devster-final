@@ -3,10 +3,8 @@ package data.controller;
 import java.util.List;
 import java.util.Map;
 
-import data.dto.CompanyInfoDto;
-import data.dto.ReviewCommentDto;
-import data.dto.ReviewCommentResponseDto;
-import data.dto.ReviewDto;
+import data.dto.*;
+import data.entity.ReviewCommentlikeEntity;
 import data.service.ReviewCommentService;
 import data.service.ReviewService;
 import org.slf4j.Logger;
@@ -15,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static data.dto.ReviewCommentlikeDto.toReviewCommentlikeEntity;
 
 @RestController
 @CrossOrigin
@@ -134,21 +134,26 @@ public ResponseEntity<Map<String, Object>> getPagedReviews(
         }
     }
 
-    @PostMapping("/D1/comment/{m_idx}/like/{rbc_idx}")
-    public ResponseEntity<ReviewCommentDto> likeReviewcomment(@PathVariable int rbc_idx, @PathVariable int m_idx) {
-        reviewCommentService.like(m_idx, rbc_idx);
-        // 좋아요 처리 후, 필요한 데이터를 ReviewBoardDto로 변환하여 생성
-        ReviewCommentDto ReviewCommentDto = new ReviewCommentDto();  // 적절한 ReviewBoardDto 생성 방식으로 변경
-        return ResponseEntity.ok(ReviewCommentDto);
+//    @PostMapping("/D1/comment/{m_idx}/like/{rbc_idx}")
+//    public ResponseEntity<ReviewCommentlikeDto> likeReviewcomment(@PathVariable int rbc_idx, @PathVariable int m_idx) {
+//        ReviewCommentlikeEntity reviewCommentlikeEntity = reviewCommentService.like(m_idx, rbc_idx);
+//        // 좋아요 처리 후, 필요한 데이터를 ReviewBoardDto로 변환하여 생성
+//        ReviewCommentlikeDto reviewCommentDto = toReviewCommentlikeEntity(reviewCommentlikeEntity);
+//        return ResponseEntity.ok(reviewCommentDto);
+//    }
+@PostMapping("/D1/comment/{m_idx}/like/{rbc_idx}")
+public ResponseEntity<ReviewCommentlikeResponseDto> likeReviewcomment(@PathVariable int rbc_idx, @PathVariable int m_idx) {
+    // like 메서드는 이제 ReviewCommentlikeResponseDto를 반환합니다.
+    ReviewCommentlikeResponseDto reviewCommentlikeResponseDto = reviewCommentService.like(m_idx, rbc_idx);
+    return ResponseEntity.ok(reviewCommentlikeResponseDto);
+}
 
-    }
 
     @PostMapping("/D1/comment/{m_idx}/dislike/{rbc_idx}")
-    public ResponseEntity<ReviewCommentDto> dislikeReviewcomment(@PathVariable int rbc_idx, @PathVariable int m_idx) {
-        reviewCommentService.dislike(m_idx, rbc_idx);
-        // 좋아요 처리 후, 필요한 데이터를 ReviewBoardDto로 변환하여 생성
-        ReviewCommentDto ReviewCommentDto = new ReviewCommentDto();  // 적절한 ReviewBoardDto 생성 방식으로 변경
-        return ResponseEntity.ok(ReviewCommentDto);
+    public ResponseEntity<ReviewCommentlikeResponseDto> dislikeReviewcomment(@PathVariable int rbc_idx, @PathVariable int m_idx) {
+
+        ReviewCommentlikeResponseDto reviewCommentlikeResponseDto = reviewCommentService.dislike(m_idx, rbc_idx);
+        return ResponseEntity.ok(reviewCommentlikeResponseDto);
 
     }
     @GetMapping("/D0/comment/{m_idx}/checkGood/{rbc_idx}")
@@ -162,5 +167,6 @@ public ResponseEntity<Map<String, Object>> getPagedReviews(
         boolean isBad = reviewCommentService.isAlreadyAddBadRp(m_idx, rbc_idx);
         return ResponseEntity.ok(isBad);
     }
+
 
 }

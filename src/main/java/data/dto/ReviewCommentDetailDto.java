@@ -15,5 +15,5 @@ public class ReviewCommentDetailDto {
     private String nickname;
     private int replyConut;
     private List<ReviewCommentDetailDto> replyList;
-
+    private int likeDislikeDifference;
 }
