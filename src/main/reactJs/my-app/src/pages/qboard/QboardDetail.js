@@ -5,6 +5,10 @@ import {useNavigate, useParams} from "react-router-dom";
 import {checkToken} from "../../api/checkToken";
 import ToastAlert from "../../api/ToastAlert";
 import {useSnackbar} from "notistack";
+import {jwtHandleError} from "../../api/JwtHandleError";
+import QboardCommentForm from "./comment/QboardCommentForm";
+import QboardComment from "./comment/QboardComment";
+
 
 
 function QboardDetail(props) {
@@ -41,7 +45,7 @@ function QboardDetail(props) {
                     setIsLoading(false);
                 })
                 .catch(error => {
-                    console.error('Error fetching qboard:', error);
+                    jwtHandleError(error, toastAlert);
                 });
         };
 
@@ -56,11 +60,10 @@ function QboardDetail(props) {
             if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
                 axiosIns.delete(`/api/qboard/D1/${qb_idx}`)
                     .then(response => {
-                        console.log('Qboard deleted successfully');
                         window.location.href="/qboard";
                     })
                     .catch(error => {
-                        console.error('Error deleting qboard:', error);
+                        jwtHandleError(error, toastAlert);
                     });
             }
         };
@@ -209,6 +212,9 @@ function QboardDetail(props) {
                         <div className="qboard-advertise-main" />
                         <b className="qboard-advertise-text1">광고 2</b>
                     </div>
+
+                    <QboardCommentForm qb_idx={qb_idx}/>
+                    <QboardComment qb_idx={qb_idx}/>
                 </div>
             </div>
 
