@@ -622,7 +622,7 @@
   font-family: "Noto Sans KR";
 }
 
-.aboard_list{
+.aboard_list {
   margin-bottom: 65rem;
 }
 /* 아래 페이징 -> width 변경 */
@@ -685,16 +685,13 @@
   height: 3.6rem;
   color: #484848;
   font-family: Roboto;
-}.aboard-bottom-pages,
- .aboard-pages {
-   position: absolute;
-   top: 45.2rem;
-   right: 2.79rem;
-   width: 30.91rem;
-   height: 2.1rem;
-   text-align: right;
- }
-/*.aboard-bottom-pages {*/
-/*  top: 226.4rem;*/
-/*  right: 2.59rem;*/
-/*}*/
+}
+.aboard-bottom-pages,
+.aboard-pages {
+  position: absolute;
+  top: 45.2rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
+}

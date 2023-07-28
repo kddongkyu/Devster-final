@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/academyboard")
+@RequestMapping("/api/aboard")
 public class AcademyBoardController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
