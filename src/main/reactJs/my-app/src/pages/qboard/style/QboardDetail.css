@@ -209,7 +209,7 @@
      margin-top: 5rem;
      background-color: #fff;
      box-sizing: border-box;
-     margin-bottom: 50rem;
+     /*margin-bottom: 50rem;*/
 }
 
 .qboard-detail-photo {
@@ -406,16 +406,6 @@
 
 }
 
-.qboard-detail-comments-counts {
-     position: absolute;
-     top: 144.1rem;
-     left: 2rem;
-     font-size: 1.6rem;
-     letter-spacing: -0.24px;
-     font-weight: 500;
-     color: #4a4a4a;
-
-}
 
 .qboard-detail-commnets-form-box {
      position: absolute;
@@ -757,17 +747,18 @@
 }
 
 .qboard-detail {
+     position: relative;
      background-color: #fff;
      border: 1px solid rgba(210, 210, 210, 0.9);
      box-sizing: border-box;
      width: 100%;
-     overflow: hidden;
+     /*overflow: hidden;*/
      text-align: left;
      font-size: 1.2rem;
      color: #626567;
      font-family: "Noto Sans KR";
+     /*height: auto;*/
 }
-
 
 
 /*-------------------------------------------*/
@@ -834,15 +825,7 @@
      height: 4rem;
      border: none;
 }
-.qboard-detail-commnets-form {
-     position: absolute;
-     width: calc(100% - 32px);
-     top: 113.4rem;
-     right: 1.6rem;
-     left: 1.6rem;
-     height: 24.4rem;
-     color: #fff;
-}
+
 .qboard-detail-commnets-detail-2 {
      position: absolute;
      top: 0;
@@ -969,14 +952,7 @@
      margin-bottom: 7rem;
      white-space: pre-line;
 }
-.qboard-detail-comments-all {
-     position: relative;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: auto;
-     margin-bottom: 3rem;
-}
+
 
 .qboard-detail-commnets-hide-co{
      position: relative;
@@ -1012,15 +988,6 @@
      text-align: center;
      font-size: 1.1rem;
      /*color: #721ea6;*/
-}
-.qboard-detail-commnets {
-     position: absolute;
-     top: 140.2rem;
-     left: 1.9rem;
-     width: 90%;
-     height: 28.1rem;
-     font-size: 1.2rem;
-     color: #1c1c1c;
 }
 
 /* 장수현 test */
@@ -1065,3 +1032,51 @@
      width: 1rem;
      cursor: pointer;
 }
+.qboard-comments-box{
+     position: relative;
+     width: calc(100% - 74px);
+     top: 35.7rem;
+     right: 3.7rem;
+     left: 3.7rem;
+}
+
+.qboard-detail-commnets-form {
+     position: absolute;
+     width: calc(100% - 32px);
+     top: 2rem;
+     right: 1.6rem;
+     left: 1.6rem;
+     height: 24.4rem;
+     color: #fff;
+     margin-top: 1rem;
+}
+
+.qboard-detail-commnets {
+     position: absolute;
+     top: 32.2rem;
+     left: 1.9rem;
+     width: 90%;
+     height: 28.1rem;
+     font-size: 1.2rem;
+     color: #1c1c1c;
+
+}
+.qboard-detail-comments-all {
+     position: relative;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: auto;
+     padding-bottom: 5rem;
+}
+
+.qboard-detail-comments-counts {
+     position: absolute;
+     top: -32rem;
+     left: 1rem;
+     font-size: 1.6rem;
+     letter-spacing: -0.24px;
+     font-weight: 500;
+     color: #4a4a4a;
+}
+

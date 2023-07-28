@@ -199,24 +199,36 @@
   position: relative;
 }
 
+/* 여기도 relative 먹여야하네요 ㅎㅎ */
+/* word-wrap이랑 width도 ㅎㅎ..*/
 .fboard-detail-textarea-subject {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 1.8rem;
-  letter-spacing: -0.24px;
-  color: #000;
+    /*position: absolute;*/
+    top: 0;
+    left: 0;
+    font-size: 1.8rem;
+    letter-spacing: -0.24px;
+    color: #000;
+    width: calc(100% - 74px);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 /* position: relative, height 값 뺌 */
 .fboard-detail-textarea {
-  position: relative;
-  width: calc(100% - 74px);
-  top: 35.7rem;
-  right: 3.7rem;
-  left: 3.7rem;
-  font-size: 1.3rem;
+    position: relative;
+    width: calc(100% - 74px);
+    top: 35.7rem;
+    right: 3.7rem;
+    left: 3.7rem;
+    font-size: 1.3rem;
 }
+
+.fboard-detail-textarea-pre {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
 
 /* 하단 */
 

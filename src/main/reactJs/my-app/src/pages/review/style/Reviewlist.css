@@ -60,7 +60,7 @@
   left: 0;
   border-radius: 5px;
   background-color: #721ea6;
-  width: 9.1rem;
+  width: 9.5rem;
   height: 3.5rem;
 }
 .review-headerbar-btn-text {
@@ -134,7 +134,7 @@
 .rboard-function-sort-view {
   position: absolute;
   top: 1.1rem;
-  right: 10.1rem;
+  right: 10.2rem;
   letter-spacing: -0.24px;
   display: inline-block;
   width: 4rem;
@@ -144,11 +144,11 @@
 }
 .rboard-function-sort-like,
 .rboard-function-sort-view {
-  right: 5.4rem;
+  right: 5.5rem;
   width: 3.7rem;
 }
 .rboard-function-sort-like {
-  right: 0.2rem;
+  right: 0.4rem;
   width: 4rem;
 }
 .rboard-function-sort-bar-icon,
@@ -202,10 +202,17 @@
   right: 5.41rem;
   height: 1.23rem;
 }
+.review-pages {
+  top: 45.2rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  /*height: 2.1rem;*/
+  text-align: right;
+}
 .review-child {
   position: absolute;
   width: calc(100% - 49px);
-  top: 37.8rem;
+  top: 44.8rem;
   right: 2.4rem;
   left: 2.5rem;
   background-color: #d9d9d9;
@@ -213,7 +220,7 @@
 }
 .review-bottom-page-text {
   position: absolute;
-  top: 118rem;
+  /*top: 118rem;*/
   right: 7.5rem;
   letter-spacing: 0.5px;
   line-height: 2.1rem;
@@ -225,13 +232,13 @@
 .review-bottom-page-next-icon,
 .review-bottom-page-pre-icon {
   position: absolute;
-  top: 118rem;
+  /*top: 118rem;*/
   right: 2.64rem;
   width: 1.3rem;
   height: 1.28rem;
 }
 .review-bottom-page-pre-icon {
-  top: 118rem;
+  /*top: 118rem;*/
   right: 5.41rem;
   height: 1.3rem;
 }
@@ -337,12 +344,13 @@
   position: absolute;
   top: 0;
   right: 5.6rem;
-  width: 3.9rem;
+  width: 3rem;
   height: 1.7rem;
   color: #626567;
 }
 .review-list-box-header-likes-t {
-  position: absolute;
+  /*position: absolute;*/
+  margin-left: 10px;
   top: 0;
   right: 0;
   letter-spacing: -0.24px;
@@ -359,14 +367,14 @@
   position: absolute;
   top: 0;
   right: 0.9rem;
-  width: 3.9rem;
+  width: 3rem;
   height: 1.7rem;
   color: #626567;
 }
 .review-list-box-header-view-icon {
-  position: absolute;
-  top: 0.43rem;
-  right: 2.83rem;
+  /*position: absolute;*/
+  /*top: 0.43rem;*/
+  /*right: 2.83rem;*/
   width: 1.25rem;
   height: 0.95rem;
 }
@@ -374,7 +382,7 @@
   position: absolute;
   top: 0;
   right: 10.3rem;
-  width: 4rem;
+  width: 3rem;
   height: 1.7rem;
   color: #626567;
 
@@ -399,7 +407,7 @@
   position: relative;
   background-color: #fff;
   width: 100%;
-  height: 120.5rem;
+  /*height: 120.5rem;*/
   overflow: hidden;
   text-align: left;
   font-size: 1.2rem;
@@ -409,5 +417,16 @@
 
 .review-list-box-icons{
   position: absolute;
-  right:2rem;
+  right:3rem;
+  margin-top: 1rem;
+}
+.review_list{
+  margin-bottom: 50rem;
+}
+.review-pages2 {
+  position: relative;
+  margin-top: 1rem;
+  width: calc(100% - 1rem);
+  height: 2.1rem;
+  text-align: right;
 }
