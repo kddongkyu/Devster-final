@@ -318,7 +318,8 @@ function FboardDetail(props) {
                 </div>
 
                 <div className="fboard-detail-textarea-contents">
-                   <pre style={{marginBottom: "5rem"}}>
+                   <pre className="fboard-detail-textarea-pre"
+                        style={{marginBottom: "5rem", wordWrap:"break-word"}}>
                        {fboardData.fboard.fb_content}
                    </pre>
                 </div>
