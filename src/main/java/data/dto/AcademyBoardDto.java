@@ -40,6 +40,7 @@ public class AcademyBoardDto {
             .ab_readcount(entity.getABreadcount())
             .ab_like(entity.getABlike())
             .ab_dislike(entity.getABdislike())
+            .ab_writeday(entity.getABwriteday())
             .ai_idx(entity.getAIidx())
             .ab_writeday(entity.getABwriteday())
             .build();

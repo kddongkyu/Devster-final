@@ -3,6 +3,7 @@ package data.service;
 import data.dto.qboard.QboardDetailDto;
 import data.dto.qboard.QboardDto;
 import data.dto.qboard.QboardResponseDto;
+import data.entity.FreeBoardEntity;
 import data.entity.MemberEntity;
 import data.entity.QboardEntity;
 import data.repository.MemberRepository;
@@ -44,6 +45,9 @@ public class QboardService {
 
     public QboardDto insertQboard(QboardDto dto, HttpSession session){
         try {
+            if(dto.getQb_photo().equals("")) {
+                dto.setQb_photo(null);
+            }
             QboardEntity entity = QboardEntity.toQboardEntity(dto);
             qboardRepository.save(entity);
             return dto;
@@ -53,20 +57,20 @@ public class QboardService {
         }
     }
 
-    public List<String> uploadPhoto(List<MultipartFile> upload, HttpSession session){
+    public String uploadPhoto(List<MultipartFile> upload, HttpSession session){
         List<String> fullPhoto = new ArrayList<>();
 
         for(MultipartFile photo : upload ) {
             fullPhoto.add(storageService.uploadFile(bucketName,"devster/qboard",photo));
         }
 
-        if(session.getAttribute("photo") != null) {
-            storageService.deleteFile(bucketName,"devster/qboard",session.getAttribute("photo").toString());
-        }
-
-        session.setAttribute("photo",String.join(",",fullPhoto));
         log.info("Qboard 사진 업로드 완료");
-        return fullPhoto;
+        return String.join(",",fullPhoto);
+    }
+
+    public void deletePhoto(String imageFileName) {
+            storageService.deleteFile(bucketName, "devster/qboard", imageFileName);
+            log.info(" QBoard 이미지 삭제 완료");
     }
 
     public void resetPhoto(String photo) {
@@ -74,9 +78,18 @@ public class QboardService {
         log.info("Qboard 사진 초기화 완료");
     }
 
-    public QboardResponseDto getPagedQboard(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("QBwriteDay").descending());
-        Page<QboardEntity> result = qboardRepository.findAll(pageable);
+    public QboardResponseDto getPagedQboard(int page, int size,  String sortProperty, String sortDirection, String keyword) {
+
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortProperty));
+        Page<QboardEntity> result;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            result = qboardRepository.findByQBsubjectContainingOrQBcontentContaining(keyword, pageable);
+            log.info("Keyword: " + keyword);
+        } else {
+            result = qboardRepository.findAll(pageable);
+        }
 
         List<QboardDetailDto> qboardList = result
                 .getContent()
@@ -97,7 +110,7 @@ public class QboardService {
         QboardResponseDto qboardResponseDto = new QboardResponseDto();
         qboardResponseDto.setQboardDetailDtoList(qboardList);
         qboardResponseDto.setTotalCount((int)result.getTotalElements());
-        qboardResponseDto.setTotalPages(result.getTotalPages() - 1);
+        qboardResponseDto.setTotalPages(result.getTotalPages());
         qboardResponseDto.setCurrentPage(result.getNumber() + 1);
         qboardResponseDto.setHasNext(result.hasNext());
 
@@ -146,7 +159,12 @@ public class QboardService {
                 QboardEntity existingEntity = entity.get();
                 existingEntity.setQBsubject(dto.getQb_subject());
                 existingEntity.setQBcontent(dto.getQb_content());
-//                existingEntity.setFBphoto(dto.getFb_photo());
+
+                if(dto.getQb_photo().equals("")) {
+                    dto.setQb_photo(null);
+                }
+                existingEntity.setQBphoto(dto.getQb_photo());
+
                 qboardRepository.save(existingEntity);
             }
 
@@ -156,12 +174,12 @@ public class QboardService {
         }
     }
 
-    public void updatePhoto(Integer qb_idx , MultipartFile upload ) {
-        Optional<QboardEntity> entity = qboardRepository.findById(qb_idx);
-        storageService.deleteFile(bucketName,"devster/qboard",entity.get().getQBphoto());
-        entity.get().setQBphoto(storageService.uploadFile(bucketName,"devster/qboard",upload));
-        qboardRepository.save(entity.get());
-
-        log.info(qb_idx+" Qboard 사진업데이트 완료");
+    public String updatePhoto(Integer qb_idx, List<MultipartFile> uploads) {
+        List<String> uploadedFileNames = new ArrayList<>();
+        for (MultipartFile files : uploads) {
+            uploadedFileNames.add(storageService.uploadFile(bucketName, "devster/qboard", files));
+        }
+        log.info(qb_idx + " QBoard 사진 업데이트 완료");
+        return String.join(",", uploadedFileNames);
     }
 }

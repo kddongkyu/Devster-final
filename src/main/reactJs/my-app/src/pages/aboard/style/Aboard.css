@@ -276,7 +276,156 @@
   width: 11.8rem;
   height: 3.3rem;
 }
+
 .aboard-form-btn-child_loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: #6e727f;
+  width: 11.8rem;
+  height: 3.3rem;
+}
+
+
+.aboard-preview-type-date,
+.aboard-preview-type-text {
+  position: relative;
+  letter-spacing: -0.24px;
+}
+.aboard-preview-type-date {
+  color: #95969a;
+}
+.aboard-preview-id,
+.aboard-preview-type {
+  position: absolute;
+  left: 4.1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 1.2rem;
+}
+.aboard-preview-type {
+  top: 0.7rem;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: #000;
+}
+.aboard-preview-id {
+  top: 2.4rem;
+  align-items: center;
+}
+.aboard-preview-subject {
+  position: absolute;
+  top: 5.3rem;
+  left: 0;
+  font-size: 2rem;
+  letter-spacing: -0.24px;
+  color: #000;
+}
+.aboard-preview-contents {
+  position: absolute;
+  top: 8.6rem;
+  left: 0;
+  letter-spacing: -0.24px;
+}
+.aboard-preview-img-preview {
+  position: absolute;
+  top: 0.9rem;
+  right: 0;
+  border-radius: 10px;
+  background-color: #f6f6f8;
+  border: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  width: 9.9rem;
+  height: 9.5rem;
+}
+.aboard-preview-likes-text {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 10.5px);
+  letter-spacing: -0.24px;
+}
+.aboard-preview-likes-icon {
+  position: absolute;
+  top: 0.53rem;
+  left: calc(50% - 29.25px);
+  width: 1.55rem;
+  height: 1.39rem;
+}
+.aboard-preview-likes {
+  position: absolute;
+  top: 12.5rem;
+  left: calc(50% - 135px);
+  width: 5.7rem;
+  height: 2.3rem;
+}
+.aboard-preview-comments-icon {
+  position: relative;
+  border-radius: 1px;
+  width: 1.55rem;
+  height: 1.39rem;
+}
+.aboard-preview-comments {
+  position: absolute;
+  top: 12.5rem;
+  left: calc(50% - 30px);
+  width: 5.7rem;
+  height: 2.3rem;
+}
+.aboard-preview-views-text {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 9.5px);
+  letter-spacing: -0.24px;
+}
+.aboard-preview-views-icon {
+  position: absolute;
+  top: 0.53rem;
+  left: calc(50% - 30.25px);
+  width: 1.75rem;
+  height: 1.35rem;
+}
+.aboard-preview-views {
+  position: absolute;
+  top: 12.5rem;
+  left: calc(50% + 75px);
+  width: 5.9rem;
+  height: 2.3rem;
+}
+.aboard-preview {
+  position: relative;
+  width: calc(100% - 44px);
+  top: 61.3rem;
+  right: 2.2rem;
+  left: 2.2rem;
+  height: 16.4rem;
+  font-size: 1.6rem;
+}
+.aboard {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #626567;
+  font-family: "Noto Sans KR";
+}
+
+.aboard_list {
+  margin-bottom: 65rem;
+}
+/* 아래 페이징 -> width 변경 */
+.aboard-pages2 {
+  position: relative;
+  /*margin-top: 1rem;*/
+  width: calc(100% - 2.79rem);
+  height: 2.1rem;
+  text-align: right;
+}
+.aboard-function-sort-box {
+>>>>>>> develop
   position: absolute;
   top: 0;
   right: 0;
@@ -328,3 +477,43 @@
   color: #626567;
   font-family: "Noto Sans KR";
 }
+
+.aboard-function-sort-like,
+.aboard-function-sort-view {
+  right: 5.4rem;
+  width: 3.7rem;
+}
+.aboard-function-sort-like {
+  right: 0.2rem;
+  width: 4rem;
+}
+.aboard-function-sort-bar-icon,
+.aboard-function-sort-bar2-icon {
+  position: absolute;
+  top: 0.1rem;
+  right: 4.95rem;
+  width: 0.1rem;
+  height: 3.4rem;
+}
+.aboard-function-sort-bar-icon {
+  right: 9.95rem;
+}
+.aboard-function-sort {
+  position: absolute;
+  top: 33.5rem;
+  right: 1.5rem;
+  width: 15rem;
+  height: 3.6rem;
+  color: #484848;
+  font-family: Roboto;
+}
+.aboard-bottom-pages,
+.aboard-pages {
+  position: absolute;
+  top: 45.2rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
+}
+>>>>>>> develop

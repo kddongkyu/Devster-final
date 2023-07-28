@@ -43,6 +43,23 @@ public class NoticeBoardService {
     private String bucketName;
 
 
+    public Map<String, Object> getNewestNboard(){
+        List<NoticeBoardEntity> nboardlist = noticeBoardRepository.findAll();
+        
+        try{
+            NoticeBoardEntity lastElement = nboardlist.get(nboardlist.size()-1);    
+            Map<String, Object> newestNboardInfo = new HashMap<>();
+            newestNboardInfo.put("nboard",NoticeBoardDto.toNoticeBoardDto(lastElement));
+
+            return newestNboardInfo;
+
+        } catch (Exception e) {
+            log.error("Error finding newest Notice Article", e);
+            throw e;
+        }
+    }
+
+
     public Map<String, Object> getPagedNboard(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("NBwriteDay").descending());
         Page<NoticeBoardEntity> result = noticeBoardRepository.findAll(pageable);

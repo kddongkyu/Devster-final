@@ -1,751 +1,750 @@
 .advertise-main {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    right: 0;
-    left: 0;
-    border: 1px solid #d2d2d2;
-    box-sizing: border-box;
-    height: 11.2rem;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  height: 11.2rem;
 }
 
 .advertise-text {
-    position: absolute;
-    top: 4.2rem;
-    left: calc(50% - 18px);
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 4.2rem;
+  left: calc(50% - 18px);
+  letter-spacing: -0.24px;
 }
 
 .advertise-box {
-    position: absolute;
-    width: calc(100% - 30px);
-    top: 7.6rem;
-    right: 1.5rem;
-    left: 1.5rem;
-    height: 11.2rem;
-    font-size: 2rem;
-    color: #000;
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 7.6rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 11.2rem;
+  font-size: 2rem;
+  color: #000;
 }
 
 .board-name-box {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    right: 0;
-    left: 0;
-    border-radius: 10px;
-    background-color: #eaeff3;
-    height: 6.7rem;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 10px;
+  background-color: #eaeff3;
+  height: 6.7rem;
 }
 
 .fboard-name-text-detail,
 .fboard-name-text-type {
-    position: absolute;
-    left: 0;
-    letter-spacing: -0.24px;
-    display: inline-block;
+  position: absolute;
+  left: 0;
+  letter-spacing: -0.24px;
+  display: inline-block;
 }
 
 .fboard-name-text-type {
-    top: 0;
-    width: 13.7rem;
-    height: 2.2rem;
+  top: 0;
+  width: 13.7rem;
+  height: 2.2rem;
 }
 
 .fboard-name-text-detail {
-    top: 2.5rem;
-    font-size: 1.3rem;
-    width: 31.1rem;
-    height: 1.6rem;
+  top: 2.5rem;
+  font-size: 1.3rem;
+  width: 31.1rem;
+  height: 1.6rem;
 }
 
 .fboard-name-text {
-    position: absolute;
-    top: 1.3rem;
-    left: 2.1rem;
-    width: 31.1rem;
-    height: 4.1rem;
+  position: absolute;
+  top: 1.3rem;
+  left: 2.1rem;
+  width: 31.1rem;
+  height: 4.1rem;
 }
 
 .fboard-name {
-    position: absolute;
-    width: calc(100% - 30px);
-    top: 20.6rem;
-    right: 1.5rem;
-    left: 1.5rem;
-    height: 6.7rem;
-    font-size: 1.8rem;
-    color: #000;
-    font-family: Roboto;
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 20.6rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 6.7rem;
+  font-size: 1.8rem;
+  color: #000;
+  font-family: Roboto;
 }
 
 .fboard-selection-freeboard-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 5px;
-    background-color: #f3f4f6;
-    border: 1px solid #d2d2d2;
-    box-sizing: border-box;
-    width: 5.97rem;
-    height: 3.5rem;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #f3f4f6;
+  border: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  width: 5.97rem;
+  height: 3.5rem;
+  cursor: pointer;
 }
 
 .fboard-selection-freeboard-tex {
-    position: absolute;
-    top: 1rem;
-    left: 1.02rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 3.94rem;
+  position: absolute;
+  top: 1rem;
+  left: 1.02rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 3.94rem;
 }
 
 .fboard-selection-freeboard {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5.97rem;
-    height: 3.5rem;
-    color: #51565b;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5.97rem;
+  height: 3.5rem;
+  color: #51565b;
 }
 
 .fboard-selection-qna-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 5px;
-    width: 6.74rem;
-    height: 3.5rem;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  width: 6.74rem;
+  height: 3.5rem;
+  cursor: pointer;
 }
 
 .fboard-selection-qna-text {
-    position: absolute;
-    top: 1rem;
-    left: 1.02rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 4.45rem;
+  position: absolute;
+  top: 1rem;
+  left: 1.02rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 4.45rem;
 }
 
 .fboard-selection-qna {
-    position: absolute;
-    top: 0;
-    left: 8.14rem;
-    width: 6.74rem;
-    height: 3.5rem;
+  position: absolute;
+  top: 0;
+  left: 8.14rem;
+  width: 6.74rem;
+  height: 3.5rem;
 }
 
 .fboard-selection-hire-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 5px;
-    width: 8.67rem;
-    height: 3.5rem;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  width: 8.67rem;
+  height: 3.5rem;
+  cursor: pointer;
 }
 
 .fboard-selection-hire-text {
-    position: absolute;
-    top: 1rem;
-    left: 1.11rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 6.53rem;
+  position: absolute;
+  top: 1rem;
+  left: 1.11rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 6.53rem;
 }
 
 .fboard-selection-hire {
-    position: absolute;
-    top: 0;
-    left: 17.03rem;
-    width: 8.67rem;
-    height: 3.5rem;
+  position: absolute;
+  top: 0;
+  left: 17.03rem;
+  width: 8.67rem;
+  height: 3.5rem;
 }
 
 .fboard-selection-academy-text {
-    position: absolute;
-    top: 1rem;
-    left: 0.84rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 5.08rem;
+  position: absolute;
+  top: 1rem;
+  left: 0.84rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 5.08rem;
 }
 
 .fboard-selection-academy {
-    position: absolute;
-    top: 0;
-    left: 27.86rem;
-    width: 6.74rem;
-    height: 3.5rem;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 27.86rem;
+  width: 6.74rem;
+  height: 3.5rem;
+  cursor: pointer;
 }
 
 .fboard-selection {
-    position: absolute;
-    top: 28.5rem;
-    left: 1.5rem;
-    width: 34.6rem;
-    height: 3.5rem;
-    text-align: center;
-    font-size: 1.3rem;
-    font-family: "Roboto Serif";
+  position: absolute;
+  top: 28.5rem;
+  left: 1.5rem;
+  width: 34.6rem;
+  height: 3.5rem;
+  text-align: center;
+  font-size: 1.3rem;
+  font-family: "Roboto Serif";
 }
 
 .fboard-write-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 5px;
-    background-color: #721ea6;
-    width: 10.5rem;
-    height: 3.8rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #721ea6;
+  width: 10.5rem;
+  height: 3.8rem;
 }
 
 .fboard-write-icon {
-    position: absolute;
-    top: 1.16rem;
-    left: 1.3rem;
-    width: 1.4rem;
-    height: 1.55rem;
+  position: absolute;
+  top: 1.16rem;
+  left: 1.3rem;
+  width: 1.4rem;
+  height: 1.55rem;
 }
 
 .fboard-write-text {
-    position: absolute;
-    top: 1.26rem;
-    left: 2.8rem;
-    letter-spacing: -0.24px;
-    font-weight: 600;
-    display: inline-block;
-    width: 6.4rem;
-    height: 1.68rem;
-    color: white;
+  position: absolute;
+  top: 1.26rem;
+  left: 2.8rem;
+  letter-spacing: -0.24px;
+  font-weight: 600;
+  display: inline-block;
+  width: 6.4rem;
+  height: 1.68rem;
+  color: white;
 }
 
 .fboard-write {
-    cursor: pointer;
-    position: absolute;
-    top: 33.6rem;
-    left: 1.5rem;
-    width: 10.5rem;
-    height: 3.8rem;
-    text-align: center;
-    font-size: 1.3rem;
-    color: #fff;
-    font-family: "Roboto Serif";
+  cursor: pointer;
+  position: absolute;
+  top: 33.6rem;
+  left: 1.5rem;
+  width: 10.5rem;
+  height: 3.8rem;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #fff;
+  font-family: "Roboto Serif";
 }
 
 .fboard-function-sort-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 15rem;
-    height: 3.6rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 15rem;
+  height: 3.6rem;
 }
 
 .fboard-function-sort-like,
 .fboard-function-sort-time,
 .fboard-function-sort-view {
-    position: absolute;
-    top: 1.2rem;
-    right: 10.1rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 4rem;
+  position: absolute;
+  top: 1.2rem;
+  right: 10.1rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 4rem;
 }
 
 .fboard-function-sort-like,
 .fboard-function-sort-view {
-    right: 5.6rem;
-    width: 3.7rem;
+  right: 5.6rem;
+  width: 3.7rem;
 }
 
 .fboard-function-sort-like {
-    right: 0.3rem;
-    width: 4rem;
+  right: 0.3rem;
+  width: 4rem;
 }
 
 .fboard-function-sort-bar-icon,
 .fboard-function-sort-bar2-icon {
-    position: absolute;
-    top: 0.1rem;
-    right: 4.95rem;
-    width: 0.2rem;
-    height: 3.4rem;
+  position: absolute;
+  top: 0.1rem;
+  right: 4.95rem;
+  width: 0.2rem;
+  height: 3.4rem;
 }
 
 .fboard-function-sort-bar-icon {
-    right: 9.95rem;
+  right: 9.95rem;
 }
 
 .fboard-function-sort {
-    position: absolute;
-    top: 33.6rem;
-    right: 1.5rem;
-    width: 15rem;
-    height: 3.6rem;
-    color: #484848;
-    font-family: Roboto;
-    cursor: pointer;
+  position: absolute;
+  top: 33.6rem;
+  right: 1.5rem;
+  width: 15rem;
+  height: 3.6rem;
+  color: #484848;
+  font-family: Roboto;
+  cursor: pointer;
 }
 
 .fboard-function-search-input1 {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    right: 0;
-    left: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #721ea6;
-    box-sizing: border-box;
-    height: 3.5rem;
-    padding-left: 2rem;
-    color: #626567;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #721ea6;
+  box-sizing: border-box;
+  height: 3.5rem;
+  padding-left: 2rem;
+  color: #626567;
 }
 
 .fboard-function-search-icon {
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    width: 1.6rem;
-    height: 1.5rem;
-    cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  width: 1.6rem;
+  height: 1.5rem;
+  cursor: pointer;
 }
 
 .board-hr-icon,
 .fboard-function-search-input {
-    position: absolute;
-    width: calc(100% - 30px);
-    top: 38.7rem;
-    right: 1.5rem;
-    left: 1.5rem;
-    height: 3.5rem;
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 38.7rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 3.5rem;
 }
 
 .board-hr-icon {
-    width: calc(100% - 44px);
-    top: 43.45rem;
-    right: 2.09rem;
-    left: 2.31rem;
-    max-width: 100%;
-    overflow: hidden;
-    height: 0.1rem;
+  width: calc(100% - 44px);
+  top: 43.45rem;
+  right: 2.09rem;
+  left: 2.31rem;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.1rem;
 }
 
 .fboard-pages-reset-icon {
-    position: absolute;
-    top: 45.2rem;
-    left: 2.1rem;
-    width: 2.04rem;
-    height: 2.03rem;
-    cursor: pointer;
+  position: absolute;
+  top: 45.2rem;
+  left: 2.1rem;
+  width: 2.04rem;
+  height: 2.03rem;
+  cursor: pointer;
 }
 
 .fboard-pages-current {
-    position: absolute;
-    top: 0;
-    right: 7.01rem;
-    letter-spacing: 0.5px;
-    line-height: 2.1rem;
-    display: inline-block;
-    width: 23.9rem;
+  position: absolute;
+  top: 0;
+  right: 7.01rem;
+  letter-spacing: 0.5px;
+  line-height: 2.1rem;
+  display: inline-block;
+  width: 23.9rem;
 }
 
 .fboard-pages,
 .fboard-pages-back-icon,
 .fboard-pages-forward-icon {
-    position: absolute;
-    top: 0.43rem;
-    right: 3.12rem;
-    width: 1.3rem;
-    height: 1.23rem;
+  position: absolute;
+  top: 0.43rem;
+  right: 3.12rem;
+  width: 1.3rem;
+  height: 1.23rem;
 }
 
 .fboard-pages,
 .fboard-pages-forward-icon {
-    right: -0.06rem;
+  right: -0.06rem;
 }
 
 .fboard-pages {
-    top: 45.2rem;
-    right: 2.79rem;
-    width: 30.91rem;
-    height: 2.1rem;
-    text-align: right;
+  top: 45.2rem;
+  right: 2.79rem;
+  width: 30.91rem;
+  height: 2.1rem;
+  text-align: right;
 }
 
 .board-hr-icon1 {
-    position: absolute;
-    width: calc(100% - 44px);
-    top: 48.85rem;
-    right: 2.09rem;
-    left: 2.31rem;
-    max-width: 100%;
-    overflow: hidden;
-    height: 0.1rem;
+  position: absolute;
+  width: calc(100% - 44px);
+  top: 48.85rem;
+  right: 2.09rem;
+  left: 2.31rem;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.1rem;
 }
 
 .fboard-notice-box {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(114, 30, 166, 0.07);
-    border-bottom: 1px solid #d2d2d2;
-    box-sizing: border-box;
-    height: 11.1rem;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(114, 30, 166, 0.07);
+  border-bottom: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  height: 11.1rem;
 }
 
 .fboard-notice-preview-info-logo-icon {
-    position: absolute;
-    top: 0.1rem;
-    left: 0;
-    width: 2rem;
-    height: 1.6rem;
+  position: absolute;
+  top: 0.1rem;
+  left: 0;
+  width: 2rem;
+  height: 1.6rem;
 }
 
 .fboard-notice-preview-info-text {
-    position: absolute;
-    top: 0;
-    left: 2.6rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 23.6rem;
+  position: absolute;
+  top: 0;
+  left: 2.6rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 23.6rem;
 }
 
 .fboard-notice-preview-info {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 26.2rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26.2rem;
+  height: 1.7rem;
 }
 
 .fboard-notice-preview-subject {
-    position: absolute;
-    top: 2.8rem;
-    left: 0.1rem;
-    font-size: 1.5rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    color: #000;
-    width: 25.5rem;
+  position: absolute;
+  top: 2.8rem;
+  left: 0.1rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  color: #000;
+  width: 25.5rem;
 }
 
 .fboard-notice-preview-notice-bo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #626567;
-    box-sizing: border-box;
-    width: 7.5rem;
-    height: 2.2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #626567;
+  box-sizing: border-box;
+  width: 7.5rem;
+  height: 2.2rem;
 }
 
 .fboard-notice-preview-notice-te {
-    position: absolute;
-    top: 0.3rem;
-    left: 0.65rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-    display: inline-block;
-    width: 6.1rem;
+  position: absolute;
+  top: 0.3rem;
+  left: 0.65rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 6.1rem;
 }
 
 .fboard-notice-preview-notice {
-    position: absolute;
-    top: 6.2rem;
-    left: 0.3rem;
-    width: 7.5rem;
-    height: 2.2rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #721ea6;
+  position: absolute;
+  top: 6.2rem;
+  left: 0.3rem;
+  width: 7.5rem;
+  height: 2.2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #721ea6;
 }
 
 .fboard-notice-preview-hash {
-    position: absolute;
-    top: 6.6rem;
-    left: 8.8rem;
-    font-size: 1.1rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 17.9rem;
+  position: absolute;
+  top: 6.6rem;
+  left: 8.8rem;
+  font-size: 1.1rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 17.9rem;
 }
 
 .fboard-notice-preview-views-tex {
-    position: absolute;
-    top: 0;
-    right: 0;
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  letter-spacing: -0.24px;
 }
 
 .fboard-notice-preview-views-ico-icon {
-    position: absolute;
-    top: 0.53rem;
-    right: 2.42rem;
-    width: 1.25rem;
-    height: 0.95rem;
+  position: absolute;
+  top: 0.53rem;
+  right: 2.42rem;
+  width: 1.25rem;
+  height: 0.95rem;
 }
 
 .fboard-notice-preview-views {
-    position: absolute;
-    top: 0;
-    right: 7.4rem;
-    width: 3.6rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0;
+  right: 7.4rem;
+  width: 3.6rem;
+  height: 1.7rem;
 }
 
 .fboard-notice-preview-icons-com2 {
-    position: relative;
-    border-radius: 1px;
-    width: 1.15rem;
-    height: 1.05rem;
+  position: relative;
+  border-radius: 1px;
+  width: 1.15rem;
+  height: 1.05rem;
 }
 
 .fboard-notice-preview-icons-com {
-    position: absolute;
-    top: 0;
-    right: 3.1rem;
-    width: 2.9rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0;
+  right: 3.1rem;
+  width: 2.9rem;
+  height: 1.7rem;
 }
 
 .fboard-notice-preview-icons-lik1 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    letter-spacing: -0.24px;
-    opacity: 0.9;
+  position: absolute;
+  top: 0;
+  right: 0;
+  letter-spacing: -0.24px;
+  opacity: 0.9;
 }
 
 .fboard-notice-preview-icons-lik2 {
-    position: absolute;
-    top: 0.53rem;
-    right: 1.02rem;
-    width: 1.05rem;
-    height: 0.95rem;
+  position: absolute;
+  top: 0.53rem;
+  right: 1.02rem;
+  width: 1.05rem;
+  height: 0.95rem;
 }
 
 .fboard-notice-preview-icons-lik {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 2rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2rem;
+  height: 1.7rem;
 }
 
 .fboard-notice-preview-icons {
-    position: absolute;
-    top: 6.6rem;
-    right: 0;
-    width: 11rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 6.6rem;
+  right: 0;
+  width: 11rem;
+  height: 1.7rem;
 }
 
 .fboard-notice-preview {
-    position: absolute;
-    top: 1.6rem;
-    left: 1rem;
-    width: 32rem;
-    height: 8.4rem;
+  position: absolute;
+  top: 1.6rem;
+  left: 1rem;
+  width: 32rem;
+  height: 8.4rem;
 }
 
 .fboard-notice {
-    position: absolute;
-    width: calc(100% - 44px);
-    top: 49rem;
-    right: 2.2rem;
-    left: 2.2rem;
-    height: 11.1rem;
+  position: absolute;
+  width: calc(100% - 44px);
+  top: 49rem;
+  right: 2.2rem;
+  left: 2.2rem;
+  height: 11.1rem;
 }
 
 .fboard-preview-box {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    border-bottom: 1px solid #bdc0c4;
-    box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid #bdc0c4;
+  box-sizing: border-box;
 }
 
 .fboard-preview-img-profile {
-    position: absolute;
-    top: 0.8rem;
-    left: 0;
-    border-radius: 50%;
-    background-color: #f6f6f8;
-    border: 1px solid #cfcfcf;
-    box-sizing: border-box;
-    width: 3.3rem;
-    height: 3.3rem;
+  position: absolute;
+  top: 0.8rem;
+  left: 0;
+  border-radius: 50%;
+  background-color: #f6f6f8;
+  border: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  width: 3.3rem;
+  height: 3.3rem;
 }
 
 .fboard-preview-type-date,
 .fboard-preview-type-text {
-    position: relative;
-    letter-spacing: -0.24px;
+  position: relative;
+  letter-spacing: -0.24px;
 }
 
 .fboard-preview-type-date {
-    color: #95969a;
+  color: #95969a;
 }
 
 .fboard-preview-id,
 .fboard-preview-type {
-    position: absolute;
-    left: 4.1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    font-size: 1.2rem;
+  position: absolute;
+  left: 4.1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 1.2rem;
 }
 
 .fboard-preview-type {
-    top: 0.7rem;
-    align-items: flex-start;
-    gap: 0.6rem;
-    color: #000;
+  top: 0.7rem;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: #000;
 }
 
 .fboard-preview-id {
-    top: 2.4rem;
-    align-items: center;
+  top: 2.4rem;
+  align-items: center;
 }
 
 .fboard-preview-subject {
-    position: absolute;
-    top: 5.3rem;
-    left: 0;
-    font-size: 2rem;
-    letter-spacing: -0.24px;
-    color: #000;
+  position: absolute;
+  top: 5.3rem;
+  left: 0;
+  font-size: 2rem;
+  letter-spacing: -0.24px;
+  color: #000;
 }
 
 .fboard-preview-contents {
-    position: absolute;
-    top: 8.6rem;
-    left: 0;
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 8.6rem;
+  left: 0;
+  letter-spacing: -0.24px;
 }
 
 .fboard-preview-img-preview {
-    position: absolute;
-    top: 0.9rem;
-    right: 0;
-    border-radius: 10px;
-    background-color: #f6f6f8;
-    border: 1px solid #cfcfcf;
-    box-sizing: border-box;
-    width: 9.9rem;
-    height: 9.5rem;
+  position: absolute;
+  top: 0.9rem;
+  right: 0;
+  border-radius: 10px;
+  background-color: #f6f6f8;
+  border: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  width: 9.9rem;
+  height: 9.5rem;
 }
 
 .fboard-preview-likes-text {
-    position: absolute;
-    top: 0;
-    left: calc(50% - 10.5px);
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 10.5px);
+  letter-spacing: -0.24px;
 }
 
 .fboard-preview-likes-icon {
-    position: absolute;
-    top: 0.53rem;
-    left: calc(50% - 29.25px);
-    width: 1.55rem;
-    height: 1.39rem;
+  position: absolute;
+  top: 0.53rem;
+  left: calc(50% - 29.25px);
+  width: 1.55rem;
+  height: 1.39rem;
 }
 
 .fboard-preview-likes {
-    position: absolute;
-    top: 12.5rem;
-    left: calc(50% - 135px);
-    width: 5.7rem;
-    height: 2.3rem;
+  position: absolute;
+  top: 12.5rem;
+  left: calc(50% - 135px);
+  width: 5.7rem;
+  height: 2.3rem;
 }
 
 .fboard-preview-comments-icon {
-    position: relative;
-    border-radius: 1px;
-    width: 1.55rem;
-    height: 1.39rem;
+  position: relative;
+  border-radius: 1px;
+  width: 1.55rem;
+  height: 1.39rem;
 }
 
 .fboard-preview-comments {
-    position: absolute;
-    top: 12.5rem;
-    left: calc(50% - 30px);
-    width: 5.7rem;
-    height: 2.3rem;
+  position: absolute;
+  top: 12.5rem;
+  left: calc(50% - 30px);
+  width: 5.7rem;
+  height: 2.3rem;
 }
 
 .fboard-preview-views-text {
-    position: absolute;
-    top: 0;
-    left: calc(50% - 9.5px);
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 9.5px);
+  letter-spacing: -0.24px;
 }
 
 .fboard-preview-views-icon {
-    position: absolute;
-    top: 0.53rem;
-    left: calc(50% - 30.25px);
-    width: 1.75rem;
-    height: 1.35rem;
+  position: absolute;
+  top: 0.53rem;
+  left: calc(50% - 30.25px);
+  width: 1.75rem;
+  height: 1.35rem;
 }
 
 .fboard-preview-views {
-    position: absolute;
-    top: 12.5rem;
-    left: calc(50% + 75px);
-    width: 5.9rem;
-    height: 2.3rem;
+  position: absolute;
+  top: 12.5rem;
+  left: calc(50% + 75px);
+  width: 5.9rem;
+  height: 2.3rem;
 }
 
 .fboard-preview {
-    position: relative;
-    width: calc(100% - 44px);
-    top: 61.3rem;
-    right: 2.3rem;
-    left: 2.1rem;
-    height: 16.4rem;
-    font-size: 1.6rem;
+  position: relative;
+  width: calc(100% - 44px);
+  top: 61.3rem;
+  right: 2.3rem;
+  left: 2.1rem;
+  height: 16.4rem;
+  font-size: 1.6rem;
 }
 
 /* 전체 div -> height 지우고 position : relative */
 .fboard {
-    position: relative;
-    background-color: #fff;
-    width: 100%;
-    overflow: hidden;
-    text-align: left;
-    font-size: 1.2rem;
-    color: #626567;
-    font-family: "Noto Sans KR";
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #626567;
+  font-family: "Noto Sans KR";
 }
 
 .fboard_list {
-    margin-bottom: 65rem;
+  margin-bottom: 65rem;
 }
 
 /* 아래 페이징 -> width 변경 */
 .fboard-pages2 {
-    position: relative;
-    margin-top: 1rem;
-    width: calc(100% - 2.79rem);
-    height: 2.1rem;
-    text-align: right;
+  position: relative;
+  margin-top: 1rem;
+  width: calc(100% - 2.79rem);
+  height: 2.1rem;
+  text-align: right;
 }
-  
