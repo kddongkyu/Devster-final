@@ -212,10 +212,13 @@ function QboardDetail(props) {
                         <div className="qboard-advertise-main" />
                         <b className="qboard-advertise-text1">광고 2</b>
                     </div>
-
-                    <QboardCommentForm qb_idx={qb_idx}/>
-                    <QboardComment qb_idx={qb_idx}/>
                 </div>
+
+            </div>
+
+            <div className="qboard-comments-box">
+                <QboardCommentForm qb_idx={qb_idx}/>
+                <QboardComment qb_idx={qb_idx}/>
             </div>
 
         </div>

@@ -39,6 +39,7 @@
     height: 7.1rem;
     object-fit: fill;
     flex: 1;
+    border: 1px solid #cfcfcf;
 }
 .b {
     position: absolute;
@@ -66,9 +67,10 @@
 .li {
     /*margin-bottom: false;*/
 }
-.ul {
+.review-detail-ul {
     margin: 0;
-    padding-left: 1.31rem;
+    padding-left: 4.31rem;
+    width: 100%;
 }
 .review-detail-comp-info-text {
     position: absolute;
@@ -80,7 +82,7 @@
     font-family: inherit;
     color: #626567;
     display: inline-block;
-    width: 13.9rem;
+    width: 18.9rem;
     height: 5.5rem;
 }
 .review-detail-comp {
@@ -339,11 +341,10 @@
 }
 .review-detail-headline {
     position: absolute;
-    top: 20.1rem;
-    left: calc(50% - 40px);
-    width: 8.5rem;
-    height: 2rem;
-    color: #626567;
+    top: 21.9rem;
+    left: 6.4rem;
+    font-size: 1.4rem;
+    letter-spacing: -0.24px;
 }
 .review-detail {
     position: relative;
@@ -672,6 +673,11 @@
 .review-detail-commnets-hide-img{
     width: 1rem;
     cursor: pointer;
+}
+
+/* 장수현 */
+.review-detail-header {
+
 }
 
 

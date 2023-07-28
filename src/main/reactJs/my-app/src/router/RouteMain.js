@@ -92,6 +92,21 @@ function RouteMain(props) {
           element={<Aboarddtail />}
         />
 
+        <Route
+            path="/qboard/detail/:qb_idx/:currentPage"
+            element={<QboardDetail />}
+        />
+
+        <Route
+            path="/fboard/detail/:fb_idx/:currentPage"
+            element={<FboardDetail />}
+        />
+
+        <Route
+            path="/review/detail/:rb_idx/:currentPage"
+            element={<Reviewdetail />}
+        />
+
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
         <Route
           path="/fboard/updateform/:fb_idx/:currentPage"

@@ -244,9 +244,9 @@ function Reviewdetail() {
                     </div>
                 </div>
                 <div className="review-detail-comp-info-text">
-                    <ul className="ul">
+                    <ul className="review-detail-ul">
                         <li className="li">사원수 : {reviewData.ciPpl}명</li>
-                        <li className="cisale_li">매출액 :{reviewData.ciSale}</li>
+                        <li className="cisale_li">매출액 : {reviewData.ciSale}</li>
                         <li className="cisal_li">평균연봉 : {Number(reviewData.ciSal).toLocaleString('ko-KR')}원
                         </li>
                     </ul>
