@@ -95,7 +95,7 @@ export const createWebSocketMiddleware = () => {
     return (storeAPI) => (next) => (action) => {
         switch (action.type) {
             case 'SOCKET_CONNECT' :
-                let sock = new SockJS('https://localhost/wss');
+                let sock = new SockJS('https://devster.kr/wss');
                 client = StompJS.Stomp.over(sock);
                 client.connect({}, () => {
                     client.subscribe('/sub/' + action.payload, data => {
