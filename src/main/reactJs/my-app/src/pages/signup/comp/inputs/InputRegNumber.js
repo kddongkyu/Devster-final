@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import '../../style/SignUpComp.css';
 import {useDispatch, useSelector} from "react-redux";
-import {setCm_reg, setRegChk, setRegIsValid} from "../../../../redux/compMemberSlice";
+import {resetCompMember, setCm_reg, setRegChk, setRegIsValid} from "../../../../redux/compMemberSlice";
 import axios from "axios";
 import {jwtHandleError} from "../../../../api/JwtHandleError";
 import {useSnackbar} from "notistack";
@@ -61,7 +61,6 @@ function InputRegNumber(props) {
                 const code = res.data.data[0].b_stt_cd;
                 if (code === '01') {
                     dispatch(setRegIsValid(true));
-                    sessionStorage.setItem('cm_reg',cm_reg);
                     setRegValidMsg('인증 되었습니다.');
                     setIsInputValid(true);
                     setLoadingPage(true);
@@ -106,7 +105,7 @@ function InputRegNumber(props) {
     useEffect(() => {
         if (regIsValid) {
             const timer = setTimeout(async () => {
-                navi('/csignup');
+                navi('/csignup', {replace: true, state: {regNum: cm_reg}});
             }, 2000);
             return () => clearTimeout(timer);
         }
@@ -122,14 +121,14 @@ function InputRegNumber(props) {
     }
 
     const handleRegKeyDown = (e) => {
-        if(e.key === '-' || e.key === ' ') {
+        if (e.key === '-' || e.key === ' ') {
             e.preventDefault();
         }
     }
 
     useEffect(() => {
-        console.log('regIsValid changed', regIsValid);
-    }, [regIsValid]);
+        dispatch(resetCompMember());
+    }, [dispatch]);
 
     return (
         <div className='signup-company-compreg'>

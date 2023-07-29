@@ -37,7 +37,7 @@ async function refreshAccessToken(refreshToken) {
 
             localStorage.setItem('accessToken', newAccessToken);
             localStorage.setItem('refreshToken', newRefreshToken);
-            localStorage.setItem('expiredTime', newDecodedToken.exp);
+            // localStorage.setItem('expiredTime', newDecodedToken.exp);
 
             return newAccessToken;
         }
@@ -56,7 +56,7 @@ axiosIns.interceptors.request.use(
         if (isTokenExpired(refreshToken) && refreshToken) {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
-            localStorage.removeItem('expiredTime');
+            // localStorage.removeItem('expiredTime');
             alert('세션이 만료되었습니다.\n로그아웃 되었습니다.');
             window.location.reload();
         } else if (isTokenExpired(accessToken) && refreshToken) {

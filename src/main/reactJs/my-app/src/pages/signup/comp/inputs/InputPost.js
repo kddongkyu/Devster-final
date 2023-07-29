@@ -46,10 +46,6 @@ function InputPost(props) {
         searchIconRef.current.click();
     }
 
-    useEffect(() => {
-        console.log('postIsValid changed', postIsValid);
-    }, [postIsValid]);
-
     return (
         <div>
             <div className='signup-comp-post-text'>

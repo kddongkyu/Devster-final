@@ -1,10 +1,14 @@
 import React, {useRef} from 'react';
-import {userSignIn} from "../../api/SignInApi";
-import {jwtHandleError} from "../../api/JwtHandleError";
-import {useSnackbar} from "notistack";
-import ToastAlert from "../../api/ToastAlert";
+import {userSignIn} from '../../api/SignInApi';
+import {jwtHandleError} from '../../api/JwtHandleError';
+import {useSnackbar} from 'notistack';
+import ToastAlert from '../../api/ToastAlert';
+import Kakao from "../../api/social/Kakao";
+import {useNavigate} from "react-router-dom";
+import Naver from "../../api/social/Naver";
 
 function SignInNorm({capsLockChk, isCapsOn}) {
+    const navi=useNavigate();
     const normIdRef = useRef('');
     const normPwRef = useRef('');
     const {enqueueSnackbar} = useSnackbar();
@@ -22,7 +26,7 @@ function SignInNorm({capsLockChk, isCapsOn}) {
 
         try {
             await userSignIn(normSignInInfo, normUrl);
-            // window.location.replace('/home');
+            navi('/home',{replace:true});
         } catch (error) {
             jwtHandleError(error, toastAlert);
         }
@@ -40,8 +44,8 @@ function SignInNorm({capsLockChk, isCapsOn}) {
         <div>
             <div>
                 <b className='login-sns-text'>SNS 로그인</b>
-                <div className='login-sns-kakao'/>
-                <div className='login-sns-naver'/>
+                <Kakao/>
+                <Naver/>
                 <div className='login-devster-hr'/>
                 <b className='login-devster-text'>Devster 아이디로 로그인</b>
             </div>

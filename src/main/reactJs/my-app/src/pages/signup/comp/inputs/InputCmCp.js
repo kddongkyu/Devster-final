@@ -91,10 +91,6 @@ function InputCmCp(props) {
         }
     }
 
-    useEffect(() => {
-        console.log('cpIsValid changed:', cpIsValid);
-    }, [cpIsValid])
-
     return (
         <div>
             <div className='signup-comp-cp-text'>

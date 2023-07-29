@@ -1,11 +1,11 @@
-package data.service;
+package data.service.devchat;
 
 import data.mapper.AcademyInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoomService implements RoomServiceInter{
+public class RoomService implements RoomServiceInter {
 
     @Autowired
     private AcademyInfoMapper academyinfoMapper;

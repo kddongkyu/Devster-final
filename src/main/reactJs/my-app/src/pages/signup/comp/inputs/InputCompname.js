@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCm_compname, setCompChk, setCompIsValid} from '../../../../redux/compMemberSlice';
+import {setCm_compname, setCompChk, setCompIsValid, setRegIsValid} from '../../../../redux/compMemberSlice';
 import axios from 'axios';
 import {useSnackbar} from 'notistack';
 import ToastAlert from '../../../../api/ToastAlert';
@@ -78,10 +78,6 @@ function InputCompname(props) {
         dispatch(setCm_compname(e.target.value));
         dispatch(setCompIsValid(false));
     }
-
-    useEffect(() => {
-        console.log('compIsValid changed: ', compIsValid);
-    }, [compIsValid]);
 
     return (
         <div className='signup-comp-compname-position-box'>

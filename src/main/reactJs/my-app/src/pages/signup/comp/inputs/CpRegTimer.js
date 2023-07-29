@@ -15,7 +15,6 @@ function CpRegTimer(props) {
         if (isCpSent && cpSeconds > 0) {
             const regTimer = setTimeout(() => {
                 dispatch(setCpSeconds(cpSeconds - 1));
-                console.log(regTimer);
             }, 1000);
             return () => clearTimeout(regTimer);
         } else if (cpSeconds <= 0) {

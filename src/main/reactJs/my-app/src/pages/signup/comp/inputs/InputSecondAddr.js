@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCm_addrSecond, setSecondAddrValid} from "../../../../redux/compMemberSlice";
+import {setCm_addr, setCm_addrSecond, setSecondAddrValid} from "../../../../redux/compMemberSlice";
 
 function InputSecondAddr(props) {
     const dispatch = useDispatch();
@@ -45,10 +45,6 @@ function InputSecondAddr(props) {
         dispatch(setCm_addrSecond(e.target.value));
         dispatch(setSecondAddrValid(false));
     }
-
-    useEffect(() => {
-        console.log('secondAddrValid changed:', secondAddrValid);
-    }, [secondAddrValid]);
 
     return (
         <div className='signup-comp-second-addr-position'>

@@ -1,4 +1,4 @@
-package data.dto;
+package data.dto.devchat;
 
 import lombok.Data;
 import lombok.ToString;

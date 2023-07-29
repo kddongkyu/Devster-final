@@ -1,16 +1,26 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import Message from "./Message";
-import './Room.css'
+import './style/Room.css'
+import { useDispatch, useSelector } from "react-redux";
+import { setSendingMsg, wsPublish } from "../../redux/devChat";
 
-function Room({roomName, msg, userNameRef, msgRef, publish, ppl}) {
+function Room(props) {
+    const dispatch = useDispatch();
+    const sendingMsg = useSelector(state => state.devChat.sendingMsg);
+    const roomName = useSelector(state => state.devChat.roomName);
+    const peopleCount = useSelector(state => state.devChat.peopleCount);
+    const msg = useSelector(state => state.devChat.msg);
     const msgSend = (e) => {
-        if (msgRef.current.value === '') {
+        if (sendingMsg === '') {
             alert('값을 입력하세요');
             return
         } else {
-            // publish('CHAT', userNameRef.current.value, msgRef.current.value);
-            publish('CHAT', '야붕이', msgRef.current.value);
-            msgRef.current.value='';
+            dispatch(wsPublish({
+                type: 'CHAT',
+                userName: '야붕이',
+                msg: sendingMsg,
+            }));
+            dispatch(setSendingMsg(''));
         }
     }
     const enterKey = (e) => {
@@ -19,10 +29,14 @@ function Room({roomName, msg, userNameRef, msgRef, publish, ppl}) {
         }
     }
 
+    const handleOnMsgInput = (e) => {
+        dispatch(setSendingMsg(e.target.value));
+    }
+
     return (
         <div>
             <h1>{roomName}</h1>
-            <h1>{ppl}</h1>
+            <h1>{peopleCount}</h1>
             <div id='chats' style={{
                 width: '500px',
                 height: '400px',
@@ -32,16 +46,23 @@ function Room({roomName, msg, userNameRef, msgRef, publish, ppl}) {
                 {
                     msg.map((item, idx) => {
                         return (
-                            <Message key={idx} item={item}/>
+                            <Message key={idx} item={item} />
                         )
                     })
                 }
             </div>
             <div id='tooldbox'>
-                {/*<input placeholder='대화명' ref={userNameRef}/>*/}
-                <input placeholder='보낼메세지' ref={msgRef} onKeyUp={enterKey}/>
+                <input placeholder='보낼메세지'
+                    value={sendingMsg}
+                    onKeyUp={enterKey}
+                    onChange={handleOnMsgInput}
+                />
                 <button onClick={msgSend}>전송</button>
             </div>
+
+
+
+
 
             <div className="moblie-chat-room">
                 <div className="chat-header">

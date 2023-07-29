@@ -43,7 +43,7 @@ const initialState = {
     cpSendingInProg: false,
     isSelectedTouched: false,
     isSubmitted: false,
-}
+};
 
 export const compMemberSlice = createSlice({
     name: 'compMember',
@@ -172,6 +172,8 @@ export const compMemberSlice = createSlice({
         setIsSubmitted: (state, action) => {
             state.isSubmitted = action.payload;
         },
+
+        resetCompMember:() => initialState,
     },
 });
 
@@ -187,7 +189,6 @@ export const {
     setCm_addr,
     setCm_addrFirst,
     setCm_addrSecond,
-
 
     setSeconds,
     setCpSeconds,
@@ -214,14 +215,14 @@ export const {
     setSecondAddrValid,
     setContractValid,
 
-
     setIsEmailSent,
     setSendingInProg,
     setIsCpSent,
     setCpSendingInProg,
     setIsSelectedTouched,
-
     setIsSubmitted,
+
+    resetCompMember,
 } = compMemberSlice.actions;
 
 export default compMemberSlice.reducer;

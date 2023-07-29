@@ -3,8 +3,10 @@ import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {userSignIn} from "../../api/SignInApi";
 import {jwtHandleError} from "../../api/JwtHandleError";
+import {useNavigate} from "react-router-dom";
 
 function SignInComp({capsLockChk, isCapsOn}) {
+    const navi=useNavigate();
     const compIdRef = useRef('');
     const compPwRef = useRef('');
     const {enqueueSnackbar} = useSnackbar();
@@ -22,7 +24,7 @@ function SignInComp({capsLockChk, isCapsOn}) {
 
         try {
             await userSignIn(compSignInInfo, compUrl);
-            // window.location.replace('/home');
+            navi('/home',{replace:true});
         } catch (error) {
             jwtHandleError(error, toastAlert);
         }

@@ -2,12 +2,14 @@ import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../../api/ToastAlert";
-import {setCm_addr, setCm_reg, setIsSubmitted} from "../../../redux/compMemberSlice";
+import {resetCompMember, setCm_addr, setCm_reg, setIsSubmitted} from "../../../redux/compMemberSlice";
 import axios from "axios";
 import {jwtHandleError} from "../../../api/JwtHandleError";
+import {useNavigate} from "react-router-dom";
 
 function SignUpCompSubmit(props) {
     const dispatch = useDispatch();
+    const navi=useNavigate();
     const cm_reg = useSelector(state => state.comp.cm_reg);
     const cm_compname = useSelector(state => state.comp.cm_compname);
     const cm_email = useSelector(state => state.comp.cm_email);
@@ -39,8 +41,8 @@ function SignUpCompSubmit(props) {
     ]);
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
-
     const scrollUp = useSelector(state => [
+        state.comp.regIsValid,
         state.comp.compIsValid,
         state.comp.emailIsValid,
         state.comp.passIsValid,
@@ -53,10 +55,10 @@ function SignUpCompSubmit(props) {
 
     const handleOnSubmit = async () => {
         await dispatch(setIsSubmitted(true));
+        const combinedAddr = `${cm_addrFirst} ${cm_addrSecond.trim()}`;
+
         if (submitIsValid.every(Boolean)) {
             try {
-                dispatch(setCm_reg(sessionStorage.getItem('cm_reg')));
-                dispatch(setCm_addr((`${cm_addrFirst} ${cm_addrSecond.trim()}`)));
                 const formData = new FormData();
                 formData.append('cm_reg', cm_reg);
                 formData.append('cm_compname', cm_compname);
@@ -66,7 +68,7 @@ function SignUpCompSubmit(props) {
                 formData.append('cm_name', cm_name);
                 formData.append('cm_cp', cm_cp);
                 formData.append('cm_post', cm_post);
-                formData.append('cm_addr', cm_addr);
+                formData.append('cm_addr', combinedAddr);
 
                 const res = await axios({
                     method: 'post',
@@ -75,8 +77,8 @@ function SignUpCompSubmit(props) {
                     headers: {'Content-Type': 'application/json'}
                 });
                 if (res?.status === 200) {
-                    sessionStorage.removeItem('cm_reg');
-                    window.location.replace('/grats');
+                    dispatch(resetCompMember());
+                    navi('/grats',{replace:true});
                 } else {
                     dispatch(setIsSubmitted(false));
                     toastAlert(<>회원가입에 실패했습니다.<br/>잠시후 다시 시도해주세요.</>, 'warning');

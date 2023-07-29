@@ -76,17 +76,11 @@ function InputCmCpReg(props) {
             dispatch(setCpRegChk(true));
             dispatch(setCpSeconds(null));
             toastAlert('인증 되었습니다.', 'success');
-            console.log(cpRegNum,cpRegInput);
         } else {
             dispatch(setCpRegChk(false));
             toastAlert(<>인증에 실패했습니다.<br/>인증번호를 확인해주세요.</>, 'warning');
-            console.log(cpRegNum,cpRegInput);
         }
     }
-
-    useEffect(() => {
-        console.log('cpRegChk changed:', cpRegChk);
-    }, [cpRegChk]);
 
     return (
         <div>

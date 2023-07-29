@@ -45,10 +45,6 @@ function InputAcademy(props) {
         searchIconRef.current.click();
     }
 
-    useEffect(() => {
-        console.log('academyIsValid changed', academyIsValid);
-    }, [academyIsValid]);
-
     return (
         <div>
             <div className='signup-guest-academy-text'>

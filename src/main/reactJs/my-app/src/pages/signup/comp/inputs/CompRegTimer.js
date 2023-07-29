@@ -15,7 +15,6 @@ function CompRegTimer(props) {
         if (isEmailSent && seconds > 0) {
             const regTimer = setTimeout(() => {
                 dispatch(setSeconds(seconds - 1));
-                console.log(regTimer);
             }, 1000);
             return () => clearTimeout(regTimer);
         } else if (seconds <= 0) {

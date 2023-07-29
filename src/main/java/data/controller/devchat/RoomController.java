@@ -1,18 +1,17 @@
-package data.controller;
+package data.controller.devchat;
 
-import data.service.RoomService;
+import data.service.devchat.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/devchat")
 public class RoomController {
 
     @Autowired
     private RoomService roomService;
 
-    @GetMapping("/devchat/{ai_idx}")
+    @GetMapping("/D1/{ai_idx}")
     public String getRoomName(@PathVariable int ai_idx) {
         return roomService.getRoomName(ai_idx);
     }

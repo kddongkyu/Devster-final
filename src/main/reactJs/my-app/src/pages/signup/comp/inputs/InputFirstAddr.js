@@ -38,10 +38,6 @@ function InputFirstAddr(props) {
         setOpenPostCode(true);
     }
 
-    useEffect(() => {
-        console.log('firstAddrValid changed', firstAddrValid);
-    }, [firstAddrValid]);
-
     return (
         <div>
             <div className='signup-comp-first-addr-text'>

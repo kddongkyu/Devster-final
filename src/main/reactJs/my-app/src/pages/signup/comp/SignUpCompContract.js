@@ -25,10 +25,6 @@ function SignUpNormContract(props) {
         dispatch(setContractValid(!contractValid));
     }
 
-    useEffect(() => {
-        console.log('contractValid chaged', contractValid)
-    }, [contractValid]);
-
     return (
         <div>
             <div className='signup-comp-contract-conditio'>

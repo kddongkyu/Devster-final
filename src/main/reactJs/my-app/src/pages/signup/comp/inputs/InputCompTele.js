@@ -53,10 +53,6 @@ function InputCompTele(props) {
         }
     }
 
-    useEffect(() => {
-        console.log('teleIsValid changed:', teleIsValid);
-    }, [teleIsValid]);
-
     return (
         <div className='signup-comp-tele-position'>
             <div className='signup-comp-tele-text'>

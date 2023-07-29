@@ -7,11 +7,11 @@ function Grats(props) {
     const navi = useNavigate();
 
     const handleHomeBtn = () => {
-        navi('/home');
+        navi('/home',{replace:true});
     }
 
     const handleSignInBtn = () => {
-        navi('/signin');
+        navi('/signin',{replace:true});
     }
 
     return (

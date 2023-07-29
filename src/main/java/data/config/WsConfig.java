@@ -12,7 +12,7 @@ public class WsConfig implements WebSocketMessageBrokerConfigurer{
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/wss")
-                .setAllowedOriginPatterns("https://localhost:443","https://localhost:3000")
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 

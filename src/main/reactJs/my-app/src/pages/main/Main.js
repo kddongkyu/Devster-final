@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
-import {NavLink, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import './style/Main.css';
 import {MainBest, MainFreeboard, MainHire, MainQnA, MainReview} from './index';
 
 
 function Main(props) {
     const navi = useNavigate();
-    const [ai_idx, setAi_idx] = useState(3); //dummy
 
     return (
         <div className='moblie-main'>
-            {/*<h1>*/}
-            {/*    <button onClick={()=>{navi(`/devchat/${ai_idx}`)}}>ㄹㅇ테스트</button>*/}
-            {/*</h1>*/}
             <div className='main-advertise'>
                 <div className='main-advertise-box'/>
                 <b className='main-advertise-text'>광고1</b>

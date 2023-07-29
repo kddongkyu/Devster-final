@@ -46,10 +46,6 @@ function InputCmName(props) {
         dispatch(setNameIsValid(false));
     }
 
-    useEffect(() => {
-        console.log('nameIsValid changed:', nameIsValid);
-    }, [nameIsValid]);
-
     return (
         <div className='signup-comp-cmname-position'>
             <div className='signup-comp-cmname-text'>
