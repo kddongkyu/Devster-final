@@ -110,8 +110,11 @@ export const createWebSocketMiddleware = () => {
                     });
                     storeAPI.dispatch(setRoomId(action.payload));
                     //username 가져와서 dispatch로 세터해주고 넘겨줘야함(나중에);
+                    const roomId=storeAPI.getState().devChat.roomId;
                     storeAPI.dispatch(wsPublish({
                         type:'ENTER',
+                        roomId,
+                        userName:'야붕',
                     }));
                     storeAPI.dispatch(setConnected(true));
                 });
@@ -123,7 +126,7 @@ export const createWebSocketMiddleware = () => {
                     client.send('/pub/msg',{},JSON.stringify({
                         type:'EXIT',
                         roomId,
-                        userName:'',
+                        userName:'야붕',
                         msg:'',
                         date:'',
                     }));
