@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 import "./style/UserInfo.css";
 import axiosIns from "../../api/JwtConfig";
-import noimage from "./assets/noimage.png";
+import { checkToken } from "../../api/checkToken";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function UserInfo(props) {
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
   const [member, setMember] = useState({
     m_name: "",
     m_email: "",
@@ -16,11 +21,8 @@ function UserInfo(props) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
-  const navigate = useNavigate();
-  const decodedToken = jwt_decode(localStorage.accessToken);
   const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${previewImage}`;
-  // const m_idx = decodedToken.idx;
 
   // Functions
   const getMemberData = async (idx) => {
@@ -29,7 +31,7 @@ function UserInfo(props) {
       setMember(response.data);
       setPreviewImage(`${photoUrl}${response.data.m_photo}`); // 서버에서 불러온 이미지 경로를 저장
     } catch (e) {
-      console.log(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -48,8 +50,8 @@ function UserInfo(props) {
           headers: { "Content-Type": "multipart/form-data" },
         });
         setPreviewImage(`${photoUrl}${response.data.m_photo}`); // 서버에서 받아온 이미지 경로를 저장
-      } catch (error) {
-        console.error("Failed to upload image: ", error);
+      } catch (e) {
+        jwtHandleError(e, toastAlert);
       }
     }
   };
@@ -65,13 +67,12 @@ function UserInfo(props) {
       const response = await axiosIns.put("/api/member/D1", member);
       if (response.status === 200) {
         alert("수정되었습니다");
-        //navigate(`/userinfo`);
         window.location.reload();
       } else {
         console.log("There was an issue updating the member");
       }
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      jwtHandleError(e, toastAlert);
     }
   };
 

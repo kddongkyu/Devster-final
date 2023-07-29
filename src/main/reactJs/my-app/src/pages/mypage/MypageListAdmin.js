@@ -47,7 +47,7 @@ function MypageListAdmin(props) {
       </div>
       <div className="menu-myresume">
         <NavLink
-          to={"/"}
+          to={"/company/approval"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;

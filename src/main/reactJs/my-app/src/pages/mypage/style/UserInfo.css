@@ -11,11 +11,13 @@
   font-size: 2rem;
   color: #000;
   width: 7.4rem;
+  font-weight: 700;
 }
 .text-name {
   top: 6.5rem;
   font-weight: 500;
   width: 2.8rem;
+  font-weight: 700;
 }
 .userinfo-name-box {
   position: absolute;
@@ -28,6 +30,7 @@
   border: 1px solid #d3d4d8;
   box-sizing: border-box;
   height: 3.8rem;
+  font-size: 1.3rem;
 }
 .text-email,
 .userinfo-name {
@@ -48,6 +51,7 @@
   display: inline-block;
   width: 4.2rem;
   height: 2.3rem;
+  font-weight: 700;
 }
 .userinfo-email {
   position: absolute;
@@ -70,6 +74,7 @@
 .userinfo-belong {
   position: absolute;
   left: 0.1rem;
+  font-weight: 700;
 }
 .userinfo-belong {
   width: 100%;
@@ -102,6 +107,7 @@
   display: inline-block;
   width: 2.6rem;
   height: 2.3rem;
+  font-weight: 700;
 }
 .userinfo-nickname {
   position: absolute;
@@ -116,7 +122,7 @@
   top: 42rem;
   left: 0.1rem;
   letter-spacing: -0.24px;
-  font-weight: 500;
+  font-weight: 700;
 }
 .button-profilechange-box {
   position: absolute;
@@ -180,6 +186,7 @@
   background-color: #721ea6;
   width: 8.8rem;
   height: 4.1rem;
+  border: 0;
 }
 .text-save {
   position: absolute;
@@ -197,19 +204,21 @@
 }
 .userinfo-wrapper {
   position: absolute;
-  top: 42.6rem;
+  /* top: 42.6rem; */
   left: 2.1rem;
   width: calc(100% - 4.4rem);
-  height: 67.7rem;
+  height: 58.7rem;
 }
 .userinfo {
   position: relative;
   width: 100%;
-  height: 101.3rem;
+  height: 58.7rem;
   text-align: left;
   font-size: 1.4rem;
   color: #3b4150;
   font-family: "Noto Sans KR";
+  margin-bottom: 4.4rem;
+  margin-top: 3.7rem;
 }
 .profile-picture img {
   width: 100%;
@@ -223,7 +232,61 @@
   width: 5rem;
   height: 4.2rem;
   border-radius: 0.5rem;
-  border: 1px solid #D2D5DA;
+  border: 2px solid #D2D5DA;
   background: #FFF;
   top: 0.3rem;
+}
+
+.userinfo-profile-guest {
+  position: absolute;
+  top: 45.6rem;
+  left: 0.1rem;
+  width: 11.8rem;
+  height: 4.8rem;
+  font-size: 1.2rem;
+}
+
+.text-nickname-guest {
+  position: absolute;
+  top: 32.6rem;
+  left: 0.1rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 100%;
+  height: 2.3rem;
+}
+
+.userinfo-name-box-post {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #d3d4d8;
+  box-sizing: border-box;
+  height: 3.8rem;
+}
+
+.userinfo-name-box-addr {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 12.4rem;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #d3d4d8;
+  box-sizing: border-box;
+  height: 3.8rem;
+}
+
+.userinfo-wrapper-guest {
+  position: absolute;
+  /* top: 37.6rem; */
+  left: 2.1rem;
+  width: calc(100% - 4.4rem);
+  height: 67.7rem;
 }
