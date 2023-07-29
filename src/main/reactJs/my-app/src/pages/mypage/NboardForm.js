@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
+import { checkToken } from "../../api/checkToken";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function NboardForm(props) {
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
   const [nbSubject, setNbSubject] = useState("");
   const [nbPhoto, setNbPhoto] = useState("");
   const [nbContent, setNbContent] = useState("");
   const [photoLength, setPhotoLength] = useState(0);
   const navi = useNavigate();
-
-  let de = jwt_decode(localStorage.getItem("accessToken"));
-  console.log(de.idx);
 
   const onSubmitEvent = (e) => {
     e.preventDefault();
@@ -21,7 +25,7 @@ function NboardForm(props) {
       nb_subject: nbSubject,
       nb_photo: nbPhoto,
       nb_content: nbContent,
-      m_idx: de.idx,
+      m_idx: decodedToken.idx,
     };
 
     axiosIns
@@ -32,7 +36,7 @@ function NboardForm(props) {
       })
       .catch((error) => {
         // 등록 실패 시 에러 처리
-        console.error(error);
+        jwtHandleError(e, toastAlert);
       });
   };
 
@@ -52,16 +56,9 @@ function NboardForm(props) {
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       setNbPhoto(res.data.join(","));
-      console.log(res.data);
-      // 추가: 업로드가 완료되면 fbPhoto 상태를 dto에 설정
-      //   const dto = {
-      //       fb_subject: nbSubject,
-      //       fb_photo: res.data.join(","), // 여러장의 사진 URL을 쉼표로 구분하여 문자열로 설정
-      //       fb_content: nbContent,
-      //       m_idx: de.idx
-      //   };
     });
   };
+
   return (
     <div>
       <form className="fboard-form" onSubmit={onSubmitEvent}>

@@ -40,7 +40,7 @@ public class CompanyMemberController {
     public void check() {
     }
 
-    @GetMapping("/D1")
+    @GetMapping("/D1/role")
     public ResponseEntity<List<CompanyMemberDto>> getAllCompanyMembers(){
         return new ResponseEntity<List<CompanyMemberDto>>(companyMemberService.getAllCompanyMembers(), HttpStatus.OK);
     }
@@ -86,7 +86,7 @@ public class CompanyMemberController {
 
     @PostMapping("/D0/email/validation")
     public ResponseEntity<String> emailValidation(@RequestBody JsonNode json) throws Exception {
-        String safeEmail = StringEscapeUtils.escapeHtml4(json.get("m_email").asText());
+        String safeEmail = StringEscapeUtils.escapeHtml4(json.get("cm_email").asText());
         return new ResponseEntity<String>(mailService.sendSimpleMessage(safeEmail),HttpStatus.OK);
     }
 
@@ -108,7 +108,7 @@ public class CompanyMemberController {
         return "로그아웃 성공";
     }
 
-    @PatchMapping("/D1")
+    @PatchMapping("/D1/role")
     public ResponseEntity<String> confirmRole(@RequestBody JsonNode json) {
         return new ResponseEntity<String>(companyMemberService.confirmRole(json.get("cm_idx").asInt(),json.get("sign").asBoolean()),HttpStatus.OK);
     }

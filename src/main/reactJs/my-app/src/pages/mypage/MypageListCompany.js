@@ -1,20 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function MypageListUser(props) {
+function MypageListCompany(props) {
   const activeStyle = {
     backgroundColor: "#e5e7eb",
-    color: "#1f2937",
+    color: "#222",
   };
   const deactiveStyle = {
-    color: "#808491",
+    color: "var(--color-slategray)",
   };
+
   return (
     <div>
       <b className="text-myaccount">내 계정</b>
       <div className="menu-userinfo">
         <NavLink
-          to={"/userinfo"}
+          to={"/compuserinfo"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;
@@ -30,13 +31,13 @@ function MypageListUser(props) {
       </div>
       <div className="menu-bookmarklist">
         <NavLink
-          to={"/bookmarks"}
+          to={"/resumelist"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;
           }}
         >
-          <div className="text-bookmarks">채용정보 북마크</div>
+          <div className="text-bookmarks">구직자 이력서 보기</div>
           <img
             className="icon-userinfo"
             alt=""
@@ -46,23 +47,7 @@ function MypageListUser(props) {
       </div>
       <div className="menu-myresume">
         <NavLink
-          to={"/myresume"}
-          className="menulist-userinfo-box"
-          style={({ isActive }) => {
-            return isActive ? activeStyle : deactiveStyle;
-          }}
-        >
-          <div className="text-bookmarks">내 이력서</div>
-          <img
-            className="icon-resume"
-            alt=""
-            src={require("./assets/file-dock.svg").default}
-          />
-        </NavLink>
-      </div>
-      <div className="menu-withdrawal">
-        <NavLink
-          to={"/withdrawal"}
+          to={"/company/withdrawal"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;
@@ -76,7 +61,7 @@ function MypageListUser(props) {
           />
         </NavLink>
       </div>
-      <div className="menu-notice">
+      <div className="menu-withdrawal">
         <NavLink
           to={"/notice/admin"}
           className="menulist-userinfo-box"
@@ -92,9 +77,10 @@ function MypageListUser(props) {
           />
         </NavLink>
       </div>
-      <div className="line-mypage" />
+
+      <div className="line-mypage-guest-user " />
     </div>
   );
 }
 
-export default MypageListUser;
+export default MypageListCompany;

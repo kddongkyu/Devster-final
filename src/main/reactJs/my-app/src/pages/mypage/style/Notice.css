@@ -10,7 +10,7 @@
   }
   .text-content-notice {
     position: absolute;
-    top: 2.1rem;
+    top: 1.4rem;
     left: 2.6rem;
     letter-spacing: -0.24px;
     display: flex;
@@ -25,7 +25,8 @@
     right: 0;
     left: 0;
     height: 6.1rem;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    font-weight: 700;
   }
   .search-icon-box {
     position: absolute;
@@ -87,12 +88,12 @@
     top: 0.2rem;
     left: 0;
     width: 2rem;
-    height: 1.3rem;
+    /* height: 1.3rem; */
   }
   .text-notice-write-time {
     position: absolute;
     top: 0;
-    left: 2.6rem;
+    left: 6.6rem;
     letter-spacing: -0.24px;
     display: inline-block;
     width: 12.1rem;
@@ -102,7 +103,7 @@
   .notice-content-title {
     position: absolute;
     top: 0.4rem;
-    left: 1.2rem;
+    left: 0.8rem;
     width: 14.7rem;
     height: 1.49rem;
   }
@@ -114,18 +115,21 @@
     color: #000;
     width: auto;
     height: 1.91rem;
+    font-weight: 700;
   }
   .notice-content-badge {
     position: absolute;
     top: 7.1rem;
-    left: 1.2rem;
-    border-radius: 5px;
+    left: 0.8rem;
+    border-radius: 3px;
     background-color: #fff;
-    border: 1px solid #626567;
+    border: 1px solid #d3d4d8;
     box-sizing: border-box;
     width: 6.3rem;
-    height: 1.87rem;
+    height: 2.2rem;
     text-align: center;
+    /* padding: 2px 10px; */
+    color: #721ea6;
   }
   .notice-content-hashtag,
   .number-likes {
@@ -188,18 +192,20 @@
     display: inline-block;
     width: 2rem;
     height: 1.38rem;
+    color: #374151;
+    font-size: 1.4rem;
   }
   .icon-view {
     position: absolute;
-    top: 0.41rem;
+    top: 0.3rem;
     right: 2.42rem;
-    width: 1.25rem;
-    height: 0.8rem;
+    width: 2rem;
+    /* height: 0.8rem; */
   }
   .content-notice-viewcount {
     position: absolute;
     top: 0;
-    right: 7.4rem;
+    right: 0rem;
     width: 3.6rem;
     height: 1.38rem;
   }
@@ -251,12 +257,14 @@
     text-align: left;
     font-size: 1.2rem;
     color: #000;
-    font-family: Roboto;
+    /* font-family: Roboto; */
+    margin-top: 3.7rem;
+    margin-bottom: 4.4rem;
   }
   .notice-content-box-admin{
     position: absolute;
     width: calc(100% - 30px);
-    top: 32.5rem;
+    /* top: 40rem; */
     right: 1.5rem;
     left: 1.5rem;
     height: 25.82rem;
@@ -349,8 +357,8 @@
 
 .nboard-write {
   position: absolute;
-  top: 76px;
-  left: 1.5rem;
+  top: 7.3rem;
+  left: 0.5rem;
   width: 10.5rem;
   height: 3.8rem;
   text-align: center;
@@ -390,4 +398,25 @@
   height: 1.68rem;
   color: white;
   z-index: 100;
+}
+
+.text-content-notice-sub {
+  position: absolute;
+  top: 3.4rem;
+  left: 2.6rem;
+  letter-spacing: -0.24px;
+  color: #868c97;
+  font-weight: 100;
+  font-size: 1.2rem;
+}
+.nboard-pages-hr{
+  position: absolute;
+  top: 11.2rem;
+  width: calc(100% - 14px);
+  right: 0rem;
+  left: 0rem;
+  right: 0.7rem;
+    left: 0.7rem;
+    height: 1px;
+    
 }

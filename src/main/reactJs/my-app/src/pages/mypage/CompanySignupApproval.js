@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
 import MenuModal from "./MenuModal";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function CompanySignupApproval(props) {
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
   const [companyMemberList, setCompanyMemberList] = useState([]);
 
   const list = async () => {
-    const listUrl = "/api/compmember/D1";
+    const listUrl = "/api/compmember/D1/role";
 
     try {
       const response = await axiosIns.get(listUrl);
       setCompanyMemberList(response.data);
-      console.log(response.data);
     } catch (e) {
-      console.log(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -32,19 +37,27 @@ function CompanySignupApproval(props) {
 
   const handleApprove = async (cm_idx) => {
     try {
-      await axiosIns.patch(`/api/compmember/D1`, { cm_idx, sign: true });
+      await axiosIns.patch(`/api/compmember/D1/role`, {
+        cm_idx,
+        type: "company",
+        sign: true,
+      });
       list();
     } catch (e) {
-      console.error(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
   const handleReject = async (cm_idx) => {
     try {
-      await axiosIns.patch(`/api/compmember/D1`, { cm_idx, sign: false });
+      await axiosIns.patch(`/api/compmember/D1/role`, {
+        cm_idx,
+        type: "company",
+        sign: false,
+      });
       list();
     } catch (e) {
-      console.error(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -52,7 +65,16 @@ function CompanySignupApproval(props) {
     <div className="memberApproval">
       <div className="content-memberApproval">
         <b className="text-constent-memberApproval">기업회원 가입 승인</b>
-        <div className="text-before-memberApproval">
+        <div
+          className="text-before-memberApproval"
+          style={{
+            display: companyMemberList.every(
+              (member) => member.cm_filename === "no"
+            )
+              ? "block"
+              : "grid",
+          }}
+        >
           {companyMemberList.every((member) => member.cm_filename === "no") ? (
             <p>회원가입 승인을 요청한 기업회원이 없습니다.</p>
           ) : (

@@ -2,11 +2,20 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
+import jwt_decode from "jwt-decode";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import { checkToken } from "../../api/checkToken";
 
 function NoticeAdmin(props) {
   const handleRefresh = () => {
     window.location.reload();
   };
+
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
 
   const [noticeBoardList, setNoticeBoardList] = useState([]);
 
@@ -47,22 +56,18 @@ function NoticeAdmin(props) {
   };
 
   useEffect(() => {
-    // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
     window.addEventListener("resize", handleResize);
-    handleResize(); // 초기 렌더링 시 텍스트 개수 설정
+    handleResize();
 
     return () => {
-      // 컴포넌트가 언마운트될 때 리사이즈 이벤트 핸들러 제거
       window.removeEventListener("resize", handleResize);
     };
   }, []);
   useEffect(() => {
-    // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
     window.addEventListener("resize", handleSubjectResize);
-    handleSubjectResize(); // 초기 렌더링 시 텍스트 개수 설정
+    handleSubjectResize();
 
     return () => {
-      // 컴포넌트가 언마운트될 때 리사이즈 이벤트 핸들러 제거
       window.removeEventListener("resize", handleSubjectResize);
     };
   }, []);
@@ -79,17 +84,15 @@ function NoticeAdmin(props) {
     axiosIns
       .get("/api/nboard/D0", { params: { page: page - 1 } })
       .then((response) => {
-        console.log(response.data);
         setNoticeBoardList(response.data.noticeBoardList);
         setTotalPages(response.data.totalPages);
       })
-      .catch((error) => {
-        console.error("Error fetching nboards:", error);
+      .catch((e) => {
+        jwtHandleError(e, toastAlert);
       });
   };
 
   useEffect(() => {
-    // JPA로부터 데이터 가져오는 API 호출
     axiosIns
       .get("/api/nboard/D0")
       .then((response) => {
@@ -121,9 +124,8 @@ function NoticeAdmin(props) {
     const today = new Date();
     const timeValue = new Date(valueConv);
 
-    // timeValue를 한국 시간대로 변환
     const timeValueUTC = new Date(timeValue.toISOString());
-    const offset = timeValue.getTimezoneOffset() * 60 * 1000; // 분 단위를 밀리초 단위로 변환
+    const offset = timeValue.getTimezoneOffset() * 60 * 1000;
     const timeValueKST = new Date(timeValueUTC.getTime() - offset);
 
     const betweenTime = Math.floor(
@@ -133,7 +135,6 @@ function NoticeAdmin(props) {
     if (betweenTime < 60) {
       return `${betweenTime}분 전`;
     }
-    console.log(betweenTime);
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
@@ -154,44 +155,66 @@ function NoticeAdmin(props) {
     return formattedDateWithoutTime;
   };
 
-  // const setPhotoUrl = (value) => {
-  //   if (value == null) {
-  //     return require("./assets/logo-img.svg").default;
-  //   }
-  //   const photoUrl = process.env.REACT_APP_PHOTO + "nboard/";
-  //   const firstCommaIndex = value.indexOf(",");
-  //   const parsedPhoto = value.substring(0, firstCommaIndex);
-  //   const srcUrl = photoUrl + parsedPhoto;
+  const [member, setMember] = useState({});
 
-  //   return srcUrl;
-  // };
+  const [companyMember, setCompanyMember] = useState([]);
+
+  const memberType = jwt_decode(localStorage.accessToken).type;
+
+  const getMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
+      setMember(response.data);
+    } catch (e) {
+      jwtHandleError(e, toastAlert);
+    }
+  };
+
+  const getCompMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/compmember/D1/${idx}`);
+      setCompanyMember(response.data);
+    } catch (e) {
+      jwtHandleError(e, toastAlert);
+    }
+  };
+
+  // Effects
+  useEffect(() => {
+    if (memberType === "normal") {
+      getMemberData(decodedToken.idx);
+    } else if (memberType === "company") {
+      getCompMemberData(decodedToken.idx);
+    }
+  }, [memberType, decodedToken.idx]);
 
   return (
     <div
       className="notice"
       style={{
-        height: `${52.4 + noticeBoardList.length * 14}rem`,
+        height: `${15 + noticeBoardList.length * 14}rem`,
       }}
     >
       <div className="notice-content-box-admin">
         <div className="notice-header">
           <div className="notice-header-box" />
           <b className="text-content-notice">공지사항</b>
+          <p className="text-content-notice-sub">
+            DEVSTER 새소식, 행사, 이벤트 정보
+          </p>
         </div>
 
-        <NavLink
-          to="/nboard/form"
-          activeClassName="active"
-          className="nboard-write"
-        >
-          <div className="nboard-write-box" />
-          <img
-            className="nboard-write-icon"
-            alt=""
-            src={require("./assets/board_write_icon.svg").default}
-          />
-          <div className="nboard-write-text">글쓰기</div>
-        </NavLink>
+        {memberType === "normal" && member.m_role === "ADMIN" && (
+          <NavLink to="/nboard/form" className="nboard-write">
+            <div className="nboard-write-box" />
+            <img
+              className="nboard-write-icon"
+              alt=""
+              src={require("./assets/board_write_icon.svg").default}
+            />
+            <div className="nboard-write-text">글쓰기</div>
+          </NavLink>
+        )}
 
         <div className="notice-options">
           <img
@@ -199,6 +222,18 @@ function NoticeAdmin(props) {
             alt=""
             src={require("./assets/board_pages_reset.svg").default}
             onClick={handleRefresh}
+            style={{
+              right:
+                memberType === "normal" && member.m_role === "ADMIN"
+                  ? "15rem"
+                  : "",
+              left:
+                (memberType === "normal" && member.m_role === "USER") ||
+                (memberType === "normal" && member.m_role === "GUEST") ||
+                memberType === "company"
+                  ? "1.6rem"
+                  : "",
+            }}
           />
           <div className="nboard-pages">
             <div className="nboard-pages-current">{`${currentPage} / ${totalPages} 페이지`}</div>
@@ -218,6 +253,8 @@ function NoticeAdmin(props) {
             />
           </div>
         </div>
+        <hr className="nboard-pages-hr" />
+
         {noticeBoardList &&
           noticeBoardList.map((nboard, index) => {
             return (
@@ -230,9 +267,11 @@ function NoticeAdmin(props) {
                   <img
                     className="logo-content-notice-icon"
                     alt=""
-                    //   src="/logo-content-notice.svg"
                     src={require("./assets/logo_content_notice.svg").default}
                   />
+                  <span style={{ position: "absolute", left: "2.7rem" }}>
+                    관리자
+                  </span>
                   <div className="text-notice-write-time">
                     {timeForToday(nboard.nboard.nb_writeday)}
                   </div>
@@ -250,9 +289,7 @@ function NoticeAdmin(props) {
                   </b>
                 </NavLink>
                 <div className="notice-content-badge">공지사항</div>
-                <div className="notice-content-hashtag">
-                  #공지사항 # Devster
-                </div>
+                <div className="notice-content-hashtag"></div>
                 <div className="content-notice-utils">
                   <div className="content-notice-viewcount">
                     <div className="number-viewcount">
@@ -261,8 +298,7 @@ function NoticeAdmin(props) {
                     <img
                       className="icon-view"
                       alt=""
-                      //src="/icon-view.svg"
-                      src={require("./assets/icon_view.svg").default}
+                      src={require("./assets/icon_readcount.png")}
                     />
                   </div>
                 </div>

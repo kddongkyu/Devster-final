@@ -1,12 +1,14 @@
 import React from "react";
-import "./style/Notice.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axiosIns from "../../api/JwtConfig";
+import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { checkToken } from "../../api/checkToken";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 
-function Notice(props) {
+function ResumeList(props) {
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
 
@@ -14,7 +16,9 @@ function Notice(props) {
     window.location.reload();
   };
 
-  const [noticeBoardList, setNoticeBoardList] = useState([]);
+  const [resumeList, setResumeList] = useState([]);
+
+  console.log(resumeList);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -78,15 +82,16 @@ function Notice(props) {
   };
 
   useEffect(() => {
-    fetchNoticeboards(currentPage);
+    fetchResumeList(currentPage);
   }, [currentPage]);
 
-  const fetchNoticeboards = (page) => {
+  const fetchResumeList = (page) => {
     axiosIns
-      .get("/api/nboard/D0", { params: { page: page - 1 } })
+      .get("/api/resume/D1/alllist", { params: { page: page - 1 } })
       .then((response) => {
-        setNoticeBoardList(response.data);
-        setTotalPages(response.data.totalPages);
+        console.log(response.data);
+        setResumeList(response.data);
+        //setTotalPages(response.data.totalPages);
       })
       .catch((e) => {
         jwtHandleError(e, toastAlert);
@@ -96,9 +101,9 @@ function Notice(props) {
   useEffect(() => {
     // JPA로부터 데이터 가져오는 API 호출
     axiosIns
-      .get("/api/nboard/D0")
+      .get("/api/resume/D1/alllist")
       .then((response) => {
-        setNoticeBoardList(response.data.freeBoardList);
+        setResumeList(response.data);
       })
       .catch((e) => {
         jwtHandleError(e, toastAlert);
@@ -160,80 +165,57 @@ function Notice(props) {
   };
 
   return (
-    <div className="notice">
-      <div className="notice-content-box">
+    <div
+      className="notice"
+      style={{
+        height: `${11.4 + resumeList.length * 14}rem`,
+      }}
+    >
+      <div className="notice-content-box-admin">
         <div className="notice-header">
           <div className="notice-header-box" />
-          <b className="text-content-notice">공지사항</b>
-        </div>
-        <div className="notice-options">
-          <div className="search-icon-box" />
-          <img
-            className="icon-search-notice"
-            alt=""
-            // src="/icon-search-notice.svg"
-            src={require("./assets/icon_search_notice.svg").default}
-          />
-          <img
-            className="notice-cotent-shape-icon"
-            alt=""
-            src={require("./assets/notice_cotent_shape.svg").default}
-          />
-          <div className="text-all-notice">전체</div>
-          <img
-            className="icon-notice-list"
-            alt=""
-            // src="/icon-notice-list.svg"
-            src={require("./assets/icon_notice_list.svg").default}
-          />
+          <b className="text-content-notice">구직자 이력서 리스트</b>
+          <p className="text-content-notice-sub">
+            구직자 이력서 목록 조회 페이지
+          </p>
         </div>
 
-        <div className="content-notice">
-          <div className="notice-content-box1" />
-          <div className="notice-content-text-01">
-            <img
-              className="logo-content-notice-icon"
-              alt=""
-              //   src="/logo-content-notice.svg"
-              src={require("./assets/logo_content_notice.svg").default}
-            />
-            <div className="text-notice-write-time">admin_01 · 약 4시간 전</div>
-          </div>
-          <b className="notice-content-title">DEVSTER 공지사항</b>
-          <div className="notice-content-badge" />
-          <div className="notice-content-hashtag">#공지사항 # Devster</div>
-          <div className="content-notice-utils">
-            <div className="content-notice-likes">
-              <div className="number-likes">9</div>
-              <img
-                className="likes-icon"
-                alt=""
-                src={require("./assets/likes.svg").default}
-              />
-            </div>
-            <div className="content-notice-commentcount">
-              <div className="number-commentcount">99</div>
-              <img
-                className="coments-icon"
-                alt=""
-                src={require("./assets/coments.svg").default}
-              />
-            </div>
-            <div className="content-notice-viewcount">
-              <div className="number-viewcount">800</div>
-              <img
-                className="icon-view"
-                alt=""
-                //src="/icon-view.svg"
-                src={require("./assets/icon_view.svg").default}
-              />
-            </div>
-          </div>
-          <div className="text-notice-content-badge">공지사항</div>
-        </div>
+        <hr className="nboard-pages-hr" />
+
+        {resumeList &&
+          resumeList.map((resume, index) => {
+            return (
+              <div className={`content-notice-${index + 1}`} key={index}>
+                <div className="notice-content-box1" />
+                <div className="notice-content-text-01">
+                  <img
+                    className="logo-content-notice-icon"
+                    alt=""
+                    //   src="/logo-content-notice.svg"
+                    src={require("./assets/logo_content_notice.svg").default}
+                  />
+                  <div className="text-notice-write-time">
+                    {/* {timeForToday(resume.nboard.nb_writeday)} */}
+                  </div>
+                </div>
+                <NavLink
+                  to={`/resume/detail/${resume.resumeDto.m_idx}/${currentPage}`}
+                >
+                  <b className="notice-content-title">
+                    {compareValues(String(resume.resumeDto.r_pos), subjectCount)
+                      ? resume.resumeDto.r_pos.slice(0, subjectCount) + "···"
+                      : resume.resumeDto.r_pos}
+                  </b>
+                </NavLink>
+                <div className="notice-content-badge">이력서</div>
+                <div className="notice-content-hashtag">#이력서 # Devster</div>
+                <div className="content-notice-utils"></div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
 }
 
-export default Notice;
+export default ResumeList;

@@ -4,6 +4,7 @@
     left: 0;
     font-size: 2rem;
     letter-spacing: -0.24px;
+    font-weight: 700;
   }
   .p {
     margin: 0;
@@ -14,6 +15,7 @@
     left: 0;
     font-size: 2rem;
     letter-spacing: -0.24px;
+    font-weight: 700;
   }
   .ul {
     margin: 0;
@@ -26,6 +28,7 @@
     font-size: inherit;
     letter-spacing: -0.24px;
     font-family: inherit;
+    font-weight: 700;
   }
   .text-withdrawal-confirm-conten {
     position: absolute;
@@ -41,6 +44,7 @@
     font-size: inherit;
     letter-spacing: -0.24px;
     font-family: inherit;
+    font-weight: 700;
   }
   .text-withdrawal-confirm-conten1 {
     position: absolute;
@@ -64,6 +68,7 @@
     left: 0.1rem;
     font-size: 1.8rem;
     letter-spacing: -0.24px;
+    font-weight: 700;
   }
   .text-content-withdrawal-email,
   .user-email-confirm {
@@ -88,13 +93,14 @@
   }
   .email-input-box {
     /* width: calc(100% - 8rem); */
-    width: 76.5%;
+    width: 78%;
     right: 8rem;
     left: 0;
   }
   .withrawal-button {
     width: 20.5%;
     right: 0;
+    font-size: 1.3rem;
     /* left: 27.4rem; */
   }
   .text-go-withdrawal {
@@ -111,20 +117,22 @@
   }
   .content-withrawal {
     position: absolute;
-    top: 42.7rem;
+    /* top: 42.7rem; */
     left: 2.1rem;
     width: calc(100% - 4.4rem);
-    height: 58.6rem;
+    /* height: 58.6rem; */
   }
   .withrawal {
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 101.3rem;
+    height: 67rem;
     text-align: left;
     font-size: 1.6rem;
     color: #000;
     font-family: "Noto Sans KR";
+    margin-top: 3.7rem;
+    margin-bottom: 4.4rem;
   }
   
   .email-input-box-error{
@@ -143,24 +151,26 @@
   .withdrawal-signup-guest-email-reg-input{
     position: absolute;
     /* width: calc(100% - 218px); */
-    width: 76.5%;
+    width: 100%;
     top: 59.9rem;
     right: 0;
     left: 0;
     height: 3rem;
     color: #626567;
+    
   }
 
   .withdrawal-signup-guest-email-reg-timelef {
     position: absolute;
     top: 63rem;
-    right: 18rem;
+    /* right: 18rem; */
+    left: 0;
     font-size: 1.1rem;
     letter-spacing: 0.01em;
     color: #721ea6;
     text-align: right;
     display: inline-block;
-    width: 13rem;
+    /* width: 13rem; */
 }
 
 .withdrawal-signup-guest-text-color-error {
@@ -181,18 +191,42 @@
   letter-spacing: 0.01em;
   display: inline-block;
   width: 4.6rem;
+  text-align: center;
 }
 
 .withrawal-button-finish {
   position: absolute;
   /* width: calc(100% - 218px); */
-  width: 20.5%;
-  top: 59.9rem;
+  width: 100%;
+  top: 65rem;
   right: 0;
-  /* left: 0; */
-  height: 4.7rem;
+  left: 0;
+  height: 4rem;
   border-radius: 5px;
   background-color: #fff;
   border: 1px solid #d3d4d8;
   box-sizing: border-box;
+  color: #fff;
+}
+
+.content-withrawal-guest {
+  position: absolute;
+  /* top: 35.7rem; */
+  left: 2.1rem;
+  width: calc(100% - 4.4rem);
+  height: 58.6rem;
+}
+
+.withdrawal-signup-guest-email-input-reg-b {
+  width: 100%;
+  left: 0;
+  border-radius: 5px;
+  border: 1px solid #d9d9d9;
+}
+
+.withdrawal-signup-guest-email-inputbox2 {
+  border-radius: 0 5px 5px 0;
+  background-color: #f5eff9;
+  border: 1px solid #d2d2d2;
+  width: 6rem;
 }

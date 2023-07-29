@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./style/Withdrawal.css";
 import axiosIns from "../../api/JwtConfig";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,46 +9,48 @@ import {
   setSeconds,
 } from "../../redux/normMemberSlice";
 import { useNavigate } from "react-router-dom";
+import { checkToken } from "../../api/checkToken";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
-import { checkToken } from "../../api/checkToken";
 
-function Withdrawal(props) {
-  const [member, setMember] = useState({ m_email: "" });
+function WithdrawalCompany(props) {
   const decodedToken = checkToken();
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const getMemberData = async (idx) => {
+  const [companyMember, setCompanyMember] = useState({
+    cm_email: "",
+  });
+
+  const getCompMemberData = async (idx) => {
     try {
-      const response = await axiosIns.get(`/api/member/D1/${idx}`);
-      setMember(response.data);
+      const response = await axiosIns.get(`/api/compmember/D1/${idx}`);
+      setCompanyMember(response.data);
     } catch (e) {
       jwtHandleError(e, toastAlert);
     }
   };
 
   useEffect(() => {
-    getMemberData(decodedToken.idx);
+    getCompMemberData(decodedToken.idx);
   }, [decodedToken.idx]);
 
-  const m_email = member.m_email;
+  const dispatch = useDispatch();
+  const cm_email = companyMember.cm_email;
   const seconds = useSelector((state) => state.norm.seconds);
   const emailRegInput = useSelector((state) => state.norm.emailRegInput);
+  // const emailIsValid = useSelector(state => state.norm.emailIsValid);
   const isEmailSent = useSelector((state) => state.norm.isEmailSent);
   const emailRegChk = useSelector((state) => state.norm.emailRegChk);
-
   const [emailRegNum, setEmailRegNum] = useState("");
 
   const handleSendButton = async () => {
     try {
       const res = await axiosIns({
         method: "post",
-        url: "/api/member/D0/email/validation",
-        data: JSON.stringify({ m_email: m_email }),
+        url: "/api/compmember/D0/email/validation",
+        data: JSON.stringify({ cm_email: cm_email }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -108,8 +109,8 @@ function Withdrawal(props) {
   if (isEmailSent && seconds > 0) {
     timerMessage = (
       <span>
-        남은 인증시간 :{minutes < 10 ? "0" : ""}
-        {minutes}:{displaySeconds < 10 ? "0" : ""}
+        남은 인증시간 :{minutes < 30 ? "0" : ""}
+        {minutes}:{displaySeconds < 30 ? "0" : ""}
         {displaySeconds}
       </span>
     );
@@ -119,13 +120,15 @@ function Withdrawal(props) {
     timerMessage = <span>인증시간이 만료되었습니다.</span>;
   }
 
+  const navigate = useNavigate();
+
   const handleSignOut = async () => {
     const confirmSignOut = window.confirm("정말 탈퇴하시겠습니까?");
     if (confirmSignOut) {
       try {
         const res = await axios({
           method: "delete",
-          url: "/api/member/D1",
+          url: "/api/compmember/D1",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.accessToken}`,
@@ -136,21 +139,18 @@ function Withdrawal(props) {
           localStorage.clear();
           navigate("/signin");
         }
-      } catch (error) {
-        console.error("탈퇴 실패" + error.response?.status);
+      } catch (e) {
+        jwtHandleError(e, toastAlert);
       }
     }
   };
 
   return (
     <div className="withrawal">
-      <div className="content-withrawal">
+      <div className="content-withrawal-guest">
         <b className="text-constent-withdrawal">계정 탈퇴</b>
         <b className="text-before-withdrawal">
-          <p className="p">
-            회원 탈퇴 전,
-            <br /> 안내 사항을 꼭 확인해주세요.
-          </p>
+          <p className="p">회원 탈퇴 전, 안내 사항을 꼭 확인해주세요.</p>
         </b>
         <b className="text-withdrawal-confirm-01">
           <ul className="ul">1) 탈퇴 아이디 복구 불가</ul>
@@ -180,22 +180,16 @@ function Withdrawal(props) {
           <input
             className="email-input-box"
             type="text"
-            value={member.m_email}
+            value={companyMember.cm_email}
             disabled
-            style={{ fontSize: "1.4rem" }}
           />
 
-          <button
-            className="withrawal-button"
-            onClick={handleSendButton}
-            style={{ fontSize: "1.2rem" }}
-          >
-            인증번호
-            <br />
-            전송
+          <button className="withrawal-button" onClick={handleSendButton}>
+            인증번호 전송
           </button>
         </div>
 
+        {/* ===========================인증번호 확인 ======================= */}
         <div className="withdrawal-signup-guest-email-reg-input">
           <input
             type="text"
@@ -203,15 +197,14 @@ function Withdrawal(props) {
             disabled={!isEmailSent || emailRegChk || seconds <= 0}
             value={emailRegInput}
             onChange={handleEmailRegChange}
-            placeholder="인증번호를 입력해주세요"
           />
           <div
             className={`withdrawal-signup-guest-email-reg-chk
-                    ${
-                      !isEmailSent || emailRegChk || seconds <= 0
-                        ? "signup-guest-button-disabled"
-                        : ""
-                    }`}
+              ${
+                !isEmailSent || emailRegChk || seconds <= 0
+                  ? "signup-guest-button-disabled"
+                  : ""
+              }`}
             onClick={handleRegChk}
           >
             <div className="signup-guest-email-inputbox2" />
@@ -220,10 +213,10 @@ function Withdrawal(props) {
             </div>
           </div>
         </div>
-
+        {/* ===========================인증번호 확인 ======================= */}
         <div
           className={`withdrawal-signup-guest-email-reg-timelef
-            ${seconds >= 60 ? "" : "withdrawal-signup-guest-text-color-error"}`}
+        ${seconds >= 60 ? "" : "withdrawal-signup-guest-text-color-error"}`}
         >
           {timerMessage}
         </div>
@@ -242,4 +235,4 @@ function Withdrawal(props) {
   );
 }
 
-export default Withdrawal;
+export default WithdrawalCompany;

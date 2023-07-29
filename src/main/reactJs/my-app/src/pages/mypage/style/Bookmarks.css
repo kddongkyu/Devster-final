@@ -1,12 +1,13 @@
 .text-bookmark {
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     font-size: 2rem;
     letter-spacing: -0.24px;
+    font-weight: 700;
   }
   .bookmark-image-01 {
-    position: absolute;
+    /* position: absolute; */
     width: 99.39%;
     top: 0;
     right: 0;
@@ -16,7 +17,7 @@
     height: 10.8rem;
   }
   .text-bookmark-01 {
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
     top: 11.8rem;
     left: 0;
@@ -25,9 +26,9 @@
     display: inline-block;
   }
   .bookmark-01 {
-    position: absolute;
+    /* position: relative; */
     width: 46.84%;
-    top: 7rem;
+    /* top: 7rem; */
     right: 53.16%;
     left: 0;
     height: 15.8rem;
@@ -43,9 +44,9 @@
     height: 10.8rem;
   }
   .bookmark-02 {
-    position: absolute;
+    /* position: relative; */
     width: 46.84%;
-    top: 7rem;
+    /* top: 7rem; */
     right: 0;
     left: 53.16%;
     height: 15.8rem;
@@ -54,7 +55,7 @@
   .bookmark-04,
   .bookmark-05,
   .bookmark-06 {
-    position: absolute;
+    /* position: absolute; */
     width: 46.84%;
     top: 28.8rem;
     right: 53.16%;
@@ -78,27 +79,70 @@
     left: 53.16%;
   }
   .content-bookmarks{
-    position: absolute;
+    /* position: absolute; */
     /* width: calc(100% - 4.4rem); */
-    width: calc(100% - 4.4rem);
-    height: 66.4rem;
+    width: 100%;
+    /* height: 66.4rem; */
   }
   .content-bookmarks1 {
-    top: 0;
-    left: 0;
+    display: grid;
     width: 100%;
+    height: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 2.2rem;
+    margin-top: 4rem;
   }
   .content-bookmarks {
-    top: 42.7rem;
+    /* top: 42.7rem; */
     left: 2.1rem;
   }
   .bookmarks {
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 109.1rem;
+    height: auto;
     text-align: left;
     font-size: 1.4rem;
     color: #000;
     font-family: "Noto Sans KR";
+    margin-top: 3.7rem;
+    margin-bottom: 4.4rem;
+    padding-left: 2.2rem;
+    padding-right: 2.2rem;
   }
+
+  .approval-apply-input{
+    position: absolute;
+    top: 15rem;
+    padding: 1rem 1rem;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #d3d4d8;
+    box-sizing: border-box;
+    width: 78%;
+  }
+  
+  .approval-apply-button{
+    position: absolute;
+    top: 15rem;
+    right:0;
+    padding: 1rem 1rem;
+    width: 20%;
+    border-radius: 5px;
+    border: 1px solid #d3d4d8;
+    height: 4.5rem;
+  }
+
+  .approval-apply {
+    position: relative;
+    background-color: #fff;
+    width: calc(100% - 4.4rem);
+    height: 30rem;
+    text-align: left;
+    font-size: 1.4rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+    left: 2.2rem;
+    
+}

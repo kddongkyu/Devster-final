@@ -110,7 +110,7 @@ public class CompanyMemberService {
             entityForUpdate.setCMpost(dto.getCm_post());
             entityForUpdate.setCMname(dto.getCm_name());
             entityForUpdate.setCMcp(dto.getCm_cp());
-
+            entityForUpdate.setCMcompname(dto.getCm_compname());
             companyMemberRepository.save(entityForUpdate);
 
             log.info("기업회원정보 업데이트 완료");

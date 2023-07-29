@@ -1,11 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
-// import "./style/FboardDetail.css";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import { useNavigate, useParams } from "react-router-dom";
 import "./style/NboardDetail.css";
+import { checkToken } from "../../api/checkToken";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function NBoardDetail(props) {
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
+  const memberType = decodedToken.type;
+
   const { nb_idx, currentPage } = useParams();
   const [detailData, setDetailData] = useState({});
   const [arrayFromString, setArrayFromString] = useState([]);
@@ -13,20 +21,17 @@ function NBoardDetail(props) {
 
   const photoUrl = process.env.REACT_APP_PHOTO + "nboard/";
 
-  console.log(detailData);
-
   useEffect(() => {
     axiosIns
       .get(`/api/nboard/D0/${nb_idx}`)
       .then((response) => {
         setDetailData(response.data);
-        console.log(response.data);
         if (response.data.nboard.nb_photo != null) {
           setArrayFromString(response.data.nboard.nb_photo.split(","));
         }
       })
-      .catch((error) => {
-        console.error("Error fetching nboard detail:", error);
+      .catch((e) => {
+        jwtHandleError(e, toastAlert);
       });
   }, [nb_idx]);
 
@@ -51,7 +56,6 @@ function NBoardDetail(props) {
     if (betweenTime < 60) {
       return `${betweenTime}분 전`;
     }
-    console.log(betweenTime);
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
@@ -86,16 +90,47 @@ function NBoardDetail(props) {
           alert("공지사항이 삭제되었습니다.");
           navi("/notice/admin"); // 삭제 후 공지사항 목록 페이지로 이동
         })
-        .catch((error) => {
-          console.error("Error deleting nboard:", error);
+        .catch((e) => {
+          jwtHandleError(e, toastAlert);
           alert("공지사항 삭제에 실패했습니다.");
         });
     }
   }, [nb_idx, navi]);
 
+  const [member, setMember] = useState({});
+
+  const [companyMember, setCompanyMember] = useState([]);
+
+  const getMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
+      setMember(response.data);
+    } catch (e) {
+      jwtHandleError(e, toastAlert);
+    }
+  };
+
+  const getCompMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/compmember/D1/${idx}`);
+      setCompanyMember(response.data);
+    } catch (e) {
+      jwtHandleError(e, toastAlert);
+    }
+  };
+
+  // Effects
+  useEffect(() => {
+    if (memberType === "normal") {
+      getMemberData(decodedToken.idx);
+    } else if (memberType === "company") {
+      getCompMemberData(decodedToken.idx);
+    }
+  }, [memberType, decodedToken.idx]);
+
   return (
     <div className="nboard-detail">
-      <div className="nboard-detail-type-text">자유게시판</div>
+      <div className="nboard-detail-type-text">공지사항</div>
       {/* <h1>{detailData.nboard.nb_subject}</h1>
       <p>{detailData.nboard.nb_content}</p> */}
       {detailData.nboard && (
@@ -124,20 +159,22 @@ function NBoardDetail(props) {
         </div>
       )}
 
-      <>
-        <img
-          className="nboard-update-icon"
-          alt=""
-          src={require("./assets/boarddetail/edit.svg").default}
-          onClick={navigateToPurchase}
-        />
-        <img
-          className="nboard-delete-icon"
-          alt=""
-          src={require("./assets/boarddetail/trash.svg").default}
-          onClick={deleteNboard}
-        />
-      </>
+      {memberType === "normal" && member.m_role === "ADMIN" && (
+        <>
+          <img
+            className="nboard-update-icon"
+            alt=""
+            src={require("./assets/boarddetail/edit.svg").default}
+            onClick={navigateToPurchase}
+          />
+          <img
+            className="nboard-delete-icon"
+            alt=""
+            src={require("./assets/boarddetail/trash.svg").default}
+            onClick={deleteNboard}
+          />
+        </>
+      )}
       {detailData.nboard && (
         <div className="nboard-detail-textarea">
           <div className="nboard-detail-textarea-subject">

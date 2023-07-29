@@ -617,3 +617,29 @@
     font-family: "Noto Sans KR";
     top: -13rem;
 }
+.nboard-detail-textarea-detail{
+    position: relative;
+    width: calc(100% - 74px);
+    top: 6.7rem;
+    right: 3.7rem;
+    left: 3.7rem;
+    /* height: 49.8rem; */
+    font-size: 1.3rem;
+    margin-bottom: 10rem;
+}
+
+.resume-box-detail {
+    position: relative;
+    width: calc(100% - 4.4rem);
+    margin: 0 auto;
+    top: 4rem;
+    right: 0;
+    left: 0.1rem;
+    border-radius: 15px;
+    background-color: #F5EFF9;
+    /* height: 17.4rem; */
+    /* padding-left: 2.2rem;
+    padding-right: 2.2rem; */
+    padding-bottom: 2.2rem;
+    margin-bottom: 8rem;
+}

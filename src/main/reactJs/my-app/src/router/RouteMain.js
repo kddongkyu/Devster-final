@@ -18,6 +18,11 @@ import {
   NboardForm,
   NboardUpdateForm,
   CompanySignupApproval,
+  CompUserInfo,
+  CompanyApprovalApply,
+  WithdrawalCompany,
+  ResumeList,
+  ResumeDetail,
 } from "../pages/mypage";
 import { SignIn } from "../pages/signin";
 import { Grats, SignUpCompForm, SignUpNorm } from "../pages/signup";
@@ -88,6 +93,7 @@ function RouteMain(props) {
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
+          <Route path="/compuserinfo" element={<CompUserInfo />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/myresume" element={<MyResume />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
@@ -95,6 +101,9 @@ function RouteMain(props) {
           <Route path="/notice/admin" element={<NoticeAdmin />} />
           <Route path="/member/approval" element={<MemberSignupApproval />} />
           <Route path="/company/approval" element={<CompanySignupApproval />} />
+          <Route path="/company/apply" element={<CompanyApprovalApply />} />
+          <Route path="/company/withdrawal" element={<WithdrawalCompany />} />
+          <Route path="/resumelist" element={<ResumeList />} />
         </Route>
 
         <Route>
@@ -115,6 +124,11 @@ function RouteMain(props) {
         <Route
           path="/nboard/updateform/:nb_idx/:currentPage"
           element={<NboardUpdateForm />}
+        />
+
+        <Route
+          path="/resume/detail/:m_idx/:currentPage"
+          element={<ResumeDetail />}
         />
 
         <Route path="/jwttest" element={<JwtTest />} />

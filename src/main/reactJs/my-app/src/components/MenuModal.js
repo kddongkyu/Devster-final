@@ -3,6 +3,7 @@ import "./style/MenuModal.css";
 import { NavLink } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../api/JwtConfig";
+import { checkToken } from "../api/checkToken";
 
 function MenuModal({ isMenuOpen, setIsMenuOpen }) {
   const closeMenuBar = () => {
@@ -15,13 +16,14 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
     m_role: "",
   });
 
+  const [companyMember, setCompanyMember] = useState([]);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  //const decodedToken = jwt_decode(localStorage.accessToken);
+  const [memberType, setMemberType] = useState(null);
+
   const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${member.m_photo}`;
-
-  //console.log("url: " + imageUrl);
 
   const getMemberData = async (idx) => {
     try {
@@ -32,13 +34,32 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
     }
   };
 
-  // Effects
+  const getCompMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/compmember/D1/${idx}`);
+      setCompanyMember(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    if (localStorage.accessToken && localStorage.refreshToken) {
-      const decodedToken = jwt_decode(localStorage.accessToken);
-      getMemberData(decodedToken.idx);
-      setIsLoggedIn(true);
-    } else {
+    try {
+      const decodedToken = checkToken();
+      if (decodedToken) {
+        setMemberType(decodedToken.type);
+        setIsLoggedIn(true);
+
+        if (decodedToken.type === "normal") {
+          getMemberData(decodedToken.idx);
+        } else if (decodedToken.type === "company") {
+          getCompMemberData(decodedToken.idx);
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error("Invalid token:", error);
       setIsLoggedIn(false);
     }
   }, []);
@@ -90,25 +111,58 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           <div className="menu-mypage">
             <div className="menu-mypage-box">
               <div className="menu-mypage-userinfo">
-                <div className="menu-mypage-userinfo-img">
-                  {member.m_photo ? <img alt="" src={imageUrl} /> : null}
-                </div>
-                <div className="menu-mypage-userinfo-contents">
-                  <div className="menu-mypage-userinfo-nickname">
-                    {member.m_nickname}
-                  </div>
-                  <div className="menu-mypage-userinfo-email">
-                    {member.m_email}
+                <div className="menu-mypage-userinfo">
+                  {memberType === "normal" && member.m_photo && (
+                    <div className="menu-mypage-userinfo-img">
+                      <img alt="" src={imageUrl} />
+                    </div>
+                  )}
+                  <div
+                    className="menu-mypage-userinfo-contents"
+                    style={{ marginLeft: memberType === "company" ? "0" : "" }}
+                  >
+                    {memberType === "normal" ? (
+                      <>
+                        <div className="menu-mypage-userinfo-nickname">
+                          {member.m_nickname}
+                        </div>
+                        <div className="menu-mypage-userinfo-email">
+                          {member.m_email}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="menu-mypage-userinfo-nickname">
+                          {companyMember.cm_name}
+                        </div>
+                        <div className="menu-mypage-userinfo-email">
+                          {companyMember.cm_email}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
               <NavLink
-                to={member.m_role === "USER" ? "/userinfo" : "/notice/admin"}
-                // to={member.m_role === "GUEST" ? "/notice/admin" : "/userinfo"}
+                to={
+                  memberType === "normal" && member.m_role === "GUEST"
+                    ? "/userinfo"
+                    : memberType === "company" &&
+                      companyMember.cm_role === "GUEST"
+                    ? "/compuserinfo"
+                    : memberType === "normal" && member.m_role === "USER"
+                    ? "/userinfo"
+                    : memberType === "company" &&
+                      companyMember.cm_role === "USER"
+                    ? "/compuserinfo"
+                    : memberType === "normal" && member.m_role === "ADMIN"
+                    ? "/notice/admin"
+                    : "/default"
+                }
                 onClick={closeMenuBar}
               >
                 <b className="menu-modal-options_mypage">
-                  <div style={{ marginTop: "1rem" }}>마이페이지</div>
+                  <div style={{ marginTop: "2rem" }}>마이페이지</div>
                 </b>
               </NavLink>
             </div>
@@ -117,7 +171,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
 
         <div
           className="menu-account"
-          style={{ top: isLoggedIn ? "43rem" : "30rem" }} // 로그인 상태에 따라 top 값을 변경
+          style={{ top: isLoggedIn ? "45rem" : "30rem" }}
         >
           <div className="menu-account-box" />
           <NavLink to={"/signin"}>

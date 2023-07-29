@@ -1,20 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function MypageListUser(props) {
+function MypageListComGuest(props) {
   const activeStyle = {
     backgroundColor: "#e5e7eb",
-    color: "#1f2937",
+    color: "#222",
   };
   const deactiveStyle = {
-    color: "#808491",
+    color: "var(--color-slategray)",
   };
+
   return (
     <div>
       <b className="text-myaccount">내 계정</b>
       <div className="menu-userinfo">
         <NavLink
-          to={"/userinfo"}
+          to={"/compuserinfo"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;
@@ -30,39 +31,7 @@ function MypageListUser(props) {
       </div>
       <div className="menu-bookmarklist">
         <NavLink
-          to={"/bookmarks"}
-          className="menulist-userinfo-box"
-          style={({ isActive }) => {
-            return isActive ? activeStyle : deactiveStyle;
-          }}
-        >
-          <div className="text-bookmarks">채용정보 북마크</div>
-          <img
-            className="icon-userinfo"
-            alt=""
-            src={require("./assets/bookmark.svg").default}
-          />
-        </NavLink>
-      </div>
-      <div className="menu-myresume">
-        <NavLink
-          to={"/myresume"}
-          className="menulist-userinfo-box"
-          style={({ isActive }) => {
-            return isActive ? activeStyle : deactiveStyle;
-          }}
-        >
-          <div className="text-bookmarks">내 이력서</div>
-          <img
-            className="icon-resume"
-            alt=""
-            src={require("./assets/file-dock.svg").default}
-          />
-        </NavLink>
-      </div>
-      <div className="menu-withdrawal">
-        <NavLink
-          to={"/withdrawal"}
+          to={"/company/withdrawal"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;
@@ -70,13 +39,13 @@ function MypageListUser(props) {
         >
           <div className="text-bookmarks">계정탈퇴</div>
           <img
-            className="icon-resume"
+            className="icon-userinfo"
             alt=""
             src={require("./assets/close-ring.svg").default}
           />
         </NavLink>
       </div>
-      <div className="menu-notice">
+      <div className="menu-myresume">
         <NavLink
           to={"/notice/admin"}
           className="menulist-userinfo-box"
@@ -92,9 +61,10 @@ function MypageListUser(props) {
           />
         </NavLink>
       </div>
-      <div className="line-mypage" />
+
+      <div className="line-mypage-guest-comp" />
     </div>
   );
 }
 
-export default MypageListUser;
+export default MypageListComGuest;

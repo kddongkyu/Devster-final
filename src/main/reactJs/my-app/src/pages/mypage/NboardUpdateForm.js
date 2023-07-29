@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
+import { checkToken } from "../../api/checkToken";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function NboardUpdateForm(props) {
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
   const { nb_idx, currentPage } = useParams();
   const [nbSubject, setNbSubject] = useState("");
   const [nbContent, setNbContent] = useState("");
@@ -23,8 +30,8 @@ function NboardUpdateForm(props) {
             : []
         );
       })
-      .catch((error) => {
-        console.error("Error fetching nboard detail:", error);
+      .catch((e) => {
+        jwtHandleError(e, toastAlert);
       });
   }, [nb_idx]);
 
@@ -45,9 +52,9 @@ function NboardUpdateForm(props) {
         // Navigate to the detail page after successful update
         navi(`/nboard/detail/${nb_idx}/${currentPage}`);
       })
-      .catch((error) => {
+      .catch((e) => {
         // Error handling
-        console.error(error);
+        jwtHandleError(e, toastAlert);
       });
   };
 

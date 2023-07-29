@@ -41,7 +41,7 @@ public class ResumeController {
         return new ResponseEntity<String>(resumeService.uploadReFile(upload,session), HttpStatus.OK);
     }
 
-    @GetMapping("/D1")
+    @GetMapping("/D1/alllist")
     public ResponseEntity<List<ResumeWrapper>> getAllResume() {
         return new ResponseEntity<List<ResumeWrapper>>(resumeService.getAllResume(), HttpStatus.OK);
     }
