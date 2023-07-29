@@ -86,7 +86,7 @@ function Reviewupdate({reviewData}) {
 
     const handleUpdateSubmit = (e)=>{
         e.preventDefault();
-        console.log(dto)
+        // console.log(dto)
 
         const dto={
             rb_subject : rbSubject,

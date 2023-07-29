@@ -10,6 +10,7 @@ import {jwtHandleError} from "../../api/JwtHandleError";
 function Aboard(props) {
 
   const [acacemyBoardList, setAcacemyBoardList] = useState([]);
+  const [noticePost,setNoticePost] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   // 미리보기 글자수
@@ -132,6 +133,15 @@ function Aboard(props) {
     fetchacdemy(page, finalKeyword, sortProperty, sortDirection);
   }, [currentPage, finalKeyword, sortProperty, sortDirection]);
 
+  const getNoticeData = () => {
+    axiosIns.get(`/api/nboard/D0/notice`)
+        .then(response => {
+          setNoticePost(response.data.nboard);
+        })
+        .catch(error => {
+          jwtHandleError(error, toastAlert);
+        })
+  }
 
   // 정렬
   const onClickLatest = () => {
@@ -361,10 +371,15 @@ function Aboard(props) {
                   src={require("./assets/board_notice_preview_info_logo.svg").default}
               />
               <div className="aboard-notice-preview-info-tex">
-                admin_01 · 약 4시간 전
+                관리자 · {timeForToday(noticeArticle.nb_writeday)}
               </div>
             </div>
-            <b className="aboard-notice-preview-subject">DEVSTER 공지사항</b>
+            <b className="aboard-notice-preview-subject"
+               onClick={() => {
+                 JwtPageChk(navi, `api/nboard/D0/${noticeArticle.nb_idx}`);
+               }}
+               style={{ cursor: "pointer" }}
+            >   {noticeArticle.nb_subject}</b>
             <div className="aboard-notice-preview-notice">
               <div className="aboard-notice-preview-notice-b"/>
               <div className="aboard-notice-preview-notice-t">공지사항</div>
@@ -372,7 +387,7 @@ function Aboard(props) {
             <div className="aboard-notice-preview-hash">#공지사항 # Devster</div>
             <div className="aboard-notice-preview-icons">
               <div className="aboard-notice-preview-views">
-                <div className="aboard-notice-preview-views-te">800</div>
+                <div className="aboard-notice-preview-views-te">   {noticeArticle.nb_readcount}</div>
                 <img
                     className="aboard-notice-preview-views-ic-icon"
                     alt=""
