@@ -11,6 +11,7 @@ function QboardCommentForm({qb_idx}) {
     // console.log("111:"+rb_idx);
     const [qboardComment,setQboardComment]=useState('');
     const navi=useNavigate();
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
@@ -45,11 +46,6 @@ function QboardCommentForm({qb_idx}) {
         <div className="qboard-detail-commnets-form">
             <form onSubmit={onSubmitEvent}>
                 <div className="qboard-detail-commnets-form-bo" />
-                <img
-                    className="qboard-detail-commnets-form-im-icon"
-                    alt=""
-                    src=""
-                />
                 <textarea className="qboard-detail-commnets-form-te"
                           placeholder="내용을 입력해주세요"
                           required value={qboardComment}

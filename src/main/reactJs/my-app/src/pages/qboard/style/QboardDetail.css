@@ -787,10 +787,9 @@
 }
 .qboard-detail-commnets-form-te {
      position: absolute;
-     width: calc(100% - 68px);
      top: 1.7rem;
      right: 1.6rem;
-     left: 5.2rem;
+     left: 1.6rem;
      border-radius: 8px;
      background-color: #fff;
      border: 1px solid #cfcfcf;
@@ -813,7 +812,7 @@
 .qboard-detail-commnets-form-su2 {
      position: absolute;
      top: 1rem;
-     right: 3.1rem;
+     right: 3.6rem;
      letter-spacing: -0.24px;
      color: white;
 }
