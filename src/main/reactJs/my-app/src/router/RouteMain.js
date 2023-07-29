@@ -44,6 +44,7 @@ import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
 import QboardDetail from "../pages/qboard/QboardDetail";
 import Translate from "../pages/test/translate";
+import FindID from "../pages/signin/find/FindID";
 
 function RouteMain(props) {
   const location = useLocation();
@@ -143,6 +144,7 @@ function RouteMain(props) {
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />
+      <Route path="/findID" element={<FindID />} />
       <Route path="/csignup" element={<SignUpCompForm />} />
       <Route path="/grats" element={<Grats />} />
       <Route path="/devchat/:ai_idx" element={<DevChat />} />
