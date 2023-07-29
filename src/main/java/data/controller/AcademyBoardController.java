@@ -109,7 +109,7 @@ public class AcademyBoardController {
     }
 
 
-  @DeleteMapping("/D1/photo/{ab_idx}/{imageFileName}")
+    @DeleteMapping("/D1/photo/{ab_idx}/{imageFileName}")
     public ResponseEntity<Void> deletephoto(@PathVariable Integer ab_idx,@PathVariable String imageFileName){
         academyBoardService.deletePhoto(ab_idx,imageFileName);
         return new ResponseEntity<>(HttpStatus.OK);

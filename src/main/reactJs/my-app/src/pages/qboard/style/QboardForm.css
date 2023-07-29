@@ -27,44 +27,6 @@
   font-size: 2rem;
   color: #000;
 }
-.qboard-form-header-rec {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  right: 0;
-  left: 0;
-  border-radius: 10px;
-  background-color: #eaeff3;
-  height: 6.7rem;
-}
-.qboard-form-header-detail,
-.qboard-form-header-name {
-  position: absolute;
-  top: 1.3rem;
-  left: 2.7rem;
-  letter-spacing: -0.24px;
-  display: inline-block;
-  width: 5.24rem;
-  height: 2.17rem;
-}
-.qboard-form-header-detail {
-  top: 3.77rem;
-  font-size: 1.3rem;
-  color: #721ea6;
-  width: 15rem;
-  height: 1.55rem;
-}
-.qboard-form-header {
-  position: absolute;
-  width: calc(100% - 30px);
-  top: 20.7rem;
-  right: 1.5rem;
-  left: 1.5rem;
-  height: 6.7rem;
-  font-size: 1.8rem;
-  color: #000;
-  font-family: Roboto;
-}
 .qboard-form-content-rec {
   position: absolute;
   width: 100%;
@@ -107,6 +69,50 @@
   box-sizing: border-box;
   height: 3.9rem;
 }
+
+.qboard-name-text-detail,
+.qboard-name-text-type {
+  position: absolute;
+  left: 0;
+  letter-spacing: -0.24px;
+  display: inline-block;
+}
+
+.qboard-name-text-type {
+  top: 0;
+  font-weight: 600;
+  width: 13.7rem;
+  height: 2.27rem;
+}
+
+.qboard-name-text-detail {
+  top: 2.58rem;
+  font-size: 1.3rem;
+  color: #721ea6;
+  width: 31.1rem;
+  height: 1.65rem;
+}
+
+.qboard-name-text {
+  position: absolute;
+  top: 1.34rem;
+  left: 2.1rem;
+  width: 31.1rem;
+  height: 4.22rem;
+}
+
+.qboard-name {
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 20.7rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 6.9rem;
+  font-size: 1.8rem;
+  color: #000;
+  font-family: Roboto;
+}
+
 .div {
   position: absolute;
   top: 1rem;
@@ -119,19 +125,10 @@
 .qboard-form-subject {
   position: absolute;
   width: calc(100% - 40px);
-  top: 29.7rem;
+  top: 29.9rem;
   right: 2rem;
   left: 2rem;
   height: 3.9rem;
-}
-.qboard-form-fileupload-placeho {
-  position: absolute;
-  top: 1rem;
-  left: 4.64rem;
-  letter-spacing: 0.01em;
-  font-weight: 500;
-  display: inline-block;
-  width: 26.77rem;
 }
 .qboard-form-fileupload-icon {
   position: absolute;
@@ -150,15 +147,7 @@
   display: inline-block;
   width: 23.41rem;
 }
-.qboard-form-fileupload {
-  position: absolute;
-  width: calc(100% - 40px);
-  top: 57.2rem;
-  right: 2rem;
-  left: 2rem;
-  height: 6.4rem;
-}
-.qboard-form-btn-child {
+.qboard-form-submitbtn-child {
   position: absolute;
   top: 0;
   right: 0;
@@ -167,7 +156,7 @@
   width: 10rem;
   height: 3.3rem;
 }
-.qboard-form-btn-text {
+.qboard-form-submitbtn-text {
   position: absolute;
   top: 0.7rem;
   right: 0.5rem;
@@ -177,7 +166,7 @@
   width: 7.2rem;
   height: 1.6rem;
 }
-.qboard-form-btn-icon {
+.qboard-form-submitbtn-icon {
   position: absolute;
   top: 0.5rem;
   right: 6.9rem;
@@ -185,14 +174,15 @@
   height: 2.4rem;
   overflow: hidden;
 }
-.qboard-form-btn {
+.qboard-form-submitbtn {
   position: absolute;
-  top: 66.3rem;
+  top: 81.5rem;
   right: 2rem;
   width: 10rem;
   height: 3.3rem;
   text-align: center;
   color: #fff;
+  border: none;
 }
 .moblie {
   position: absolute;
@@ -207,10 +197,104 @@
   position: relative;
   background-color: #fff;
   width: 100%;
-  height: 70.9rem;
+  height: 86.4rem;
   overflow: hidden;
   text-align: left;
   font-size: 1.3rem;
   color: #626567;
   font-family: "Noto Sans KR";
+}
+
+.qboard-form-photo1,
+.qboard-form-photo2,
+.qboard-form-photo3 {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 175px);
+  background-color: #fff;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.qboard-form-photo2,
+.qboard-form-photo3 {
+  left: calc(50% - 105px);
+}
+
+.qboard-form-photo3 {
+  left: calc(50% - 35px);
+}
+
+.qboard-form-photo4 {
+  top: 0.1rem;
+  left: calc(50% + 35px);
+}
+
+.qboard-form-photo4,
+.qboard-form-photo5,
+.qboard-form-photo6 {
+  position: absolute;
+  background-color: #fff;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.qboard-form-photo5 {
+  top: 0;
+  left: calc(50% + 105px);
+}
+
+.qboard-form-photo6 {
+  top: 6.9rem;
+  left: calc(50% - 175px);
+}
+
+.qboard-form-photo10,
+.qboard-form-photo7,
+.qboard-form-photo8,
+.qboard-form-photo9 {
+  position: absolute;
+  top: 6.9rem;
+  left: calc(50% - 105px);
+  background-color: #fff;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.qboard-form-photo10,
+.qboard-form-photo8,
+.qboard-form-photo9 {
+  left: calc(50% - 35px);
+}
+
+.qboard-form-photo10,
+.qboard-form-photo9 {
+  left: calc(50% + 35px);
+}
+
+.qboard-form-photo10 {
+  left: calc(50% + 105px);
+}
+
+.qboard-form-photo-list {
+  position: absolute;
+  top: 56.9rem;
+  left: calc(50% - 175px);
+  width: 35rem;
+  height: 15.9rem;
+}
+
+.qboard-form-photo-list_text {
+  position: absolute;
+  top: 13.9rem;
+  left: calc(50% - 175px);
+}
+
+.qboard-form-inputfileupload {
+  position: absolute;
+  width: calc(100% - 40px);
+  top: 74.4rem;
+  right: 2rem;
+  left: 2rem;
+  height: 6.4rem;
 }

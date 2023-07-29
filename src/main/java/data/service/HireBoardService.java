@@ -2,6 +2,7 @@ package data.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import data.entity.HireBookmarkEntity;
 import data.repository.CompanyMemberRepository;
 import data.repository.HireBoardRepository;
 import data.repository.HireBookmarkRepository;
+import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 import data.mapper.HireBoardMapper;
 import org.springframework.data.domain.Pageable;
@@ -28,9 +30,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -38,6 +42,7 @@ import org.slf4j.LoggerFactory;
 
 
 @Service
+@Slf4j
 public class HireBoardService {
 
     
@@ -65,40 +70,76 @@ public class HireBoardService {
     }
 
 
-    public void insertHireBoard(HireBoardDto dto){ 
-        HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
-            hireBoardRepository.save(entity);
+    public HireBoardDto insertHireBoard(HireBoardDto dto, HttpSession session) {
+        try {
+            if (session.getAttribute("photo") != null) {
+                dto.setHb_photo(session.getAttribute("photo").toString());
+            }
+            HireBoardEntity hireBoard = HireBoardEntity.toHireBoardEntity(dto);
+            hireBoardRepository.save(hireBoard);
+            session.removeAttribute("photo");
+            return dto;
+        } catch (Exception e) {
+            log.error("insert HireBoard Error", e);
+            throw e;
+        }
+    }
+
+    public List<String> uploadPhoto(List<MultipartFile> upload, HttpSession session) {
+        List<String> fullPhoto = new ArrayList<>();
+        for (MultipartFile photo : upload) {
+            fullPhoto.add(storageService.uploadFile(bucketName, "devster/hboard", photo));
+        }
+        if (session.getAttribute("photo") != null) {
+            storageService.deleteFile(bucketName, "devster/hboard", session.getAttribute("photo").toString());
+        }
+        session.setAttribute("photo", String.join(",", fullPhoto));
+        log.info("HireBoard 사진 업로드 완료");
+        return fullPhoto;
+    }
+
+    public void resetPhoto(String photo) {
+        storageService.deleteFile(bucketName, "devster/hboard", photo);
+        log.info("HireBoard 사진 초기화 완료");
     }
 
 
-    public Map<String, Object> getPagedHboard(int page, int size,String keyword) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("HBwriteday").descending());
+
+
+
+
+
+
+    public Map<String, Object> getPagedHboard(int page, int size, String sortProperty, String sortDirection, String keyword) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);    
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction,sortProperty));
         Page<HireBoardEntity> result;
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            result = hireBoardRepository.findByHBsubjectContaining(keyword, pageable);
-               logger.info("Keyword: " + keyword);
+            result = hireBoardRepository.findByHBsubjectContainingOrHBcontentContaining(keyword, pageable);
+            log.info("Keyword: " + keyword);
         } else {
             result = hireBoardRepository.findAll(pageable);
         }
 
-        List<Map<String, Object>> hiresWithCompanyInfo = result
+        List<Map<String, Object>> hireBoardList = result
                 .getContent()
                 .stream()
                 .map(hireBoardEntity -> {
                     CompanyMemberEntity companyMemberInfo = companyMemberRepository.findById(hireBoardEntity.getCMidx()).orElse(null);
-                    Map<String, Object> hireWithCompanyInfo = new HashMap<>();
-                    hireWithCompanyInfo.put("hboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
+                    Map<String, Object> hboardMemberInfo = new HashMap<>();
+                    hboardMemberInfo.put("hboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
+                    
                     if (companyMemberInfo != null) {
-                        hireWithCompanyInfo.put("cmCompname", companyMemberInfo.getCMcompname());
-                        hireWithCompanyInfo.put("cmPhoto", companyMemberInfo.getCMfilename());
+                        hboardMemberInfo.put("cmCompname", companyMemberInfo.getCMcompname());
+                        hboardMemberInfo.put("cmPhoto", companyMemberInfo.getCMfilename());
                     }
-                    return hireWithCompanyInfo;
+                    return hboardMemberInfo;
                 })
                 .collect(Collectors.toList());
 
         Map<String, Object> response = new HashMap<>();
-        response.put("reviews", hiresWithCompanyInfo);
+        response.put("hireBoardList", hireBoardList);
         response.put("totalElements", result.getTotalElements());
         response.put("totalPages", result.getTotalPages());
         response.put("currentPage", result.getNumber() + 1);
@@ -108,70 +149,7 @@ public class HireBoardService {
     }
 
 
-    // public Map<String,Object> list(int currentPage){
-    
-    //     //페이징처리
-    //     int totalCount;//총갯수
-    //     int perPage=10;//한페이지당 출력할 글갯수
-    //     int perBlock=5;//출력할 페이지갯수
-    //     int startNum;//db에서 가져올 시작번호
-    //     int startPage;//출력할 시작페이지
-    //     int endPage;//출력할 끝페이지
-    //     int totalPage;//총 페이지수
-    //     int no;//출력할 시작번호
 
-    //     //총갯수
-    //     totalCount = (int)hireBoardRepository.count();
-    //      //총 페이지수
-    //     totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
-    //     //시작페이지
-    //     startPage=(currentPage-1)/perBlock*perBlock+1;
-    //     //끝페이지
-    //     endPage=startPage+perBlock-1;
-    //     if(endPage>totalPage)
-    //         endPage=totalPage;
-    //     //시작번호
-    //     startNum=(currentPage-1)*perPage;    
-    //     //각페이지당 출력할 번호
-    //     no=totalCount-(currentPage-1)*perPage;
-
-    //     Map<String, Integer> map=new HashMap<>();
-    //     map.put("start", startNum);
-    //     map.put("perpage", perPage);
-    //     List<Map<String,Object>> fullList = new ArrayList<>();
-    //     List<HireBoardDto> list = hireBoardMapper.getPagingList(map);
-        
-    //     for(HireBoardDto dto : list){
-    //         Map<String,Object> dmap = new HashMap<>();
-    //         dmap.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
-    //         dmap.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
-    //         dmap.put("hb_subject",dto.getHb_subject());
-    //         dmap.put("hb_content",dto.getHb_content());
-    //         dmap.put("hb_readcount",dto.getHb_readcount());
-    //         dmap.put("hb_writeday",dto.getHb_writeday());
-    //         dmap.put("hb_photo",dto.getHb_photo());
-    //         fullList.add(dmap);
-    //     }
-
-    //     //출력할 페이지번호들을 Vector에 담아서 보내기
-    //     Vector<Integer> parr=new Vector<>();
-    //     for(int i=startPage;i<=endPage;i++){
-    //         parr.add(i);
-    //     }
-
-    //     //필요한 변수들을 Map 에 담아서 보낸다
-    //     Map<String,Object> smap=new HashMap<>();
-    //     smap.put("totalCount",totalCount);
-    //     smap.put("list",fullList);
-    //     smap.put("parr",parr);
-    //     smap.put("startPage",startPage);
-    //     smap.put("endPage",endPage);
-    //     smap.put("no",no);
-    //     smap.put("totalPage",totalPage);
-
-    //     System.out.println(smap);
-    //     return  smap;
-    // } 
 
 
     public List<HireBoardDto> getPagingList(int start, int perpage) {
@@ -215,8 +193,9 @@ public class HireBoardService {
         map.put("hb_readcount",dto.getHb_readcount());
         map.put("hb_photo",dto.getHb_photo());
         map.put("hb_writeday",dto.getHb_writeday());
-        map.put("cm_compname",hireBoardMapper.getCompName(dto.getCm_idx()));
-        map.put("cm_filename",hireBoardMapper.getCmFileName(dto.getCm_idx()));
+        map.put("cm_compname",hireBoardMapper.getCompName(dto.getHb_idx()));
+        map.put("cm_filename",hireBoardMapper.getCmFileName(dto.getHb_idx()));
+        map.put("cm_idx",hireBoardMapper.getCmIdx(dto.getHb_idx()));
 
 
         //북마크 추가 여부 확인 및 역시 map 에 담기 
@@ -268,15 +247,68 @@ public class HireBoardService {
     //     }
     // }
 
-    public void updateHireBoard(HireBoardDto dto){
-        try {
-            HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
-            hireBoardRepository.save(entity);
-        } catch (Exception e) {
-            logger.error("Error occurred while updating hireboard",e);
-            throw e;
+    // public void updateHireBoard(HireBoardDto dto){
+    //     try {
+    //         HireBoardEntity entity = HireBoardEntity.toHireBoardEntity(dto);
+    //         hireBoardRepository.save(entity);
+    //     } catch (Exception e) {
+    //         logger.error("Error occurred while updating hireboard",e);
+    //         throw e;
+    //     }
+    // }
+
+    public void updateHireBoard(int hb_idx, HireBoardDto dto){
+        try{
+            Optional<HireBoardEntity> e = hireBoardRepository.findById(hb_idx);
+            if(e.isPresent()){
+                HireBoardEntity existingEntity = e.get();
+                existingEntity.setHBsubject(dto.getHb_subject());
+                existingEntity.setHBcontent(dto.getHb_content());
+                existingEntity.setHBphoto(dto.getHb_photo());
+
+                hireBoardRepository.save(existingEntity);
+                }
+            } catch (Exception e) {
+                log.error("update HireBoard Error",e);
+                throw e;
+            }
         }
-    }
+    
+    // 사진 업데이트 여러장 
+        public String updatePhoto(Integer hb_idx, List<MultipartFile> uploads){
+        List<String> uploadedFileNames = new ArrayList<>();
+        for (MultipartFile files : uploads){
+            uploadedFileNames.add(storageService.uploadFile(bucketName, "devster/hboard",files));
+        }
+        log.info(hb_idx + "HireBoard 사진 업데이트 완료");
+        return String.join(",",uploadedFileNames);
+    }    
+
+    //업데이트시 기존 사진 삭제 로직
+    public void deletePhoto(Integer hb_idx, String imageFileName){
+        Optional<HireBoardEntity> entityOptional = hireBoardRepository.findById(hb_idx);
+        if(entityOptional.isPresent()){
+            HireBoardEntity entity = entityOptional.get();
+            String existingPhotos = entity.getHBphoto();
+            List<String> existingPhotosList = Arrays.asList(existingPhotos.split(","));
+            List<String> updatedPhotosList = new ArrayList<>();
+            for (String photo : existingPhotosList){
+                if(!photo.equals(imageFileName)){
+                    updatedPhotosList.add(photo);
+                }
+            }
+            entity.setHBphoto(String.join(",", updatedPhotosList));
+            hireBoardRepository.save(entity);
+            storageService.deleteFile(bucketName,"devster/hboard",imageFileName);
+            log.info(hb_idx + " HireBoard 이미지 삭제 완료");
+        } else {
+            log.error("HireBoardEntity with hb_idx " + hb_idx + " not found.");
+        }
+    } 
+    
+
+
+
 
  
 
@@ -299,7 +331,7 @@ public class HireBoardService {
             }
             
         } catch (Exception e) {
-            logger.error("Error occurred while inserting hirebookmark",e);
+            logger.error("Error occurred while bookmark",e);
         }
     }    
 

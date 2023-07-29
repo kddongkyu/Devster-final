@@ -41,7 +41,7 @@ import javax.transaction.Transactional;
 @Service
 @Slf4j
 public class AcademyBoardService {
-    private final MemberRepository memberRepository;    
+    private final MemberRepository memberRepository;
 
     private final AcademyBoardRepository academyBoardRepository;
 
@@ -66,7 +66,7 @@ public class AcademyBoardService {
         this.academyInfoRepository = academyInfoRepository;
 
     }
-    
+
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
@@ -175,24 +175,24 @@ public class AcademyBoardService {
     public AcademyBoardDto findByAbIdx(int idx){
         try {
             AcademyBoardEntity entity = academyBoardRepository.findById((Integer)idx)
-                .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + idx));
-            return AcademyBoardDto.toAcademyBoardDto(entity);    
+                    .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + idx));
+            return AcademyBoardDto.toAcademyBoardDto(entity);
         } catch (EntityNotFoundException e) {
             log.error("Error occurred while getting a entity", e);
             throw e;
         }
-    } 
+    }
 
-public Map<String,Object> getDetailPage(Integer ab_idx){
+    public Map<String,Object> getDetailPage(Integer ab_idx){
         try{
             AcademyBoardEntity aboard = academyBoardRepository.findById(ab_idx)
                     .orElseThrow(() -> new EntityNotFoundException("해당 idx는 존재하지 않습니다." + ab_idx));
-           aboard.setABreadcount(aboard.getABreadcount()+1);
-           academyBoardRepository.save(aboard);
+            aboard.setABreadcount(aboard.getABreadcount()+1);
+            academyBoardRepository.save(aboard);
 
             // AIname 가져오기
-        AcademyInfoEntity academyInfo = academyInfoRepository.findById(aboard.getAIidx()).orElse(null);
-        MemberEntity memberInfo = memberRepository.findById(aboard.getMIdx()).orElse(null);
+            AcademyInfoEntity academyInfo = academyInfoRepository.findById(aboard.getAIidx()).orElse(null);
+            MemberEntity memberInfo = memberRepository.findById(aboard.getMIdx()).orElse(null);
 
             Map<String, Object> aboarddetailInfo = new HashMap<>();
             aboarddetailInfo.put("aboard",AcademyBoardDto.toAcademyBoardDto(aboard));
@@ -209,7 +209,7 @@ public Map<String,Object> getDetailPage(Integer ab_idx){
             log.error("Error finding one aboarddetail", e);
             throw e;
         }
-        }
+    }
 
 
 
@@ -288,29 +288,29 @@ public Map<String,Object> getDetailPage(Integer ab_idx){
 
 
     private AcademylikeEntity findOrCreateABoardLike(int ABidx,int MIdx){
-            return academylikeRepository.findByABidxAndMIdx(ABidx,MIdx)
+        return academylikeRepository.findByABidxAndMIdx(ABidx,MIdx)
                 .orElse(new AcademylikeEntity(ABidx,MIdx));
-    }    
+    }
 
     public void like(int ABidx, int MIdx){
-        try {           
+        try {
             AcademylikeEntity academylikeEntity = findOrCreateABoardLike(ABidx,MIdx);
-            
+
             if (academylikeEntity.getLikestatus() == 1) {
                 academylikeEntity.setLikestatus(0);
                 academylikeRepository.save(academylikeEntity);
-    
+
                 AcademyBoardEntity academyBoardEntity = academyBoardRepository.findById(ABidx)
-                    .orElseThrow(()-> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(ab_like-1)"));
+                        .orElseThrow(()-> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(ab_like-1)"));
                 academyBoardEntity.setABlike(academyBoardEntity.getABlike()-1);
                 academyBoardRepository.save(academyBoardEntity);
-    
+
             } else if (academylikeEntity.getLikestatus() == 2) {
                 throw new IllegalArgumentException("이미 싫어요가 눌려 있습니다");
             } else {
                 academylikeEntity.setLikestatus(1);
                 academylikeRepository.save(academylikeEntity);
-    
+
                 // AcademyBoardEntity의 ab_like 필드 업데이트
                 AcademyBoardEntity academyBoardEntity = academyBoardRepository.findById(ABidx)
                         .orElseThrow(() -> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(ab_like+1): " + ABidx));
@@ -320,31 +320,31 @@ public Map<String,Object> getDetailPage(Integer ab_idx){
         } catch (IllegalArgumentException e) {
             log.error("review like Error(Ill)", e);
         } catch (Exception e) {
-         log.error("review like Error(Exce)", e);
+            log.error("review like Error(Exce)", e);
         }
     }
-     
+
 
     public void dislike(int ABidx, int MIdx) {
         try {
             AcademylikeEntity academylikeEntity = findOrCreateABoardLike(ABidx, MIdx);
-            
+
             if (academylikeEntity.getLikestatus() == 1) {
                 throw new IllegalArgumentException("이미 좋아요가 눌려 있습니다");
             } else if (academylikeEntity.getLikestatus() == 2) {
                 //throw new IllegalArgumentException("이미 싫어요가 눌려 있습니다");
                 academylikeEntity.setLikestatus(0);
                 academylikeRepository.save(academylikeEntity);
-    
+
                 AcademyBoardEntity academyBoardEntity = academyBoardRepository.findById(ABidx)
-                    .orElseThrow(()-> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(ab_dislike-1)"));
+                        .orElseThrow(()-> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(ab_dislike-1)"));
                 academyBoardEntity.setABdislike(academyBoardEntity.getABdislike()-1);
                 academyBoardRepository.save(academyBoardEntity);
-    
+
             } else {
                 academylikeEntity.setLikestatus(2);
                 academylikeRepository.save(academylikeEntity);
-    
+
                 // AcademyBoardEntity의 ab_like 필드 업데이트
                 AcademyBoardEntity academyBoardEntity = academyBoardRepository.findById(ABidx)
                         .orElseThrow(() -> new IllegalArgumentException("해당하는 리뷰 보드를 찾지 못했습니다(rb_dislike+1): " + ABidx));
@@ -354,7 +354,7 @@ public Map<String,Object> getDetailPage(Integer ab_idx){
         } catch (IllegalArgumentException e) {
             log.error("review like Error(Ill)", e);
         } catch (Exception e) {
-         log.error("review like Error(Exce)", e);
+            log.error("review like Error(Exce)", e);
         }
     }
 
@@ -362,7 +362,7 @@ public Map<String,Object> getDetailPage(Integer ab_idx){
         AcademylikeEntity academylikeEntity=findOrCreateABoardLike(ABidx, MIdx);
         return academylikeEntity.getLikestatus()==1;
     }
-   
+
     public boolean isAlreadyAddBadRp(int ABidx, int MIdx){
         AcademylikeEntity academylikeEntity=findOrCreateABoardLike(ABidx, MIdx);
         return academylikeEntity.getLikestatus()==2;

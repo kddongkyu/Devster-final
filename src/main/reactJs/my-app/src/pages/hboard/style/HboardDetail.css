@@ -1,0 +1,403 @@
+.hboard-advertise-main {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  height: 11.2rem;
+}
+.hboard-advertise-text {
+  position: absolute;
+  top: 4.2rem;
+  left: calc(50% - 18px);
+  letter-spacing: -0.24px;
+}
+.hboard-advertise-box {
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 7.6rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 11.2rem;
+  font-size: 2rem;
+  color: #000;
+}
+.hboard-advertise-box1 {
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 7.6rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 11.2rem;
+  font-size: 2rem;
+  color: #000;
+}
+/*  position : relative주고 list 안에 넣은듯?? */
+.hboard-advertise-box2 {
+  position: relative;
+  width: calc(100% - 30px);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  height: 11.2rem;
+  font-size: 2rem;
+  color: #000;
+}
+
+.hboard-detail-type-hr-icon {
+  position: absolute;
+  width: calc(100% - 41px);
+  top: 15.22rem;
+  right: 1.31rem;
+  left: 1.25rem;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.13rem;
+}
+.hboard-detail-type-text {
+  position: absolute;
+  top: 21.9rem;
+  left: 2.4rem;
+  font-size: 1.4rem;
+  letter-spacing: -0.24px;
+}
+.hboard-detail-info-profile-img-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 4.3rem;
+  height: 4.3rem;
+  object-fit: cover;
+}
+.hboard-detail-info-nickname {
+  position: absolute;
+  top: 0.2rem;
+  left: 5.3rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #1c1c1c;
+  display: inline-block;
+  width: 18rem;
+  height: 1.7rem;
+}
+.span {
+  color: #721ea6;
+}
+.hboard-detail-info-status-text,
+.hboard-detail-info-status-text1 {
+  position: absolute;
+  top: 2.3rem;
+  left: 12.8rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 10rem;
+}
+.hboard-detail-info-status-text1 {
+  left: 5.4rem;
+  width: 5rem;
+}
+.hboard-detail-info-status-view-icon {
+  position: absolute;
+  top: 2.75rem;
+  left: 11rem;
+  width: 1.4rem;
+  height: 0.94rem;
+}
+.hboard-detail-info {
+  position: absolute;
+  top: 29rem;
+  left: 2.7rem;
+  width: 18.8rem;
+  height: 4.3rem;
+}
+.hboard-url-icon2 {
+  position: absolute;
+  top: 27.13rem;
+  right: 3.1rem;
+  width: 1.5rem;
+  height: 2.35rem;
+  cursor: pointer;
+}
+.hboard-url-icon {
+  position: absolute;
+  top: 27.13rem;
+  right: 6.3rem;
+  width: 1.87rem;
+  height: 2.35rem;
+  cursor: pointer;
+}
+.hboard-delete-icon,
+.hboard-update-icon {
+  position: absolute;
+  top: 27.2rem;
+  right: 9.7rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+.hboard-delete-icon {
+  right: 13rem;
+  width: 2.3rem;
+  height: 2.3rem;
+}
+.board-detail-header-btn-like-i-icon {
+  position: absolute;
+  top: 0.28rem;
+  right: 1.5rem;
+  width: 0.69rem;
+  height: 0.56rem;
+}
+.board-detail-header-btn-like-t {
+  position: absolute;
+  top: 0;
+  right: 0;
+  letter-spacing: -0.24px;
+}
+.hboard-detail-header-btn-like {
+  position: absolute;
+  top: 0;
+  right: 2.31rem;
+  width: 2.19rem;
+  height: 1.06rem;
+}
+.board-detail-header-btn-dislik-icon {
+  position: absolute;
+  top: 0.35rem;
+  right: 1.13rem;
+  width: 0.69rem;
+  height: 0.56rem;
+}
+.hboard-detail-header-btn-disli {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.81rem;
+  height: 1.06rem;
+}
+.hboard-detail-header-btn {
+  position: absolute;
+  top: 19.56rem;
+  right: 1.69rem;
+  width: 4.5rem;
+  height: 1.06rem;
+}
+.p {
+  margin: 0;
+}
+
+/* 중단 */
+
+/* heigh 지우고 position: relative */
+
+.hboard-detail-textarea-contents {
+  position: relative;
+  width: 100%;
+  top: 6.7rem;
+  left: 0;
+  letter-spacing: -0.24px;
+  display: inline-block;
+}
+.hboard-detail-textarea-subject {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.8rem;
+  letter-spacing: -0.24px;
+  color: #000;
+}
+.hboard-detail-textarea {
+  position: relative;
+  width: calc(100% - 74px);
+  top: 35.7rem;
+  right: 3.7rem;
+  left: 3.7rem;
+  font-size: 1.3rem;
+}
+
+/* 하단 */
+
+/* 나란히 줘야 되는 div 묶어서 display : flex */
+.fboard-detail-listbackcounter {
+  position: relative;
+  display: flex;
+  margin-top: 5rem;
+}
+
+.hboard-detail-photo-list {
+  position: relative;
+  margin-top: 5rem;
+  background-color: #fff;
+  box-sizing: border-box;
+  margin-bottom: 50rem;
+}
+
+.hboard-detail-listback-rec {
+  position: absolute;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+.hboard-detail-photo {
+  /* top: 55rem; */
+  left: calc(50% - 150px);
+  border: 1px solid #fff;
+  width: 30rem;
+  height: 30rem;
+  position: relative;
+}
+.hboard-detail-listback-rec {
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  border: 1px solid #bdc0c4;
+  width: 6.8rem;
+  height: 3.5rem;
+}
+.hboard-detail-listback-text {
+  position: absolute;
+  top: 0.8rem;
+  left: 3.1rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 3.8rem;
+}
+.hboard-detail-listback-icon {
+  position: absolute;
+  top: 0.95rem;
+  left: 1rem;
+  width: 1.6rem;
+  height: 1.69rem;
+  overflow: hidden;
+}
+
+/* position: relative */
+.hboard-detail-listback {
+  position: relative;
+  width: 6.9rem;
+  height: 3.5rem;
+  font-size: 1.3rem;
+  color: #747474;
+}
+
+.hboard-detail-counter-like-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px 0 0 5px;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 2.13rem;
+  height: 2.38rem;
+}
+.hboard-detail-counter-like-icon {
+  position: absolute;
+  top: 1.04rem;
+  right: 0.6rem;
+  width: 1.38rem;
+  height: 0.52rem;
+}
+.hboard-detail-counter-like {
+  position: absolute;
+  top: 0;
+  right: 5.5rem;
+  width: 2.13rem;
+  height: 2.38rem;
+}
+.hboard-detail-counter-num-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 3.5rem;
+  height: 2.38rem;
+}
+.hboard-detail-counter-num-text {
+  position: absolute;
+  top: 0.63rem;
+  right: 1.06rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+}
+.hboard-detail-counter-num {
+  position: absolute;
+  top: 0;
+  right: 2.06rem;
+  width: 3.5rem;
+  height: 2.38rem;
+}
+.board-detail-counter-dislike-b {
+  border-radius: 0 5px 5px 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+}
+.hboard-detail-counter-dislike,
+.hboard-detail-counter-dislike-b {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3.4rem;
+  height: 3.8rem;
+}
+.hboard-detail-counter {
+  position: absolute;
+  top: 120.5rem;
+  right: 3.6rem;
+  width: 12.2rem;
+  height: 3.8rem;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #000;
+}
+
+.hboard-advertise-text1 {
+  position: absolute;
+  top: 4.2rem;
+  left: calc(50% - 27px);
+  letter-spacing: -0.24px;
+}
+
+.advertise-text1 {
+  position: absolute;
+  top: 2.63rem;
+  left: calc(50% - 27px);
+  letter-spacing: -0.24px;
+}
+.advertise-box1 {
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 79.94rem;
+  right: 0.94rem;
+  left: 0.94rem;
+  height: 7rem;
+  font-size: 1.25rem;
+  color: #000;
+}
+.hboard-detail-hr-icon {
+  position: absolute;
+  width: calc(100% - 40px);
+  top: 89.03rem;
+  right: 1.25rem;
+  left: 1.25rem;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.08rem;
+}
+
+.hboard-detail {
+  background-color: #fff;
+  border: 1px solid rgba(210, 210, 210, 0.9);
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #626567;
+  font-family: "Noto Sans KR";
+}

@@ -33,6 +33,12 @@ public class NoticeBoardController {
         this.noticeBoardService = noticeBoardService;
     }
 
+    @GetMapping("/D0/notice")
+    public ResponseEntity<Map<String, Object>> getNewestNboard(){
+        return new ResponseEntity<>(noticeBoardService.getNewestNboard(),HttpStatus.OK);
+    }                
+
+
     @GetMapping("/D0")
     public ResponseEntity<Map<String, Object>> getPagedNboard(
             @RequestParam(defaultValue = "0") int page,
