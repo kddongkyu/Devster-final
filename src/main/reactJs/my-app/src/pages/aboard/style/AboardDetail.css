@@ -1,0 +1,624 @@
+.advertise-main {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 11.2rem;
+}
+.advertise-text {
+    position: absolute;
+    top: 4.2rem;
+    left: calc(50% - 18px);
+    letter-spacing: -0.24px;
+}
+.advertise-box {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 7.6rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 11.2rem;
+    font-size: 2rem;
+    color: #000;
+}
+.aboard-detail-child {
+    position: absolute;
+    width: calc(100% - 41px);
+    top: 24.35rem;
+    right: 2.1rem;
+    left: 2rem;
+    max-width: 100%;
+    overflow: hidden;
+    height: 0.25rem;
+}
+.aboard-detail-type-text {
+    position: absolute;
+    top: 21.9rem;
+    left: 2.4rem;
+    font-size: 1.4rem;
+    letter-spacing: -0.24px;
+}
+.aboard-detail-info-profile-img-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    width: 4.3rem;
+    height: 4.3rem;
+    object-fit: cover;
+}
+.aboard-detail-info-nickname {
+    position: absolute;
+    top: 0.2rem;
+    left: 5.3rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #1c1c1c;
+    display: inline-block;
+    width: 13.3rem;
+    height: 1.7rem;
+}
+.span {
+    color: #721ea6;
+}
+.aboard-detail-info-status-text,
+.aboard-detail-info-status-text1 {
+    position: absolute;
+    top: 2.3rem;
+    left: 11.1rem;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 7.7rem;
+}
+.aboard-detail-info-status-text1 {
+    left: 5.4rem;
+    width: 4.1rem;
+}
+.aboard-detail-info-status-view-icon {
+    position: absolute;
+    top: 2.75rem;
+    left: 9.65rem;
+    width: 1.4rem;
+    height: 0.94rem;
+}
+.aboard-detail-info {
+    position: absolute;
+    top: 29rem;
+    left: 2.7rem;
+    width: 18.8rem;
+    height: 4.3rem;
+}
+.aboard-url-icon {
+    position: absolute;
+    top: 27.13rem;
+    right: 3rem;
+    width: 1.87rem;
+    height: 2.35rem;
+}
+.aboard-delete-icon,
+.aboard-update-icon {
+    position: absolute;
+    top: 27.2rem;
+    right: 6.3rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    overflow: hidden;
+}
+.aboard-delete-icon {
+    right: 9.8rem;
+    width: 2.3rem;
+    height: 2.3rem;
+}
+.aboard-detail-header-btn-like-i-icon {
+    position: absolute;
+    top: 0.45rem;
+    right: 2.4rem;
+    width: 1.1rem;
+    height: 0.9rem;
+}
+.aboard-detail-header-btn-like-t {
+    position: absolute;
+    top: 0;
+    right: 0;
+    letter-spacing: -0.24px;
+}
+.aboard-detail-header-btn-like {
+    position: absolute;
+    top: 0;
+    right: 3.7rem;
+    width: 3.5rem;
+    height: 1.7rem;
+}
+.aboard-detail-header-btn-dislik-icon {
+    position: absolute;
+    top: 0.55rem;
+    right: 1.8rem;
+    width: 1.1rem;
+    height: 0.9rem;
+}
+.aboard-detail-header-btn-disli {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.9rem;
+    height: 1.7rem;
+}
+.aboard-detail-header-btn {
+    position: absolute;
+    top: 31.3rem;
+    right: 2.7rem;
+    width: 7.2rem;
+    height: 1.7rem;
+}
+.p {
+    margin: 0;
+}
+.aboard-detail-textarea-content {
+    position: absolute;
+    width: 100%;
+    top: 6.7rem;
+    left: 0;
+    letter-spacing: -0.24px;
+    display: inline-block;
+    height: 43.1rem;
+}
+.aboard-detail-textarea-subject {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.8rem;
+    letter-spacing: -0.24px;
+    color: #000;
+}
+.aboard-detail-textarea {
+    position: absolute;
+    width: calc(100% - 74px);
+    top: 35.7rem;
+    right: 3.7rem;
+    left: 3.7rem;
+    height: 49.8rem;
+    font-size: 1.3rem;
+}
+.aboard-detail-listback-rec,
+.aboard-detail-photo {
+    position: absolute;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.aboard-detail-photo {
+    top: 88rem;
+    left: calc(50% - 150px);
+    border: 1px solid #fff;
+    width: 30rem;
+    height: 30rem;
+}
+.aboard-detail-listback-rec {
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    border: 1px solid #bdc0c4;
+    width: 6.8rem;
+    height: 3.5rem;
+}
+.aboard-detail-listback-text {
+    position: absolute;
+    top: 0.8rem;
+    left: 3.1rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+    width: 3.8rem;
+}
+.aboard-detail-listback-icon {
+    position: absolute;
+    top: 0.95rem;
+    left: 1rem;
+    width: 1.6rem;
+    height: 1.69rem;
+    overflow: hidden;
+}
+.aboard-detail-listback {
+    position: absolute;
+    top: 120.5rem;
+    left: 4.1rem;
+    width: 6.9rem;
+    height: 3.5rem;
+    font-size: 1.3rem;
+    color: #747474;
+}
+.aboard-detail-counter-like-box {
+    position: absolute;
+    top: 0;
+    right: 8.8rem;
+    border-radius: 5px 0 0 5px;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 3.4rem;
+    height: 3.8rem;
+}
+.aboard-detail-counter-like-ico-icon {
+    position: absolute;
+    top: 1.66rem;
+    right: 9.76rem;
+    width: 1.38rem;
+    height: 0.83rem;
+}
+.aboard-detail-counter-num-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 5.6rem;
+    height: 3.8rem;
+}
+.aboard-detail-counter-num-text {
+    position: absolute;
+    top: 1rem;
+    right: 1.7rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+}
+.aboard-detail-counter-num {
+    position: absolute;
+    top: 0;
+    right: 3.3rem;
+    width: 5.6rem;
+    height: 3.8rem;
+}
+.aboard-detail-counter-dislike- {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0 5px 5px 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 3.4rem;
+    height: 3.8rem;
+}
+.aboard-detail-counter-dislike-icon {
+    position: absolute;
+    top: 1.66rem;
+    right: 0.96rem;
+    width: 1.38rem;
+    height: 0.83rem;
+}
+.aboard-detail-counter {
+    position: absolute;
+    top: 120.5rem;
+    right: 3.6rem;
+    width: 12.2rem;
+    height: 3.8rem;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+}
+.aboard-datail-advertise-text {
+    position: absolute;
+    top: 4.2rem;
+    left: calc(50% - 27px);
+    letter-spacing: -0.24px;
+}
+.aboard-datail-advertise-box {
+    position: absolute;
+    width: calc(100% - 30px);
+    top: 127.9rem;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 11.2rem;
+    font-size: 2rem;
+    color: #000;
+}
+.aboard-detail-hr-icon {
+    position: absolute;
+    width: calc(100% - 40px);
+    top: 142.44rem;
+    right: 2rem;
+    left: 2rem;
+    max-width: 100%;
+    overflow: hidden;
+    height: 0.12rem;
+}
+.aboard-detail-comments-counts {
+    position: absolute;
+    top: 144.1rem;
+    left: 2rem;
+    font-size: 1.6rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    color: #4a4a4a;
+}
+.aboard-detail-commnets-form-bo {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    height: 24.4rem;
+}
+.aboard-detail-commnets-form-im-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.6rem;
+    border-radius: 50%;
+    width: 2.8rem;
+    height: 2.8rem;
+    object-fit: cover;
+}
+.aboard-detail-commnets-form-te {
+    position: absolute;
+    width: calc(100% - 68px);
+    top: 1.7rem;
+    right: 1.6rem;
+    left: 5.2rem;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    height: 15.7rem;
+}
+.aboard-detail-commnets-form {
+    position: absolute;
+    width: calc(100% - 32px);
+    top: 147.6rem;
+    right: 1.6rem;
+    left: 1.6rem;
+    height: 24.4rem;
+}
+.aboard-detail-commnets-form-su {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 8px;
+    background-color: #721ea6;
+    width: 11.6rem;
+    height: 4rem;
+}
+.aboard-detail-commnets-form-su1 {
+    position: absolute;
+    top: 1rem;
+    right: 3.1rem;
+    letter-spacing: -0.24px;
+}
+.aboard-detail-commnets-submit- {
+    position: absolute;
+    top: 166.3rem;
+    right: 3.2rem;
+    width: 11.6rem;
+    height: 4rem;
+    font-size: 1.4rem;
+    color: #fff;
+}
+.aboard-detail-commnets-detail-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+}
+.aboard-detail-commnets-detail- {
+    position: absolute;
+    top: 174.4rem;
+    left: 2rem;
+    width: 17.7rem;
+    height: 3.5rem;
+    color: #1c1c1c;
+}
+.aboard-detail-commnets-all-up- {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 5px 0 0 5px;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 2.93rem;
+    height: 2.7rem;
+}
+.aboard-detail-commnets-all-up-icon {
+    position: absolute;
+    top: 1.15rem;
+    right: 0.81rem;
+    width: 1.23rem;
+    height: 0.66rem;
+}
+.aboard-detail-commnets-all-up {
+    position: absolute;
+    top: 0;
+    right: 7.57rem;
+    width: 2.93rem;
+    height: 2.7rem;
+}
+.aboard-detail-commnets-all-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 4.82rem;
+    height: 2.7rem;
+}
+.aboard-detail-commnets-all-lik2 {
+    position: absolute;
+    top: 0.61rem;
+    right: 1.36rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+    width: 1.89rem;
+    height: 1.35rem;
+}
+.aboard-detail-commnets-all-dow-icon {
+    position: absolute;
+    top: 1.14rem;
+    right: 0.81rem;
+    width: 1.23rem;
+    height: 0.66rem;
+}
+.aboard-detail-commnets-all-dow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.93rem;
+    height: 2.7rem;
+}
+.aboard-detail-commnets-all-lik {
+    position: absolute;
+    top: 175.2rem;
+    right: 1.9rem;
+    width: 10.5rem;
+    height: 2.7rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #000;
+}
+.aboard-detail-commnets-all-con {
+    position: absolute;
+    width: calc(100% - 45px);
+    top: 179.2rem;
+    left: 1.9rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+    height: 20.8rem;
+}
+.aboard-detail-commnets-hide-ic-icon {
+    position: absolute;
+    top: 0.5rem;
+    left: -0.11rem;
+    width: 1.16rem;
+    height: 0.59rem;
+}
+.aboard-detail-commnets-hide-co,
+.aboard-detail-commnets-hide-te {
+    position: absolute;
+    top: 0;
+    left: 1.8rem;
+    letter-spacing: -0.24px;
+}
+.aboard-detail-commnets-hide-co {
+    left: 10.8rem;
+    color: #626567;
+}
+.aboard-detail-commnets-hide {
+    position: absolute;
+    top: 200.9rem;
+    left: 2.5rem;
+    width: 15rem;
+    height: 1.6rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #721ea6;
+}
+.aboard-detail-recom-box {
+    position: absolute;
+    top: 203.7rem;
+    left: 4.1rem;
+    border-left: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    width: 33rem;
+    height: 22rem;
+}
+.aboard-detail-recom-info-count {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 500;
+    display: inline-block;
+    width: 13.3rem;
+    height: 1.7rem;
+}
+.aboard-detail-recom-info-date {
+    position: absolute;
+    top: 1.9rem;
+    left: 0.1rem;
+    font-size: 1rem;
+    letter-spacing: -0.24px;
+    color: #626567;
+}
+.aboard-detail-recom-info-text {
+    position: absolute;
+    top: 0;
+    left: 4.4rem;
+    width: 13.3rem;
+    height: 3.3rem;
+}
+.aboard-detail-recom-info {
+    position: absolute;
+    top: 204.6rem;
+    left: 5rem;
+    width: 17.7rem;
+    height: 3.5rem;
+    color: #1c1c1c;
+}
+.aboard-detail-recom-likes-coun {
+    position: absolute;
+    top: 0;
+    right: 2.84rem;
+    width: 4.82rem;
+    height: 2.7rem;
+}
+.aboard-detail-recom-down-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0 5px 5px 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 2.93rem;
+    height: 2.7rem;
+}
+.aboard-detail-recom-likes {
+    position: absolute;
+    top: 205.4rem;
+    right: 1.9rem;
+    width: 10.5rem;
+    height: 2.7rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #000;
+}
+.aboard-detail-recom-recom-form,
+.aboard-detail-recom-textarea {
+    position: absolute;
+    left: 5.3rem;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+}
+.aboard-detail-recom-textarea {
+    width: calc(100% - 82px);
+    top: 209.2rem;
+    display: inline-block;
+    height: 12.4rem;
+}
+.aboard-detail-recom-recom-form {
+    top: 222.9rem;
+    text-align: center;
+}
+.aboard-detail {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid rgba(210, 210, 210, 0.9);
+    box-sizing: border-box;
+    width: 100%;
+    height: 227.9rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.2rem;
+    color: #626567;
+    font-family: "Noto Sans KR";
+}

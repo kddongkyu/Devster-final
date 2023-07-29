@@ -1,24 +1,38 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate, redirect } from "react-router-dom";
 import "./style/Hboard.css";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
+import { JwtPageChk } from "../../api/JwtPageChk";
+import { checkToken } from "../../api/checkToken";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function Hboard(props) {
-  // const Hboard = () => {
-  //   const handleRefresh = () => {
-  //     window.location.reload();
-  //   };
-
   const handleRefresh = () => {
+    //새로고침 버튼용
     window.location.reload();
   };
 
   const [hireBoardList, setHireBoardList] = useState([]);
+  const [noticeArticle, setNoticeArticle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const navi = useNavigate();
   const [contentCount, setContentCount] = useState(15); //텍스트의 초기 개수
+  const [subjectCount, setsubjectCount] = useState(10);
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
+  //정렬
+  const [sortProperty, setSortProperty] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  //검색
+  const [inputKeyword, setInputKeyword] = useState(""); //사용자가 입력하는 검색어
+  const [finalKeyword, setFinalKeyword] = useState(""); //최종 검색어 (검색버튼)
+
+  //디코딩 함수
+  const de = checkToken();
 
   const handleResize = () => {
     // 화면 너비에 따라 텍스트 개수를 업데이트
@@ -35,6 +49,21 @@ function Hboard(props) {
       setContentCount(15);
     }
   };
+  const handleSubjectResize = () => {
+    // 화면 너비에 따라 텍스트 개수를 업데이트
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= 1000) {
+      setsubjectCount(50);
+    } else if (screenWidth >= 768) {
+      setsubjectCount(35);
+    } else if (screenWidth >= 600) {
+      setsubjectCount(25);
+    } else if (screenWidth >= 480) {
+      setsubjectCount(20);
+    } else {
+      setsubjectCount(10);
+    }
+  };
 
   useEffect(() => {
     // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
@@ -46,21 +75,60 @@ function Hboard(props) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
+    window.addEventListener("resize", handleSubjectResize);
+    handleSubjectResize(); // 초기 렌더링 시 텍스트 개수 설정
+
+    return () => {
+      // 컴포넌트가 언마운트될 때 리사이즈 이벤트 핸들러 제거
+      window.removeEventListener("resize", handleSubjectResize);
+    };
+  }, []);
+
+  const compareValues = (value1, value2) => {
+    return value1.length > value2;
+  };
+
+  //검색 기능
+  const handleSearchButtonClick = () => {
+    //검색 버튼을 눌렀을 때 '최종 검색어'를 업데이트합니다.
+    const searchKeyword = inputKeyword;
+    setFinalKeyword(searchKeyword);
+    //첫 페이지의 검색 결과를 가져옵니다.
+    setCurrentPage(1);
+  };
+  //엔터로 검색
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchButtonClick();
+    }
+  };
 
   useEffect(() => {
-    fetchHboards(currentPage);
-  }, [currentPage]);
+    const page = Math.max(1, currentPage);
+    fetchHboards(page, finalKeyword, sortProperty, sortDirection);
+  }, [currentPage, finalKeyword, sortProperty, sortDirection]);
 
-  const fetchHboards = (page) => {
-    axiosIns
-      .get("/api/hboard/D0", { params: { page: page - 1 } })
-      .then((response) => {
-        setHireBoardList(response.data.hireBoardList);
-        setTotalPages(response.data.totalPages);
-      })
-      .catch((error) => {
-        console.error("Error fetching hboards:", error);
+  const fetchHboards = async (page, keyword, sortProperty, sortDirection) => {
+    const searchKeyword =
+      keyword && keyword.trim() !== "" ? keyword.trim() : null;
+
+    try {
+      const response = await axiosIns.get("/api/hboard/D0", {
+        params: {
+          page: page - 1, //Use the page parameter
+          keyword: searchKeyword,
+          sortProperty,
+          sortDirection,
+        },
       });
+
+      setHireBoardList(response.data.hireBoardList);
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching hboards:", error);
+    }
   };
 
   useEffect(() => {
@@ -75,6 +143,22 @@ function Hboard(props) {
       });
   }, []);
 
+  useEffect(() => {
+    // notice board에서 최신 글 가져오는 API 호출
+    axiosIns
+      .get("/api/nboard/D0/notice")
+      .then((response) => {
+        console.log("콘솔테스트");
+        console.log(response.data);
+        console.log(response.data.nboard);
+        setNoticeArticle(response.data.nboard);
+      })
+      .catch((error) => {
+        console.error("Error fetching notice article:", error);
+      });
+  }, []);
+
+  //페이징
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -87,11 +171,24 @@ function Hboard(props) {
     }
   };
 
+  //정렬
+  const onClickLatest = () => {
+    setSortProperty("HBwriteday");
+    setSortDirection("DESC");
+  };
+
+  const onClickViews = () => {
+    setSortProperty("HBreadcount");
+    setSortDirection("DESC");
+  };
+
+  //작성시간 몇 시간전으로 변경
   const timeForToday = (value) => {
     if (!value) {
       return "";
     }
 
+    //timeValue를 한국 시간대로 변환
     const valueConv = value.slice(0, -10);
     const today = new Date();
     const timeValue = new Date(valueConv);
@@ -108,7 +205,6 @@ function Hboard(props) {
     if (betweenTime < 60) {
       return `${betweenTime}분 전`;
     }
-    console.log(betweenTime);
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
@@ -129,6 +225,23 @@ function Hboard(props) {
     return formattedDateWithoutTime;
   };
 
+  // 사진 url 설정
+  const setPhotoUrl = (value) => {
+    if (value == null) {
+      return require("./assets/logo-img.svg").default;
+    }
+    const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
+    if (value.includes(",")) {
+      const firstCommaIndex = value.indexOf(",");
+      const parsedPhoto = value.substring(0, firstCommaIndex);
+      const srcUrl = photoUrl + parsedPhoto;
+      return srcUrl;
+    } else {
+      const srcUrl = photoUrl + value;
+      return srcUrl;
+    }
+  };
+
   return (
     <div className="hboard">
       <div className="advertise-box">
@@ -145,10 +258,14 @@ function Hboard(props) {
         </div>
       </div>
       <div className="hboard-selection">
-        <div className="hboard-selection-freeboard">
-          <div className="board-selection-freeboard-box" />
-          <div className="board-selection-freeboard-text">자유</div>
-        </div>
+        <NavLink
+          to="/fboard"
+          activeClassName="active"
+          className="hboard-selection-freeboard"
+        >
+          <div className="hboard-selection-freeboard-box" />
+          <div className="hboard-selection-freeboard-text">자유</div>
+        </NavLink>
         <NavLink
           to="/qboard"
           activeClassName="active"
@@ -164,28 +281,68 @@ function Hboard(props) {
         <NavLink
           to="/aboard"
           activeClassName="active"
-          className="fboard-selection-academy"
+          className="hboard-selection-academy"
         >
           <div className="hboard-selection-qna-box" />
           <div className="hboard-selection-academy-text">학원별</div>
         </NavLink>
       </div>
-      <div className="hboard-write">
-        <div className="hboard-write-box" />
+
+      {de.type === "company" && (
+        <div
+          className="hboard-write"
+          onClick={() => {
+            JwtPageChk(navi, "/hboard/form");
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          <div className="hboard-write-box" />
+          <img
+            className="hboard-write-icon"
+            alt=""
+            src={require("./assets/hboard_write_icon.svg").default}
+          />
+          <div className="hboard-write-text">글쓰기</div>
+        </div>
+      )}
+
+      <div className="hboard-function-sort">
+        <div className="hboard-function-sort-box" />
+        <div className="hboard-function-sort-time" onClick={onClickLatest}>
+          최신순
+        </div>
+        <div className="hboard-function-sort-view" onClick={onClickViews}>
+          조회순
+        </div>
+        {/* <div className="fboard-function-sort-like">인기순</div> */}
         <img
-          className="hboard-write-icon"
+          className="fboard-function-sort-bar2-icon"
           alt=""
-          src={require("./assets/hboard_write_icon.svg").default}
+          src={require("./assets/hboard_function_sort_bar.svg").default}
         />
-        <div className="hboard-write-text">글쓰기</div>
+        {/* <img
+          className="fboard-function-sort-bar-icon"
+          alt=""
+          src={require("./assets/hboard_function_sort_bar2.svg").default}
+        /> */}
       </div>
-      <div className="hboard-function-search-input" />
-      <img
-        className="hboard-function-search-icon"
-        alt=""
-        src={require("./assets/hboard_function_search_icon.svg").default}
-      />
-      {/* <img className="board-hr-icon" alt="" src="/board-hr.svg" /> */}
+
+      <div className="hboard-function-search-input">
+        <input
+          className="hboard-function-search-input1"
+          type="text"
+          value={inputKeyword}
+          placeholder="검색어를 입력해주세요"
+          onChange={(e) => setInputKeyword(e.target.value)}
+          onKeyDown={handleEnterKeyPress}
+        />
+        <img
+          className="hboard-function-search-icon"
+          alt=""
+          src={require("./assets/hboard_function_search_icon.svg").default}
+          onClick={handleSearchButtonClick}
+        />
+      </div>
       <img
         className="hboard-pages-reset-icon"
         alt=""
@@ -210,21 +367,34 @@ function Hboard(props) {
         />
       </div>
 
-      <img className="board-hr-icon1" alt="" src="/board-hr1.svg" />
+      {/* <img className="board-hr-icon1" alt="" src="/board-hr1.svg" /> */}
+
       <div className="hboard-notice">
         <div className="hboard-notice-box" />
-        <div className="hboard-notice-preview">
+
+        <div key={noticeArticle.nb_idx} className="hboard-notice-preview">
           <div className="hboard-notice-preview-info">
             <img
               className="board-notice-preview-info-logo-icon"
               alt=""
-              src="/board-notice-preview-info-logo.svg"
+              src={
+                require("./assets/board_notice_preview_info_logo.svg").default
+              }
             />
             <div className="hboard-notice-preview-info-tex">
-              admin_01 · 약 4시간 전
+              {/* admin_01 · 약 4시간 전 */}
+              관리자 · {timeForToday(noticeArticle.nb_writeday)}
             </div>
           </div>
-          <b className="hboard-notice-preview-subject">DEVSTER 공지사항</b>
+          <b
+            className="hboard-notice-preview-subject"
+            onClick={() => {
+              JwtPageChk(navi, `api/nboard/D0/${noticeArticle.nb_idx}`);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            {noticeArticle.nb_subject}
+          </b>
           <div className="hboard-notice-preview-notice">
             <div className="hboard-notice-preview-notice-b" />
             <div className="hboard-notice-preview-notice-t">공지사항</div>
@@ -232,7 +402,9 @@ function Hboard(props) {
           <div className="hboard-notice-preview-hash">#공지사항 # Devster</div>
           <div className="hboard-notice-preview-icons">
             <div className="hboard-notice-preview-views">
-              <div className="hboard-notice-preview-views-te">800</div>
+              <div className="hboard-notice-preview-views-te">
+                {noticeArticle.nb_readcount}
+              </div>
               <img
                 className="hboard-notice-preview-views-ic-icon"
                 alt=""
@@ -270,157 +442,90 @@ function Hboard(props) {
 
       <div className="hboard_list">
         {hireBoardList &&
-          hireBoardList.map((hboard) => (
-            <div key={hboard.hboard.hb_idx} className="hboard-preview">
-              <div className="hboard-preview-box" />
-              <div className="fboard-preview-img-profile">
-                <img alt="" src={hboard.cmPhoto} />
-              </div>
-              <div className="hboard-preview-type">
-                <b className="hboard-preview-type-text">채용게시판</b>
-                <div className="hboard-preview-type-date">
-                  {timeForToday(hboard.hboard.hb_writeday)}
+          hireBoardList.map((hboard) => {
+            return (
+              <div key={hboard.hboard.hb_idx} className="hboard-preview">
+                <div className="hboard-preview-box" />
+                <div className="fboard-preview-img-profile">
+                  <img alt="" src={hboard.cmPhoto} />
                 </div>
-              </div>
-              <div className="hboard-preview-id">
-                <div className="hboard-preview-type-text">
-                  {hboard.cmNicname}
+                <div className="hboard-preview-type">
+                  <b className="hboard-preview-type-text">채용게시판</b>
+                  <div className="hboard-preview-type-date">
+                    {timeForToday(hboard.hboard.hb_writeday)}
+                    &nbsp;&nbsp;&nbsp;
+                    <img
+                      src={
+                        require("./assets/hboard_preview_views_icon.svg")
+                          .default
+                      }
+                    />
+                    &nbsp;
+                    {hboard.hboard.hb_readcount}
+                  </div>
                 </div>
-              </div>
-              <NavLink
-                to={"/hboard/detail/${hboard.hboard.hb_idx}/${currentPage}"}
-              >
-                <b className="hboard-preview-subject">
-                  {hboard.hboard.hb_subject}
-                </b>
-                <div className="hboard-preview-contents">
-                  {hboard.hboard.hb_content.slice(0, contentCount)}
+                <div className="hboard-preview-id">
+                  <div className="hboard-preview-type-text">
+                    {hboard.cmCompname}
+                  </div>
                 </div>
-                <div className="hboard-preview-img-preview">
-                  <img alt="" src={hboard.hboard.hb_photo} />
-                </div>
-              </NavLink>
 
-              <div className="hboard-preview-likes">
-                <div className="hboard-preview-likes-text">
-                  {hboard.hboard.hb_like - hboard.hboard.hb_dislike}
+                <div
+                  onClick={() => {
+                    JwtPageChk(
+                      navi,
+                      `/hboard/detail/${hboard.hboard.hb_idx}/${currentPage}`
+                    );
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  <b className="hboard-preview-subject">
+                    {compareValues(
+                      String(hboard.hboard.hb_subject),
+                      subjectCount
+                    )
+                      ? hboard.hboard.hb_subject.slice(0, subjectCount) + "···"
+                      : hboard.hboard.hb_subject}
+                  </b>
+                  <div className="hboard-preview-contents">
+                    {compareValues(
+                      String(hboard.hboard.hb_content),
+                      contentCount
+                    )
+                      ? hboard.hboard.hb_content.slice(0, contentCount) + "···"
+                      : hboard.hboard.hb_content}
+                    {/* {hboard.hboard.hb_content.slice(0, contentCount)} */}
+                  </div>
+                  <div>
+                    <img
+                      alt=""
+                      src={setPhotoUrl(hboard.hboard.hb_photo)}
+                      className="hboard-preview-img-preview"
+                    />
+                  </div>
                 </div>
-                <img
-                  className="hboard-preview-likes-icon"
-                  alt=""
-                  src={
-                    require("./assets/hboard_preview_likes_icon.svg").default
-                  }
-                />
               </div>
-              <div className="hboard-preview-comments">
-                <div className="hboard-preview-likes-text">99</div>
-                <img
-                  className="hboard-preview-comments-icon"
-                  alt=""
-                  src={
-                    require("./assets/hboard_preview_comments_icon.svg").default
-                  }
-                />
-              </div>
-              <div className="hboard-preview-views">
-                <div className="hboard-preview-views-text">
-                  {hboard.hboard.hb_readcount}
-                </div>
-                <img
-                  className="hboard-preview-views-icon"
-                  alt=""
-                  src={
-                    require("./assets/hboard_preview_views_icon.svg").default
-                  }
-                />
-              </div>
-            </div>
-          ))}
+            );
+          })}
       </div>
 
-      {/* <div className="hboard-preview">
-        <div className="hboard-preview-box" />
-        <div className="hboard-preview-img-profile" />
-        <div className="hboard-preview-type">
-          <b className="hboard-preview-type-text">게시판명길이최대로</b>
-          <div className="hboard-preview-type-date">작성시간</div>
-        </div>
-        <div className="hboard-preview-id">
-          <div className="hboard-preview-type-text">아이디명최대로</div>
-        </div>
-        <b className="hboard-preview-subject">제목 일이삼사오육칠팔구...</b>
-        <div className="hboard-preview-contents">
-          본문 일이삼사오육칠팔구십일이...
-        </div>
-        <div className="hboard-preview-img-preview" />
-        <div className="hboard-preview-likes">
-          <div className="hboard-preview-likes-text">99.9k</div>
-          <img
-            className="hboard-preview-likes-icon"
-            alt=""
-            src={require("./assets/hboard_preview_likes_icon.svg").default}
-          />
-        </div>
-        <div className="hboard-preview-comments">
-          <div className="hboard-preview-likes-text">99.9k</div>
-          <img
-            className="hboard-preview-comments-icon"
-            alt=""
-            src={require("./assets/hboard_preview_comments_icon.svg").default}
-          />
-        </div>
-        <div className="hboard-preview-views">
-          <div className="hboard-preview-views-text">99.9k</div>
-          <img
-            className="hboard-preview-views-icon"
-            alt=""
-            src={require("./assets/hboard_preview_views_icon.svg").default}
-          />
-        </div>
-      </div>
-      <div className="hboard-function-sort">
-        <div className="hboard-function-sort-box" />
-        <div className="hboard-function-sort-time">최신순</div>
-        <div className="hboard-function-sort-view">조회순</div>
-        <div className="hboard-function-sort-like">인기순</div>
-        <img
-          className="hboard-function-sort-bar2-icon"
-          alt=""
-          src={require("./assets/hboard_function_sort_bar2.svg").default}
-        />
-        <img
-          className="hboard-function-sort-bar-icon"
-          alt=""
-          src={require("./assets/hboard_function_sort_bar.svg").default}
-        />
-      </div>
-      <div className="hboard-pages">
-        <div className="hboard-pages-current">1 / 5 페이지</div>
+      <div className="hboard-pages2">
+        <div className="hboard-pages-current">{`${currentPage} / ${totalPages} 페이지`}</div>
         <img
           className="hboard-pages-back-icon"
           alt=""
           src={require("./assets/hboard_pages_back.svg").default}
+          onClick={goToPreviousPage}
+          style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
         />
         <img
           className="hboard-pages-forward-icon"
           alt=""
           src={require("./assets/hboard_pages_forward.svg").default}
+          onClick={goToNextPage}
+          style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
         />
       </div>
-      <div className="hboard-pages1">
-        <div className="hboard-pages-current">1 / 5 페이지</div>
-        <img
-          className="hboard-pages-back-icon"
-          alt=""
-          src={require("./assets/hboard_pages_back.svg").default}
-        />
-        <img
-          className="hboard-pages-forward-icon"
-          alt=""
-          src={require("./assets/hboard_pages_forward.svg").default}
-        />
-      </div> */}
     </div>
   );
 }

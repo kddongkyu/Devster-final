@@ -20,7 +20,7 @@ public class HireBoardDto {
     private String hb_content;
     private String hb_photo;
     private int hb_readcount;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
+    // @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
     private Timestamp hb_writeday;
 
     public static HireBoardDto toHireBoardDto(HireBoardEntity entity){

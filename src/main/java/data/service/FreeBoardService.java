@@ -4,7 +4,6 @@ import data.dto.FreeBoardDto;
 import data.entity.FreeBoardEntity;
 import data.entity.FreeBoardLikeEntity;
 import data.entity.MemberEntity;
-import data.entity.ReviewEntity;
 import data.repository.FreeBoardLikeRepository;
 import data.repository.FreeBoardRepository;
 import data.repository.MemberRepository;

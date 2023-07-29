@@ -1,10 +1,12 @@
 import "./style/Fboard.css";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+
+import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
 import { JwtPageChk } from "../../api/JwtPageChk";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import { jwtHandleError } from "../../api/JwtHandleError";
 
 function Fboard(props) {
   const handleRefresh = () => {
@@ -124,7 +126,8 @@ function Fboard(props) {
       setFreeBoardList(response.data.freeBoardList);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error("Error fetching fboards:", error);
+      //axios용 에러함수
+      jwtHandleError(error, toastAlert);
     }
   };
 
@@ -136,7 +139,8 @@ function Fboard(props) {
         setFreeBoardList(response.data.freeBoardList);
       })
       .catch((error) => {
-        console.error("Error fetching fboards:", error);
+        //axios용 에러함수
+        jwtHandleError(error, toastAlert);
       });
   }, []);
 
@@ -190,7 +194,6 @@ function Fboard(props) {
     if (betweenTime < 60) {
       return `${betweenTime}분 전`;
     }
-    console.log(betweenTime);
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {

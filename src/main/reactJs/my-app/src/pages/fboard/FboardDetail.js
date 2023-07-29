@@ -1,12 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./style/FboardDetail.css";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import { useNavigate, useParams } from "react-router-dom";
+import ToastAlert from "../../api/ToastAlert";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { checkToken } from "../../api/checkToken";
+import { useSnackbar } from "notistack";
 
 function FboardDetail(props) {
-  let de = jwt_decode(localStorage.getItem("accessToken"));
-  const m_idx = de.idx;
+  //에러 호출용 변수
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+  //디코딩 함수
+  const de = checkToken();
+  // const m_idx = de.idx;
+  const [m_idx, setM_idx] = useState();
   const [fboardData, setFboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { fb_idx, currentPage } = useParams();
@@ -27,6 +35,7 @@ function FboardDetail(props) {
             setArrayFromString(response.data.fboard.fb_photo.split(","));
           }
           setIsLoading(false);
+          setM_idx(de.idx);
 
           if (m_idx && fb_idx) {
             axiosIns
@@ -35,7 +44,7 @@ function FboardDetail(props) {
                 setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
               })
               .catch((error) => {
-                console.error("Error checking good status:", error);
+                jwtHandleError(error, toastAlert);
               });
 
             axiosIns
@@ -44,12 +53,12 @@ function FboardDetail(props) {
                 setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
               })
               .catch((error) => {
-                console.error("Error checking bad status:", error);
+                jwtHandleError(error, toastAlert);
               });
           }
         })
         .catch((error) => {
-          console.error("Error fetching fboard:", error);
+          jwtHandleError(error, toastAlert);
         });
     },
     [fb_idx, currentPage]
@@ -94,7 +103,7 @@ function FboardDetail(props) {
                   })
                   .catch((error) => {
                     alert("좋아요 요청 실패");
-                    console.error("좋아요 요청 실패:", error);
+                    jwtHandleError(error, toastAlert);
                   });
               } else {
                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
@@ -107,17 +116,17 @@ function FboardDetail(props) {
                   })
                   .catch((error) => {
                     alert("좋아요 요청 실패");
-                    console.error("좋아요 요청 실패:", error);
+                    jwtHandleError(error, toastAlert);
                   });
               }
             })
             .catch((error) => {
-              console.error("좋아요 상태 체크 실패:", error);
+              jwtHandleError(error, toastAlert);
             });
         }
       })
       .catch((error) => {
-        console.error("싫어요 상태 체크 실패:", error);
+        jwtHandleError(error, toastAlert);
       });
   };
 
@@ -145,7 +154,7 @@ function FboardDetail(props) {
                   })
                   .catch((error) => {
                     alert("싫어요 요청 실패");
-                    console.error("싫어요 요청 실패:", error);
+                    jwtHandleError(error, toastAlert);
                   });
               } else {
                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
@@ -158,17 +167,17 @@ function FboardDetail(props) {
                   })
                   .catch((error) => {
                     alert("싫어요 요청 실패");
-                    console.error("싫어요 요청 실패:", error);
+                    jwtHandleError(error, toastAlert);
                   });
               }
             })
             .catch((error) => {
-              console.error("싫어요 상태 체크 실패:", error);
+              jwtHandleError(error, toastAlert);
             });
         }
       })
       .catch((error) => {
-        console.error("좋아요 상태 체크 실패:", error);
+        jwtHandleError(error, toastAlert);
       });
   };
 
@@ -186,7 +195,7 @@ function FboardDetail(props) {
           window.location.href = "/fboard";
         })
         .catch((error) => {
-          console.error("Error deleting fboard:", error);
+          jwtHandleError(error, toastAlert);
         });
     }
   };
@@ -344,7 +353,10 @@ function FboardDetail(props) {
         </div>
 
         <div className="fboard-detail-textarea-contents">
-          <pre style={{ marginBottom: "5rem" }}>
+          <pre
+            className="fboard-detail-textarea-pre"
+            style={{ marginBottom: "5rem", wordWrap: "break-word" }}
+          >
             {fboardData.fboard.fb_content}
           </pre>
         </div>

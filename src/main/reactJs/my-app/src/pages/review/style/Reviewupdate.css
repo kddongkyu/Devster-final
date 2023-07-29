@@ -65,10 +65,11 @@
     letter-spacing: 0.01em;
     font-weight: 500;
     display: inline-block;
+    color: #626567;
 }
 .reviewupdate-write-subject-box-icon {
     position: absolute;
-    width: calc(100% - 83px);
+    width: calc(100% - 107px);
     top: 2.9rem;
     right: 0;
     left: 8.3rem;
@@ -76,6 +77,8 @@
     max-width: 100%;
     overflow: hidden;
     height: 3.9rem;
+    margin-left: 10px;
+    border: 1px solid #626567;
 }
 .reviewupdate-write-select-box-icon {
     position: absolute;
@@ -84,6 +87,8 @@
     border-radius: 5px;
     width: 8.3rem;
     height: 3.9rem;
+    color: #626567;
+    font-size: 13px;
 }
 .reviewupdate-write-subject {
     position: absolute;
@@ -102,6 +107,7 @@
     letter-spacing: 0.01em;
     font-weight: 500;
     display: inline-block;
+    color: #626567;
 }
 .reviewupdate-write-company-box-icon {
     position: absolute;
@@ -113,6 +119,7 @@
     max-width: 100%;
     overflow: hidden;
     height: 3.9rem;
+    border: 1px solid #626567;
 }
 .reviewupdate-write-company {
     position: absolute;
@@ -122,19 +129,20 @@
     left: 3.7rem;
     height: 6.8rem;
     font-size: 1.5rem;
+    margin-top: 1rem;
 }
 .reviewupdate-search-icon {
     position: absolute;
-    top: 40rem;
+    top: 41rem;
     right: 5.4rem;
-    width: 2rem;
+    width: 1.5rem;
     height: 2.1rem;
 }
 .reviewupdate-stars-icons {
     position: absolute;
     top: -5.6rem;
-    right: 0.3rem;
-    width: 12.3rem;
+    right: 0rem;
+    /*width: 12.3rem;*/
     height: 2.26rem;
 }
 .reviewupdate-content-box-icon {
@@ -300,6 +308,7 @@
     text-align: center;
     color: #fff;
     background-color: #721ea6;
+    border-radius: 5px;
     border: none;
 }
 .review-update-form {
@@ -312,4 +321,5 @@
     font-size: 1.3rem;
     /*color: #000;*/
     font-family: "Noto Sans KR";
+    margin-bottom: 2rem;
 }

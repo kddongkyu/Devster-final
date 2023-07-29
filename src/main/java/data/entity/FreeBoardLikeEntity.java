@@ -1,7 +1,6 @@
 package data.entity;
 
 import data.dto.FreeBoardLikeDto;
-import data.dto.ReviewlikeDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

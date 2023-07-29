@@ -1,211 +1,217 @@
 /* 상단 */
 .fboard-advertise-main {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    right: 0;
-    left: 0;
-    border: 1px solid #d2d2d2;
-    box-sizing: border-box;
-    height: 11.2rem;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  height: 11.2rem;
 }
 
 .fboard-advertise-text {
-    position: absolute;
-    top: 4.2rem;
-    left: calc(50% - 18px);
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 4.2rem;
+  left: calc(50% - 18px);
+  letter-spacing: -0.24px;
 }
 
 .fboard-advertise-box {
-    position: absolute;
-    width: calc(100% - 30px);
-    top: 7.6rem;
-    right: 1.5rem;
-    left: 1.5rem;
-    height: 11.2rem;
-    font-size: 2rem;
-    color: #000;
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 7.6rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 11.2rem;
+  font-size: 2rem;
+  color: #000;
 }
 
 .board-detail-type-text {
-    position: absolute;
-    top: 21.9rem;
-    left: 2.4rem;
-    font-size: 1.4rem;
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 21.9rem;
+  left: 2.4rem;
+  font-size: 1.4rem;
+  letter-spacing: -0.24px;
 }
 
 .fboard-detail-info-profile-img-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    width: 4.3rem;
-    height: 4.3rem;
-    object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 4.3rem;
+  height: 4.3rem;
+  object-fit: cover;
 }
 
 .fboard-detail-info-nickname {
-    position: absolute;
-    top: 0.2rem;
-    left: 5.3rem;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: #1c1c1c;
-    display: inline-block;
-    width: 18rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0.2rem;
+  left: 5.3rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #1c1c1c;
+  display: inline-block;
+  width: 18rem;
+  height: 1.7rem;
 }
 
 .span {
-    color: #721ea6;
+  color: #721ea6;
 }
 
 .fboard-detail-info-status-text,
 .fboard-detail-info-status-text1 {
-    position: absolute;
-    top: 2.3rem;
-    left: 12.8rem;
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 10rem;
+  position: absolute;
+  top: 2.3rem;
+  left: 12.8rem;
+  letter-spacing: -0.24px;
+  display: inline-block;
+  width: 10rem;
 }
 
 .fboard-detail-info-status-text1 {
-    left: 5.4rem;
-    width: 5rem;
+  left: 5.4rem;
+  width: 5rem;
 }
 
 .fboard-detail-info-status-view-icon {
-    position: absolute;
-    top: 2.75rem;
-    left: 11rem;
-    width: 1.4rem;
-    height: 0.94rem;
+  position: absolute;
+  top: 2.75rem;
+  left: 11rem;
+  width: 1.4rem;
+  height: 0.94rem;
 }
 
 .fboard-detail-info {
-    position: absolute;
-    top: 29rem;
-    left: 2.7rem;
-    width: 18.8rem;
-    height: 4.3rem;
+  position: absolute;
+  top: 29rem;
+  left: 2.7rem;
+  width: 18.8rem;
+  height: 4.3rem;
 }
 
 .fboard-url-icon {
-    position: absolute;
-    top: 27.13rem;
-    right: 3rem;
-    width: 1.87rem;
-    height: 2.35rem;
-    cursor: pointer;
+  position: absolute;
+  top: 27.13rem;
+  right: 3rem;
+  width: 1.87rem;
+  height: 2.35rem;
+  cursor: pointer;
 }
 
 .fboard-delete-icon,
 .fboard-update-icon {
-    position: absolute;
-    top: 27.2rem;
-    right: 6.3rem;
-    width: 2.4rem;
-    height: 2.4rem;
-    overflow: hidden;
-    cursor: pointer;
+  position: absolute;
+  top: 27.2rem;
+  right: 6.3rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .fboard-delete-icon {
-    right: 9.8rem;
-    width: 2.3rem;
-    height: 2.3rem;
+  right: 9.8rem;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
 .board-detail-header-btn-like-i-icon {
-    position: absolute;
-    top: 0.45rem;
-    right: 2.4rem;
-    width: 1.1rem;
-    height: 0.9rem;
+  position: absolute;
+  top: 0.45rem;
+  right: 2.4rem;
+  width: 1.1rem;
+  height: 0.9rem;
 }
 
 .board-detail-header-btn-like-t {
-    position: absolute;
-    top: 0;
-    right: 0;
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  letter-spacing: -0.24px;
 }
 
 .fboard-detail-header-btn-like {
-    position: absolute;
-    top: 0;
-    right: 3.7rem;
-    width: 3.5rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0;
+  right: 3.7rem;
+  width: 3.5rem;
+  height: 1.7rem;
 }
 
 .board-detail-header-btn-dislik-icon {
-    position: absolute;
-    top: 0.55rem;
-    right: 1.8rem;
-    width: 1.1rem;
-    height: 0.9rem;
+  position: absolute;
+  top: 0.55rem;
+  right: 1.8rem;
+  width: 1.1rem;
+  height: 0.9rem;
 }
 
 .fboard-detail-header-btn-disli {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 2.9rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.9rem;
+  height: 1.7rem;
 }
 
 .fboard-detail-header-btn {
-    position: absolute;
-    top: 31.3rem;
-    right: 2.7rem;
-    width: 7.2rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 31.3rem;
+  right: 2.7rem;
+  width: 7.2rem;
+  height: 1.7rem;
 }
 
 .p {
-    margin: 0;
+  margin: 0;
 }
 
 /* 중단 */
 
 /* heigh 지우고 position: relative */
 .fboard-detail-textarea-contents {
-    position: relative;
-    width: 100%;
-    top: 6.7rem;
-    left: 0;
-    letter-spacing: -0.24px;
-    display: inline-block;
+  position: relative;
+  width: 100%;
+  top: 6.7rem;
+  left: 0;
+  letter-spacing: -0.24px;
+  display: inline-block;
 }
 
 .fboard-detail-photo-list {
-    position: relative;
-    margin-top: 5rem;
-    background-color: #fff;
-    box-sizing: border-box;
-    margin-bottom: 50rem;
+  position: relative;
+  margin-top: 5rem;
+  background-color: #fff;
+  box-sizing: border-box;
+  margin-bottom: 50rem;
 }
 
 /* top 값 지움 */
 .board-detail-photo {
-    left: calc(50% - 150px);
-    border: 1px solid #fff;
-    width: 30rem;
-    height: 30rem;
-    position: relative;
+  left: calc(50% - 150px);
+  border: 1px solid #fff;
+  width: 30rem;
+  height: 30rem;
+  position: relative;
 }
 
+/* 여기도 relative 먹여야하네요 ㅎㅎ */
+/* word-wrap이랑 width도 ㅎㅎ..*/
 .fboard-detail-textarea-subject {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 0;
     font-size: 1.8rem;
     letter-spacing: -0.24px;
     color: #000;
+    width: calc(100% - 74px);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 /* position: relative, height 값 뺌 */
@@ -218,508 +224,512 @@
     font-size: 1.3rem;
 }
 
+.fboard-detail-textarea-pre {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+
 /* 하단 */
 
 /* 나란히 줘야 되는 div 묶어서 display : flex */
 .fboard-detail-listbackcounter {
-    position: relative;
-    display: flex;
-    margin-top: 5rem;
-}
-
-
-.fboard-detail-listback-rec {
-    position: absolute;
-    background-color: #fff;
-    box-sizing: border-box;
+  position: relative;
+  display: flex;
+  margin-top: 5rem;
 }
 
 .fboard-detail-listback-rec {
-    top: 0;
-    left: 0;
-    border-radius: 5px;
-    border: 1px solid #bdc0c4;
-    width: 6.8rem;
-    height: 3.5rem;
+  position: absolute;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.fboard-detail-listback-rec {
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  border: 1px solid #bdc0c4;
+  width: 6.8rem;
+  height: 3.5rem;
 }
 
 .fboard-detail-listback-text {
-    position: absolute;
-    top: 0.8rem;
-    left: 3.1rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-    display: inline-block;
-    width: 3.8rem;
+  position: absolute;
+  top: 0.8rem;
+  left: 3.1rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 3.8rem;
 }
 
 .fboard-detail-listback-icon {
-    position: absolute;
-    top: 0.95rem;
-    left: 1rem;
-    width: 1.6rem;
-    height: 1.69rem;
-    overflow: hidden;
+  position: absolute;
+  top: 0.95rem;
+  left: 1rem;
+  width: 1.6rem;
+  height: 1.69rem;
+  overflow: hidden;
 }
 
 /* position: relative */
 .fboard-detail-listback {
-    position: relative;
-    width: 6.9rem;
-    height: 3.5rem;
-    font-size: 1.3rem;
-    color: #747474;
+  position: relative;
+  width: 6.9rem;
+  height: 3.5rem;
+  font-size: 1.3rem;
+  color: #747474;
 }
 
 .fboard-detail-counter-like-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 5px 0 0 5px;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 3.4rem;
-    height: 3.8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px 0 0 5px;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 3.4rem;
+  height: 3.8rem;
 }
 
 .fboard-detail-counter-like-icon {
-    position: absolute;
-    top: 1.66rem;
-    right: 0.96rem;
-    width: 1.38rem;
-    height: 0.83rem;
+  position: absolute;
+  top: 1.66rem;
+  right: 0.96rem;
+  width: 1.38rem;
+  height: 0.83rem;
 }
 
 .fboard-detail-counter-like {
-    position: absolute;
-    top: 0;
-    right: 8.8rem;
-    width: 3.4rem;
-    height: 3.8rem;
+  position: absolute;
+  top: 0;
+  right: 8.8rem;
+  width: 3.4rem;
+  height: 3.8rem;
 }
 
 .fboard-detail-counter-num-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 5.6rem;
-    height: 3.8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 5.6rem;
+  height: 3.8rem;
 }
 
 .fboard-detail-counter-num-text {
-    position: absolute;
-    top: 1rem;
-    right: 1.7rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
+  position: absolute;
+  top: 1rem;
+  right: 1.7rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
 }
 
 .fboard-detail-counter-num {
-    position: absolute;
-    top: 0;
-    right: 3.3rem;
-    width: 5.6rem;
-    height: 3.8rem;
+  position: absolute;
+  top: 0;
+  right: 3.3rem;
+  width: 5.6rem;
+  height: 3.8rem;
 }
 
 .fboard-detail-counter-dislike-b {
-    border-radius: 0 5px 5px 0;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
+  border-radius: 0 5px 5px 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
 }
 
 .fboard-detail-counter-dislike,
 .fboard-detail-counter-dislike-b {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 3.4rem;
-    height: 3.8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3.4rem;
+  height: 3.8rem;
 }
 
 /* position: relative, width 값  width: calc(100% - 20px)로 조정 */
 .fboard-detail-counter {
-    position: relative;
-    width: calc(100% - 20px);
-    height: 3.8rem;
-    text-align: center;
-    font-size: 1.3rem;
-    color: #000;
+  position: relative;
+  width: calc(100% - 20px);
+  height: 3.8rem;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #000;
 }
 
 .fboard-advertise-text1 {
-    position: absolute;
-    top: 4.2rem;
-    left: calc(50% - 27px);
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 4.2rem;
+  left: calc(50% - 27px);
+  letter-spacing: -0.24px;
 }
 
 .fboard-advertise-box1 {
-    position: absolute;
-    width: calc(100% - 30px);
-    top: 127.9rem;
-    right: 1.5rem;
-    left: 1.5rem;
-    height: 11.2rem;
-    font-size: 2rem;
-    color: #000;
+  position: absolute;
+  width: calc(100% - 30px);
+  top: 127.9rem;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 11.2rem;
+  font-size: 2rem;
+  color: #000;
 }
 
 /*  position : relative주고 list 안에 넣은듯?? */
 .fboard-advertise-box2 {
-    position: relative;
-    width: calc(100% - 30px);
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-    height: 11.2rem;
-    font-size: 2rem;
-    color: #000;
+  position: relative;
+  width: calc(100% - 30px);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  height: 11.2rem;
+  font-size: 2rem;
+  color: #000;
 }
 
 .board-detail-hr-icon {
-    position: absolute;
-    width: calc(100% - 40px);
-    top: 142.44rem;
-    right: 2rem;
-    left: 2rem;
-    max-width: 100%;
-    overflow: hidden;
-    height: 0.12rem;
+  position: absolute;
+  width: calc(100% - 40px);
+  top: 142.44rem;
+  right: 2rem;
+  left: 2rem;
+  max-width: 100%;
+  overflow: hidden;
+  height: 0.12rem;
 }
 
 .board-detail-comments-counts {
-    position: absolute;
-    top: 144.1rem;
-    left: 2rem;
-    font-size: 1.6rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-    color: #4a4a4a;
+  position: absolute;
+  top: 144.1rem;
+  left: 2rem;
+  font-size: 1.6rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  color: #4a4a4a;
 }
 
 .board-detail-commnets-form-box {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    right: 0;
-    left: 0;
-    border-radius: 8px;
-    background-color: #fff;
-    border: 1px solid #cfcfcf;
-    box-sizing: border-box;
-    height: 24.4rem;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  height: 24.4rem;
 }
 
 .board-detail-commnets-form-img-icon {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.6rem;
-    border-radius: 50%;
-    width: 2.8rem;
-    height: 2.8rem;
-    object-fit: cover;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.6rem;
+  border-radius: 50%;
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: cover;
 }
 
 .board-detail-commnets-form-tex {
-    position: absolute;
-    width: calc(100% - 68px);
-    top: 1.7rem;
-    right: 1.6rem;
-    left: 5.2rem;
-    border-radius: 8px;
-    background-color: #fff;
-    border: 1px solid #cfcfcf;
-    box-sizing: border-box;
-    height: 15.7rem;
+  position: absolute;
+  width: calc(100% - 68px);
+  top: 1.7rem;
+  right: 1.6rem;
+  left: 5.2rem;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  height: 15.7rem;
 }
 
 .board-detail-commnets-form {
-    position: absolute;
-    width: calc(100% - 32px);
-    top: 147.6rem;
-    right: 1.6rem;
-    left: 1.6rem;
-    height: 24.4rem;
+  position: absolute;
+  width: calc(100% - 32px);
+  top: 147.6rem;
+  right: 1.6rem;
+  left: 1.6rem;
+  height: 24.4rem;
 }
 
 .board-detail-commnets-form-sub {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 8px;
-    background-color: #721ea6;
-    width: 11.6rem;
-    height: 4rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 8px;
+  background-color: #721ea6;
+  width: 11.6rem;
+  height: 4rem;
 }
 
 .board-detail-commnets-form-sub1 {
-    position: absolute;
-    top: 1rem;
-    right: 3.1rem;
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 1rem;
+  right: 3.1rem;
+  letter-spacing: -0.24px;
 }
 
 .board-detail-commnets-submit-b {
-    position: absolute;
-    top: 166.3rem;
-    right: 3.2rem;
-    width: 11.6rem;
-    height: 4rem;
-    font-size: 1.4rem;
-    color: #fff;
+  position: absolute;
+  top: 166.3rem;
+  right: 3.2rem;
+  width: 11.6rem;
+  height: 4rem;
+  font-size: 1.4rem;
+  color: #fff;
 }
 
 .board-detail-commnets-detail-i-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 50%;
-    width: 3.5rem;
-    height: 3.5rem;
-    object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
 }
 
 .board-detail-commnets-detail-i {
-    position: absolute;
-    top: 174.4rem;
-    left: 2rem;
-    width: 17.7rem;
-    height: 3.5rem;
-    color: #1c1c1c;
+  position: absolute;
+  top: 174.4rem;
+  left: 2rem;
+  width: 17.7rem;
+  height: 3.5rem;
+  color: #1c1c1c;
 }
 
 .board-detail-commnets-all-up-b {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 5px 0 0 5px;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 2.93rem;
-    height: 2.7rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px 0 0 5px;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 2.93rem;
+  height: 2.7rem;
 }
 
 .board-detail-commnets-all-up-i-icon {
-    position: absolute;
-    top: 1.15rem;
-    right: 0.81rem;
-    width: 1.23rem;
-    height: 0.66rem;
+  position: absolute;
+  top: 1.15rem;
+  right: 0.81rem;
+  width: 1.23rem;
+  height: 0.66rem;
 }
 
 .board-detail-commnets-all-up {
-    position: absolute;
-    top: 0;
-    right: 7.57rem;
-    width: 2.93rem;
-    height: 2.7rem;
+  position: absolute;
+  top: 0;
+  right: 7.57rem;
+  width: 2.93rem;
+  height: 2.7rem;
 }
 
 .board-detail-commnets-all-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 4.82rem;
-    height: 2.7rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 4.82rem;
+  height: 2.7rem;
 }
 
 .board-detail-commnets-all-like2 {
-    position: absolute;
-    top: 0.61rem;
-    right: 1.36rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-    display: inline-block;
-    width: 1.89rem;
-    height: 1.35rem;
+  position: absolute;
+  top: 0.61rem;
+  right: 1.36rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 1.89rem;
+  height: 1.35rem;
 }
 
 .board-detail-commnets-all-down-icon {
-    position: absolute;
-    top: 1.14rem;
-    right: 0.81rem;
-    width: 1.23rem;
-    height: 0.66rem;
+  position: absolute;
+  top: 1.14rem;
+  right: 0.81rem;
+  width: 1.23rem;
+  height: 0.66rem;
 }
 
 .board-detail-commnets-all-down {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 2.93rem;
-    height: 2.7rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.93rem;
+  height: 2.7rem;
 }
 
 .board-detail-commnets-all-like {
-    position: absolute;
-    top: 175.2rem;
-    right: 1.9rem;
-    width: 10.5rem;
-    height: 2.7rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #000;
+  position: absolute;
+  top: 175.2rem;
+  right: 1.9rem;
+  width: 10.5rem;
+  height: 2.7rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #000;
 }
 
 .board-detail-commnets-all-cont {
-    position: absolute;
-    width: calc(100% - 45px);
-    top: 179.2rem;
-    left: 1.9rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-    display: inline-block;
-    height: 20.8rem;
+  position: absolute;
+  width: calc(100% - 45px);
+  top: 179.2rem;
+  left: 1.9rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  height: 20.8rem;
 }
 
 .board-detail-commnets-hide-ico-icon {
-    position: absolute;
-    top: 0.5rem;
-    left: -0.11rem;
-    width: 1.16rem;
-    height: 0.59rem;
+  position: absolute;
+  top: 0.5rem;
+  left: -0.11rem;
+  width: 1.16rem;
+  height: 0.59rem;
 }
 
 .board-detail-commnets-hide-com,
 .board-detail-commnets-hide-tex {
-    position: absolute;
-    top: 0;
-    left: 1.8rem;
-    letter-spacing: -0.24px;
+  position: absolute;
+  top: 0;
+  left: 1.8rem;
+  letter-spacing: -0.24px;
 }
 
 .board-detail-commnets-hide-com {
-    left: 10.8rem;
-    color: #626567;
+  left: 10.8rem;
+  color: #626567;
 }
 
 .board-detail-commnets-hide {
-    position: absolute;
-    top: 200.9rem;
-    left: 2.5rem;
-    width: 15rem;
-    height: 1.6rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #721ea6;
+  position: absolute;
+  top: 200.9rem;
+  left: 2.5rem;
+  width: 15rem;
+  height: 1.6rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #721ea6;
 }
 
 .board-detail-recom-box {
-    position: absolute;
-    top: 203.7rem;
-    left: 4.1rem;
-    border-left: 1px solid #d2d2d2;
-    box-sizing: border-box;
-    width: 33rem;
-    height: 22rem;
+  position: absolute;
+  top: 203.7rem;
+  left: 4.1rem;
+  border-left: 1px solid #d2d2d2;
+  box-sizing: border-box;
+  width: 33rem;
+  height: 22rem;
 }
 
 .board-detail-recom-info-counts {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-weight: 500;
-    display: inline-block;
-    width: 13.3rem;
-    height: 1.7rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 500;
+  display: inline-block;
+  width: 13.3rem;
+  height: 1.7rem;
 }
 
 .board-detail-recom-info-date {
-    position: absolute;
-    top: 1.9rem;
-    left: 0.1rem;
-    font-size: 1rem;
-    letter-spacing: -0.24px;
-    color: #626567;
+  position: absolute;
+  top: 1.9rem;
+  left: 0.1rem;
+  font-size: 1rem;
+  letter-spacing: -0.24px;
+  color: #626567;
 }
 
 .board-detail-recom-info-text {
-    position: absolute;
-    top: 0;
-    left: 4.4rem;
-    width: 13.3rem;
-    height: 3.3rem;
+  position: absolute;
+  top: 0;
+  left: 4.4rem;
+  width: 13.3rem;
+  height: 3.3rem;
 }
 
 .board-detail-recom-info {
-    position: absolute;
-    top: 204.6rem;
-    left: 5rem;
-    width: 17.7rem;
-    height: 3.5rem;
-    color: #1c1c1c;
+  position: absolute;
+  top: 204.6rem;
+  left: 5rem;
+  width: 17.7rem;
+  height: 3.5rem;
+  color: #1c1c1c;
 }
 
 .board-detail-recom-likes-count {
-    position: absolute;
-    top: 0;
-    right: 2.84rem;
-    width: 4.82rem;
-    height: 2.7rem;
+  position: absolute;
+  top: 0;
+  right: 2.84rem;
+  width: 4.82rem;
+  height: 2.7rem;
 }
 
 .board-detail-recom-down-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 0 5px 5px 0;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 2.93rem;
-    height: 2.7rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 5px 5px 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 2.93rem;
+  height: 2.7rem;
 }
 
 .board-detail-recom-likes {
-    position: absolute;
-    top: 205.4rem;
-    right: 1.9rem;
-    width: 10.5rem;
-    height: 2.7rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #000;
+  position: absolute;
+  top: 205.4rem;
+  right: 1.9rem;
+  width: 10.5rem;
+  height: 2.7rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #000;
 }
 
 .board-detail-recom-recom-form,
 .board-detail-recom-textarea {
-    position: absolute;
-    left: 5.3rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
+  position: absolute;
+  left: 5.3rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
 }
 
 .board-detail-recom-textarea {
-    width: calc(100% - 82px);
-    top: 209.2rem;
-    display: inline-block;
-    height: 12.4rem;
+  width: calc(100% - 82px);
+  top: 209.2rem;
+  display: inline-block;
+  height: 12.4rem;
 }
 
 .board-detail-recom-recom-form {
-    top: 222.9rem;
-    text-align: center;
+  top: 222.9rem;
+  text-align: center;
 }
 
 /* position이랑 height 값 뺌 */
 .fboard-detail {
-    background-color: #fff;
-    border: 1px solid rgba(210, 210, 210, 0.9);
-    box-sizing: border-box;
-    width: 100%;
-    overflow: hidden;
-    text-align: left;
-    font-size: 1.2rem;
-    color: #626567;
-    font-family: "Noto Sans KR";
+  background-color: #fff;
+  border: 1px solid rgba(210, 210, 210, 0.9);
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #626567;
+  font-family: "Noto Sans KR";
 }
-

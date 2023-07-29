@@ -7,7 +7,7 @@
      border: 1px solid #d2d2d2;
      box-sizing: border-box;
      height: 11.2rem;
-    
+
 }
 
 .qboard-advertise-text {
@@ -15,7 +15,7 @@
      top: 4.2rem;
      left: calc(50% - 18px);
      letter-spacing: -0.24px;
-    
+
 }
 
 .qboard-advertise-box {
@@ -27,16 +27,15 @@
      height: 11.2rem;
      font-size: 2rem;
      color: #000;
-    
+
 }
 
- /*.qboard-detail-type-hr-icon {*/  /*    position: absolute;*/  /*    width: 100%;*/  /*    top: 24.35rem;*/  /*    text-align: center;*/  /*    max-width: 100%;*/  /*    overflow: hidden;*/  /*    height: 0.3rem;*/  /*}*/ .qboard-detail-type-text {
+.qboard-detail-type-text {
      position: absolute;
      top: 21.9rem;
      left: 2.4rem;
      font-size: 1.4rem;
      letter-spacing: -0.24px;
-    
 }
 
 .qboard-detail-info-profile-img-icon {
@@ -47,7 +46,7 @@
      width: 4.3rem;
      height: 4.3rem;
      object-fit: cover;
-    
+
 }
 
 .qboard-detail-info-nickname {
@@ -60,12 +59,12 @@
      display: inline-block;
      width: 18rem;
      height: 1.7rem;
-    
+
 }
 
 .span {
      color: #721ea6;
-    
+
 }
 
 .qboard-detail-info-status-text, .qboard-detail-info-status-text1 {
@@ -75,13 +74,13 @@
      letter-spacing: -0.24px;
      display: inline-block;
      width: 10rem;
-    
+
 }
 
 .qboard-detail-info-status-text1 {
      left: 5.4rem;
      width: 5rem;
-    
+
 }
 
 .qboard-detail-info-status-view-icon {
@@ -90,7 +89,7 @@
      left: 11rem;
      width: 1.4rem;
      height: 0.94rem;
-    
+
 }
 
 .qboard-detail-info {
@@ -99,7 +98,7 @@
      left: 2.7rem;
      width: 18.8rem;
      height: 4.3rem;
-    
+
 }
 
 .qboard-url-icon {
@@ -109,7 +108,7 @@
      width: 1.87rem;
      height: 2.35rem;
      cursor: pointer;
-    
+
 }
 
 .qboard-delete-icon, .qboard-update-icon {
@@ -120,14 +119,14 @@
      height: 2.4rem;
      overflow: hidden;
      cursor: pointer;
-    
+
 }
 
 .qboard-delete-icon {
      right: 9.8rem;
      width: 2.3rem;
      height: 2.3rem;
-    
+
 }
 
 .qboard-detail-header-btn-like-i-icon {
@@ -136,7 +135,7 @@
      right: 2.4rem;
      width: 1.1rem;
      height: 0.9rem;
-    
+
 }
 
 .qboard-detail-header-btn-like-t {
@@ -144,7 +143,7 @@
      top: 0;
      right: 0;
      letter-spacing: -0.24px;
-    
+
 }
 
 .qboard-detail-header-btn-like {
@@ -153,7 +152,7 @@
      right: 3.7rem;
      width: 3.5rem;
      height: 1.7rem;
-    
+
 }
 
 .qboard-detail-header-btn-dislik-icon {
@@ -162,7 +161,7 @@
      right: 1.8rem;
      width: 1.1rem;
      height: 0.9rem;
-    
+
 }
 
 .qboard-detail-header-btn-disli {
@@ -171,7 +170,7 @@
      right: 0;
      width: 2.9rem;
      height: 1.7rem;
-    
+
 }
 
 .qboard-detail-header-btn {
@@ -180,68 +179,80 @@
      right: 2.7rem;
      width: 7.2rem;
      height: 1.7rem;
-    
+
 }
 
 .p {
      margin: 0;
-    
+
 }
 
- /* 중단 */ .qboard-detail-textarea-contents {
+ /* 중단 */
+.qboard-detail-textarea-contents {
      position: relative;
      width: 100%;
      top: 6.7rem;
      left: 0;
      letter-spacing: -0.24px;
      display: inline-block;
-     /*height: 43.1rem;*/  /*margin-bottom: 5rem;*/ 
 }
+
+.qboard-detail-textarea-contents pre {
+     white-space: pre-wrap;       /* CSS3 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+     overflow-wrap: break-word;   /* Modern browsers */
+}
+
 
 .qboard-detail-photo-list {
      position: relative;
      margin-top: 5rem;
      background-color: #fff;
      box-sizing: border-box;
-    
+     /*margin-bottom: 50rem;*/
 }
 
 .qboard-detail-photo {
-     /*top: 88rem;*/ 
     left: calc(50% - 150px);
      border: 1px solid #fff;
      width: 30rem;
      height: 30rem;
      position: relative;
-    
+
 }
 
 .qboard-detail-textarea-subject {
-     position: absolute;
+     position: relative;
      top: 0;
      left: 0;
      font-size: 1.8rem;
      letter-spacing: -0.24px;
      color: #000;
-    
+
 }
 
 .qboard-detail-textarea {
-     position: absolute;
+     position: relative;
      width: calc(100% - 74px);
      top: 35.7rem;
      right: 3.7rem;
      left: 3.7rem;
-     /*height: 49.8rem;*/ 
-    font-size: 1.3rem;
-    
+     font-size: 1.3rem;
 }
 
- /* 하단 */  /*.qboard-detail-listbackcounter{*/  /*    display: flex;*/  /*}*/ .qboard-detail-listback-rec {
+ /* 하단 */
+
+.qboard-detail-listbackcounter {
+     position: relative;
+     display: flex;
+     margin-top: 5rem;
+}
+
+.qboard-detail-listback-rec {
      position: absolute;
      background-color: #fff;
      box-sizing: border-box;
-    
+
 }
 
 .qboard-detail-listback-rec {
@@ -251,7 +262,7 @@
      border: 1px solid #bdc0c4;
      width: 6.8rem;
      height: 3.5rem;
-    
+
 }
 
 .qboard-detail-listback-text {
@@ -262,7 +273,7 @@
      font-weight: 500;
      display: inline-block;
      width: 3.8rem;
-    
+
 }
 
 .qboard-detail-listback-icon {
@@ -272,18 +283,16 @@
      width: 1.6rem;
      height: 1.69rem;
      overflow: hidden;
-    
+
 }
 
 .qboard-detail-listback {
-     position: absolute;
-     top: 120.5rem;
-     left: 4.1rem;
+     position: relative;
      width: 6.9rem;
      height: 3.5rem;
      font-size: 1.3rem;
      color: #747474;
-    
+
 }
 
 .qboard-detail-counter-like-box {
@@ -296,7 +305,7 @@
      box-sizing: border-box;
      width: 3.4rem;
      height: 3.8rem;
-    
+
 }
 
 .qboard-detail-counter-like-icon {
@@ -305,7 +314,7 @@
      right: 0.96rem;
      width: 1.38rem;
      height: 0.83rem;
-    
+
 }
 
 .qboard-detail-counter-like {
@@ -314,7 +323,7 @@
      right: 8.8rem;
      width: 3.4rem;
      height: 3.8rem;
-    
+
 }
 
 .qboard-detail-counter-num-box {
@@ -326,7 +335,7 @@
      box-sizing: border-box;
      width: 5.6rem;
      height: 3.8rem;
-    
+
 }
 
 .qboard-detail-counter-num-text {
@@ -335,7 +344,7 @@
      right: 1.7rem;
      letter-spacing: -0.24px;
      font-weight: 500;
-    
+
 }
 
 .qboard-detail-counter-num {
@@ -344,36 +353,15 @@
      right: 3.3rem;
      width: 5.6rem;
      height: 3.8rem;
-    
-}
-
-.qboard-detail-counter-dislike-b {
-     border-radius: 0 5px 5px 0;
-     background-color: #fff;
-     border: 1px solid #bdc0c4;
-     box-sizing: border-box;
-    
-}
-
-.qboard-detail-counter-dislike, .qboard-detail-counter-dislike-b {
-     position: absolute;
-     top: 0;
-     right: 0;
-     width: 3.4rem;
-     height: 3.8rem;
-    
 }
 
 .qboard-detail-counter {
-     position: absolute;
-     top: 120.5rem;
-     right: 3.6rem;
-     width: 12.2rem;
+     position: relative;
+     width: calc(100% - 20px);
      height: 3.8rem;
      text-align: center;
      font-size: 1.3rem;
      color: #000;
-    
 }
 
 .qboard-advertise-text1 {
@@ -381,7 +369,7 @@
      top: 4.2rem;
      left: calc(50% - 27px);
      letter-spacing: -0.24px;
-    
+
 }
 
 .qboard-advertise-box1 {
@@ -393,19 +381,17 @@
      height: 11.2rem;
      font-size: 2rem;
      color: #000;
-    
+
 }
 
 .qboard-advertise-box2 {
-     position: absolute;
+     position: relative;
      width: calc(100% - 30px);
-     top: 128rem;
-     right: 1.5rem;
-     left: 1.5rem;
+     margin-top: 3rem;
+     margin-bottom: 3rem;
      height: 11.2rem;
      font-size: 2rem;
      color: #000;
-    
 }
 
 .qboard-detail-hr-icon {
@@ -417,19 +403,9 @@
      max-width: 100%;
      overflow: hidden;
      height: 0.12rem;
-    
+
 }
 
-.qboard-detail-comments-counts {
-     position: absolute;
-     top: 144.1rem;
-     left: 2rem;
-     font-size: 1.6rem;
-     letter-spacing: -0.24px;
-     font-weight: 500;
-     color: #4a4a4a;
-    
-}
 
 .qboard-detail-commnets-form-box {
      position: absolute;
@@ -442,7 +418,7 @@
      border: 1px solid #cfcfcf;
      box-sizing: border-box;
      height: 24.4rem;
-    
+
 }
 
 .qboard-detail-commnets-form-img-icon {
@@ -453,7 +429,7 @@
      width: 2.8rem;
      height: 2.8rem;
      object-fit: cover;
-    
+
 }
 
 .qboard-detail-commnets-form-tex {
@@ -467,7 +443,7 @@
      border: 1px solid #cfcfcf;
      box-sizing: border-box;
      height: 15.7rem;
-    
+
 }
 
 .qboard-detail-commnets-form {
@@ -477,7 +453,7 @@
      right: 1.6rem;
      left: 1.6rem;
      height: 24.4rem;
-    
+
 }
 
 .qboard-detail-commnets-form-sub {
@@ -488,7 +464,7 @@
      background-color: #721ea6;
      width: 11.6rem;
      height: 4rem;
-    
+
 }
 
 .qboard-detail-commnets-form-sub1 {
@@ -496,7 +472,7 @@
      top: 1rem;
      right: 3.1rem;
      letter-spacing: -0.24px;
-    
+
 }
 
 .qboard-detail-commnets-submit-b {
@@ -507,7 +483,7 @@
      height: 4rem;
      font-size: 1.4rem;
      color: #fff;
-    
+
 }
 
 .qboard-detail-commnets-detail-i-icon {
@@ -518,7 +494,7 @@
      width: 3.5rem;
      height: 3.5rem;
      object-fit: cover;
-    
+
 }
 
 .qboard-detail-commnets-detail-i {
@@ -528,7 +504,7 @@
      width: 17.7rem;
      height: 3.5rem;
      color: #1c1c1c;
-    
+
 }
 
 .qboard-detail-commnets-all-up-b {
@@ -541,7 +517,7 @@
      box-sizing: border-box;
      width: 2.93rem;
      height: 2.7rem;
-    
+
 }
 
 .qboard-detail-commnets-all-up-i-icon {
@@ -550,7 +526,7 @@
      right: 0.81rem;
      width: 1.23rem;
      height: 0.66rem;
-    
+
 }
 
 .qboard-detail-commnets-all-up {
@@ -559,7 +535,7 @@
      right: 7.57rem;
      width: 2.93rem;
      height: 2.7rem;
-    
+
 }
 
 .qboard-detail-commnets-all-box {
@@ -571,7 +547,7 @@
      box-sizing: border-box;
      width: 4.82rem;
      height: 2.7rem;
-    
+
 }
 
 .qboard-detail-commnets-all-like2 {
@@ -583,7 +559,7 @@
      display: inline-block;
      width: 1.89rem;
      height: 1.35rem;
-    
+
 }
 
 .qboard-detail-commnets-all-down-icon {
@@ -592,7 +568,7 @@
      right: 0.81rem;
      width: 1.23rem;
      height: 0.66rem;
-    
+
 }
 
 .qboard-detail-commnets-all-down {
@@ -601,7 +577,7 @@
      right: 0;
      width: 2.93rem;
      height: 2.7rem;
-    
+
 }
 
 .qboard-detail-commnets-all-like {
@@ -613,7 +589,7 @@
      text-align: center;
      font-size: 1.1rem;
      color: #000;
-    
+
 }
 
 .qboard-detail-commnets-all-cont {
@@ -625,7 +601,7 @@
      font-weight: 500;
      display: inline-block;
      height: 20.8rem;
-    
+
 }
 
 .qboard-detail-commnets-hide-ico-icon {
@@ -634,7 +610,7 @@
      left: -0.11rem;
      width: 1.16rem;
      height: 0.59rem;
-    
+
 }
 
 .qboard-detail-commnets-hide-com, .qboard-detail-commnets-hide-tex {
@@ -642,13 +618,13 @@
      top: 0;
      left: 1.8rem;
      letter-spacing: -0.24px;
-    
+
 }
 
 .qboard-detail-commnets-hide-com {
      left: 10.8rem;
      color: #626567;
-    
+
 }
 
 .qboard-detail-commnets-hide {
@@ -660,7 +636,7 @@
      text-align: center;
      font-size: 1.1rem;
      color: #721ea6;
-    
+
 }
 
 .qboard-detail-recom-box {
@@ -671,7 +647,7 @@
      box-sizing: border-box;
      width: 33rem;
      height: 22rem;
-    
+
 }
 
 .qboard-detail-recom-info-counts {
@@ -682,7 +658,7 @@
      display: inline-block;
      width: 13.3rem;
      height: 1.7rem;
-    
+
 }
 
 .qboard-detail-recom-info-date {
@@ -692,7 +668,7 @@
      font-size: 1rem;
      letter-spacing: -0.24px;
      color: #626567;
-    
+
 }
 
 .qboard-detail-recom-info-text {
@@ -701,7 +677,7 @@
      left: 4.4rem;
      width: 13.3rem;
      height: 3.3rem;
-    
+
 }
 
 .qboard-detail-recom-info {
@@ -711,7 +687,7 @@
      width: 17.7rem;
      height: 3.5rem;
      color: #1c1c1c;
-    
+
 }
 
 .qboard-detail-recom-likes-count {
@@ -720,7 +696,7 @@
      right: 2.84rem;
      width: 4.82rem;
      height: 2.7rem;
-    
+
 }
 
 .qboard-detail-recom-down-box {
@@ -733,7 +709,7 @@
      box-sizing: border-box;
      width: 2.93rem;
      height: 2.7rem;
-    
+
 }
 
 .qboard-detail-recom-likes {
@@ -745,7 +721,7 @@
      text-align: center;
      font-size: 1.1rem;
      color: #000;
-    
+
 }
 
 .qboard-detail-recom-recom-form, .qboard-detail-recom-textarea {
@@ -753,7 +729,7 @@
      left: 5.3rem;
      letter-spacing: -0.24px;
      font-weight: 500;
-    
+
 }
 
 .qboard-detail-recom-textarea {
@@ -761,13 +737,13 @@
      top: 209.2rem;
      display: inline-block;
      height: 12.4rem;
-    
+
 }
 
 .qboard-detail-recom-recom-form {
      top: 222.9rem;
      text-align: center;
-    
+
 }
 
 .qboard-detail {
@@ -776,11 +752,330 @@
      border: 1px solid rgba(210, 210, 210, 0.9);
      box-sizing: border-box;
      width: 100%;
-     height: 227.9rem;
-     overflow: hidden;
+     /*overflow: hidden;*/
      text-align: left;
      font-size: 1.2rem;
      color: #626567;
      font-family: "Noto Sans KR";
+     /*height: auto;*/
+}
+
+
+/*-------------------------------------------*/
+
+
+.qboard-detail-commnets-form-bo {
+     position: absolute;
+     width: 100%;
+     top: 0;
+     right: 0;
+     left: 0;
+     border-radius: 8px;
+     background-color: #fff;
+     border: 1px solid #cfcfcf;
+     box-sizing: border-box;
+     height: 24.4rem;
+}
+.qboard-detail-commnets-form-im-icon {
+     position: absolute;
+     top: 1.5rem;
+     left: 1.6rem;
+     border-radius: 50%;
+     width: 2.8rem;
+     height: 2.8rem;
+     object-fit: cover;
+}
+.qboard-detail-commnets-form-te {
+     position: absolute;
+     top: 1.7rem;
+     right: 1.6rem;
+     left: 1.6rem;
+     border-radius: 8px;
+     background-color: #fff;
+     border: 1px solid #cfcfcf;
+     box-sizing: border-box;
+     height: 15.7rem;
+     resize: none;
+     padding-left: 1.5rem;
+     padding-top: 1.5rem;
+}
+.qboard-detail-commnets-form-su1 {
+     position: absolute;
+     top: 0;
+     right: 0;
+     border-radius: 8px;
+     background-color: #721ea6;
+     width: 11.6rem;
+     height: 4rem;
+     border: none;
+}
+.qboard-detail-commnets-form-su2 {
+     position: absolute;
+     top: 1rem;
+     right: 3.6rem;
+     letter-spacing: -0.24px;
+     color: white;
+}
+.qboard-detail-commnets-form-su {
+     position: absolute;
+     top: 18.7rem;
+     right: 1.6rem;
+     width: 11.6rem;
+     height: 4rem;
+     border: none;
+}
+
+.qboard-detail-commnets-detail-2 {
+     position: absolute;
+     top: 0;
+     left: 0;
+     font-weight: 500;
+     display: inline-block;
+     width: 13.3rem;
+     height: 1.7rem;
+}
+.qboard-detail-commnets-detail-3 {
+     position: absolute;
+     top: 1.9rem;
+     left: 0.1rem;
+     font-size: 1rem;
+     letter-spacing: -0.24px;
+     color: #626567;
+}
+.qboard-detail-commnets-detail-1 {
+     position: absolute;
+     top: 0;
+     left: 4.4rem;
+     width: 13.3rem;
+     height: 3.3rem;
+}
+.qboard-detail-commnets-detail-icon {
+     position: absolute;
+     top: 0;
+     left: 0;
+     border-radius: 50%;
+     width: 3.5rem;
+     height: 3.5rem;
+     object-fit: cover;
+}
+.qboard-detail-commnets-detail- {
+     position: absolute;
+     top: 0;
+     left: 0.1rem;
+     width: 17.7rem;
+     height: 3.5rem;
+}
+.qboard-detail-commnets-all-up- {
+     position: absolute;
+     top: 0;
+     right: 7.57rem;
+     border-radius: 5px 0 0 5px;
+     background-color: #fff;
+     border: 1px solid #bdc0c4;
+     box-sizing: border-box;
+     width: 2.93rem;
+     height: 2.7rem;
+}
+.qboard-detail-commnets-all-up-icon {
+     position: absolute;
+     top: 1.15rem;
+     right: 8.38rem;
+     width: 1.23rem;
+     height: 0.66rem;
+}
+.qboard-detail-commnets-all-box {
+     position: absolute;
+     top: 0;
+     right: 0;
+     background-color: #fff;
+     border: 1px solid #bdc0c4;
+     box-sizing: border-box;
+     width: 4.82rem;
+     height: 2.7rem;
+}
+.qboard-detail-commnets-all-lik2 {
+     position: absolute;
+     top: 0.61rem;
+     right: 1.36rem;
+     letter-spacing: -0.24px;
+     font-weight: 500;
+     display: inline-block;
+     width: 1.89rem;
+     height: 1.35rem;
+}
+.qboard-detail-commnets-all-lik1 {
+     position: absolute;
+     top: 0;
+     right: 2.84rem;
+     width: 4.82rem;
+     height: 2.7rem;
+}
+.qboard-detail-commnets-all-dow {
+     position: absolute;
+     top: 0;
+     right: 0;
+     border-radius: 0 5px 5px 0;
+     background-color: #fff;
+     border: 1px solid #bdc0c4;
+     box-sizing: border-box;
+     width: 2.93rem;
+     height: 2.7rem;
+}
+.qboard-detail-commnets-all-dow-icon {
+     position: absolute;
+     top: 1.14rem;
+     right: 0.81rem;
+     width: 1.23rem;
+     height: 0.66rem;
+}
+.qboard-detail-commnets-all-lik {
+     position: absolute;
+     top: 0.8rem;
+     right: 0;
+     width: 10.5rem;
+     height: 2.7rem;
+     text-align: center;
+     font-size: 1.1rem;
+     color: #000;
+}
+.qboard-detail-commnets-all-con {
+     position: relative;
+     width: calc(100% - 7px);
+     top: 4.8rem;
+     left: 0;
+     letter-spacing: -0.24px;
+     font-weight: 500;
+     color: #626567;
+     display: inline-block;
+     height: auto;
+     margin-bottom: 7rem;
+     white-space: pre-line;
+}
+
+
+.qboard-detail-commnets-hide-co{
+     position: relative;
+     top: 0;
+     float: left;
+     /*left: 17.8rem;*/
+     letter-spacing: -0.24px;
+     color: #626567;
+     cursor: pointer;
+     /*padding-left: 2rem;*/
+}
+.qboard-detail-commnets-hide-te {
+     position: relative;
+     top: 0;
+     float: left;
+     /*left: 17.8rem;*/
+     letter-spacing: -0.24px;
+     color: #626567;
+     cursor: pointer;
+     /*padding-left: 2rem;*/
+     /*padding-bottom: 2rem;*/
+}
+/*.qboard-detail-commnets-hide-co {*/
+/*    left: 10.8rem;*/
+/*    color: #626567;*/
+/*}*/
+.qboard-detail-commnets-hide {
+     position: relative;
+     top: auto;
+     /*left: 0.6rem;*/
+     width: 90%;
+     height: auto;
+     text-align: center;
+     font-size: 1.1rem;
+     /*color: #721ea6;*/
+}
+
+/* 장수현 test */
+.qboard-detail-commnets-btns{
+     display: flex;
+     margin-top: 3rem;
+     /*width: calc(100% - 20px);*/
+}
+
+.qboard-detail-commnets-btns-delete{
+     display: inline-block;
+     color: #721ea6;
+     cursor: pointer;
+}
+
+.qboard-detail-commnets-btns-update{
+     display: inline-block;
+     margin-left: 1rem;
+     color: #721ea6;
+     cursor: pointer;
+}
+.qboard-detail-reply-all {
+     position: relative;
+     top: 0;
+     left: 0;
+     width: 90%;
+     height: auto;
+     margin-bottom: 1rem;
+     /*border-left: 1px solid #adadad;*/
+}
+.qboard-detail-reply-all:before {
+     content: "";
+     position: absolute;
+     left: -2rem; /* 세로선을 왼쪽으로 5px 이동시킵니다. */
+     top: 0;
+     height: 90%;
+     width: 1px;
+     background-color: #e3e3e5; /* 세로선의 색상을 정의합니다. */
+}
+
+.qboard-detail-commnets-hide-img{
+     width: 1rem;
+     cursor: pointer;
+}
+.qboard-comments-box{
+     position: relative;
+     width: calc(100% - 74px);
+     top: 35.7rem;
+     right: 3.7rem;
+     left: 3.7rem;
+}
+
+.qboard-detail-commnets-form {
+     position: absolute;
+     width: calc(100% - 32px);
+     top: 2rem;
+     right: 1.6rem;
+     left: 1.6rem;
+     height: 24.4rem;
+     color: #fff;
+     margin-top: 1rem;
+}
+
+.qboard-detail-commnets {
+     position: absolute;
+     top: 32.2rem;
+     left: 1.9rem;
+     width: 90%;
+     height: 28.1rem;
+     font-size: 1.2rem;
+     color: #1c1c1c;
+
+}
+.qboard-detail-comments-all {
+     position: relative;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: auto;
+     padding-bottom: 5rem;
+}
+
+.qboard-detail-comments-counts {
+     position: absolute;
+     top: -32rem;
+     left: 1rem;
+     font-size: 1.6rem;
+     letter-spacing: -0.24px;
+     font-weight: 500;
+     color: #4a4a4a;
 }
 

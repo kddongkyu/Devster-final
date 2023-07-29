@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './style/Reviewdetail.css';
 import axiosIns from "../../api/JwtConfig";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import StarRating from "./StarRating";
-import {Reviewcomment} from "./index";
+import {Reviewcomment, Reviewcommentform, Reviewcommentreply} from "./index";
 function Reviewdetail() {
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
@@ -15,6 +15,7 @@ function Reviewdetail() {
     const [isGood, setIsGood] = useState(false);
     const [isBad, setIsBad] = useState(false);
     const [status, setStatus] = useState("");
+    const navi = useNavigate();
 
     const fetchReview = useCallback((rb_idx, currentPage = null) => {
         const url=`/api/review/D0/${rb_idx}`;
@@ -57,6 +58,18 @@ function Reviewdetail() {
     if (isLoading) {
         return <div>Loading...</div>;
     }
+
+    // 목록 돌아가기
+    const reivewNavigation = () => {
+        const url = "/review";
+        window.location.href = url;
+    };
+
+    const handleNicknameClick = () => {
+        // recv_nick은 이 컴포넌트에서 사용할 수 있는 형태로 가져옵니다.
+        const recv_nick = reviewData.mNicname;
+        navi(`/message/form/${recv_nick}`);
+    };
 
     const timeForToday = (value) => {
         if (!value) {
@@ -211,6 +224,10 @@ function Reviewdetail() {
                 <div className="advertise-main" />
                 <b className="advertise-text">광고</b>
             </div>
+            <div className="review-detail-headline">
+                <div className="review-detail-headline-box" />
+                <div className="review-detail-headline-text">리뷰게시판</div>
+            </div>
             <div className="review-detail-comp">
                 <div className="review-detail-comp-box" />
                 <div className="review-detail-comp-info">
@@ -227,9 +244,9 @@ function Reviewdetail() {
                     </div>
                 </div>
                 <div className="review-detail-comp-info-text">
-                    <ul className="ul">
+                    <ul className="review-detail-ul">
                         <li className="li">사원수 : {reviewData.ciPpl}명</li>
-                        <li className="cisale_li">매출액 :{reviewData.ciSale}</li>
+                        <li className="cisale_li">매출액 : {reviewData.ciSale}</li>
                         <li className="cisal_li">평균연봉 : {Number(reviewData.ciSal).toLocaleString('ko-KR')}원
                         </li>
                     </ul>
@@ -241,13 +258,15 @@ function Reviewdetail() {
                         className="review-detail-info-profile-img-icon"
                         alt=""
                         src={require('./assets/review_detail_info_profile_img.png').default}
+                        onClick={handleNicknameClick}
                     />
-                    <div className="review-detail-info-nickname">{reviewData.mNicname}</div>
+                    <div className="review-detail-info-nickname"
+                         onClick={handleNicknameClick}>{reviewData.mNicname}</div>
                     <div className="review-detail-info-status">
-                        <div className="review-detail-info-status-text"> 
-                    
-                         {timeForToday(reviewData.review.rb_writeday)
-                        }{` ·        `}</div>
+                        <div className="review-detail-info-status-text">
+
+                            {timeForToday(reviewData.review.rb_writeday)
+                            }{`   ·        `}</div>
                         <img
                             className="review-detail-info-status-view-icon"
                             alt=""
@@ -266,21 +285,34 @@ function Reviewdetail() {
                 />
                 {m_idx === reviewData.review.m_idx &&(
                     <>
-                <Link to={`/review/update/${reviewData.review.rb_idx}`}>
-                <img className="review-edit-icon" alt=""
-                     src={require('./assets/review-edit.svg').default}/>
-                </Link>
-                <img className="review-trash-icon" alt=""
-                     src={require('./assets/review-trash.svg').default}
-                     onClick={() => deleteReview(rb_idx)} />
+                        <Link to={`/review/update/${reviewData.review.rb_idx}`}>
+                            <img className="review-edit-icon" alt=""
+                                 src={require('./assets/review-edit.svg').default}/>
+                        </Link>
+                        <img className="review-trash-icon" alt=""
+                             src={require('./assets/review-trash.svg').default}
+                             onClick={() => deleteReview(rb_idx)} />
                     </>
                 )}
             </div>
             <div className="review-detail-body">
                 <div className="review-detail-body-text">
+                   <pre style={{marginBottom: "5rem"}}>
                     {reviewData.review.rb_content}
+                    </pre>
                 </div>
-                <b className="review-detail-body-subject">{reviewData.review.rb_subject}</b>
+                <div className="review-detail-body-subject">{reviewData.review.rb_subject}</div>
+            </div>
+
+            <div className="review-detail-listbackcounter">
+            <div className="reivew-detail-listback" onClick={reivewNavigation}>
+                <div className="reivew-detail-listback-rec"/>
+                <div className="reivew-detail-listback-text">목록</div>
+                <img
+                    className="reivew-detail-listback-icon"
+                    alt=""
+                    src={require("../fboard/assets/boarddetail/board_detail_listback_icon.svg").default}
+                />
             </div>
             <div className="review-detail-counter">
                 <div className="review-detail-counter-like">
@@ -308,19 +340,16 @@ function Reviewdetail() {
                         src={require('./assets/review_detail_counter_dislike_icon.svg').default}
                     />
                 </div>
-
             </div>
+            </div>
+
             <div className="advertise-box1">
                 <div className="advertise-main" />
                 <b className="advertise-text1">광고 2</b>
             </div>
-            <img
-                className="review-detail-hr-icon"
-                alt=""
-                src="/review-detail-hr.svg"
-            />
 
-        <Reviewcomment rb_idx={rb_idx}/>
+            <Reviewcommentform rb_idx={rb_idx}/>
+            <Reviewcomment rb_idx={rb_idx}/>
         </div>
 
     );

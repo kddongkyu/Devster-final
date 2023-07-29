@@ -2,15 +2,9 @@ package data.service;
 
 import data.dto.CompanyInfoDto;
 import data.dto.ReviewDto;
-import data.entity.CompanyInfoEntity;
-import data.entity.MemberEntity;
-import data.entity.ReviewEntity;
-import data.entity.ReviewlikeEntity;
+import data.entity.*;
 import data.mapper.ReviewMapper;
-import data.repository.CompanyInfoRepository;
-import data.repository.MemberRepository;
-import data.repository.ReviewRepository;
-import data.repository.ReviewlikeRepository;
+import data.repository.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +27,16 @@ public class ReviewService {
     private final ReviewMapper reviewMapper;
     private final MemberRepository memberRepository;
 
+    private final ReviewCommentRepository reviewCommentRepository;
 
     public ReviewService(ReviewRepository reviewRepository, ReviewlikeRepository ReviewlikeRepository, CompanyInfoRepository companyInfoRepository,
-                         ReviewMapper reviewMapper,MemberRepository memberRepository)  {
+                         ReviewMapper reviewMapper,MemberRepository memberRepository,ReviewCommentRepository reviewCommentRepository)  {
         this.reviewRepository = reviewRepository;
         this.ReviewlikeRepository=ReviewlikeRepository;
         this.CompanyInfoRepository=companyInfoRepository;
         this.reviewMapper = reviewMapper;
         this.memberRepository = memberRepository;
-
+        this.reviewCommentRepository= reviewCommentRepository;
     }
 
     public ReviewDto insertReview(ReviewDto dto) {
@@ -77,47 +72,7 @@ public class ReviewService {
         }
     }
 
-// public Map<String, Object> getPagedReviews(int page, int size,String keyword) {
-//        Pageable pageable = PageRequest.of(page, size, Sort.by("RBwriteday").descending());
-//        Page<ReviewEntity> result;
-//
-//        if (keyword != null && !keyword.trim().isEmpty()) {
-//            result = reviewRepository.findByRBsubjectContaining(keyword, pageable);
-//               logger.info("Keyword: " + keyword);
-//        } else {
-//            result = reviewRepository.findAll(pageable);
-//        }
-//
-//        List<Map<String, Object>> reviewsWithCompanyInfo = result
-//                .getContent()
-//                .stream()
-//                .map(reviewEntity -> {
-//                    CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(reviewEntity.getCIidx()).orElse(null);
-//                    MemberEntity memberInfo = memberRepository.findById(reviewEntity.getMIdx()).orElse(null);
-//                    Map<String, Object> reviewWithCompanyInfo = new HashMap<>();
-//                    reviewWithCompanyInfo.put("review", ReviewDto.toReviewDto(reviewEntity));
-//                    if (memberInfo != null) {
-//                        reviewWithCompanyInfo.put("mPhoto", memberInfo.getMPhoto());
-//                        reviewWithCompanyInfo.put("mNicname", memberInfo.getMNickname());
-//                    }
-//                    if (companyInfo != null) {
-//                        reviewWithCompanyInfo.put("ciName", companyInfo.getCIname());
-//                        reviewWithCompanyInfo.put("ciStar", companyInfo.getCIstar());
-//                        reviewWithCompanyInfo.put("ciPhoto", companyInfo.getCIphoto());
-//                    }
-//                    return reviewWithCompanyInfo;
-//                })
-//                .collect(Collectors.toList());
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("reviews", reviewsWithCompanyInfo);
-//        response.put("totalElements", result.getTotalElements());
-//        response.put("totalPages", result.getTotalPages());
-//        response.put("currentPage", result.getNumber() + 1);
-//        response.put("hasNext", result.hasNext());
-//
-//        return response;
-//    }
+
 
     public Map<String, Object> getPagedReviews(int page, int size, String sortProperty, String sortDirection, String keyword) {
         Sort.Direction direction = Sort.Direction.fromString(sortDirection);
@@ -138,8 +93,13 @@ public class ReviewService {
                 .map(reviewEntity -> {
                     CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(reviewEntity.getCIidx()).orElse(null);
                     MemberEntity memberInfo = memberRepository.findById(reviewEntity.getMIdx()).orElse(null);
+                    // 댓글 수 가져오기 로직 추가
+                    int reviewCommentCount = reviewCommentRepository.countAllByRBidx(reviewEntity.getRBidx());
+
                     Map<String, Object> reviewWithCompanyInfo = new HashMap<>();
                     reviewWithCompanyInfo.put("review", ReviewDto.toReviewDto(reviewEntity));
+                    //댓글 수 가져오기 로직 추가
+                    reviewWithCompanyInfo.put("reviewCommentCount", reviewCommentCount);
                     if (memberInfo != null) {
                         reviewWithCompanyInfo.put("mPhoto", memberInfo.getMPhoto());
                         reviewWithCompanyInfo.put("mNicname", memberInfo.getMNickname());
@@ -178,6 +138,7 @@ public class ReviewService {
             Map<String, Object> reviewWithAdditionalInfo = new HashMap<>();
             reviewWithAdditionalInfo.put("review", ReviewDto.toReviewDto(review));
 
+
             if (memberInfo != null) {
                 reviewWithAdditionalInfo.put("mPhoto", memberInfo.getMPhoto());
                 reviewWithAdditionalInfo.put("mNicname", memberInfo.getMNickname());
@@ -209,26 +170,7 @@ public class ReviewService {
             throw e;
         }
     }
-//    public void updateReview(int rb_idx, ReviewDto dto){
-//        try {
-//            Optional<ReviewEntity> e = reviewRepository.findById(rb_idx);
-//
-//            if(e.isPresent()) {
-//                ReviewEntity existingEntity = e.get();
-//                existingEntity.setCIidx(dto.getCi_idx());
-//                existingEntity.setRBsubject(dto.getRb_subject());
-//                existingEntity.setRBcontent(dto.getRb_content());
-//                existingEntity.setRBstar(dto.getRb_star());
-//                existingEntity.setRBtype(dto.getRb_type());
-//
-//                // Update the existing entity
-//                reviewRepository.save(existingEntity);
-//            }
-//        } catch (Exception e) {
-//            logger.error("update review Error", e);
-//            throw e;
-//        }
-//    }
+
 
     public void updateReview(int rb_idx, ReviewDto dto){
         try {
@@ -265,7 +207,6 @@ public class ReviewService {
     }
 
 
-
     // 좋아요 싫어요 기능
 
     private ReviewlikeEntity findOrCreateRBoardLike(int MIdx, int RBidx){
@@ -273,7 +214,7 @@ public class ReviewService {
                 .orElse(new ReviewlikeEntity(MIdx,RBidx));
     }
 
-//현재 로직에선 필요가 없는데 출력하는 로직에서 필요한지 고민 필요
+
  public boolean isAlreadyAddGoodRp(int MIdx, int RBidx){
      ReviewlikeEntity rboardlikeEntity=findOrCreateRBoardLike(MIdx, RBidx);
      return rboardlikeEntity.getLikestatus()==1;

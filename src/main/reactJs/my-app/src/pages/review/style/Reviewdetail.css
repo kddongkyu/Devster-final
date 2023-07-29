@@ -24,19 +24,22 @@
     font-size: 2rem;
 }
 .review-detail-comp-box {
-    position: absolute;
+    /*position: ;*/
     top: 0;
     left: 0;
     width: 35rem;
     height: 12rem;
+    display: flex;
 }
 .review-detail-comp-info-img-icon {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     left: 0;
     width: 10.9rem;
     height: 7.1rem;
     object-fit: fill;
+    flex: 1;
+    border: 1px solid #cfcfcf;
 }
 .b {
     position: absolute;
@@ -64,9 +67,11 @@
 .li {
     /*margin-bottom: false;*/
 }
-.ul {
+.review-detail-ul {
     margin: 0;
     /* padding-left: 1.31rem; */
+    /* padding-left: 4.31rem; */
+    /* width: 100%; */
 }
 .review-detail-comp-info-text {
     position: absolute;
@@ -78,7 +83,7 @@
     font-family: inherit;
     color: #626567;
     display: inline-block;
-    width: 13.9rem;
+    width: 18.9rem;
     height: 5.5rem;
 }
 .review-detail-comp {
@@ -189,6 +194,7 @@
     font-size: 1.8rem;
     letter-spacing: -0.24px;
     color: #000;
+    width: calc(100% - 74px);
 }
 .review-detail-body {
     position: absolute;
@@ -291,7 +297,7 @@
 .review-detail-hr-icon {
     position: absolute;
     width: calc(100% - 40px);
-    top: 108.24rem;
+    /*top: 20.24rem;*/
     right: 2rem;
     left: 2rem;
     max-width: 100%;
@@ -300,13 +306,83 @@
 }
 .review-detail-comments-counts {
     position: absolute;
-    top: 109.9rem;
+    top: -30rem;
     left: 2rem;
     font-size: 1.6rem;
     letter-spacing: -0.24px;
     font-weight: 500;
     color: #4a4a4a;
 }
+
+.review-line-box {
+    position: absolute;
+    width: calc(100% - 61px);
+    top: 23.1rem;
+    right: 3.6rem;
+    left: 2.5rem;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 0.1rem;
+}
+.review-detail-headline-box {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 42.5px);
+    background-color: #fff;
+    width: 100%;
+    height: 2rem;
+}
+.review-detail-headline-text {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 31.5px);
+    letter-spacing: -0.24px;
+    display: inline-block;
+    width: 6.5rem;
+}
+.review-detail-headline {
+    position: absolute;
+    top: 21.9rem;
+    left: 6.4rem;
+    font-size: 1.4rem;
+    letter-spacing: -0.24px;
+}
+.review-detail {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid rgba(210, 210, 210, 0.9);
+    box-sizing: border-box;
+    width: 100%;
+    height: 301.5rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.4rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+.cisale_li{
+    width: 15rem;
+}
+.cisal_li{
+    width: 19rem;
+}
+.rview-readcount{
+    /*left: 9rem;*/
+    /*padding-left: 3rem;*/
+    float: left;
+}
+.ci_name_b{
+    position: absolute;
+    top: 7.3rem;
+    left: 0.1rem;
+    letter-spacing: 1px;
+    line-height: 2.1rem;
+    display: inline-block;
+    width: 15.96rem;
+}
+/*d-----------------------------*/
+
+
 .review-detail-commnets-form-bo {
     position: absolute;
     width: 100%;
@@ -339,6 +415,9 @@
     border: 1px solid #cfcfcf;
     box-sizing: border-box;
     height: 15.7rem;
+    resize: none;
+    padding-left: 1.5rem;
+    padding-top: 1.5rem;
 }
 .review-detail-commnets-form-su1 {
     position: absolute;
@@ -348,13 +427,14 @@
     background-color: #721ea6;
     width: 11.6rem;
     height: 4rem;
+    border: none;
 }
 .review-detail-commnets-form-su2 {
     position: absolute;
     top: 1rem;
     right: 3.1rem;
     letter-spacing: -0.24px;
-    color: #fff;
+    color: white;
 }
 .review-detail-commnets-form-su {
     position: absolute;
@@ -372,6 +452,30 @@
     left: 1.6rem;
     height: 24.4rem;
     color: #fff;
+}
+.review-detail-commnets-detail-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 500;
+    display: inline-block;
+    width: 13.3rem;
+    height: 1.7rem;
+}
+.review-detail-commnets-detail-3 {
+    position: absolute;
+    top: 1.9rem;
+    left: 0.1rem;
+    font-size: 1rem;
+    letter-spacing: -0.24px;
+    color: #626567;
+}
+.review-detail-commnets-detail-1 {
+    position: absolute;
+    top: 0;
+    left: 4.4rem;
+    width: 13.3rem;
+    height: 3.3rem;
 }
 .review-detail-commnets-detail-icon {
     position: absolute;
@@ -392,7 +496,7 @@
 .review-detail-commnets-all-up- {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 7.57rem;
     border-radius: 5px 0 0 5px;
     background-color: #fff;
     border: 1px solid #bdc0c4;
@@ -403,16 +507,9 @@
 .review-detail-commnets-all-up-icon {
     position: absolute;
     top: 1.15rem;
-    right: 0.81rem;
+    right: 8.38rem;
     width: 1.23rem;
     height: 0.66rem;
-}
-.review-detail-commnets-all-up {
-    position: absolute;
-    top: 0;
-    right: 7.57rem;
-    width: 2.93rem;
-    height: 2.7rem;
 }
 .review-detail-commnets-all-box {
     position: absolute;
@@ -434,19 +531,30 @@
     width: 1.89rem;
     height: 1.35rem;
 }
+.review-detail-commnets-all-lik1 {
+    position: absolute;
+    top: 0;
+    right: 2.84rem;
+    width: 4.82rem;
+    height: 2.7rem;
+}
+.review-detail-commnets-all-dow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 0 5px 5px 0;
+    background-color: #fff;
+    border: 1px solid #bdc0c4;
+    box-sizing: border-box;
+    width: 2.93rem;
+    height: 2.7rem;
+}
 .review-detail-commnets-all-dow-icon {
     position: absolute;
     top: 1.14rem;
     right: 0.81rem;
     width: 1.23rem;
     height: 0.66rem;
-}
-.review-detail-commnets-all-dow {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 2.93rem;
-    height: 2.7rem;
 }
 .review-detail-commnets-all-lik {
     position: absolute;
@@ -459,7 +567,7 @@
     color: #000;
 }
 .review-detail-commnets-all-con {
-    position: absolute;
+    position: relative;
     width: calc(100% - 7px);
     top: 4.8rem;
     left: 0;
@@ -467,211 +575,113 @@
     font-weight: 500;
     color: #626567;
     display: inline-block;
-    height: 20.8rem;
+    height: auto;
+    margin-bottom: 7rem;
+    white-space: pre-line;
 }
 .review-detail-comments-all {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
-    width: 35.2rem;
-    height: 25.6rem;
+    width: 100%;
+    height: auto;
+    margin-bottom: 3rem;
 }
-.review-detail-commnets-hide-ic-icon {
-    position: absolute;
-    top: 0.5rem;
-    left: -0.11rem;
-    width: 1.16rem;
-    height: 0.59rem;
-}
-.review-detail-commnets-hide-co,
-.review-detail-commnets-hide-te {
-    position: absolute;
+
+.review-detail-commnets-hide-co{
+    position: relative;
     top: 0;
-    left: 1.8rem;
+    float: left;
+    /*left: 17.8rem;*/
     letter-spacing: -0.24px;
-}
-.review-detail-commnets-hide-co {
-    left: 10.8rem;
     color: #626567;
+    cursor: pointer;
+    /*padding-left: 2rem;*/
 }
+.review-detail-commnets-hide-te {
+    position: relative;
+    top: 0;
+    float: left;
+    /*left: 17.8rem;*/
+    letter-spacing: -0.24px;
+    color: #626567;
+    cursor: pointer;
+    /*padding-left: 2rem;*/
+    /*padding-bottom: 2rem;*/
+}
+/*.review-detail-commnets-hide-co {*/
+/*    left: 10.8rem;*/
+/*    color: #626567;*/
+/*}*/
 .review-detail-commnets-hide {
-    position: absolute;
-    top: 26.5rem;
-    left: 0.6rem;
-    width: 15rem;
-    height: 1.6rem;
+    position: relative;
+    top: auto;
+    /*left: 0.6rem;*/
+    width: 90%;
+    height: auto;
     text-align: center;
     font-size: 1.1rem;
-    color: #721ea6;
+    /*color: #721ea6;*/
 }
 .review-detail-commnets {
-    position: relative;
+    position: absolute;
     top: 140.2rem;
     left: 1.9rem;
-    width: 35.2rem;
+    width: 90%;
     height: 28.1rem;
     font-size: 1.2rem;
     color: #1c1c1c;
 }
-.review-detail-recom-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-left: 1px solid #d2d2d2;
-    box-sizing: border-box;
-    width: 33rem;
-    height: 22rem;
+
+/* 장수현 test */
+.review-detail-commnets-btns{
+    display: flex;
+    margin-top: 3rem;
+    /*width: calc(100% - 20px);*/
 }
-.review-detail-recom-info-count {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-weight: 500;
+
+.review-detail-commnets-btns-delete{
     display: inline-block;
-    width: 13.3rem;
-    height: 1.7rem;
+    color: #721ea6;
+    cursor: pointer;
 }
-.review-detail-recom-info-date {
-    position: absolute;
-    top: 1.9rem;
-    left: 0.1rem;
-    font-size: 1rem;
-    letter-spacing: -0.24px;
-    color: #626567;
-}
-.review-detail-recom-info-text {
-    position: absolute;
-    top: 0;
-    left: 4.4rem;
-    width: 13.3rem;
-    height: 3.3rem;
-}
-.review-detail-recom-info {
-    position: absolute;
-    top: 0.9rem;
-    left: 0.9rem;
-    width: 17.7rem;
-    height: 3.5rem;
-    color: #1c1c1c;
-}
-.review-detail-recom-likes-coun {
-    position: absolute;
-    top: 0;
-    right: 2.84rem;
-    width: 4.82rem;
-    height: 2.7rem;
-}
-.review-detail-recom-down-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 0 5px 5px 0;
-    background-color: #fff;
-    border: 1px solid #bdc0c4;
-    box-sizing: border-box;
-    width: 2.93rem;
-    height: 2.7rem;
-}
-.review-detail-recom-likes {
-    position: absolute;
-    top: 1.7rem;
-    right: 0;
-    width: 10.5rem;
-    height: 2.7rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #000;
-}
-.review-detail-recom-recom-form,
-.review-detail-recom-textarea {
-    position: absolute;
-    left: 1.2rem;
-    letter-spacing: -0.24px;
-    font-weight: 500;
-}
-.review-detail-recom-textarea {
-    width: calc(100% - 22px);
-    top: 5.5rem;
+
+.review-detail-commnets-btns-update{
     display: inline-block;
-    height: 12.4rem;
+    margin-left: 1rem;
+    color: #721ea6;
+    cursor: pointer;
 }
-.review-detail-recom-recom-form {
-    top: 19.2rem;
-    text-align: center;
-}
-.review-detail-recom {
-    position: absolute;
-    top: 169.5rem;
-    left: 4.1rem;
-    width: 33rem;
-    height: 22rem;
-    font-size: 1.2rem;
-    color: #626567;
-}
-.review-line-box {
-    position: absolute;
-    width: calc(100% - 61px);
-    top: 23.1rem;
-    right: 3.6rem;
-    left: 2.5rem;
-    border: 1px solid #d2d2d2;
-    box-sizing: border-box;
-    height: 0.1rem;
-}
-.review-detail-headline-box {
-    position: absolute;
-    top: 0;
-    left: calc(50% - 42.5px);
-    background-color: #fff;
-    width: 8.5rem;
-    height: 2rem;
-}
-.review-detail-headline-text {
-    position: absolute;
-    top: 0;
-    left: calc(50% - 31.5px);
-    letter-spacing: -0.24px;
-    display: inline-block;
-    width: 6.5rem;
-}
-.review-detail-headline {
-    position: absolute;
-    top: 22.1rem;
-    left: calc(50% - 40px);
-    width: 8.5rem;
-    height: 2rem;
-    color: #626567;
-}
-.review-detail {
+.review-detail-reply-all {
     position: relative;
-    background-color: #fff;
-    border: 1px solid rgba(210, 210, 210, 0.9);
-    box-sizing: border-box;
-    width: 100%;
-    height: 191.5rem;
-    overflow: hidden;
-    text-align: left;
-    font-size: 1.4rem;
-    color: #000;
-    font-family: "Noto Sans KR";
+    top: 0;
+    left: 0;
+    width: 90%;
+    height: auto;
+    margin-bottom: 1rem;
+    /*border-left: 1px solid #adadad;*/
 }
-.cisale_li{
-    width: 15rem;
-}
-.cisal_li{
-    width: 19rem;
- }
-.rview-readcount{
-    /*left: 9rem;*/
-    /*padding-left: 3rem;*/
-    float: left;
-}
-.ci_name_b{
+.review-detail-reply-all:before {
+    content: "";
     position: absolute;
-    top: 7.3rem;
-    left: 0.1rem;
-    letter-spacing: 1px;
-    line-height: 2.1rem;
-    display: inline-block;
-    width: 9.96rem;
+    left: -2rem; /* 세로선을 왼쪽으로 5px 이동시킵니다. */
+    top: 0;
+    height: 90%;
+    width: 1px;
+    background-color: #e3e3e5; /* 세로선의 색상을 정의합니다. */
 }
+
+.review-detail-commnets-hide-img{
+    width: 1rem;
+    cursor: pointer;
+}
+
+/* 장수현 */
+.review-detail-header {
+
+}
+
+
+
+
+

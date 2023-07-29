@@ -8,6 +8,7 @@ import data.repository.MemberRepository;
 import jwt.setting.config.SocialType;
 import jwt.setting.settings.JwtService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.session.StandardSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Member;
 import java.util.Optional;
 
@@ -37,6 +39,11 @@ public class NaverController {
     public NaverController(MemberRepository memberRepository, JwtService jwtService) {
         this.memberRepository = memberRepository;
         this.jwtService = jwtService;
+    }
+
+    @GetMapping("/oauth2/authorization/naver")
+    public void api(){
+
     }
 
     @GetMapping("/oauth2/callback/naver")
@@ -177,4 +184,5 @@ public class NaverController {
         
         log.info("네이버 accessToken 삭제완료");
     }
+
 }

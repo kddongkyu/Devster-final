@@ -27,8 +27,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final AcademyInfoRepository academyInfoRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final PostMessageService postMessageService;
 
     private final JwtService jwtService;
 
@@ -38,10 +38,11 @@ public class MemberService {
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder, PostMessageService postMessageService, JwtService jwtService) {
         this.memberRepository = memberRepository;
         this.academyInfoRepository = academyInfoRepository;
         this.passwordEncoder = passwordEncoder;
+        this.postMessageService = postMessageService;
         this.jwtService = jwtService;
     }
 

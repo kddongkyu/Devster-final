@@ -33,8 +33,13 @@ import {
   FboardUpdateForm,
 } from "../pages/fboard";
 import { Qboard, QboardForm } from "../pages/qboard";
-import { Hboard, HboardForm } from "../pages/hboard";
-import { Aboard, AboardForm } from "../pages/aboard";
+import { Aboard, Aboarddtail, AboardForm, Aboardupdate } from "../pages/aboard";
+import {
+  Hboard,
+  HboardForm,
+  HboardDetail,
+  HboardUpdateForm,
+} from "../pages/hboard";
 import {
   Reviewform,
   Reviewlist,
@@ -46,6 +51,7 @@ import MessageList from "../pages/message/MessageList";
 import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
 import QboardDetail from "../pages/qboard/QboardDetail";
+import Translate from "../pages/test/translate";
 
 function RouteMain(props) {
   const location = useLocation();
@@ -67,7 +73,9 @@ function RouteMain(props) {
         <Route path="/review" element={<Reviewlist />} />
 
         <Route path="/fboard/form" element={<FboardForm />} />
-        <Route path="/qboard/form" element={<QboardForm />} />
+        <Route path="/qboard/form" element={<QboardForm />}>
+          <Route path=":qb_idx/:currentPage" element={<QboardForm />} />
+        </Route>
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route path="/review/form" element={<Reviewform />} />
@@ -80,15 +88,51 @@ function RouteMain(props) {
           path="/fboard/detail/:fb_idx/:currentPage"
           element={<FboardDetail />}
         />
+
+        <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
+        <Route
+          path="/fboard/updateform/:fb_idx/:currentPage"
+          element={<FboardUpdateForm />}
+        />
+
+        <Route
+          path="/hboard/detail/:hb_idx/:currentPage"
+          element={<HboardDetail />}
+        />
+
+        <Route
+          path="hboard/updateform/:hb_idx/:currentPage"
+          element={<HboardUpdateForm />}
+        />
+
+        <Route
+          path="/aboard/detail/:ab_idx/:currentPage"
+          element={<Aboarddtail />}
+        />
+
         <Route
           path="/qboard/detail/:qb_idx/:currentPage"
           element={<QboardDetail />}
+        />
+
+        <Route
+          path="/fboard/detail/:fb_idx/:currentPage"
+          element={<FboardDetail />}
+        />
+
+        <Route
+          path="/review/detail/:rb_idx/:currentPage"
+          element={<Reviewdetail />}
         />
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
         <Route
           path="/fboard/updateform/:fb_idx/:currentPage"
           element={<FboardUpdateForm />}
+        />
+        <Route
+          path="/aboard/update/:ab_idx/:currentPage"
+          element={<Aboardupdate />}
         />
 
         <Route element={<MypageList />}>
@@ -140,6 +184,7 @@ function RouteMain(props) {
       <Route path="/grats" element={<Grats />} />
       <Route path="/devchat/:ai_idx" element={<DevChat />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/translate" element={<Translate />} />
     </Routes>
   );
 }

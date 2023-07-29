@@ -33,6 +33,13 @@ function ReviewModal({ isReviewOpen, setIsReviewOpen ,setSelectedCompany, setSel
         }
     };
 
+    // 엔터로 검색
+    const handleEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    };
+
     const handleInputChange = (e) => {
         setKeyword(e.target.value);
     };
@@ -60,6 +67,7 @@ function ReviewModal({ isReviewOpen, setIsReviewOpen ,setSelectedCompany, setSel
                     <input className="review-modal-search-input1"
                            value={keyword}
                            onChange={handleInputChange}
+                           onKeyDown={handleEnterKeyPress}
                     />
                     <img
                         className="review-modal-search-icon"
