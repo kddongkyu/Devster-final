@@ -18,13 +18,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.AlgorithmConstraints;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     private static final String[] NO_CHECK_URLS = {"/api/member/login","/api/compmember/login","/api/member/login/kakao","/api/member/naver"};
+    private static final Pattern PERMIT_ALL_PATTERN = Pattern.compile("^/api/.*?/D0/.*$");
 
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
@@ -36,137 +39,65 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         } else {
+
+            Matcher matcher = PERMIT_ALL_PATTERN.matcher(request.getRequestURI());
+            if (matcher.matches()) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             for (String url : NO_CHECK_URLS) {
                 if (request.getRequestURI().equals(url)) {
-                    filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
-                    return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
+                    filterChain.doFilter(request, response);
+                    return;
                 }
             }
-            String uri = request.getRequestURI();
-            String[] uriParts = uri.split("/");
-            // 사용자 요청 헤더에서 RefreshToken 추출
-            // -> RefreshToken이 없거나 유효하지 않다면(DB에 저장된 RefreshToken과 다르다면) null을 반환
-            // 사용자의 요청 헤더에 RefreshToken이 있는 경우는, AccessToken이 만료되어 요청한 경우밖에 없다.
-            // 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
             String refreshToken = jwtService.extractRefreshToken(request)
                     .filter(jwtService::isTokenValid)
                     .orElse(null);
 
             if (refreshToken != null) {
-                        if (jwtService.extractType(refreshToken).get().equals("company")) {
-                            checkRefreshTokenAndReIssueAccessTokenComp(response, refreshToken);
-                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-                        } else {
-                            checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
-                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-                        }
+                Optional<String> optionalType = jwtService.extractType(refreshToken);
+                if (optionalType.isPresent()) {
+                    String type = optionalType.get();
+                    if (type.equals("company")) {
+                        checkRefreshTokenAndReIssueAccessTokenComp(response, refreshToken);
+                        return;
+                    } else {
+                        checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
+                        return;
                     }
-                    // RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행
-                    // AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
-                    // AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
-                    if (refreshToken == null) {
-                        String accessToken = jwtService.extractAccessToken(request)
-                                .filter(jwtService::isTokenValid)
-                                .orElse(null);
-                        String type = jwtService.extractType(accessToken).get();
-                        log.info(type);
-                        if (type.equals("company")) {
-                            checkAccessTokenAndAuthenticationComp(request, response, filterChain);
-                        } else {
-                            checkAccessTokenAndAuthentication(request, response, filterChain);
-                        }
-                    }
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰의 유형이 없습니다.");
+                    return;
+                }
+            }
 
-//            if (uriParts.length > 1) {
-//                String prefix = uriParts[2];
-//                if (prefix.equals("member")) {
-//                    // member에 대한 처리
-//                    // 리프레시 토큰이 요청 헤더에 존재했다면, 사용자가 AccessToken이 만료되어서
-//                    // RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
-//                    // 일치한다면 AccessToken을 재발급해준다.
-//                    if (refreshToken != null) {
-//                        if (jwtService.extractType(refreshToken).get().equals("company")) {
-//                            checkRefreshTokenAndReIssueAccessTokenComp(response, refreshToken);
-//                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-//                        } else {
-//                            checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
-//                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-//                        }
-//                    }
-//                    // RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행
-//                    // AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
-//                    // AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
-//                    if (refreshToken == null) {
-//                        String accessToken = jwtService.extractAccessToken(request)
-//                                .filter(jwtService::isTokenValid)
-//                                .orElse(null);
-//                        String type = jwtService.extractType(accessToken).get();
-//                        log.info(type);
-//                        if (type.equals("company")) {
-//                            checkAccessTokenAndAuthenticationComp(request, response, filterChain);
-//                        } else {
-//                            checkAccessTokenAndAuthentication(request, response, filterChain);
-//                        }
-//                    }
-//                } else if (prefix.equals("compmember")) {
-//
-//                    // compmember에 대한 처리
-//                    // 리프레시 토큰이 요청 헤더에 존재했다면, 사용자가 AccessToken이 만료되어서
-//                    // RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
-//                    // 일치한다면 AccessToken을 재발급해준다.
-//                    if (refreshToken != null) {
-//                        if (jwtService.extractType(refreshToken).get().equals("company")) {
-//                            checkRefreshTokenAndReIssueAccessTokenComp(response, refreshToken);
-//                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-//                        } else {
-//                            checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
-//                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-//                        }
-//                    }
-//                    // RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행
-//                    // AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
-//                    // AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
-//                    if (refreshToken == null) {
-//                        String accessToken = jwtService.extractAccessToken(request)
-//                                .filter(jwtService::isTokenValid)
-//                                .orElse(null);
-//                        String type = jwtService.extractType(accessToken).get();
-//                        log.info(type);
-//                        if (type.equals("company")) {
-//                            checkAccessTokenAndAuthenticationComp(request, response, filterChain);
-//                        } else {
-//                            checkAccessTokenAndAuthentication(request, response, filterChain);
-//                        }
-//                    }
-//                } else {
-//
-//                    if (refreshToken != null) {
-//                        if (jwtService.extractType(refreshToken).get().equals("company")) {
-//                            checkRefreshTokenAndReIssueAccessTokenComp(response, refreshToken);
-//                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-//                        } else {
-//                            checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
-//                            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-//                        }
-//                    }
-//                    // RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행
-//                    // AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
-//                    // AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
-//                    if (refreshToken == null) {
-//                        String accessToken = jwtService.extractAccessToken(request)
-//                                .filter(jwtService::isTokenValid)
-//                                .orElse(null);
-//                        String type = jwtService.extractType(accessToken).toString();
-//                        if (type.equals("company")) {
-//                            checkAccessTokenAndAuthenticationComp(request, response, filterChain);
-//                        } else {
-//                            checkAccessTokenAndAuthentication(request, response, filterChain);
-//                        }
-//                    }
-//                }
-//            }
+            Optional<String> optionalAccessToken = jwtService.extractAccessToken(request)
+                    .filter(jwtService::isTokenValid);
+
+            if(optionalAccessToken.isPresent()) {
+                String accessToken = optionalAccessToken.get();
+                Optional<String> optionalType = jwtService.extractType(accessToken);
+                if (optionalType.isPresent()) {
+                    String type = optionalType.get();
+                    log.info(type);
+                    if (type.equals("company")) {
+                        checkAccessTokenAndAuthenticationComp(request, response, filterChain);
+                    } else {
+                        checkAccessTokenAndAuthentication(request, response, filterChain);
+                    }
+                } else {
+                    log.error("토큰의 유형이 없습니다.");
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰의 유형이 없습니다.");
+                }
+            } else {
+                log.error("유효한 액세스 토큰이 없습니다.");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "유효한 액세스 토큰이 없습니다.");
+            }
         }
     }
+
     public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMRefreshtoken(refreshToken);
         if (optionalMemberEntity.isPresent()) {
