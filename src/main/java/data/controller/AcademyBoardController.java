@@ -54,7 +54,7 @@ public class AcademyBoardController {
         this.academyCommentService = academyCommentServic;
     }
 
-    @GetMapping("/D0")
+    @GetMapping("/D1")
     public ResponseEntity<Map<String, Object>> getPagedAcademyboard(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

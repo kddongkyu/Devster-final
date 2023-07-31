@@ -44,21 +44,21 @@ function AboardReplyUpdateForm({abc_idx,ab_idx,currentContent,abc_ref}) {
 
 
     return (
-        <div className="aboard-detail-commnets-form">
-            <form onSubmit={onSubmitEvent}>
-                <div className="aboard-detail-commnets-form-bo" />
+        <div>
+            <form className="a-detail-commnets-form" onSubmit={onSubmitEvent}>
+                <div className="a-detail-commnets-form-bo" />
                 <img
-                    className="aboard-detail-commnets-form-im-icon"
+                    className="a-detail-commnets-form-im-icon"
                     alt=""
                     src=""
                 />
-                <textarea className="aboard-detail-commnets-form-te"
+                <textarea className="a-detail-reply-form-te"
                           placeholder="내용을 입력해주세요"
                           required value={aboardComment} // reviewComment state 사용
                           onChange={(e)=>setAboardComment(e.target.value)}
                 />
-                <div className="aboard-detail-commnets-form-su">
-                    <button type='submit' className="aboard-detail-commnets-form-su-text">답글등록</button>
+                <div className="a-detail-reply-form-su">
+                    <button type='submit' className="a-detail-reply-form-su-text">답글수정</button>
                 </div>
             </form>
         </div>

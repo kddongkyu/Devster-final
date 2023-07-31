@@ -9,6 +9,7 @@ import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
 import AboardCommentForm from "./comment/AboardCommentForm";
 import AboardComment from "./comment/AboardComment";
+
 function AboardDetail(props) {
     //에러 호출용 변수
     const {enqueueSnackbar} = useSnackbar();
@@ -16,6 +17,8 @@ function AboardDetail(props) {
     //디코딩 함수
     const de = checkToken();
     const m_idx = de.idx;
+    const [m_photo, setM_photo] = useState(null);
+    const [m_nickname, setM_nickname] = useState(null);
 
     const [aboardDate,setAboardData]=useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +29,7 @@ function AboardDetail(props) {
 
     const navi = useNavigate();
     const photoUrl = process.env.REACT_APP_PHOTO+"aboard/";
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const fetchAboard = useCallback((ab_idx,currentPage=null) => {
         console.log(ab_idx);
@@ -178,11 +182,10 @@ function AboardDetail(props) {
         }
     };
 
-    let result = aboardDate.aboard.ab_like - aboardDate.aboard.ab_dislike;
-
-    if (aboardDate.aboard.ab_like <= aboardDate.aboard.ab_dislike) {
-        result = - result;
-    }
+    // let result = aboardDate.aboard.ab_like - aboardDate.aboard.ab_dislike;
+    // if (aboardDate.aboard.ab_like <= aboardDate.aboard.ab_dislike) {
+    //     result = - result;
+    // }
 
     //목록 돌아가기
     const aboardNavigation = () => {
@@ -240,40 +243,35 @@ function AboardDetail(props) {
 
     return (
         <div className="aboard-detail">
-            <div className="advertise-box">
-                <div className="advertise-main" />
-                <b className="advertise-text">광고</b>
+            <div className="aboard-advertise-box">
+                <div className="aboard-advertise-main" />
+                <b className="aboard-advertise-text">광고</b>
             </div>
-            <img
-                className="aboard-detail-type-hr-icon"
-                alt=""
-                src="/aboard-detail-type-hr.svg"
-            />
-            <div className="aboard-detail-type-text">{aboardDate.ciName}게시판</div>
+
+            <div className="aboard-detail-type-text">{aboardDate.ciName} 게시판</div>
             <div className="aboard-detail-info">
                 <img
                     className="aboard-detail-info-profile-img-icon"
                     alt=""
-                    src={aboardDate.mPhoto}
+                    src={`${profileUrl}${aboardDate.mPhoto}`}
                     onClick={handleNicknameClick}
                 />
-                <div className="aboard-detail-info-nickname"
-                     onClick={handleNicknameClick}
-                >{aboardDate.mNicname}</div>
+                <div className="aboard-detail-info-nickname" onClick={handleNicknameClick}>{aboardDate.mNicname}</div>
                 <div className="aboard-detail-info-status-text">
-                    <span className="aboard-datail-readcount-text">{aboardDate.aboard.ab_readcount}{` · `}</span>
-                    <span className="span">{`수정됨 `}</span>
+                    <span>{aboardDate.aboard.ab_readcount}</span>
                 </div>
-                <div className="aboard-detail-info-status-text1">
-                    {timeForToday(aboardDate.aboard.ab_writeday)}</div>
+                <div className="aboard-detail-info-status-text1">{timeForToday(aboardDate.aboard.ab_writeday)}</div>
                 <img
                     className="aboard-detail-info-status-view-icon"
                     alt=""
                     src={require("./assets/aboarddetail/aboard_detail_info_status_views.svg").default}
                 />
             </div>
+
             <img className="aboard-url-icon" alt=""
-                 src={require("./assets/aboarddetail/aboard_url_icon.svg").default}/>
+                 src={require("./assets/aboarddetail/aboard_url_icon.svg").default}
+            />
+
             {m_idx === aboardDate.aboard.m_idx && (
                 <>
                     <img
@@ -290,98 +288,88 @@ function AboardDetail(props) {
                     />
                 </>
             )}
-            <div className="aboard-detail-header-btn">
-                <div className="aboard-detail-header-btn-like">
-                    <img
-                        className="board-detail-header-btn-like-i-icon"
-                        alt=""
-                        src={require("./assets/aboarddetail/board_detail_header_btn_like_icon.svg").default}
-                    />
-                    <div className="board-detail-header-btn-like-t">{aboardDate.aboard.ab_like}</div>
-                </div>
-                <div className="aboard-detail-header-btn-disli">
-                    <img
-                        className="board-detail-header-btn-dislik-icon"
-                        alt=""
-                        src={require("./assets/aboarddetail/board_detail_header_btn_dislike_icon.svg").default}
-                    />
-                    <div className="board-detail-header-btn-like-t">{aboardDate.aboard.ab_dislike}</div>
-                </div>
-            </div>
+
             <div className="aboard-detail-textarea">
                 <div className="aboard-detail-textarea-subject">
                     {aboardDate.aboard.ab_subject}
                 </div>
-                <div className="aboard-detail-textarea-content">
-                <pre style={{marginBottom:"5rem"}}>
-                     {aboardDate.aboard.ab_content}
-                </pre>
+
+                <div className="aboard-detail-textarea-contents">
+                   <pre style={{marginBottom:"5rem"}}>
+                      {aboardDate.aboard.ab_content}
+                   </pre>
                 </div>
-            </div>
-            <div className="aboard-detail-photo-list">
-                {arrayFromString.map((imageId, index) => {
-                    return (
 
-                        <img className="aboard-detail-photo" key={index}
-                             src={`${photoUrl}${imageId}`}
-                             alt={`image${index}`}
-                        />
-                    )
-                })}
+                <div className="aboard-detail-photo-list">
+                    {arrayFromString.map((imageId, index) => {
+                        return (
+                            <img
+                                className="aboard-detail-photo" key={index}
+                                src={`${photoUrl}${imageId}`}
+                                alt={`Image ${index}`}
+                            />
+                        )
+                    })}
 
-
-                <div className="aboard-detail-listback">
-                    <div className="aboard-detail-listback-rec" onClick={aboardNavigation} />
-                    <div className="aboard-detail-listback-text">목록</div>
-                    <img
-                        className="aboard-detail-listback-icon"
-                        alt=""
-                        src={require("./assets/aboarddetail/aboard_detail_listback_icon.svg").default}
-                    />
-                </div>
-                <div className="aboard-detail-counter">
-                    <div className="aboard-detail-counter-like">
-                        <div className="aboard-detail-counter-like-box"
-                             style={isGood ? { backgroundColor: '#F5EFF9' } : {}}/>
-                        onClick={() => handlelike(m_idx, ab_idx)}/>
-                        <img
-                            className="aboard-detail-counter-like-ico-icon"
-                            alt=""
-                            src={require("./assets/aboarddetail/aboard_detail_counter_like_icon.svg").default}
-                            onClick={() => handlelike(m_idx, ab_idx)}/>
-                        />
-                        />
-                    </div>
-                    <div className="aboard-detail-counter-num">
-                        <div className="aboard-detail-counter-num-box" />
-                        <div className="aboard-detail-counter-num-text">
-                            {result}
-
+                    {/* 여기서부터 밑으로 정렬 */}
+                    <div className="aboard-detail-listbackcounter">
+                        <div className="aboard-detail-listback"onClick={aboardNavigation}>
+                            <div className="aboard-detail-listback-rec" />
+                            <div className="aboard-detail-listback-text">목록</div>
+                            <img
+                                className="aboard-detail-listback-icon"
+                                alt=""
+                                src={require("./assets/aboarddetail/aboard_detail_listback_icon.svg").default}
+                            />
+                        </div>
+                        <div className="aboard-detail-counter">
+                            <div className="aboard-detail-counter-like">
+                                <div className="aboard-detail-counter-like-box"
+                                     style={isGood ? { backgroundColor: '#F5EFF9' } : {}}
+                                     onClick={() => handlelike(m_idx, ab_idx)}/>
+                                <img
+                                    className="aboard-detail-counter-like-ico-icon"
+                                    alt=""
+                                    src={require("./assets/aboarddetail/aboard_detail_counter_like_icon.svg").default}
+                                    onClick={() => handlelike(m_idx, ab_idx)}/>
+                                />
+                            </div>
+                            <div className="aboard-detail-counter-num">
+                                <div className="aboard-detail-counter-num-box" />
+                                <div className="aboard-detail-counter-num-text">
+                                    {aboardDate.aboard.ab_like > aboardDate.aboard.ab_dislike
+                                        ? aboardDate.aboard.ab_like - aboardDate.aboard.ab_dislike
+                                        : -aboardDate.aboard.ab_dislike}
+                                </div>
+                            </div>
+                            <div className="aboard-detail-counter-dislike">
+                                <div className="aboard-detail-counter-dislike-"
+                                     style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
+                                     onClick={() => handleDislike(m_idx, ab_idx)}/>
+                                <img
+                                    className="aboard-detail-counter-dislike-ico-icon"
+                                    alt=""
+                                    src={require("./assets/aboarddetail/aboard_detail_counter_dislike_icon.svg").default}
+                                    onClick={() => handleDislike(m_idx, ab_idx)}
+                                />
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div className="aboard-detail-counter-dislike">
-                        <div className="aboard-detail-counter-dislike-"
-                             style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
-                             onClick={() => handleDislike(m_idx, ab_idx)}/>
-                        <img
-                            className="aboard-detail-counter-dislike-ico-icon"
-                            alt=""
-                            src={require("./assets/aboarddetail/aboard_detail_counter_dislike_icon.svg").default}
-                            onClick={() => handleDislike(m_idx, ab_idx)}
-                        />
-                        />
+
+                    <div className="aboard-advertise-box2">
+                        <div className="aboard-advertise-main" />
+                        <b className="aboard-advertise-text1">광고 2</b>
                     </div>
                 </div>
-                <div className="aboard-datail-advertise-box">
-                    <div className="advertise-main" />
-                    <b className="aboard-datail-advertise-text">광고 2</b>
-                </div>
+
             </div>
 
-            <div className="aboard-comment-box">
+            <div className="aboard-comments-box">
                 <AboardCommentForm ab_idx={ab_idx}/>
                 <AboardComment ab_idx={ab_idx}/>
             </div>
+
         </div>
     );
 }

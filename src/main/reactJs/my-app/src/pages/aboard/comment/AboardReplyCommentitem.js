@@ -6,6 +6,7 @@ import {checkToken} from "../../../api/checkToken"
 import axiosIns from "../../../api/JwtConfig";
 import AboardReplyUpdateForm from "./AboardReplyUpdateForm";
 
+
 function AboardReplyCommentitem({ reply, replyIndex }) {
 
     const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -21,6 +22,7 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
     let de = checkToken();
     const m_idx =de.idx;
     const abc_idx=reply.academyCommentDto.abc_idx;
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const deleteComment = () => {
         axiosIns.delete(`/api/academyboard/D1/comment/${abc_idx}`)
@@ -205,13 +207,13 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
 
                     <div className="aboard-detail-commnets-detail-3">
 
-                        <span> {timeForToday(reply.academyCommentDto.abc_writeday)}{` · `}</span>
+                        <span> {timeForToday(reply.academyCommentDto.abc_writeday)} </span>
                     </div>
                 </div>
                 <img
                     className="aboard-detail-commnets-detail-icon"
                     alt=""
-                    src="/aboard-detail-commnets-detail-info-img@2x.png"
+                    src={`${profileUrl}${reply.photo}`}
                 />
             </div>
             <div className="aboard-detail-commnets-all-lik-reply" >

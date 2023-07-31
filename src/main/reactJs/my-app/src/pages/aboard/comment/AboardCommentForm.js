@@ -44,11 +44,6 @@ function AboardCommentForm({ab_idx}) {
         <div className="aboard-detail-commnets-form">
             <form onSubmit={onSubmitEvent}>
                 <div className="aboard-detail-commnets-form-bo" />
-                <img
-                    className="aboard-detail-commnets-form-im-icon"
-                    alt=""
-                    src=""
-                />
                 <textarea className="aboard-detail-commnets-form-te"
                           placeholder="내용을 입력해주세요"
                           required value={aboardComment}

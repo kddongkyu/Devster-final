@@ -11,6 +11,7 @@ import AboardReplyUpdateForm from "./AboardReplyUpdateForm";
 import {useNavigation} from "react-router-dom";
 
 
+
 function AboardCommentitem( {comment, index ,toggleReplyComments }) {
 
     const [showReplyForm, setShowReplyForm] = useState(false);
@@ -24,6 +25,7 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
     const de = checkToken();
     const m_idx = de.idx;
     const abc_idx=comment.academyCommentDto.abc_idx;
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
 
 
@@ -228,7 +230,7 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
                 <img
                     className="aboard-detail-commnets-detail-icon"
                     alt=""
-                    // src="/review-detail-commnets-detail-info-img@2x.png"
+                    src={`${profileUrl}${comment.mPhoto}`}
                 />
             </div>
 
@@ -250,12 +252,12 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
                 </div>
                 <div className="aboard-detail-commnets-all-dow"
                      style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
-                      onClick={()=>handleDislikeClick(m_idx,abc_idx)}
+                     onClick={()=>handleDislikeClick(m_idx,abc_idx)}
                 />
                 <img
                     className="aboard-detail-commnets-all-dow-icon"
                     alt=""
-                     src={require('../assets/star-dislike-icon.svg').default}
+                    src={require('../assets/star-dislike-icon.svg').default}
                     onClick={()=>handleDislikeClick(m_idx,abc_idx)}
                 />
             </div>
@@ -270,9 +272,9 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
                             <div className="aboard-detail-commnets-btns-delete" onClick={handleDeleteClick}>삭제</div> &nbsp;&nbsp;
                             <div className="aboard-detail-commnets-btns-update" onClick={handleUpdateClick}>수정</div>
                         </div>
-                        {showUpdateForm && <AboardReplyUpdateForm abc_idx={comment.academyCommentDto.abc_idx}
-                                                                  ab_idx={comment.academyCommentDto.ab_idx}
-                                                                  currentContent={comment.academyCommentDto.abc_content} />}
+                        {showUpdateForm && <AboardReplyUpdateForm  abc_idx={comment.academyCommentDto.abc_idx}
+                                                                   ab_idx={comment.academyCommentDto.ab_idx}
+                                                                   currentContent={comment.academyCommentDto.abc_content} />}
                     </>
                 )}
             </div>
@@ -282,10 +284,10 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
                          onClick={() => toggleReplyComments(comment.academyCommentDto.abc_idx)}
                     >
                         <img alt=""
-                              // src={require('./assets/review_detail_commnets_all_up_icon.svg').default}
+                             src={require('../assets/star-dislike-icon.svg').default}
                              className="aboard-detail-commnets-hide-img"/>
                         &nbsp;&nbsp;답글 숨기기</div>
-                ) : ""} &nbsp;&nbsp;
+                ) : ""}
 
                 <div className="aboard-detail-commnets-hide-co" onClick={handleReplyButtonClick}>답글 쓰기</div>
                 {showReplyForm &&

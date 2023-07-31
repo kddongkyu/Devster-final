@@ -1,7 +1,7 @@
 package data.service;
 
 import data.entity.AcademyInfoEntity;
-import data.repository.AcademyInfoRepository;
+import data.repository.*;
 import org.hibernate.hql.internal.ast.tree.IdentNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,9 +18,6 @@ import data.entity.AcademyBoardEntity;
 import data.entity.AcademylikeEntity;
 import data.entity.MemberEntity;
 import data.mapper.AcademyBoardMapper;
-import data.repository.AcademyBoardRepository;
-import data.repository.AcademylikeRepository;
-import data.repository.MemberRepository;
 import jwt.setting.settings.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
@@ -52,11 +49,12 @@ public class AcademyBoardService {
     private final AcademyBoardMapper academyBoardMapper;
 
     private final AcademyInfoRepository academyInfoRepository;
+    private final AcademyCommentRepository academyCommentRepository;
 
     private final JwtService jwtService;
 
     public AcademyBoardService(AcademyBoardRepository academyBoardRepository,  MemberRepository memberRepository, NcpObjectStorageService storageService, AcademylikeRepository academylikeRepository,AcademyBoardMapper academyBoardMapper,JwtService jwtService,
-                               AcademyInfoRepository academyInfoRepository ) {
+                               AcademyInfoRepository academyInfoRepository,AcademyCommentRepository academyCommentRepository ) {
         this.academyBoardRepository = academyBoardRepository;
         this.academylikeRepository = academylikeRepository;
         this.memberRepository = memberRepository;
@@ -64,7 +62,7 @@ public class AcademyBoardService {
         this.academyBoardMapper = academyBoardMapper;
         this.jwtService = jwtService;
         this.academyInfoRepository = academyInfoRepository;
-
+        this.academyCommentRepository = academyCommentRepository;
     }
 
     @Value("${aws.s3.bucketName}")
@@ -115,11 +113,6 @@ public class AcademyBoardService {
 
 
 
-
-
-
-
-
     public Map<String, Object> getPagedAcademyboard(int page, int size, String keyword, HttpServletRequest request, String sortProperty, String sortDirection) {
         int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
         int AIidx = memberRepository.findById(m_idx).get().getAIidx();
@@ -141,8 +134,13 @@ public class AcademyBoardService {
                 .map(academyBoardEntity -> {
                     MemberEntity memberInfo = memberRepository.findById(academyBoardEntity.getMIdx()).orElse(null);
                     AcademyInfoEntity academyInfo= academyInfoRepository.findById(academyBoardEntity.getAIidx()).orElse(null);
+                    //댓글 수 가져오기
+                    int aboardcommentCount = academyCommentRepository.countAllByABidx(academyBoardEntity.getABidx());
+
                     Map<String, Object> academyboardMemberInfo = new HashMap<>();
                     academyboardMemberInfo.put("academyboard", AcademyBoardDto.toAcademyBoardDto(academyBoardEntity));
+
+                    academyboardMemberInfo.put("aboardcommentCount",aboardcommentCount);
 
                     if (memberInfo != null) {
                         academyboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
@@ -152,7 +150,6 @@ public class AcademyBoardService {
                     if(academyInfo != null){
                         academyboardMemberInfo.put("AIidx",academyInfo.getAIidx());
                         academyboardMemberInfo.put("AIname",academyInfo.getAIname());
-
                     }
                     return academyboardMemberInfo;
                 })
@@ -168,8 +165,6 @@ public class AcademyBoardService {
 
         return response;
     }
-
-
 
 
     public AcademyBoardDto findByAbIdx(int idx){
@@ -194,6 +189,7 @@ public class AcademyBoardService {
             AcademyInfoEntity academyInfo = academyInfoRepository.findById(aboard.getAIidx()).orElse(null);
             MemberEntity memberInfo = memberRepository.findById(aboard.getMIdx()).orElse(null);
 
+
             Map<String, Object> aboarddetailInfo = new HashMap<>();
             aboarddetailInfo.put("aboard",AcademyBoardDto.toAcademyBoardDto(aboard));
 
@@ -210,10 +206,6 @@ public class AcademyBoardService {
             throw e;
         }
     }
-
-
-
-
 
 
 
@@ -270,10 +262,6 @@ public class AcademyBoardService {
             log.error("aboard t사진을 찾을 수 없었습니다"+ab_idx);
         }
     }
-
-
-
-
 
 
     public void deleteAcademyBoard(Integer idx){

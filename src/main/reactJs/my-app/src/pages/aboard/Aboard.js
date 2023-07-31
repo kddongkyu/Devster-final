@@ -10,7 +10,7 @@ import {jwtHandleError} from "../../api/JwtHandleError";
 function Aboard(props) {
 
     const [acacemyBoardList, setAcacemyBoardList] = useState([]);
-    // const [noticePost,setNoticePost] = useState({});
+    const [noticePost,setNoticePost] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     // 미리보기 글자수
@@ -26,7 +26,7 @@ function Aboard(props) {
     const navi = useNavigate();
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
-
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
     // 새로고침
     const handleRefresh = () => {
         window.location.reload();
@@ -110,7 +110,7 @@ function Aboard(props) {
         const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
         console.log(sortDirection, sortProperty)
         try {
-            const response = await axiosIns.get('/api/academyboard/D0', {
+            const response = await axiosIns.get('/api/academyboard/D1', {
                 params: {
                     page: page - 1, // Use the page parameter
                     keyword: searchKeyword,
@@ -121,7 +121,7 @@ function Aboard(props) {
 
             setAcacemyBoardList(response.data.academyBoardList); // Typo 수정 (acacemy -> academy)
             setTotalPages(response.data.totalPages);
-
+            console.log(response.data)
         } catch (error) {
             jwtHandleError(error, toastAlert);
         }
@@ -130,18 +130,20 @@ function Aboard(props) {
     useEffect(() => {
         // Ensure currentPage is at least 1
         const page = Math.max(1, currentPage);
+        getNoticeData();
         fetchacdemy(page, finalKeyword, sortProperty, sortDirection);
     }, [currentPage, finalKeyword, sortProperty, sortDirection]);
 
-    // const getNoticeData = () => {
-    //     axiosIns.get(`/api/nboard/D0/notice`)
-    //         .then(response => {
-    //             setNoticePost(response.data.nboard);
-    //         })
-    //         .catch(error => {
-    //             jwtHandleError(error, toastAlert);
-    //         })
-    // }
+    const getNoticeData = () => {
+        axiosIns.get(`/api/nboard/D0/notice`)
+            .then(response => {
+                setNoticePost(response.data.nboard);
+                console.log(response.data)
+            })
+            .catch(error => {
+                jwtHandleError(error, toastAlert);
+            })
+    }
 
     // 정렬
     const onClickLatest = () => {
@@ -343,27 +345,13 @@ function Aboard(props) {
                     style={{opacity: currentPage === totalPages ? 0.5 : 1}}
                 />
             </div>
-            {/*<div className="aboard-bottom-pages">*/}
-            {/*    <div className="aboard-pages-current">{`${currentPage} / ${totalPages} 페이지`}</div>*/}
-            {/*    <img*/}
-            {/*        className="aboard-pages-forward-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/board_pages_forward.svg").default}*/}
-            {/*        onClick={() => goToNextPage(finalKeyword, sortProperty, sortDirection)}*/}
-            {/*        style={{opacity: currentPage === totalPages ? 0.5 : 1}}*/}
-            {/*    />*/}
-            {/*    <img*/}
-            {/*        className="aboard-pages-back-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/aboard_pages_back.svg").default}*/}
-            {/*        onClick={() => goToPreviousPage(finalKeyword, sortProperty, sortDirection)}*/}
-            {/*        style={{opacity: currentPage === 1 ? 0.5 : 1}}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*<img className="aboard-hr-icon1" alt="" src="/aboard-hr1.svg"/>*/}
             <div className="aboard-notice">
                 <div className="aboard-notice-box"/>
-                <div className="aboard-notice-preview">
+                <div className="aboard-notice-preview"
+                     onClick={() => {
+                         window.location.href = `/notice/detail/${noticePost.nb_idx}/1`;
+                     }}
+                >
                     <div className="aboard-notice-preview-info">
                         <img
                             className="aboard-notice-preview-info-log-icon"
@@ -371,15 +359,10 @@ function Aboard(props) {
                             src={require("./assets/board_notice_preview_info_logo.svg").default}
                         />
                         <div className="aboard-notice-preview-info-tex">
-                            {/*관리자 · {timeForToday(noticeArticle.nb_writeday)}*/}
+                            관리자 · {timeForToday(noticePost.nb_writeday)}
                         </div>
                     </div>
-                    {/*<b className="aboard-notice-preview-subject"*/}
-                    {/*   onClick={() => {*/}
-                    {/*       JwtPageChk(navi, `api/nboard/D0/${noticeArticle.nb_idx}`);*/}
-                    {/*   }}*/}
-                    {/*   style={{ cursor: "pointer" }}*/}
-                    {/*>   {noticeArticle.nb_subject}</b>*/}
+                    <b className="aboard-notice-preview-subject"> {noticePost.nb_subject}</b>
                     <div className="aboard-notice-preview-notice">
                         <div className="aboard-notice-preview-notice-b"/>
                         <div className="aboard-notice-preview-notice-t">공지사항</div>
@@ -388,7 +371,7 @@ function Aboard(props) {
                     <div className="aboard-notice-preview-icons">
                         <div className="aboard-notice-preview-views">
                             <div className="aboard-notice-preview-views-te">
-                                {/*{noticeArticle.nb_readcount}*/}
+                                {noticePost.nb_readcount}
                             </div>
                             <img
                                 className="aboard-notice-preview-views-ic-icon"
@@ -397,7 +380,7 @@ function Aboard(props) {
                             />
                         </div>
                         <div className="aboard-notice-preview-icons-co">
-                            <div className="aboard-notice-preview-views-te">99</div>
+                            <div className="aboard-notice-preview-views-te"> {noticePost.nb_readlike}</div>
                             <img
                                 className="aboard-notice-preview-icons-co2"
                                 alt=""
@@ -405,7 +388,7 @@ function Aboard(props) {
                             />
                         </div>
                         <div className="aboard-notice-preview-icons-li">
-                            <div className="aboard-notice-preview-icons-li1">9</div>
+                            <div className="aboard-notice-preview-icons-li1"> {noticePost.nb_like}</div>
                             <img
                                 className="aboard-notice-preview-icons-li2"
                                 alt=""
@@ -423,7 +406,7 @@ function Aboard(props) {
                             <div className="aboard-preview-box"/>
                             <img className="aboard-preview-img-profile"
                                  alt=""
-                                 src={setPhotoUrl(aboard.mPhoto)}
+                                 src={`${profileUrl}${aboard.mPhoto}`}
                             />
                             <div className="aboard-preview-type">
                                 <b className="aboard-preview-type-text">{aboard.AIname} 게시판</b>
@@ -462,7 +445,7 @@ function Aboard(props) {
                                 />
                             </div>
                             <div className="aboard-preview-comments">
-                                <div className="aboard-preview-likes-text">99.9k</div>
+                                <div className="aboard-preview-likes-text">{aboard.aboardcommentCount}</div>
                                 <img
                                     className="aboard-preview-comments-icon"
                                     alt=""

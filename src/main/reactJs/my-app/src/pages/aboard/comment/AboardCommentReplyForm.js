@@ -36,21 +36,21 @@ function AboardCommentReplyForm({abc_idx,ab_idx}) {
     }
 
     return (
-        <div className="aboard-detail-commnets-form">
+        <div className="a-detail-commnets-form">
             <form onSubmit={onSubmitEvent}>
-                <div className="aboard-detail-commnets-form-bo" />
+                <div className="a-detail-commnets-form-bo" />
                 <img
-                    className="aboard-detail-commnets-form-im-icon"
+                    className="a-detail-commnets-form-im-icon"
                     alt=""
                     src=""
                 />
-                <textarea className="aboard-detail-commnets-form-te"
+                <textarea className="a-detail-commnets-form-te"
                           placeholder="내용을 입력해주세요"
-                          required value={aboardComment} // reviewComment state 사용
+                          required value={aboardComment}
                           onChange={(e)=>setAboardComment(e.target.value)}
                 />
-                <div className="aboard-detail-commnets-form-su">
-                    <button type='submit' className="aboard-detail-commnets-form-su-text">답글등록</button>
+                <div className="a-detail-commnets-form-su">
+                    <button type='submit' className="a-detail-commnets-form-su-text">답글등록</button>
                 </div>
             </form>
         </div>
