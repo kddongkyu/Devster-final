@@ -17,30 +17,12 @@ function Main(props) {
 
   return (
     <div className="moblie-main">
-      {/*<h1>*/}
-      {/*    <button onClick={()=>{navi(`/devchat/${ai_idx}`)}}>ㄹㅇ테스트</button>*/}
-      {/*</h1>*/}
-      {/* <div className="main-advertise">
-        <div className="main-advertise-box" />
-        <b className="main-advertise-text">광고1</b>
-      </div> */}
       <div className="main-preview-name">
         <div className="main-preview-name-box" />
         <b className="main-preview-name-text">실시간 인기글</b>
       </div>
       <MainBest />
-      {/* <div className="main-best-more">
-        <div className="main-best-more-text">더보기</div>
-        <img
-          className="main-best-more-icon"
-          alt=""
-          src={require("./assets/main_more_icon.svg").default}
-        />
-      </div> */}
-      {/* <div className="main-advertise1">
-        <div className="main-advertise-box" />
-        <b className="main-advertise-text">광고2</b>
-      </div> */}
+
       <div className="main-preview-name1">
         <div className="main-preview-name-box" />
         <b className="main-preview-name-text">자유게시판 (최신순)</b>
@@ -75,10 +57,7 @@ function Main(props) {
           src={require("./assets/main_more_icon.svg").default}
         />
       </div>
-      {/* <div className="main-advertise2">
-        <div className="main-advertise-box" />
-        <b className="main-advertise-text">광고3</b>
-      </div> */}
+
       <div className="main-preview-name3">
         <div className="main-preview-name-box" />
         <b className="main-preview-name-text">채용게시판 (최신순)</b>
@@ -121,10 +100,6 @@ function Main(props) {
           src={require("./assets/main_more_icon.svg").default}
         />
       </div>
-      {/* <div className="main-advertise3">
-        <div className="main-advertise-box" />
-        <b className="main-advertise-text">광고4</b>
-      </div> */}
     </div>
   );
 }

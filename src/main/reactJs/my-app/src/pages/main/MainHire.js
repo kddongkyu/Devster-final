@@ -12,6 +12,7 @@ function MainHire(props) {
   const [subjectCount, setsubjectCount] = useState(10);
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   useEffect(() => {
     //JPA로부터 자유게시판 최신순 글 3개 가져오는 API 호출
@@ -72,7 +73,7 @@ function MainHire(props) {
     if (value == null) {
       return require("./assets/logo-img.svg").default;
     }
-    const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
+    const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
     if (value.includes(",")) {
       const firstCommaIndex = value.indexOf(",");
       const parsedPhoto = value.substring(0, firstCommaIndex);
@@ -99,7 +100,11 @@ function MainHire(props) {
                 <div>
                   <img
                     alt=""
-                    src={hboard.mPhoto}
+                    src={
+                      hboard.mPhoto
+                        ? `${profileUrl}${hboard.cmPhoto}`
+                        : require("./assets/logo_profile.svg").default
+                    }
                     className="main-best-profile-img"
                   />
                 </div>

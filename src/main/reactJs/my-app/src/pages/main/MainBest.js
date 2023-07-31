@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
 
 function MainBest(props) {
   // const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const [popularFreeArticle, setPopularFreeArticle] = useState([]);
   const [popularQnaArticle, setPopularQnaArticle] = useState([]);
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   useEffect(() => {
     // fboard에서 인기글 가져오는 API 호출
@@ -89,7 +92,11 @@ function MainBest(props) {
               <div>
                 <img
                   alt=""
-                  src={setPhotoUrl(fboard.mPhoto)}
+                  src={
+                    fboard.mPhoto
+                      ? `${profileUrl}${fboard.mPhoto}`
+                      : require("./assets/logo_profile.svg").default
+                  }
                   className="main-best-profile-img"
                 />
               </div>
@@ -102,21 +109,28 @@ function MainBest(props) {
               <div className="main-best-id">
                 <div className="main-best-info-type">{fboard.mNicname}</div>
               </div>
-              <b className="main-best-subject">
-                {fboard.freeBoardHotArticle.fbsubject}
-              </b>
-              <div className="main-best-content">
-                본문 일이삼사오육칠팔구십일이...
-              </div>
-              <div>
-                <img
-                  alt=""
-                  src={setPhotoUrl(fboard.freeBoardHotArticle.fbphoto)}
-                  className="main-best-img"
-                />
-              </div>
+              <NavLink
+                to={`/fboard/detail/${fboard.freeBoardHotArticle.fb_idx}/${currentPage}`}
+              >
+                <b className="main-best-subject">
+                  {fboard.freeBoardHotArticle.fbsubject}
+                </b>
+                <div className="main-best-content">
+                  본문 일이삼사오육칠팔구십일이...
+                </div>
+                <div>
+                  <img
+                    alt=""
+                    src={setPhotoUrl(fboard.freeBoardHotArticle.fbphoto)}
+                    className="main-best-img"
+                  />
+                </div>
+              </NavLink>
               <div className="main-best-likes">
-                <div className="main-best-likes-text">99.9k</div>
+                <div className="main-best-likes-text">
+                  {fboard.freeBoardHotArticle.fblikeCount -
+                    fboard.freeBoardHotArticle.fbdislikeCount}
+                </div>
                 <img
                   className="main-best-likes-icon"
                   alt=""
@@ -132,7 +146,9 @@ function MainBest(props) {
                 />
               </div>
               <div className="main-best-views">
-                <div className="main-best-views-text">99.9k</div>
+                <div className="main-best-views-text">
+                  {fboard.freeBoardHotArticle.fbreadCount}
+                </div>
                 <img
                   className="main-best-views-icon"
                   alt=""

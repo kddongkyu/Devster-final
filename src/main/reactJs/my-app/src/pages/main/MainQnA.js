@@ -12,6 +12,7 @@ function MainQnA(props) {
   const [subjectCount, setsubjectCount] = useState(10);
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   useEffect(() => {
     //JPA로부터 질문게시판 최신순 글 3개 가져오는 API 호출
@@ -72,7 +73,7 @@ function MainQnA(props) {
     if (value == null) {
       return require("./assets/logo-img.svg").default;
     }
-    const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
+    const photoUrl = process.env.REACT_APP_PHOTO + "qboard/";
     if (value.includes(",")) {
       const firstCommaIndex = value.indexOf(",");
       const parsedPhoto = value.substring(0, firstCommaIndex);
@@ -99,12 +100,16 @@ function MainQnA(props) {
                 <div>
                   <img
                     alt=""
-                    src={qboard.mPhoto}
+                    src={
+                      qboard.mPhoto
+                        ? `${profileUrl}${qboard.mPhoto}`
+                        : require("./assets/logo_profile.svg").default
+                    }
                     className="main-best-profile-img"
                   />
                 </div>
                 <div className="main-best-info">
-                  <b className="main-best-info-type">자유게시판</b>
+                  <b className="main-best-info-type">질문게시판</b>
                   <div className="main-best-info-date">
                     {timeForToday(qboard.qboard.qb_writeday)}
                   </div>

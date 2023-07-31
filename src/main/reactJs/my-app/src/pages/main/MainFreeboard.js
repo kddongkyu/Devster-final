@@ -12,6 +12,7 @@ function MainFreeboard(props) {
   const [subjectCount, setsubjectCount] = useState(10);
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
+  const profileUrl = process.env.REACT_APP_PHOTO;
 
   useEffect(() => {
     //JPA로부터 자유게시판 최신순 글 3개 가져오는 API 호출
@@ -99,7 +100,11 @@ function MainFreeboard(props) {
                 <div>
                   <img
                     alt=""
-                    src={fboard.mPhoto}
+                    src={
+                      fboard.mPhoto
+                        ? `${profileUrl}${fboard.mPhoto}`
+                        : require("./assets/logo_profile.svg").default
+                    }
                     className="main-best-profile-img"
                   />
                 </div>
