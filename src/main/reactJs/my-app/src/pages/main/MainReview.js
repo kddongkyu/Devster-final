@@ -75,6 +75,10 @@ function MainReview(props) {
     3: "합격",
   };
 
+  const compareValues = (value1, value2) => {
+    return value1.length > value2;
+  };
+
   return (
     <div>
       {rboardNewestList &&
@@ -90,7 +94,11 @@ function MainReview(props) {
                 src={rboard.ciPhoto}
               />
               <div className="review-list-subject-text">
-                <p className="p">{rboard.rboard.rb_subject}</p>
+                <p className="p">
+                  {compareValues(String(rboard.rboard.rb_subject), subjectCount)
+                    ? rboard.rboard.rb_subject.slice(0, subjectCount) + "···"
+                    : rboard.rboard.rb_subject}
+                </p>
               </div>
               <img className="logo-icon" alt="" src={rboard.mPhoto} />
               <div className="review-list-user-time">

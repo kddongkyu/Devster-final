@@ -292,13 +292,14 @@ public class FreeBoardService {
 
             for(FreeBoardEntity freeBoardEntity : freeBoardEntities) {
                 MemberEntity memberInfo = memberRepository.findById(freeBoardEntity.getMIdx()).orElse(null);
+                int fboardCommentCount = fboardCommentRepository.countAllByFBidx(freeBoardEntity.getFBidx());
                 Map<String,Object> hottsetFboardInfo = new HashMap<>();
                 if (memberInfo != null) {
                     hottsetFboardInfo.put("mPhoto", memberInfo.getMPhoto());
                     hottsetFboardInfo.put("mNicname", memberInfo.getMNickname());
                 }
                 hottsetFboardInfo.put("freeBoardHotArticle",freeBoardEntity);
-
+                hottsetFboardInfo.put("fboardCommentCount",fboardCommentCount);
                 freeBoardList.add(hottsetFboardInfo);
             }
             return freeBoardList;
@@ -317,9 +318,10 @@ public class FreeBoardService {
     
             for (FreeBoardEntity freeBoardEntity : freeBoardEntities) {
                 MemberEntity memberInfo = memberRepository.findById(freeBoardEntity.getMIdx()).orElse(null);
+                int fboardCommentCount = fboardCommentRepository.countAllByFBidx(freeBoardEntity.getFBidx());
                 Map<String, Object> fboardMemberInfo = new HashMap<>();
                 fboardMemberInfo.put("fboard", FreeBoardDto.toFreeBoardDto(freeBoardEntity));
-    
+                fboardMemberInfo.put("fboardCommentCount",fboardCommentCount);
                 if (memberInfo != null) {
                     fboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
                     fboardMemberInfo.put("mNicname", memberInfo.getMNickname());

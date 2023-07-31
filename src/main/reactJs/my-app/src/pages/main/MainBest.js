@@ -118,10 +118,23 @@ function MainBest(props) {
                 <div className="main-best-content">
                   본문 일이삼사오육칠팔구십일이...
                 </div>
+                {/* <div>
+                  <img
+                    alt=""
+                    // src={setPhotoUrl(fboard.freeBoardHotArticle.fbphoto)}
+                    src={setPhotoUrl(fboard.fboafreeBoardHotArticlerd.fbphoto)}
+                    className="main-best-img"
+                  />
+                </div> */}
                 <div>
                   <img
                     alt=""
-                    src={setPhotoUrl(fboard.freeBoardHotArticle.fbphoto)}
+                    src={
+                      fboard.freeBoardHotArticle.fbphoto &&
+                      fboard.freeBoardHotArticle.fbphoto.length > 0
+                        ? setPhotoUrl(fboard.freeBoardHotArticle.fbphoto)
+                        : require("./assets/logo-img.svg").default
+                    }
                     className="main-best-img"
                   />
                 </div>
@@ -138,7 +151,9 @@ function MainBest(props) {
                 />
               </div>
               <div className="main-best-coments">
-                <div className="main-best-likes-text">99.9k</div>
+                <div className="main-best-likes-text">
+                  {fboard.fboardCommentCount}
+                </div>
                 <img
                   className="main-best-coments-icon"
                   alt=""
