@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './style/AboardUpdateForm.css';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import {checkToken} from "../../api/checkToken";
+import {jwtHandleError} from "../../api/JwtHandleError";
 
 function AboardUpdateForm(props) {
 
@@ -13,11 +17,16 @@ function AboardUpdateForm(props) {
     const { ab_idx, currentPage } = useParams();
     const location = useLocation();
     const aboardData = location.state;
-
     const [arrayFromString, setArrayFromString] = useState([]);
     const photoUrl = process.env.REACT_APP_PHOTO+"aboard/";
+    const [newSelectedPhotos, setNewSelectedPhotos] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-    let de = jwt_decode(localStorage.getItem("accessToken"));
+    //에러 호출용 변수
+    const {enqueueSnackbar} = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
+    //디코딩 함수
+    const de = checkToken();
     const m_idx = de.idx;
 
     useEffect(() => {
@@ -32,28 +41,37 @@ function AboardUpdateForm(props) {
         }
     }, [aboardData]);
 
-    // 배열을 콤마로 이어진 문자열로 변환하는 함수
-    const convertArrayToString = (arr) => {
-        console.log(arr.join(','));
-        return arr.join(',');
-    };
-    const handleImageClick = (index) => {
-        // 클릭한 이미지를 배열에서 제거하는 로직
-        const newPhotoArray = arrayFromString.filter((_, i) => i !== index);
-        setArrayFromString(newPhotoArray);
 
-        // // 변경된 배열을 문자열로 변환하여 setFbPhoto에 넣어줌
-        // const newPhotoString = convertArrayToString(newPhotoArray);
-        // setFbPhoto(newPhotoString);
-        console.log(arrayFromString);
+    // 기존 사진 삭제
+    const deleteImage = useCallback((index, imageFileName) => {
+        // 이미지를 삭제하는 요청을 서버로 보내는 axios 요청
+        axiosIns
+            .delete(`/api/academyboard/D1/photo/${ab_idx}/${imageFileName}`)
+            .then((res) => {
+                setArrayFromString((prevArray) => prevArray.filter((_, i) => i !== index));
+            })
+            .catch((error) => {
+                // 삭제 실패 시 에러 처리
+                jwtHandleError(error, toastAlert);
+            });
+    }, [arrayFromString, ab_idx]);
+
+    // 추가 사진 삭제
+    const deleteNewImage = (index) => {
+        setNewSelectedPhotos((prevPhotos) => {
+            const updatedPhotos = prevPhotos.filter((_, i) => i !== index);
+            return updatedPhotos;
+        });
     };
+
+
 
     const onSubmitEvent = (e) => {
         e.preventDefault();
 
         const dto = {
             ab_subject: abSubject,
-            ab_photo: abPhoto,
+            ab_photo: arrayFromString.join(','),
             ab_content: abContent,
             m_idx: m_idx,
         };
@@ -66,26 +84,40 @@ function AboardUpdateForm(props) {
             })
             .catch((error) => {
                 // 업데이트 실패 시 에러 처리
-                console.error(error);
+                jwtHandleError(error, toastAlert);
             });
     };
 
+
     // 파일 업로드
-    const onUploadEvent = (e) => {
-        const uploadPhoto = new FormData();
-        uploadPhoto.append("upload", e.target.files[0]);
-        uploadPhoto.append("upload", arrayFromString[0])
+    const uploadPhoto = (e) => {
+        setIsLoading(true);
+        const upload = new FormData();
+        const maxAllowedFiles = 10;
+
+        // 업데이트된 사진 10장이내인지 확인
+        if (e.target.files.length + arrayFromString.length > maxAllowedFiles) {
+            alert(" 사진은 최대 10장까지만 업로드할 수 있습니다.");
+            e.target.value = null;
+            setIsLoading(false);
+            return;
+        }
+
+        for (let i = 0; i < e.target.files.length; i++) {
+            upload.append("upload", e.target.files[i]);
+        }
         axiosIns({
             method: "post",
             url: `/api/academyboard/D1/photo/${ab_idx}`,
-            data: uploadPhoto,
+            data: upload,
             headers: { "Content-Type": "multipart/form-data" },
         })
             .then((res) => {
-                setAbPhoto(res.data);
+                setArrayFromString([...arrayFromString, ...res.data.split(',')]);
+                setIsLoading(false);
             })
             .catch((error) => {
-                console.error(error);
+                jwtHandleError(error, toastAlert);
             });
     };
 
@@ -123,47 +155,55 @@ function AboardUpdateForm(props) {
                 </textarea>
 
             </div>
+            {/*사진 미리보기*/}
             <div className="aboard-update-form-photo-list">
-                {arrayFromString.map((imageId, index) => (
-                    // <div className={'fboard-form-photo'+(index+1)}>
-                    <img
-                        className={'aboard-form-photo'+(index+1)} key={index}
-                        src={`${photoUrl}${imageId}`}
-                        alt={`Image ${index}`}
-                        onClick={() => handleImageClick(index)}
+                {([...arrayFromString, ...newSelectedPhotos]).map((imageId, index) => (
+                   <img
+                    key={index}
+                    src={typeof imageId === 'string' ? `${photoUrl}${imageId}` : URL.createObjectURL(imageId)}
+                    alt={`Image ${index}`}
+                    className={`aboard-form-photo${index + 1}`}
+                    // onClick={() => deleteImage(index, imageId)}
+                    onClick={() => {
+                    if (typeof imageId === 'string') {
+                    deleteImage(index, imageId);
+                } else {
+                    deleteNewImage(index - 1);
+                }
+                }}
                     />
-                    // </div>
                 ))}
-                <div className="aboard-update-form-photo1" />
-                <div className="aboard-update-form-photo2" />
-                <div className="aboard-update-form-photo3" />
-                <div className="aboard-update-form-photo4" />
-                <div className="aboard-update-form-photo5" />
-                <div className="aboard-update-form-photo6" />
-                <div className="aboard-update-form-photo7" />
-                <div className="aboard-update-form-photo8" />
-                <div className="aboard-update-form-photo9" />
-                <div className="aboard-update-form-photo10" />
+                {/*<div className="aboard-update-form-photo1" />*/}
+                {/*<div className="aboard-update-form-photo2" />*/}
+                {/*<div className="aboard-update-form-photo3" />*/}
+                {/*<div className="aboard-update-form-photo4" />*/}
+                {/*<div className="aboard-update-form-photo5" />*/}
+                {/*<div className="aboard-update-form-photo6" />*/}
+                {/*<div className="aboard-update-form-photo7" />*/}
+                {/*<div className="aboard-update-form-photo8" />*/}
+                {/*<div className="aboard-update-form-photo9" />*/}
+                {/*<div className="aboard-update-form-photo10" />*/}
+                <div className="aboard-form-photo-list_text">삭제하고싶은 사진을 클릭하세요.</div>
             </div>
             <div className="aboard-update-form-fileupload">
                 <input className="aboard-update-form-subject-rec"
                 type="file" multiple
                  placeholder="첨부 사진을 올려주세요"
-                 onChange={onUploadEvent}
+                 onChange={uploadPhoto}
                 />
 
-                {/*<img*/}
-                {/*    className="aboard-update-form-fileupload-icon"*/}
-                {/*    alt=""*/}
-                {/*    src={require("./assets/qboard_form_fileupload_icon.svg").default}*/}
-                {/*/>*/}
-                {/*<div className="aboard-update-form-fileupload-2">*/}
-                {/*    사진 3장이 등록되었습니다.*/}
-                {/*</div>*/}
+                <img
+                    className="aboard-update-form-fileupload-icon"
+                    alt=""
+                    src={require("./assets/qboard_form_fileupload_icon.svg").default}
+                />
+                <div className="aboard-update-form-fileupload-2">
+                    &nbsp;&nbsp;사진 {arrayFromString.length + newSelectedPhotos.length}장이 등록되었습니다.
+                </div>
             </div>
             <button type="submit" className="aboard-update-form-btn">
-                <div className="aboard-update-form-btn-child" />
-                <div className="aboard-update-form-btn-text">게시글수정</div>
+                <div className={isLoading ? "aboard-form-btn-child_loading" : "aboard-update-form-btn-child"}/>
+                <div className="aboard-update-form-btn-text">{isLoading ? "로딩중..." : "게시글수정"}</div>
                 <img
                     className="aboard-update-form-btn-icon"
                     alt=""

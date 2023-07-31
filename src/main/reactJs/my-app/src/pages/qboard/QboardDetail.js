@@ -35,7 +35,6 @@ function QboardDetail(props) {
         const getDetailData = () => {
             axiosIns.get(`/api/qboard/D0/${qb_idx}`)
                 .then(response => {
-                    console.log(response.data.qboardDto);
                     setM_photo(response.data.photo);
                     setM_nickname(response.data.nickname);
                     setQboardData(response.data.qboardDto);

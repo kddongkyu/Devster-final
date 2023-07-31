@@ -1,7 +1,7 @@
 import "./style/Fboard.css";
 
-import {NavLink, useNavigate} from 'react-router-dom';
-import {useEffect, useState} from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
 import { JwtPageChk } from "../../api/JwtPageChk";
 import { useSnackbar } from "notistack";

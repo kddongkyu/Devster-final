@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { checkToken } from "../../api/checkToken";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function ResumeUpdateform(props) {
-  const decodedToken = jwt_decode(localStorage.accessToken);
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+
   const m_idx = decodedToken.idx;
 
   const navigate = useNavigate();
@@ -27,7 +33,7 @@ function ResumeUpdateform(props) {
       const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
     } catch (e) {
-      console.log(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -39,14 +45,13 @@ function ResumeUpdateform(props) {
       setResumeLicenseList(response.data.resumeLicenseDtoList);
       console.log(response.data);
     } catch (e) {
-      console.log(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
   const removeCareer = (index) => {
     const newCareerList = resumeCareerList.filter((_, idx) => idx !== index);
     setResumeCareerList(newCareerList);
-    console.log(newCareerList);
   };
 
   const removeLicense = (index) => {
@@ -79,7 +84,7 @@ function ResumeUpdateform(props) {
 
       console.log(response.data);
     } catch (e) {
-      console.log(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -133,13 +138,50 @@ function ResumeUpdateform(props) {
     }
   };
 
+  const addCareer = () => {
+    if (resumeCareerList.length >= 3) {
+      alert("최대 3개까지만 가능합니다");
+      return;
+    }
+
+    const newCareerList = [
+      ...resumeCareerList,
+      {
+        m_idx: m_idx,
+        r_carstartdate: "",
+        r_carenddate: "",
+        r_company: "",
+        r_department: "",
+        r_position: "",
+      },
+    ];
+    setResumeCareerList(newCareerList);
+  };
+
+  const addLicense = () => {
+    if (resumeLicenseList.length >= 3) {
+      alert("최대 3개까지만 가능합니다");
+      return;
+    }
+
+    const newLicenseList = [
+      ...resumeLicenseList,
+      {
+        m_idx: m_idx,
+        r_licdate: "",
+        r_licname: "",
+      },
+    ];
+    setResumeLicenseList(newLicenseList);
+  };
+
   return (
     <form
       className="resumeform"
       onSubmit={updateResume}
       style={{
         height: `${
-          125 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+          121 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
         }rem`,
       }}
     >
@@ -159,7 +201,7 @@ function ResumeUpdateform(props) {
             <img
               className="resumeform-header-email-icon"
               alt=""
-              src={require("./assets/resumeform_header_email_icon.svg").default}
+              src={require("./assets/icon_mail.svg").default}
             />
             <div className="resumeform-header-email-text">{member.m_email}</div>
           </div>
@@ -182,7 +224,12 @@ function ResumeUpdateform(props) {
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`기술 스택  `}</span>
-              <span className="span">(업무 툴 / 스킬)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (업무 툴 / 스킬)
+              </span>
             </b>
           </div>
           <div className="resumeform-job-box">
@@ -201,7 +248,12 @@ function ResumeUpdateform(props) {
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`링크 업로드  `}</span>
-              <span className="span">(웹페이지 및 블로그)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (웹페이지 및 블로그)
+              </span>
             </b>
           </div>
           <div className="resumeform-job-box">
@@ -218,7 +270,12 @@ function ResumeUpdateform(props) {
           <div className="resumeform-school-title">
             <b className="resumeform-job-tiltle-text">
               <span>{`학력  `}</span>
-              <span className="span">(최종학력)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (최종학력)
+              </span>
             </b>
           </div>
           <div className="resumeform-school-entrance">
@@ -271,7 +328,8 @@ function ResumeUpdateform(props) {
             <img
               className="icon-add-circle-outline"
               alt=""
-              src={require("./assets/icon _add_circle_outline.svg").default}
+              src={require("./assets/icon_circle_plus.svg").default}
+              onClick={addCareer}
             />
           </div>
           {resumeCareerList.map((career, index) => (
@@ -282,7 +340,10 @@ function ResumeUpdateform(props) {
                   onClick={() => removeCareer(index)}
                   className="resumeform-career-group-02-removeButton"
                 >
-                  삭제
+                  <img
+                    alt=""
+                    src={require("./assets/icon-trash.svg").default}
+                  />
                 </button>
               )}
               <div className="resumeform-career-group-02-gro">
@@ -370,14 +431,15 @@ function ResumeUpdateform(props) {
 
         <div
           className="resumeform-certificate"
-          style={{ top: `${55 + resumeCareerList.length * 9}rem` }}
+          style={{ top: `${51 + resumeCareerList.length * 9}rem` }}
         >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">자격증</b>
             <img
               className="resume-certificate-plusicon"
               alt=""
-              src={require("./assets/resume_certificate_plusicon.svg").default}
+              src={require("./assets/icon_circle_plus.svg").default}
+              onClick={addLicense}
             />
           </div>
           {resumeLicenseList.map((license, index) => (
@@ -388,7 +450,10 @@ function ResumeUpdateform(props) {
                   onClick={() => removeLicense(index)}
                   className="resumeform-career-group-02-removeButton"
                 >
-                  삭제
+                  <img
+                    alt=""
+                    src={require("./assets/icon-trash.svg").default}
+                  />
                 </button>
               )}
               <div className="resumeform-certificate-box-dat">
@@ -429,7 +494,7 @@ function ResumeUpdateform(props) {
           className="resumeform-content"
           style={{
             top: `${
-              65 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+              56 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
             }rem`,
           }}
         >
@@ -450,14 +515,19 @@ function ResumeUpdateform(props) {
           className="resumeform-fileupload"
           style={{
             top: `${
-              94 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+              82 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
             }rem`,
           }}
         >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`첨부파일 업로드  `}</span>
-              <span className="span">(자격증 및 포트폴리오)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (자격증 및 포트폴리오)
+              </span>
             </b>
           </div>
           <div className="resumeform-job-box">
@@ -472,13 +542,13 @@ function ResumeUpdateform(props) {
               name="r_file"
               onChange={handleFileChange}
             />
-            <button
+            {/* <button
               type="button"
               onClick={() => document.getElementById("fileUpload").click()}
               className="customFileUploadButton"
             >
               파일선택
-            </button>
+            </button> */}
             <button
               type="button"
               className="clearFileInput"
@@ -486,7 +556,7 @@ function ResumeUpdateform(props) {
                 setResume((prevResume) => ({ ...prevResume, r_file: "delete" }))
               }
             >
-              삭제
+              <img alt="" src={require("./assets/icon-trash.svg").default} />
             </button>
           </div>
         </div>
@@ -494,7 +564,7 @@ function ResumeUpdateform(props) {
           className="resumeform-resumefileupload"
           style={{
             top: `${
-              103 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+              92 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
             }rem`,
           }}
         >
@@ -518,7 +588,7 @@ function ResumeUpdateform(props) {
               {" "}
               PDF 파일로 올려주세요.
             </div> */}
-            <button
+            {/* <button
               type="button"
               onClick={() =>
                 document.getElementById("resumeFileUpload").click()
@@ -526,7 +596,7 @@ function ResumeUpdateform(props) {
               className="customFileUploadButton"
             >
               파일선택
-            </button>
+            </button> */}
             <button
               type="button"
               className="clearFileInput"
@@ -537,22 +607,23 @@ function ResumeUpdateform(props) {
                 }))
               }
             >
-              삭제
+              <img alt="" src={require("./assets/icon-trash.svg").default} />
             </button>
           </div>
         </div>
       </div>
       <button
         type="submit"
+        className="resume-update-submit-button"
         style={{
           position: "absolute",
           top: `${
-            122 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
+            112 + resumeCareerList.length * 9 + resumeLicenseList.length * 4
           }rem`,
-          right: "3rem",
+          right: "2.4rem",
         }}
       >
-        Submit
+        저장
       </button>
     </form>
   );

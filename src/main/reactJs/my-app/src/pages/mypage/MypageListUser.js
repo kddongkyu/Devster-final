@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 function MypageListUser(props) {
   const activeStyle = {
     backgroundColor: "#e5e7eb",
-    color: "#222",
+    color: "#1f2937",
   };
   const deactiveStyle = {
-    color: "var(--color-slategray)",
+    color: "#808491",
   };
   return (
     <div>
@@ -78,7 +78,7 @@ function MypageListUser(props) {
       </div>
       <div className="menu-notice">
         <NavLink
-          to={"/mypage/notice"}
+          to={"/notice/admin"}
           className="menulist-userinfo-box"
           style={({ isActive }) => {
             return isActive ? activeStyle : deactiveStyle;

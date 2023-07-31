@@ -3,15 +3,14 @@ package data.controller;
 import data.dto.PostMessage.PostMessageDetailDto;
 import data.dto.PostMessage.PostMessageDto;
 import data.dto.PostMessage.PostMessageRespnoseDto;
+import data.repository.MemberRepository;
 import data.service.PostMessageService;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import jwt.setting.settings.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -19,9 +18,13 @@ import java.util.List;
 public class PostMessageController {
 
     private final PostMessageService postMessageService;
+    private final JwtService jwtService;
+    private final MemberRepository memberRepository;
 
-    public PostMessageController(PostMessageService postMessageService) {
+    public PostMessageController(PostMessageService postMessageService, JwtService jwtService, MemberRepository memberRepository) {
         this.postMessageService = postMessageService;
+        this.jwtService = jwtService;
+        this.memberRepository = memberRepository;
     }
 
     @GetMapping("/D1/list/{currentPage}")
@@ -44,7 +47,9 @@ public class PostMessageController {
 
     @PostMapping("/D1")
     public ResponseEntity<String> sendPostMessage(@RequestBody PostMessageDto dto,HttpServletRequest request) {
-        return new ResponseEntity<String>(postMessageService.sendPostMessage(dto,request), HttpStatus.OK);
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+        dto.setSend_nick(memberRepository.findById(m_idx).get().getMNickname());
+        return new ResponseEntity<String>(postMessageService.sendPostMessage(dto), HttpStatus.OK);
     }
 
     @DeleteMapping("/D1")

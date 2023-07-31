@@ -12,6 +12,7 @@ import {checkToken} from "../../../api/checkToken";
 function QboardReplyCommentItem({ reply, replyIndex }) {
 
     const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
@@ -94,7 +95,7 @@ function QboardReplyCommentItem({ reply, replyIndex }) {
                 <img
                     className="qboard-detail-commnets-detail-icon"
                     alt=""
-                    src="/qboard-detail-commnets-detail-info-img@2x.png"
+                    src={`${profileUrl}${reply.photo}`}
                 />
             </div>
             <div className="qboard-detail-commnets-all-con">

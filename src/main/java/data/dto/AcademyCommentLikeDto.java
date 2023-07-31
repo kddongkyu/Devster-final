@@ -18,6 +18,9 @@ public class AcademyCommentLikeDto {
     private int likestatus;
     private int ab_idx;
 
+    public AcademyCommentLikeDto(int aBclikeidx, int mIdx, int aBcidx, int likestatus) {
+    }
+
     public static AcademyCommentLikeDto toAcademyCommentLikeDto(AcademyCommentLikeEntity entity){
 
         return AcademyCommentLikeDto.builder()

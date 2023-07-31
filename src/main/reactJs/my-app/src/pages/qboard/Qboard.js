@@ -16,6 +16,7 @@ const Qboard = () => {
   const [qboardList, setQboardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [noticePost,setNoticePost] = useState({});
 
   //정렬
   const [sortProperty, setSortProperty] = useState('');
@@ -76,12 +77,21 @@ const Qboard = () => {
       //axios용 에러함수
       jwtHandleError(error, toastAlert);
     }
-
   };
 
+  const getNoticeData = () => {
+    axiosIns.get(`/api/nboard/D0/notice`)
+        .then(response => {
+          setNoticePost(response.data.nboard);
+        })
+        .catch(error => {
+          jwtHandleError(error, toastAlert);
+        })
+  }
 
   useEffect(() => {
     const page = Math.max(1, currentPage);
+    getNoticeData();
     fetchQboards(page, finalKeyword, sortProperty, sortDirection);
   }, [currentPage, finalKeyword, sortProperty, sortDirection]);
 
@@ -106,6 +116,47 @@ const Qboard = () => {
   const onClickViews = () => {
     setSortProperty('QBreadCount');
     setSortDirection('DESC');
+  };
+
+  const timeForToday = (value) => {
+    if (!value) {
+      return '';
+    }
+
+    const valueConv = value.slice(0, -10);
+    const today = new Date();
+    const timeValue = new Date(valueConv);
+
+    // timeValue를 한국 시간대로 변환
+    const timeValueUTC = new Date(timeValue.toISOString());
+    const offset = timeValue.getTimezoneOffset() * 60 * 1000; // 분 단위를 밀리초 단위로 변환
+    const timeValueKST = new Date(timeValueUTC.getTime() - offset);
+
+
+    const betweenTime = Math.floor((today.getTime() - timeValueKST.getTime()) / 1000 / 60);
+    if (betweenTime < 1) return '방금 전';
+    if (betweenTime < 60) {
+      return `${betweenTime}분 전`;
+    }
+    console.log(betweenTime);
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간 전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 8) {
+      return `${betweenTimeDay}일 전`;
+    }
+
+    const year = String(timeValue.getFullYear()).slice(0, 4);
+    const month = String(timeValue.getMonth() + 1).padStart(2, '0');
+    const day = String(timeValue.getDate()).padStart(2, '0');
+
+    const formattedDateWithoutTime = `${year}-${month}-${day}`;
+
+    return formattedDateWithoutTime;
   };
 
 
@@ -207,7 +258,11 @@ const Qboard = () => {
       </div>
     <div className="qboard-notice">
       <div className="qboard-notice-box" />
-      <div className="qboard-notice-preview">
+      <div className="qboard-notice-preview"
+           onClick={() => {
+             window.location.href = `/notice/detail/${noticePost.nb_idx}/1`;
+           }}
+      >
         <div className="qboard-notice-preview-info">
           <img
             className="qboard-notice-preview-info-logo-icon"
@@ -215,38 +270,22 @@ const Qboard = () => {
             src={require("./assets/board_notice_preview_info_logo.svg").default}
           />
           <div className="qboard-notice-preview-info-text">
-            admin_01 · 약 4시간 전
+            관리자 · {timeForToday(noticePost.nb_writeday)}
           </div>
         </div>
-        <b className="qboard-notice-preview-subject">DEVSTER 공지사항</b>
+        <b className="qboard-notice-preview-subject">{noticePost.nb_subject}</b>
         <div className="qboard-notice-preview-notice">
           <div className="qboard-notice-preview-notice-bo" />
           <div className="qboard-notice-preview-notice-te">공지사항</div>
         </div>
-        <div className="qboard-notice-preview-hash">#공지사항 # Devster</div>
+        <div className="qboard-notice-preview-hash"># 공지사항 # 필독 # Devster</div>
         <div className="qboard-notice-preview-icons">
           <div className="qboard-notice-preview-views">
-            <div className="qboard-notice-preview-views-tex">800</div>
+            <div className="qboard-notice-preview-views-tex">1</div>
             <img
               className="qboard-notice-preview-views-ico-icon"
               alt=""
               src={require("./assets/board_preview_views_icon.svg").default}
-            />
-          </div>
-          <div className="qboard-notice-preview-icons-com">
-            <div className="qboard-notice-preview-views-tex">99</div>
-            <img
-              className="qboard-notice-preview-icons-com2"
-              alt=""
-              src={require("./assets/board_preview_comments_icon.svg").default}
-            />
-          </div>
-          <div className="qboard-notice-preview-icons-lik">
-            <div className="qboard-notice-preview-icons-lik1">9</div>
-            <img
-              className="qboard-notice-preview-icons-lik2"
-              alt=""
-              src={require("./assets/board_preview_likes_icon.svg").default}
             />
           </div>
         </div>

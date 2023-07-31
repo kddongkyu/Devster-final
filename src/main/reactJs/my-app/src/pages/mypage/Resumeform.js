@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./style/Resumeform.css";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { checkToken } from "../../api/checkToken";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function Resumeform(props) {
-  const decodedToken = jwt_decode(localStorage.accessToken);
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
   const m_idx = decodedToken.idx;
 
   const navigate = useNavigate();
@@ -20,7 +25,7 @@ function Resumeform(props) {
       const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
     } catch (e) {
-      console.log(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -203,8 +208,8 @@ function Resumeform(props) {
         const response = await axiosIns.post("/api/resume/D1/file", formData);
         let url = response.data.url;
         resumeDto.r_file = url; // Update the resumeDto with the returned URL
-      } catch (error) {
-        console.log(error.message);
+      } catch (e) {
+        jwtHandleError(e, toastAlert);
       }
     }
 
@@ -214,8 +219,8 @@ function Resumeform(props) {
         const response = await axiosIns.post("/api/resume/D1/refile", formData);
         let url = response.data.url;
         resumeDto.r_refile = url; // Update the resumeDto with the returned URL
-      } catch (error) {
-        console.log(error.message);
+      } catch (e) {
+        jwtHandleError(e, toastAlert);
       }
     }
 
@@ -229,8 +234,8 @@ function Resumeform(props) {
       const response = await axiosIns.post("/api/resume/D1", resumeWrapper);
       console.log(response.data);
       navigate("/myresume"); // after successful post, navigate to /resume
-    } catch (error) {
-      console.log(error.message);
+    } catch (e) {
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -240,7 +245,7 @@ function Resumeform(props) {
       onSubmit={handleSubmit}
       style={{
         height: `${
-          125 + resumeCareerDtoList.length * 9 + resumeLicenseDtoList.length * 4
+          118 + resumeCareerDtoList.length * 9 + resumeLicenseDtoList.length * 4
         }rem`,
       }}
     >
@@ -260,7 +265,7 @@ function Resumeform(props) {
             <img
               className="resumeform-header-email-icon"
               alt=""
-              src={require("./assets/resumeform_header_email_icon.svg").default}
+              src={require("./assets/icon_mail.svg").default}
             />
             <div className="resumeform-header-email-text">{member.m_email}</div>
           </div>
@@ -276,6 +281,7 @@ function Resumeform(props) {
               name="r_pos"
               value={resumeDto.r_pos}
               onChange={handleChange}
+              placeholder="예) 프론트엔드"
             />
           </div>
         </div>
@@ -283,7 +289,12 @@ function Resumeform(props) {
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`기술 스택  `}</span>
-              <span className="span">(업무 툴 / 스킬)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (업무 툴 / 스킬)
+              </span>
             </b>
           </div>
           <div className="resumeform-job-box">
@@ -293,6 +304,7 @@ function Resumeform(props) {
               name="r_skill"
               value={resumeDto.r_skill}
               onChange={handleChange}
+              placeholder="예) HTML,CSS,React,Javascript"
             />
           </div>
         </div>
@@ -300,7 +312,12 @@ function Resumeform(props) {
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`링크 업로드  `}</span>
-              <span className="span">(웹페이지 및 블로그)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (웹페이지 및 블로그)
+              </span>
             </b>
           </div>
           <div className="resumeform-job-box">
@@ -310,6 +327,7 @@ function Resumeform(props) {
               name="r_link"
               value={resumeDto.r_link}
               onChange={handleChange}
+              placeholder="예) www.devster.kr"
             />
           </div>
         </div>
@@ -317,10 +335,16 @@ function Resumeform(props) {
           <div className="resumeform-school-title">
             <b className="resumeform-job-tiltle-text">
               <span>{`학력  `}</span>
-              <span className="span">(최종학력)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (최종학력)
+              </span>
             </b>
           </div>
           <div className="resumeform-school-entrance">
+            <label htmlFor="start-date">시작일:</label>
             <input
               className="resumeform-school-entrance-rec"
               type="date"
@@ -345,6 +369,7 @@ function Resumeform(props) {
               name="r_gradecom"
               value={resumeDto.r_gradecom}
               onChange={handleChange}
+              placeholder="예) 한국대학교 경영학과"
             />
           </div>
         </div>
@@ -354,7 +379,7 @@ function Resumeform(props) {
             <img
               className="icon-add-circle-outline"
               alt=""
-              src={require("./assets/icon _add_circle_outline.svg").default}
+              src={require("./assets/icon_circle_plus.svg").default}
               onClick={addCareer}
             />
           </div>
@@ -366,7 +391,10 @@ function Resumeform(props) {
                   onClick={() => removeCareer(index)}
                   className="resumeform-career-group-02-removeButton"
                 >
-                  삭제
+                  <img
+                    alt=""
+                    src={require("./assets/icon-trash.svg").default}
+                  />
                 </button>
               )}
               <div className="resumeform-career-group-02-gro">
@@ -394,6 +422,7 @@ function Resumeform(props) {
                   name="r_company"
                   value={career.r_company}
                   onChange={(e) => handleChangeCareer(e, index)}
+                  placeholder="회사명"
                 />
               </div>
               <div className="resumeform-career-group-02-gro6">
@@ -403,6 +432,7 @@ function Resumeform(props) {
                   name="r_department"
                   value={career.r_department}
                   onChange={(e) => handleChangeCareer(e, index)}
+                  placeholder="부서명"
                 />
               </div>
               <div className="resumeform-career-group-02-gro8">
@@ -412,6 +442,7 @@ function Resumeform(props) {
                   name="r_position"
                   value={career.r_position}
                   onChange={(e) => handleChangeCareer(e, index)}
+                  placeholder="직급"
                 />
               </div>
             </div>
@@ -419,14 +450,14 @@ function Resumeform(props) {
         </div>
         <div
           className="resumeform-certificate"
-          style={{ top: `${55 + resumeCareerDtoList.length * 9}rem` }}
+          style={{ top: `${51 + resumeCareerDtoList.length * 9}rem` }}
         >
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">자격증</b>
             <img
               className="resume-certificate-plusicon"
               alt=""
-              src={require("./assets/resume_certificate_plusicon.svg").default}
+              src={require("./assets/icon_circle_plus.svg").default}
               onClick={addLicense}
             />
           </div>
@@ -438,7 +469,10 @@ function Resumeform(props) {
                   onClick={() => removeLicense(index)}
                   className="resumeform-career-group-02-removeButton"
                 >
-                  삭제
+                  <img
+                    alt=""
+                    src={require("./assets/icon-trash.svg").default}
+                  />
                 </button>
               )}
               <div className="resumeform-certificate-box-dat">
@@ -456,6 +490,7 @@ function Resumeform(props) {
                 name="r_licname"
                 value={license.r_licname}
                 onChange={(e) => handleChangeLicense(e, index)}
+                placeholder="예) 정보처리기능사"
               />
             </div>
           ))}
@@ -464,7 +499,7 @@ function Resumeform(props) {
           className="resumeform-content"
           style={{
             top: `${
-              65 +
+              56 +
               resumeCareerDtoList.length * 9 +
               resumeLicenseDtoList.length * 4
             }rem`,
@@ -487,7 +522,7 @@ function Resumeform(props) {
           className="resumeform-fileupload"
           style={{
             top: `${
-              94 +
+              82 +
               resumeCareerDtoList.length * 9 +
               resumeLicenseDtoList.length * 4
             }rem`,
@@ -496,7 +531,12 @@ function Resumeform(props) {
           <div className="resumeform-job-tiltle">
             <b className="resumeform-job-tiltle-text">
               <span>{`첨부파일 업로드  `}</span>
-              <span className="span">(자격증 및 포트폴리오)</span>
+              <span
+                className="span"
+                style={{ color: "#626567", fontWeight: "500" }}
+              >
+                (자격증 및 포트폴리오)
+              </span>
             </b>
           </div>
           <div className="resumeform-job-box">
@@ -508,7 +548,9 @@ function Resumeform(props) {
               type="file"
               name="r_file"
               onChange={handleFileChange}
+              style={{ width: "87%" }}
             />
+
             <button
               type="button"
               onClick={clearFileInput1}
@@ -522,7 +564,7 @@ function Resumeform(props) {
           className="resumeform-resumefileupload"
           style={{
             top: `${
-              103 +
+              91 +
               resumeCareerDtoList.length * 9 +
               resumeLicenseDtoList.length * 4
             }rem`,
@@ -538,6 +580,7 @@ function Resumeform(props) {
               type="file"
               name="r_refile"
               onChange={handleFileChange}
+              style={{ width: "87%" }}
             />
             <button
               type="button"
@@ -550,18 +593,19 @@ function Resumeform(props) {
         </div>
       </div>
       <button
+        className="resumeform-submit-button"
         type="submit"
         style={{
           position: "absolute",
           top: `${
-            122 +
+            110 +
             resumeCareerDtoList.length * 9 +
             resumeLicenseDtoList.length * 4
           }rem`,
           right: "3rem",
         }}
       >
-        Submit
+        저장
       </button>
     </form>
   );

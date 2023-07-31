@@ -14,6 +14,8 @@ function QboardCommentItem({ comment, index ,toggleReplyComments }) {
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [m_idx,setM_idx] = useState(0);
     const de = checkToken();
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
+
 
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
@@ -101,7 +103,7 @@ function QboardCommentItem({ comment, index ,toggleReplyComments }) {
                 <img
                     className="qboard-detail-commnets-detail-icon"
                     alt=""
-                    src="/qboard-detail-commnets-detail-info-img@2x.png"
+                    src={`${profileUrl}${comment.photo}`}
                 />
             </div>
 
