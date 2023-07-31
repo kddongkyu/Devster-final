@@ -4,11 +4,13 @@ public class UserSession {
     private String sessionId;
     private String roomId;
     private String userName;
+    private String userProfile;
 
-    public UserSession(String sessionId, String roomId, String userName){
+    public UserSession(String sessionId, String roomId, String userName, String userProfile){
         this.sessionId = sessionId;
         this.roomId = roomId;
         this.userName = userName;
+        this.userProfile = userProfile;
     }
 
     public String getSessionId() {
@@ -21,5 +23,9 @@ public class UserSession {
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getUserProfile() {
+        return userProfile;
     }
 }

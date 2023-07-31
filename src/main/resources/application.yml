@@ -39,10 +39,10 @@ aws:
 jwt:
   secretKey: HellOImFakerIAgrreLGBTIlikeTeaMC0OKYoUKMowWhatImsaYinGIdONtKnowHAHeHaaaCutEMeaRonGGGG12312TQLVKFKasd
   access:
-    expiration: 360000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    expiration: 36000000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
     header: Authorization
   refresh:
-    expiration: 1200000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
+    expiration: 120000000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루))
     header: Authorization-refresh
 naver:
   login:

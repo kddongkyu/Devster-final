@@ -1,28 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Message from "./Message";
 import './style/Room.css'
 import { useDispatch, useSelector } from "react-redux";
-import { setSendingMsg, wsPublish } from "../../redux/devChat";
+import { removeMarker, setSendingMsg, wsPublish } from "../../redux/devChat";
+import ChatUpload from './ChatUpload';
+import axiosIns from '../../api/JwtConfig';
+import { jwtHandleError } from '../../api/JwtHandleError';
+import { useSnackbar } from 'notistack';
+import ToastAlert from '../../api/ToastAlert';
+import ChatList from './ChatList';
 
 function Room(props) {
     const dispatch = useDispatch();
     const sendingMsg = useSelector(state => state.devChat.sendingMsg);
     const roomName = useSelector(state => state.devChat.roomName);
+    const userName = useSelector(state => state.devChat.userName);
+    const userProfile=useSelector(state=>state.devChat.userProfile);
     const peopleCount = useSelector(state => state.devChat.peopleCount);
     const msg = useSelector(state => state.devChat.msg);
-    const msgSend = (e) => {
-        if (sendingMsg === '') {
-            alert('값을 입력하세요');
-            return
+    const [imgArr, setImgArr] = useState([]);
+    const { enqueueSnackbar } = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
+
+    const msgSend = async () => {
+        if (!sendingMsg.trim() && imgArr.length === 0) {
+            return;
         } else {
+            let imgUrl = [];
+            if (imgArr.length > 0) {
+                const formData = new FormData();
+                for (let i = 0; i < imgArr.length; i++) {
+                    formData.append('upload', imgArr[i]);
+                }
+
+                try {
+                    const res = await axiosIns({
+                        method: 'post',
+                        url: '/api/devchat/D1/upload',
+                        data: formData,
+                        headers: { 'Content-Type': 'multipart/form-data' }
+                    });
+
+                    if (res?.status === 200) {
+                        imgUrl = res.data;
+                    }
+                } catch (error) {
+                    jwtHandleError(error, toastAlert);
+                }
+            }
+
+            dispatch(removeMarker());
             dispatch(wsPublish({
                 type: 'CHAT',
-                userName: '야붕이',
-                msg: sendingMsg,
+                userName: userName,
+                msg: sendingMsg ? sendingMsg : '',
+                msgImg: imgUrl,
+                userProfile: userProfile,
             }));
             dispatch(setSendingMsg(''));
+            setImgArr([]);
         }
     }
+
     const enterKey = (e) => {
         if (e.key === 'Enter') {
             msgSend();
@@ -37,6 +76,7 @@ function Room(props) {
         <div>
             <h1>{roomName}</h1>
             <h1>{peopleCount}</h1>
+            <ChatList />
             <div id='chats' style={{
                 width: '500px',
                 height: '400px',
@@ -52,6 +92,7 @@ function Room(props) {
                 }
             </div>
             <div id='tooldbox'>
+                <ChatUpload imgArr={imgArr} setImgArr={setImgArr} />
                 <input placeholder='보낼메세지'
                     value={sendingMsg}
                     onKeyUp={enterKey}

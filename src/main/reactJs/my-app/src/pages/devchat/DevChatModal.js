@@ -8,7 +8,6 @@ function DevChatModal(props) {
     const dispatch = useDispatch();
     const modalOpen = useSelector(state => state.devChat.modalOpen);
     const hidden = useSelector(state => state.devChat.hidden);
-    const msg=useSelector(state=>state.devChat.msg);
     if (!modalOpen) {
         return null;
     }

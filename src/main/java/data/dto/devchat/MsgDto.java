@@ -1,5 +1,9 @@
 package data.dto.devchat;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -10,8 +14,12 @@ public class MsgDto {
     private String type;
     private String roomId;
     private String userName;
+    private String userProfile;
     private String msg;
+    private String[] msgImg;
     private int ppl;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+    private Date date;
 
     public String getSessionId() {
         return this.sessionId;
@@ -45,12 +53,28 @@ public class MsgDto {
         this.userName = userName;
     }
 
+    public String getUserProfile() {
+        return this.userProfile;
+    }
+
+    public void setUserProfile(String userProfile) {
+        this.userProfile = userProfile;
+    }
+
     public String getMsg() {
         return this.msg;
     }
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String[] getMsgImg() {
+        return this.msgImg;
+    }
+
+    public void setMsgImg(String[] msgImg) {
+        this.msgImg = msgImg;
     }
 
     public int getPpl() {
@@ -61,5 +85,12 @@ public class MsgDto {
         this.ppl = ppl;
     }
 
+    public Date getDate() {
+        return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
 }

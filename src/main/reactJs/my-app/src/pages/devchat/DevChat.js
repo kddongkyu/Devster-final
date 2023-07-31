@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import axiosIns from "../../api/JwtConfig";
-import { setRoomName, wsConnect, wsDisconnect } from "../../redux/devChat";
+import { setAi_idx, setRoomName, setUserName, setUserProfile, wsConnect, wsDisconnect } from "../../redux/devChat";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import Room from "./Room";
+import { checkToken } from "../../api/checkToken";
 
 function DevChat(props) {
     const dispatch = useDispatch();
-    const ai_idx = useSelector(state => state.devChat.ai_idx);
     const connected = useSelector(state => state.devChat.connected);
     const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
 
-    
     useEffect(() => {
         const handleBeforeUnload = () => {
             dispatch(wsDisconnect());
@@ -28,11 +27,15 @@ function DevChat(props) {
     useEffect(() => {
         if (!connected) {
             const handleOnConnect = async () => {
+                const de = checkToken();
                 try {
-                    const res = await axiosIns.get('/api/devchat/D1/' + ai_idx)
+                    const res = await axiosIns.get(`/api/member/D1/${de.idx}`);
                     if (res?.status === 200) {
-                        dispatch(setRoomName(res.data));
-                        dispatch(wsConnect(res.data));
+                        dispatch(setAi_idx(res.data.ai_idx));
+                        dispatch(setRoomName(res.data.ai_name));
+                        dispatch(setUserName(res.data.m_nickname));
+                        dispatch(setUserProfile(res.data.m_photo));
+                        dispatch(wsConnect(res.data.ai_idx));
                     }
                 } catch (error) {
                     jwtHandleError(error, toastAlert);
@@ -40,7 +43,7 @@ function DevChat(props) {
             }
             handleOnConnect();
         }
-    }, [connected, ai_idx, dispatch, toastAlert]);
+    }, [connected]);
 
     return (
         <div>

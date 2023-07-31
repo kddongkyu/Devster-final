@@ -1,19 +1,21 @@
-import {createAction, createSlice} from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import * as SockJS from "sockjs-client";
 import * as StompJS from "@stomp/stompjs";
 
 const initialState = {
-    ai_idx: 1,
+    ai_idx: '',
     roomName: '',
-    roomId:'',
+    roomId: '',
     msg: [],
     peopleCount: 0,
     connected: false,
     hidden: false,
     userName: '',
+    userProfile: '',
     sendingMsg: '',
     modalOpen: false,
     unreadMsg: 0,
+    userList: [],
 };
 
 export const devChatSlice = createSlice({
@@ -26,8 +28,8 @@ export const devChatSlice = createSlice({
         setRoomName: (state, action) => {
             state.roomName = action.payload;
         },
-        setRoomId:(state,action) => {
-            state.roomId=action.payload;
+        setRoomId: (state, action) => {
+            state.roomId = action.payload;
         },
         setMsg: (state, action) => {
             state.msg.push(action.payload);
@@ -39,16 +41,22 @@ export const devChatSlice = createSlice({
             state.connected = action.payload;
         },
         setHidden: (state, action) => {
-            if(!state.hidden && action.payload) {
-                state.msg = state.msg.filter(item=> item.type !== 'READ_MARKER').concat({
-                    type:'READ_MARKER',
-                    msg:'------------ 여기 -------------',
+            if (!state.hidden && action.payload) {
+                state.msg = state.msg.filter(item => item.type !== 'READ_MARKER').concat({
+                    type: 'READ_MARKER',
+                    msg: '여기까지 읽으셨습니다.',
                 });
             }
             state.hidden = action.payload;
-          },
+        },
+        removeMarker: (state) => {
+            state.msg = state.msg.filter(item => item.type !== 'READ_MARKER');
+        },
         setUserName: (state, action) => {
             state.userName = action.payload;
+        },
+        setUserProfile: (state, action) => {
+            state.userProfile = action.payload;
         },
         setSendingMsg: (state, action) => {
             state.sendingMsg = action.payload;
@@ -62,8 +70,11 @@ export const devChatSlice = createSlice({
         resetUnreadMsg: (state) => {
             state.unreadMsg = 0;
         },
+        setUserList: (state, action) => {
+            state.userList = action.payload;
+        },
 
-        resetDevChat:() => initialState,
+        resetDevChat: () => initialState,
     },
 });
 
@@ -75,11 +86,14 @@ export const {
     setPeopleCount,
     setConnected,
     setHidden,
+    removeMarker,
     setUserName,
+    setUserProfile,
     setSendingMsg,
     setModalOpen,
     incUnreadMsg,
     resetUnreadMsg,
+    setUserList,
     resetDevChat,
 } = devChatSlice.actions;
 
@@ -93,28 +107,37 @@ export const createWebSocketMiddleware = () => {
     let client;
 
     return (storeAPI) => (next) => (action) => {
+        const roomId = storeAPI.getState().devChat.roomId;
+        const userName=storeAPI.getState().devChat.userName;
+        const userProfile=storeAPI.getState().devChat.userProfile;
+        const date = new Date().toISOString();
+
         switch (action.type) {
-            case 'SOCKET_CONNECT' :
-                let sock = new SockJS('https://devster.kr/wss');
+            case 'SOCKET_CONNECT':
+                let sock = new SockJS('https:/localhost/wss');
                 client = StompJS.Stomp.over(sock);
+                client.debug = () => { };
                 client.connect({}, () => {
                     client.subscribe('/sub/' + action.payload, data => {
-                        let parsedData=JSON.parse(data.body);
+                        let parsedData = JSON.parse(data.body);
                         storeAPI.dispatch(setMsg(parsedData));
-                        if(storeAPI.getState().devChat.hidden) {
+                        if (storeAPI.getState().devChat.hidden && parsedData.type === 'CHAT') {
                             storeAPI.dispatch(incUnreadMsg());
                         }
                     });
-                    client.subscribe('/sub/'+ action.payload + '/ppl', data => {
+                    client.subscribe('/sub/' + action.payload + '/ppl', data => {
                         storeAPI.dispatch(setPeopleCount(data.body));
                     });
+                    client.subscribe('/sub/' + action.payload + '/users', data => {
+                        let parsedData = JSON.parse(data.body);
+                        storeAPI.dispatch(setUserList(parsedData));
+                    });
                     storeAPI.dispatch(setRoomId(action.payload));
-                    //username 가져와서 dispatch로 세터해주고 넘겨줘야함(나중에);
-                    const roomId=storeAPI.getState().devChat.roomId;
                     storeAPI.dispatch(wsPublish({
-                        type:'ENTER',
+                        type: 'ENTER',
                         roomId,
-                        userName:'야붕',
+                        userName,
+                        userProfile,
                     }));
                     storeAPI.dispatch(setConnected(true));
                 });
@@ -122,14 +145,6 @@ export const createWebSocketMiddleware = () => {
 
             case 'SOCKET_DISCONNECT':
                 if (client) {
-                    const roomId=storeAPI.getState().devChat.roomId;
-                    client.send('/pub/msg',{},JSON.stringify({
-                        type:'EXIT',
-                        roomId,
-                        userName:'야붕',
-                        msg:'',
-                        date:'',
-                    }));
                     client.disconnect();
                     storeAPI.dispatch(setConnected(false));
                     storeAPI.dispatch(resetDevChat());
@@ -139,13 +154,15 @@ export const createWebSocketMiddleware = () => {
 
             case 'SOCKET_PUBLISH':
                 if (client) {
-                    const roomId=storeAPI.getState().devChat.roomId;
-                    const {type, userName, msg} = action.payload;
+                    const { type, userName, userProfile, msg, msgImg } = action.payload;
                     client.send('/pub/msg', {}, JSON.stringify({
                         type,
                         roomId,
                         userName,
+                        userProfile,
                         msg,
+                        msgImg,
+                        date,
                     }));
                 }
                 break;

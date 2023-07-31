@@ -2,11 +2,13 @@ import "./style/Fboard.css";
 import {Link, NavLink, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import axiosIns from "../../api/JwtConfig";
-import {JwtPageChk} from "../../api/JwtPageChk";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import { useJwtPageChk } from "../../api/JwtPageChk";
 
 function Fboard(props) {
+    const JwtPageChk = useJwtPageChk();
+
     const handleRefresh = () => { // 새로고침 버튼용
         window.location.reload();
     };
