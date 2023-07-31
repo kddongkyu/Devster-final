@@ -70,10 +70,7 @@ public class PostMessageService {
         return toPostMessageDetialDto(entity);
     }
 
-    public String sendPostMessage(PostMessageDto dto,HttpServletRequest request) {
-        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
-        String send_nick = memberRepository.findById(m_idx).get().getMNickname();
-        dto.setSend_nick(send_nick);
+    public String sendPostMessage(PostMessageDto dto) {
         postMessageRepository.save(PostMessageEntity.toPostMessageEntity(dto));
         log.info(dto.getSend_nick() + " -> " + dto.getRecv_nick() + " 쪽지 발송 완료.");
         return dto.getSend_nick() + " -> " + dto.getRecv_nick() + " 쪽지 발송 완료.";

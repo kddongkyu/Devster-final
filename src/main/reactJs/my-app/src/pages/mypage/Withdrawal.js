@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./style/Withdrawal.css";
-import Email from "./signoutInputs/Email";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,20 +10,25 @@ import {
   setSeconds,
 } from "../../redux/normMemberSlice";
 import { useNavigate } from "react-router-dom";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import { checkToken } from "../../api/checkToken";
 
 function Withdrawal(props) {
-  const [member, setMember] = useState({
-    m_email: "",
-  });
-
-  const decodedToken = jwt_decode(localStorage.accessToken);
+  const [member, setMember] = useState({ m_email: "" });
+  const decodedToken = checkToken();
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getMemberData = async (idx) => {
     try {
       const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
     } catch (e) {
-      console.log(e);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -33,12 +36,9 @@ function Withdrawal(props) {
     getMemberData(decodedToken.idx);
   }, [decodedToken.idx]);
 
-  const dispatch = useDispatch();
   const m_email = member.m_email;
-  console.log(m_email);
   const seconds = useSelector((state) => state.norm.seconds);
   const emailRegInput = useSelector((state) => state.norm.emailRegInput);
-  // const emailIsValid = useSelector(state => state.norm.emailIsValid);
   const isEmailSent = useSelector((state) => state.norm.isEmailSent);
   const emailRegChk = useSelector((state) => state.norm.emailRegChk);
 
@@ -46,7 +46,7 @@ function Withdrawal(props) {
 
   const handleSendButton = async () => {
     try {
-      const res = await axios({
+      const res = await axiosIns({
         method: "post",
         url: "/api/member/D0/email/validation",
         data: JSON.stringify({ m_email: m_email }),
@@ -67,9 +67,9 @@ function Withdrawal(props) {
         dispatch(setIsEmailSent(false));
         alert("인증번호 발송에 실패했습니다.\n잠시후 다시 시도해주세요.");
       }
-    } catch (error) {
+    } catch (e) {
       dispatch(setIsEmailSent(false));
-      console.error("인증번호 발송 실패" + error.response?.status);
+      jwtHandleError(e, toastAlert);
     }
   };
 
@@ -88,11 +88,7 @@ function Withdrawal(props) {
     }
   };
 
-  useEffect(() => {
-    console.log("emailRegChk changed:", emailRegChk);
-  }, [emailRegChk]);
-
-  // =========================인증시간==============================
+  useEffect(() => {}, [emailRegChk]);
 
   const minutes = Math.floor(seconds / 60);
   const displaySeconds = seconds % 60;
@@ -102,7 +98,6 @@ function Withdrawal(props) {
     if (isEmailSent && seconds > 0) {
       const regTimer = setTimeout(() => {
         dispatch(setSeconds(seconds - 1));
-        console.log(regTimer);
       }, 1000);
       return () => clearTimeout(regTimer);
     } else if (seconds !== null && seconds <= 0) {
@@ -110,13 +105,11 @@ function Withdrawal(props) {
     }
   }, [isEmailSent, seconds]);
 
-  // let timerMessage = "";
-
   if (isEmailSent && seconds > 0) {
     timerMessage = (
       <span>
-        남은 인증시간 :{minutes < 30 ? "0" : ""}
-        {minutes}:{displaySeconds < 30 ? "0" : ""}
+        남은 인증시간 :{minutes < 10 ? "0" : ""}
+        {minutes}:{displaySeconds < 10 ? "0" : ""}
         {displaySeconds}
       </span>
     );
@@ -125,10 +118,6 @@ function Withdrawal(props) {
   } else if (isEmailSent && seconds <= 0) {
     timerMessage = <span>인증시간이 만료되었습니다.</span>;
   }
-
-  // =========================회원탈퇴==============================
-
-  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     const confirmSignOut = window.confirm("정말 탈퇴하시겠습니까?");
@@ -158,7 +147,10 @@ function Withdrawal(props) {
       <div className="content-withrawal">
         <b className="text-constent-withdrawal">계정 탈퇴</b>
         <b className="text-before-withdrawal">
-          <p className="p">회원 탈퇴 전, 안내 사항을 꼭 확인해주세요.</p>
+          <p className="p">
+            회원 탈퇴 전,
+            <br /> 안내 사항을 꼭 확인해주세요.
+          </p>
         </b>
         <b className="text-withdrawal-confirm-01">
           <ul className="ul">1) 탈퇴 아이디 복구 불가</ul>
@@ -190,14 +182,20 @@ function Withdrawal(props) {
             type="text"
             value={member.m_email}
             disabled
+            style={{ fontSize: "1.4rem" }}
           />
-          {/* <Email /> */}
-          <button className="withrawal-button" onClick={handleSendButton}>
-            인증번호 전송
+
+          <button
+            className="withrawal-button"
+            onClick={handleSendButton}
+            style={{ fontSize: "1.2rem" }}
+          >
+            인증번호
+            <br />
+            전송
           </button>
         </div>
 
-        {/* ===========================인증번호 확인 ======================= */}
         <div className="withdrawal-signup-guest-email-reg-input">
           <input
             type="text"
@@ -205,6 +203,7 @@ function Withdrawal(props) {
             disabled={!isEmailSent || emailRegChk || seconds <= 0}
             value={emailRegInput}
             onChange={handleEmailRegChange}
+            placeholder="인증번호를 입력해주세요"
           />
           <div
             className={`withdrawal-signup-guest-email-reg-chk
@@ -221,7 +220,7 @@ function Withdrawal(props) {
             </div>
           </div>
         </div>
-        {/* ===========================인증번호 확인 ======================= */}
+
         <div
           className={`withdrawal-signup-guest-email-reg-timelef
             ${seconds >= 60 ? "" : "withdrawal-signup-guest-text-color-error"}`}
@@ -234,8 +233,9 @@ function Withdrawal(props) {
           className="withrawal-button-finish"
           disabled={!emailRegChk}
           onClick={handleSignOut}
+          style={{ backgroundColor: emailRegChk ? "#dc2626" : "#fee2e2" }}
         >
-          탈퇴하기
+          회원탈퇴
         </button>
       </div>
     </div>

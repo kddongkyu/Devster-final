@@ -67,19 +67,27 @@ public class NoticeBoardController {
     public ResponseEntity<NoticeBoardDto> updateNoticeBoard(@PathVariable int nb_idx, @RequestBody NoticeBoardDto dto) {
         noticeBoardService.updateNoticeBoard(nb_idx, dto);
         return new ResponseEntity<NoticeBoardDto>(HttpStatus.OK);
+
     }
 
-    // @PostMapping("/D1/photo/{fb_idx}")
-    // public ResponseEntity<Void> updatePhoto(@PathVariable Integer nb_idx, @RequestBody MultipartFile upload) {
-    //     noticeBoardService.updatePhoto(nb_idx,upload);
-    //     return new ResponseEntity<>(HttpStatus.OK);
-    // }
+//    @PostMapping("/D1/photo/{nb_idx}")
+//    public ResponseEntity<Void> updatePhoto(@PathVariable Integer nb_idx, @RequestParam("upload") MultipartFile upload) {
+//        noticeBoardService.updatePhoto(nb_idx,upload);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
-    @PostMapping("/D1/photo/{fb_idx}")
-    public ResponseEntity<String> updatePhoto(@PathVariable Integer nb_idx, @RequestBody List<MultipartFile> upload) {
-        // noticeBoardService.updatePhoto(nb_idx,upload);
-        // return new ResponseEntity<>(HttpStatus.OK);
-        return new ResponseEntity<String>(noticeBoardService.updatePhoto(nb_idx,upload),HttpStatus.OK);
+    @PostMapping("/D1/photos/{nb_idx}")
+    public ResponseEntity<List<String>> updatePhotos(@PathVariable Integer nb_idx , @RequestParam("upload") List<MultipartFile> uploads ) {
+        List<String> fileNames = noticeBoardService.updatePhotos(nb_idx, uploads);
+        return new ResponseEntity<>(fileNames, HttpStatus.OK);
     }
+
+    @PostMapping("/D1/photo/upload")
+    public ResponseEntity<List<String>> uploadPhoto(@RequestBody List<MultipartFile> upload, HttpSession session) {
+        return new ResponseEntity<List<String>>(noticeBoardService.uploadPhoto(upload, session),HttpStatus.OK);
+    }
+
+
+    
 
 }

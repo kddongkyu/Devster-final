@@ -66,23 +66,10 @@ public class SecurityConfig {
                 // [PART 2]
                 //== URL별 권한 관리 옵션 ==//
                 .authorizeRequests()
-
-                // 아이콘, css, js 관련
-                // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
-
-
                 .antMatchers("/api/**/D0/**").permitAll()
                 .antMatchers("/api/**/D1/**").authenticated()
                 .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-
-                .and()
-
-                // [PART 3]
-                //== 소셜 로그인 설정 ==//
-                .oauth2Login();
-//                        .and()
-//                .cors().configurationSource(corsConfigurationSource());
+                .anyRequest().authenticated();
 
         // [PART4]
         // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작

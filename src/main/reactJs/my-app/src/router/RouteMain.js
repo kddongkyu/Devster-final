@@ -14,6 +14,15 @@ import {
   Withdrawal,
   NoticeAdmin,
   MemberSignupApproval,
+  NBoardDetail,
+  NboardForm,
+  NboardUpdateForm,
+  CompanySignupApproval,
+  CompUserInfo,
+  CompanyApprovalApply,
+  WithdrawalCompany,
+  ResumeList,
+  ResumeDetail,
 } from "../pages/mypage";
 import { SignIn } from "../pages/signin";
 import { Grats, SignUpCompForm, SignUpNorm } from "../pages/signup";
@@ -24,7 +33,6 @@ import {
   FboardUpdateForm,
 } from "../pages/fboard";
 import { Qboard, QboardForm } from "../pages/qboard";
-
 import { Aboard, Aboarddtail, AboardForm, Aboardupdate } from "../pages/aboard";
 import {
   Hboard,
@@ -43,6 +51,8 @@ import MessageList from "../pages/message/MessageList";
 import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
 import QboardDetail from "../pages/qboard/QboardDetail";
+import Translate from "../pages/test/translate";
+import FindID from "../pages/signin/find/FindID";
 
 function RouteMain(props) {
   const location = useLocation();
@@ -64,19 +74,27 @@ function RouteMain(props) {
         <Route path="/review" element={<Reviewlist />} />
 
         <Route path="/fboard/form" element={<FboardForm />} />
-        <Route path="/qboard/form" element={<QboardForm />} />
-        <Route path="/hboard/form" element={<HboardForm />} />
-        <Route path="/aboard/form" element={<AboardForm />} />
-        <Route path="/review/form" element={<Reviewform />} />
-
-        <Route path="/fboard/form" element={<FboardForm />} />
         <Route path="/qboard/form" element={<QboardForm />}>
           <Route path=":qb_idx/:currentPage" element={<QboardForm />} />
         </Route>
-
         <Route path="/hboard/form" element={<HboardForm />} />
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route path="/review/form" element={<Reviewform />} />
+
+        <Route
+          path="/review/detail/:rb_idx/:currentPage"
+          element={<Reviewdetail />}
+        />
+        <Route
+          path="/fboard/detail/:fb_idx/:currentPage"
+          element={<FboardDetail />}
+        />
+
+        <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
+        <Route
+          path="/fboard/updateform/:fb_idx/:currentPage"
+          element={<FboardUpdateForm />}
+        />
 
         <Route
           path="/hboard/detail/:hb_idx/:currentPage"
@@ -87,9 +105,25 @@ function RouteMain(props) {
           path="hboard/updateform/:hb_idx/:currentPage"
           element={<HboardUpdateForm />}
         />
+
         <Route
           path="/aboard/detail/:ab_idx/:currentPage"
           element={<Aboarddtail />}
+        />
+
+        <Route
+          path="/qboard/detail/:qb_idx/:currentPage"
+          element={<QboardDetail />}
+        />
+
+        <Route
+          path="/fboard/detail/:fb_idx/:currentPage"
+          element={<FboardDetail />}
+        />
+
+        <Route
+          path="/review/detail/:rb_idx/:currentPage"
+          element={<Reviewdetail />}
         />
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
@@ -104,12 +138,17 @@ function RouteMain(props) {
 
         <Route element={<MypageList />}>
           <Route path="/userinfo" element={<UserInfo />} />
+          <Route path="/compuserinfo" element={<CompUserInfo />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="/myresume" element={<MyResume />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
           <Route path="/mypage/notice" element={<Notice />} />
           <Route path="/notice/admin" element={<NoticeAdmin />} />
           <Route path="/member/approval" element={<MemberSignupApproval />} />
+          <Route path="/company/approval" element={<CompanySignupApproval />} />
+          <Route path="/company/apply" element={<CompanyApprovalApply />} />
+          <Route path="/company/withdrawal" element={<WithdrawalCompany />} />
+          <Route path="/resumelist" element={<ResumeList />} />
         </Route>
 
         <Route>
@@ -122,15 +161,32 @@ function RouteMain(props) {
           <Route path="/updateresume" element={<ResumeUpdateform />} />
         </Route>
 
+        <Route
+          path="/nboard/detail/:nb_idx/:currentPage"
+          element={<NBoardDetail />}
+        />
+        <Route path="/nboard/form" element={<NboardForm />} />
+        <Route
+          path="/nboard/updateform/:nb_idx/:currentPage"
+          element={<NboardUpdateForm />}
+        />
+
+        <Route
+          path="/resume/detail/:m_idx/:currentPage"
+          element={<ResumeDetail />}
+        />
+
         <Route path="/jwttest" element={<JwtTest />} />
       </Route>
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />
+      <Route path="/findID" element={<FindID />} />
       <Route path="/csignup" element={<SignUpCompForm />} />
       <Route path="/grats" element={<Grats />} />
       <Route path="/devchat/:ai_idx" element={<DevChat />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/translate" element={<Translate />} />
     </Routes>
   );
 }

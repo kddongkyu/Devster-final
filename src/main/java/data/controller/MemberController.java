@@ -132,10 +132,16 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    @PatchMapping("/D1")
+//    public ResponseEntity<String> confirmRole(@RequestBody JsonNode json, HttpServletRequest request) {
+//        return new ResponseEntity<String>(memberService.confirmRole(request,json.get("sign").asBoolean()),HttpStatus.OK);
+//    }
+
     @PatchMapping("/D1")
-    public ResponseEntity<String> confirmRole(@RequestBody JsonNode json, HttpServletRequest request) {
-        return new ResponseEntity<String>(memberService.confirmRole(request,json.get("sign").asBoolean()),HttpStatus.OK);
+    public ResponseEntity<String> confirmRole(@RequestBody JsonNode json) {
+        return new ResponseEntity<String>(memberService.confirmRole(json.get("m_idx").asInt(),json.get("sign").asBoolean()),HttpStatus.OK);
     }
+
 
     @PostMapping("/D0/id")
     public ResponseEntity<String> findId(@RequestBody JsonNode json) {

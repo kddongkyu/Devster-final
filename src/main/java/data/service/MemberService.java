@@ -1,6 +1,7 @@
 package data.service;
 
 import data.dto.MemberDto;
+import data.dto.PostMessage.PostMessageDto;
 import data.entity.AcademyInfoEntity;
 import data.entity.MemberEntity;
 import data.repository.AcademyInfoRepository;
@@ -27,8 +28,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final AcademyInfoRepository academyInfoRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final PostMessageService postMessageService;
 
     private final JwtService jwtService;
 
@@ -38,10 +39,11 @@ public class MemberService {
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+    public MemberService(MemberRepository memberRepository, AcademyInfoRepository academyInfoRepository, PasswordEncoder passwordEncoder, PostMessageService postMessageService, JwtService jwtService) {
         this.memberRepository = memberRepository;
         this.academyInfoRepository = academyInfoRepository;
         this.passwordEncoder = passwordEncoder;
+        this.postMessageService = postMessageService;
         this.jwtService = jwtService;
     }
 
@@ -173,9 +175,9 @@ public class MemberService {
         return photo;
     }
 
-    public String confirmRole(HttpServletRequest request, boolean sign) {
-        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+    public String confirmRole(int m_idx,boolean sign) {
         MemberEntity member = memberRepository.findById(m_idx).get();
+        PostMessageDto postMessageDto = new PostMessageDto();
 
         if(sign) {
             storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
@@ -183,12 +185,28 @@ public class MemberService {
             member.setMFilename("no");
             memberRepository.save(member);
             log.info("일반 회원 USER 승급 승인");
+            
+            //승급 성공후 쪽지 발송 로직
+            postMessageDto.setSend_nick("관리자");
+            postMessageDto.setSubject("학원 인증 승인");
+            postMessageDto.setContent("학원 인증이 승인되었습니다. \n 이제부터 게시판을 자유롭게 이용하실 수 있습니다!");
+            postMessageDto.setRecv_nick(member.getMNickname());
+            postMessageService.sendPostMessage(postMessageDto);
+            log.info(postMessageDto.getRecv_nick() + " 회원 학원 인증 승인 쪽지 발송 성공");
             return "일반 회원 USER 승급 승인";
         } else {
             storageService.deleteFile(bucketName,"devster/member",member.getMFilename());
             member.setMFilename("no");
             memberRepository.save(member);
             log.info("일반 회원 USER 승급 반려");
+
+            //승급 성공후 쪽지 발송 로직
+            postMessageDto.setSend_nick("관리자");
+            postMessageDto.setSubject("학원 인증 반려");
+            postMessageDto.setContent("학원 인증이 반려되었습니다. \n 학원 인증 사진을 확인 후 다시 올려주세요!");
+            postMessageDto.setRecv_nick(member.getMNickname());
+            postMessageService.sendPostMessage(postMessageDto);
+            log.info(postMessageDto.getRecv_nick() + " 회원 학원 인증 반려 쪽지 발송 성공");
             return "일반 회원 USER 승급 반려";
         }
     }

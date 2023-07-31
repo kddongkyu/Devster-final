@@ -583,8 +583,8 @@
 
 .fboard-preview-img-profile {
   position: absolute;
-  top: 0.8rem;
-  left: 0;
+  top: 0;
+  left: -1px;
   border-radius: 50%;
   background-color: #f6f6f8;
   border: 1px solid #cfcfcf;

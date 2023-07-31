@@ -1,11 +1,10 @@
 package data.service;
 
-import data.dto.FreeBoardDto;
+import data.dto.fboard.FreeBoardDto;
 import data.entity.FreeBoardEntity;
 import data.entity.FreeBoardLikeEntity;
 import data.entity.MemberEntity;
-import data.entity.ReviewEntity;
-import data.mapper.FreeBoardMapper;
+import data.repository.FboardCommentRepository;
 import data.repository.FreeBoardLikeRepository;
 import data.repository.FreeBoardRepository;
 import data.repository.MemberRepository;
@@ -34,15 +33,15 @@ public class FreeBoardService {
     private final MemberRepository memberRepository;
     private final FreeBoardLikeRepository freeBoardLikeRepository;
     private final NcpObjectStorageService storageService;
-    private final FreeBoardMapper freeBoardMapper;
+    private final FboardCommentRepository fboardCommentRepository;
 
     @Autowired
-    public FreeBoardService(FreeBoardMapper freeBoardMapper,FreeBoardRepository freeBoardRepository, MemberRepository memberRepository, FreeBoardLikeRepository freeBoardLikeRepository, NcpObjectStorageService storageService) {
-        this.freeBoardMapper = freeBoardMapper;
+    public FreeBoardService(FreeBoardRepository freeBoardRepository, MemberRepository memberRepository, FreeBoardLikeRepository freeBoardLikeRepository, NcpObjectStorageService storageService, FboardCommentRepository fboardCommentRepository) {
         this.freeBoardRepository = freeBoardRepository;
         this.memberRepository = memberRepository;
         this.freeBoardLikeRepository = freeBoardLikeRepository;
         this.storageService = storageService;
+        this.fboardCommentRepository = fboardCommentRepository;
     }
 
     @Value("${aws.s3.bucketName}")
@@ -100,8 +99,10 @@ public class FreeBoardService {
                 .stream()
                 .map(freeBoardEntity -> {
                     MemberEntity memberInfo = memberRepository.findById(freeBoardEntity.getMIdx()).orElse(null);
+                    int fboardCommentCount = fboardCommentRepository.countAllByFBidx(freeBoardEntity.getFBidx());
                     Map<String, Object> fboardMemberInfo = new HashMap<>();
                     fboardMemberInfo.put("fboard", FreeBoardDto.toFreeBoardDto(freeBoardEntity));
+                    fboardMemberInfo.put("fboardCommentCount", fboardCommentCount);
 
                     if (memberInfo != null) {
                         fboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());

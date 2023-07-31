@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./style/Modal.css";
-import { NavLink } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import axiosIns from "../../api/JwtConfig";
 
 function MenuModal({ isMenuOpen, setIsMenuOpen, selectedMemberImage }) {
   const closeMenuBar = () => {

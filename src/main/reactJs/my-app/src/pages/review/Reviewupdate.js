@@ -4,6 +4,8 @@ import axiosIns from "../../api/JwtConfig";
 import {useNavigate, useParams} from "react-router-dom";
 import { ReviewModal } from "./index";
 import jwt_decode from "jwt-decode";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function Reviewupdate({reviewData}) {
     const [rbSubject, setRbsubject] = useState("");
@@ -19,6 +21,8 @@ function Reviewupdate({reviewData}) {
     const [selectedCompany, setSelectedCompany] = useState("");
     const [selectedCompanyIdx, setSelectedCompanyIdx] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const { enqueueSnackbar } = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
 
     let de = jwt_decode(localStorage.getItem("accessToken"));
     const m_idx = de.idx;
@@ -76,7 +80,7 @@ function Reviewupdate({reviewData}) {
                     setIsLoading(false);  // 추가: 데이터를 불러오는데 성공하면 로딩 상태를 종료합니다.
                 }
             } catch (error) {
-                console.error(error);
+               toastAlert('로딩 처리 중 에러 발생','warning');
             }
         };
 
@@ -86,7 +90,6 @@ function Reviewupdate({reviewData}) {
 
     const handleUpdateSubmit = (e)=>{
         e.preventDefault();
-        console.log(dto)
 
         const dto={
             rb_subject : rbSubject,
@@ -103,7 +106,7 @@ function Reviewupdate({reviewData}) {
                 navi(`/review/detail/${rb_idx}/${currentPage}`);
             })
             .catch((error)=>{
-                console.error("Error in updating review: ", error);
+                toastAlert('업데이트 처리 중 에러 발생','warning');
             });
     };
 

@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './style/Reviewlist.css';
 import axiosIns from "../../api/JwtConfig";
 import {Link, NavLink, useNavigate} from "react-router-dom";
@@ -10,8 +10,8 @@ import {jwtHandleError} from "../../api/JwtHandleError";
 
 function Reviewlist(props) {
     const [reviews, setReviews] = useState([]);
-    const [currentPage,setCurrentPage] = useState(1);
-    const [totalPages,setTotalPages]=useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const navi = useNavigate();
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
@@ -21,6 +21,39 @@ function Reviewlist(props) {
     //검색
     const [inputKeyword, setInputKeyword] = useState(''); // 사용자가 입력하는 검색어
     const [finalKeyword, setFinalKeyword] = useState(''); // 최종 검색어 (검색 버튼
+
+    const [subjectCount, setsubjectCount] = useState(25);
+
+    const handleSubjectResize = () => { // 화면 너비에 따라 subject 미리보기 갯수 반응형으로 변경
+        // 화면 너비에 따라 텍스트 개수를 업데이트
+        const screenWidth = window.innerWidth;
+        if (screenWidth >= 1000) {
+            setsubjectCount(50);
+        } else if (screenWidth >= 768) {
+            setsubjectCount(35);
+        } else if (screenWidth >= 600) {
+            setsubjectCount(25);
+        } else if (screenWidth >= 480) {
+            setsubjectCount(20);
+        } else {
+            setsubjectCount(10);
+        }
+    };
+
+    useEffect(() => {
+        // 컴포넌트가 마운트되거나 화면 크기가 변경될 때 리사이즈 이벤트 핸들러 등록
+        window.addEventListener('resize', handleSubjectResize);
+        handleSubjectResize(); // 초기 렌더링 시 텍스트 개수 설정
+
+        return () => {
+            // 컴포넌트가 언마운트될 때 리사이즈 이벤트 핸들러 제거
+            window.removeEventListener('resize', handleSubjectResize);
+        };
+    }, []);
+
+    const compareValues = (value1, value2) => {
+        return value1.length > value2;
+    };
 
 
 
@@ -53,7 +86,6 @@ function Reviewlist(props) {
 
     const fetchReviews = async (page, keyword, sortProperty, sortDirection) => {
         const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
-        console.log(sortDirection,sortProperty)
         try {
             const response = await axiosIns.get('/api/review/D0', {
                 params: {
@@ -65,7 +97,6 @@ function Reviewlist(props) {
             });
 
             setReviews(response.data.reviews);
-            console.log(response.data);
             setTotalPages(response.data.totalPages);
 
         } catch (error) {
@@ -76,7 +107,7 @@ function Reviewlist(props) {
 
 //정렬
     const onClickLatest = () => {
-       // fetchReviews(currentPage, finalKeyword, 'RBwriteday', 'DESC');
+        // fetchReviews(currentPage, finalKeyword, 'RBwriteday', 'DESC');
         setSortProperty('RBwriteday');
         setSortDirection('DESC');
     };
@@ -85,11 +116,11 @@ function Reviewlist(props) {
 
         setSortProperty('RBlike');
         setSortDirection('DESC');
-      //  fetchReviews(currentPage, finalKeyword, 'RBlike', 'DESC');
+        //  fetchReviews(currentPage, finalKeyword, 'RBlike', 'DESC');
     };
 
     const onClickViews = () => {
-       // fetchReviews(currentPage, finalKeyword, 'RBreadcount', 'DESC');
+        // fetchReviews(currentPage, finalKeyword, 'RBreadcount', 'DESC');
         setSortProperty('RBreadcount');
         setSortDirection('DESC');
     };
@@ -142,7 +173,6 @@ function Reviewlist(props) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -179,27 +209,26 @@ function Reviewlist(props) {
                 </div>
             </div>
 
-                <button className="review-headerbar-btn">
-                    <div className="review-headerbar-rec"
-                         onClick={()=>{
-                             //페이지 이동시 토큰 여부 확인 함수
-                             JwtPageChk(navi,'/review/form');
-                         }}
-                        />
-                    <div className="review-headerbar-btn-text">{`후기작성 `}</div>
-                    <img
-                        className="review-headerbar-btn-icon"
-                        alt=""
-                        src={require('./assets/review_headerbar_btn_icon.svg').default}
-                    />
-                </button>
+            <button className="review-headerbar-btn"
+                    onClick={() => {
+                        //페이지 이동시 토큰 여부 확인 함수
+                        JwtPageChk(navi, '/review/form');
+                    }}>
+                <div className="review-headerbar-rec"/>
+                <div className="review-headerbar-btn-text">{`후기작성 `}</div>
+                <img
+                    className="review-headerbar-btn-icon"
+                    alt=""
+                    src={require('./assets/review_headerbar_btn_icon.svg').default}
+                />
+            </button>
             <div className="review-function-search-input">
                 <input className="review-function-search-input1"
                        value={inputKeyword}
                        placeholder='검색어를 입력해주세요'
                        onChange={(e) => setInputKeyword(e.target.value)}
                        onKeyDown={handleEnterKeyPress}
-                    />
+                />
                 <img
                     className="review-list-search-icon"
                     alt=""
@@ -229,94 +258,101 @@ function Reviewlist(props) {
                 src={require('./assets/review_pages_reload_icon.svg').default}
                 onClick={handleRefresh}
             />
-            <div className="review-top-page-text">{`${currentPage} / ${totalPages} 페이지`}</div>
-            <img
-                className="review-top-pages-next-icon"
-                alt=""
-                src={require('./assets/review_pages_paging_forwardicon.svg').default}
-                onClick={() => goToNextPage(finalKeyword,sortProperty,sortDirection)}
-                style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
-            />
-            <img
-                className="rboard-top-pages-back-icon"
-                alt=""
-                src={require('./assets/rboard-top_pages_back.svg').default}
-                onClick={() => goToPreviousPage(finalKeyword,sortProperty,sortDirection)}
-                style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
-            />
-            <div className="review-child"/>
+            <div className="review-pages">
+                <div className="review-top-page-text">{`${currentPage} / ${totalPages} 페이지`}</div>
+                <img
+                    className="review-top-pages-next-icon"
+                    alt=""
+                    src={require('./assets/review_pages_paging_forwardicon.svg').default}
+                    onClick={() => goToNextPage(finalKeyword, sortProperty, sortDirection)}
+                    style={{opacity: currentPage === totalPages ? 0.5 : 1}}
+                />
+                <img
+                    className="rboard-top-pages-back-icon"
+                    alt=""
+                    src={require('./assets/rboard-top_pages_back.svg').default}
+                    onClick={() => goToPreviousPage(finalKeyword, sortProperty, sortDirection)}
+                    style={{opacity: currentPage === 1 ? 0.5 : 1}}
+                />
+                <div className="review-child"/>
+            </div>
 
-            {reviews.map((review)=>(
-                <Link to={`/review/detail/${review.review.rb_idx}/${currentPage}`} key={review.review.rb_idx}>
-                    <div className="review-list-box">
-                        <img
-                            className="review-list-box-img-icon"
-                            alt=""
-                            src={review.ciPhoto}
-                        />
-                        <div className="review-list-subject-text">
-                            <p className="p">{review.review.rb_subject}</p>
-                        </div>
-                        <img className="logo-icon" alt="" src={review.mPhoto}/>
-                        <div className="review-list-user-time">{review.mNicname} ·
-                            {timeForToday(review.review.rb_writeday)}</div>
-                        <div className="review-list-rb-type">
-                            <p className="p1">{`리뷰 종류 : `}{reviewTypes[review.review.rb_type]}</p>
-                        </div>
-                        <b className="review-list-companyname">{review.ciName}</b>
-                        <div className="review-list-box-star-text">{review.review.rb_star}.0</div>
-                        <div className="review-list-box-star-icons">
-                            <StarRating rating={review.review.rb_star} />
-                        </div>
-
-                        <div className="review-bottom-bar"/>
-                        <div className="review-list-box-icons">
-                            <div className="review-list-box-header-comment-parent">
-                                <div className="review-list-box-header-comment">{review.reviewCommentCount}</div>
-                                <img
-                                    className="review-list-box-header-comment-icon"
-                                    alt=""
-                                    src={require('./assets/review_list_box_header_comments_icon.svg').default}
-                                />
+            <div className="review_list">
+                {reviews.map((review) => (
+                        <div className="review-list-box">
+                            <Link to={`/review/detail/${review.review.rb_idx}/${currentPage}`} key={review.review.rb_idx}>
+                            <img
+                                className="review-list-box-img-icon"
+                                alt=""
+                                src={review.ciPhoto}
+                            />
+                            <div className="review-list-subject-text">
+                                <p className="p">
+                                    {compareValues(String(review.review.rb_subject),subjectCount) ? review.review.rb_subject.slice(0, subjectCount) + "···" : review.review.rb_subject}
+                                </p>
                             </div>
-                            <div className="review-list-box-header-likes-t-parent">
-                                <div className="review-list-box-header-likes-t">{review.review.rb_like}</div>
-                                <img
-                                    className="review-ist-box-header-like-icon"
-                                    alt=""
-                                    src={require('./assets/review_list_box_header_likes_icon.svg').default}
-                                />
+                            <img className="logo-icon" alt="" src={review.mPhoto}/>
+                            <div className="review-list-user-time">{review.mNicname} ·
+                                {timeForToday(review.review.rb_writeday)}</div>
+                            <div className="review-list-rb-type">
+                                <p className="p1">{`리뷰 종류 : `}{reviewTypes[review.review.rb_type]}</p>
                             </div>
-                            <div className="review-list-box-header-views-t-parent">
-                                <div className="review-list-box-header-comment">{review.review.rb_readcount}</div>
-                                <img
-                                    className="review-list-box-header-view-icon"
-                                    alt=""
-                                    src={require('./assets/review_list_box_header_views_icon.svg').default}
-                                />
+                            <b className="review-list-companyname">{review.ciName}</b>
+                            <div className="review-list-box-star-text">{review.review.rb_star}.0</div>
+                            <div className="review-list-box-star-icons">
+                                <StarRating rating={review.review.rb_star}/>
                             </div>
+
+                            <div className="review-bottom-bar"/>
+                            <div className="review-list-box-icons">
+                                <div className="review-list-box-header-comment-parent">
+                                    <div className="review-list-box-header-comment">{review.reviewCommentCount}</div>
+                                    <img
+                                        className="review-list-box-header-comment-icon"
+                                        alt=""
+                                        src={require('./assets/review_list_box_header_comments_icon.svg').default}
+                                    />
+                                </div>
+                                <div className="review-list-box-header-likes-t-parent">
+                                    <div className="review-list-box-header-likes-t">{review.review.rb_like}</div>
+                                    <img
+                                        className="review-ist-box-header-like-icon"
+                                        alt=""
+                                        src={require('./assets/review_list_box_header_likes_icon.svg').default}
+                                    />
+                                </div>
+                                <div className="review-list-box-header-views-t-parent">
+                                    <div className="review-list-box-header-comment">{review.review.rb_readcount}</div>
+                                    <img
+                                        className="review-list-box-header-view-icon"
+                                        alt=""
+                                        src={require('./assets/review_list_box_header_views_icon.svg').default}
+                                    />
+                                </div>
+                            </div>
+                            </Link>
                         </div>
-                    </div>
-                </Link>
-            ))}:
+                ))}
+            </div>
+            <div className="review-pages2">
+                <div className="review-bottom-page-text">{`${currentPage} / ${totalPages} 페이지`}</div>
+                <img
+                    className="review-bottom-page-next-icon"
+                    alt=""
+                    src={require('./assets/review_pages_paging_forwardicon.svg').default}
+                    onClick={() => goToNextPage(finalKeyword, sortProperty, sortDirection)}
 
-            <div className="review-bottom-page-text">{`${currentPage} / ${totalPages} 페이지`}</div>
-            <img
-                className="review-bottom-page-next-icon"
-                alt=""
-                src={require('./assets/review_pages_paging_forwardicon.svg').default}
-                onClick={() => goToNextPage(finalKeyword,sortProperty,sortDirection)}
+                    style={{opacity: currentPage === totalPages ? 0.5 : 1}}
+                />
+                <img
+                    className="review-bottom-page-pre-icon"
+                    alt=""
+                    src={require('./assets/rboard-top_pages_back.svg').default}
+                    onClick={() => goToPreviousPage(finalKeyword, sortProperty, sortDirection)}
 
-                style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
-            />
-            <img
-                className="review-bottom-page-pre-icon"
-                alt=""
-                src={require('./assets/rboard-top_pages_back.svg').default}
-                onClick={() => goToPreviousPage(finalKeyword,sortProperty,sortDirection)}
-
-                style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
-            />
+                    style={{opacity: currentPage === 1 ? 0.5 : 1}}
+                />
+            </div>
         </div>
     );
 };
