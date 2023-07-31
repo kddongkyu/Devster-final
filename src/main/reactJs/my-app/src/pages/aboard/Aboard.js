@@ -121,7 +121,18 @@ function Aboard(props) {
 
             setAcacemyBoardList(response.data.academyBoardList); // Typo 수정 (acacemy -> academy)
             setTotalPages(response.data.totalPages);
-            console.log(response.data)
+
+          // //   if(response.data.mPhoto == null){
+          // //       // If mPhoto is null, set it to a default image
+          // //       response.data.mPhoto = '../'; // use trim() to remove spaces from start and end
+          // //   } else {
+          // //       // If mPhoto is not null, trim any spaces from start and end
+          // //       response.data.mPhoto = response.data.mPhoto.trim();
+          // // }
+          //   if (response.data.mPhoto) {
+          //       return require("./assets/logo-img.svg").default;
+          //   }
+            console.log(response.data.mPhoto)
         } catch (error) {
             jwtHandleError(error, toastAlert);
         }
@@ -404,10 +415,14 @@ function Aboard(props) {
                     return (
                         <div className="aboard-preview" key={aboard.academyboard.ab_idx}>
                             <div className="aboard-preview-box"/>
-                            <img className="aboard-preview-img-profile"
-                                 alt=""
-                                 src={`${profileUrl}${aboard.mPhoto}`}
+                            <img
+                                className="aboard-preview-img-profile"
+                                alt=""
+                                src={aboard.mPhoto ? `${profileUrl}${aboard.mPhoto}`
+                                    : require("./assets/logo-img.svg").default}
                             />
+
+
                             <div className="aboard-preview-type">
                                 <b className="aboard-preview-type-text">{aboard.AIname} 게시판</b>
                                 <div
