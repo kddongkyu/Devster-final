@@ -28,6 +28,7 @@ function Fboard(props) {
   //검색
   const [inputKeyword, setInputKeyword] = useState(""); // 사용자가 입력하는 검색어
   const [finalKeyword, setFinalKeyword] = useState(""); // 최종 검색어 (검색 버튼
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   const handleResize = () => {
     // 화면 너비에 따라 content 미리보기 갯수 반응형으로 변경
@@ -418,7 +419,8 @@ function Fboard(props) {
               <div key={fboard.fboard.fb_idx} className="fboard-preview">
                 <div className="fboard-preview-box" />
                 <div className="fboard-preview-img-profile">
-                  <img alt="" src={fboard.mPhoto} />
+                  <img className="fboard-preview-img-profile"
+                      alt="" src={`${profileUrl}${fboard.mPhoto}`} />
                 </div>
                 <div className="fboard-preview-type">
                   <b className="fboard-preview-type-text">자유게시판</b>
@@ -472,7 +474,7 @@ function Fboard(props) {
                   />
                 </div>
                 <div className="fboard-preview-comments">
-                  <div className="fboard-preview-likes-text">99</div>
+                  <div className="fboard-preview-likes-text">{fboard.fboardCommentCount}</div>
                   <img
                     className="fboard-preview-comments-icon"
                     alt=""

@@ -4,15 +4,18 @@ import './style/Reviewdetail.css';
 import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 
 function ReviewReplyform({rbc_idx,rb_idx}) {
 
     const [reviewcomment,setReviewcomment]=useState('');
     const navi=useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
-    console.log(de.idx);
 
 
 
@@ -26,7 +29,6 @@ function ReviewReplyform({rbc_idx,rb_idx}) {
             rb_idx:rb_idx,
             rbc_ref:rbc_idx
         };
-//console.log(dto)
         axiosIns.post("/api/review/D1/comment", dto)
             .then(res => {
                 // 성공적으로 등록된 경우, 목록으로 이동
@@ -34,8 +36,7 @@ function ReviewReplyform({rbc_idx,rb_idx}) {
 
             })
             .catch(error => {
-                // 등록 실패 시 에러 처리
-                console.error(error);
+              toastAlert('답글 작성 중 에러 발생', 'warning');
             });
     }
 

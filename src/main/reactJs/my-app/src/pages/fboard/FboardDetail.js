@@ -6,6 +6,8 @@ import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
 import {checkToken} from "../../api/checkToken";
 import {useSnackbar} from "notistack";
+import FboardCommentForm from "./comment/FboardCommentForm";
+import FboardComment from  "./comment/FboardComment";
 
 
 function FboardDetail(props) {
@@ -25,6 +27,7 @@ function FboardDetail(props) {
     const [arrayFromString, setArrayFromString] = useState([]);
     const navi = useNavigate();
     const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const fetchFboard = useCallback((fb_idx, currentPage = null) => {
         const url = `/api/fboard/D0/${fb_idx}`;
@@ -250,12 +253,12 @@ function FboardDetail(props) {
                 <b className="fboard-advertise-text">광고</b>
             </div>
 
-            <div className="board-detail-type-text">자유게시판</div>
+            <div className="fboard-detail-type-text">자유게시판</div>
             <div className="fboard-detail-info">
                 <img
                     className="fboard-detail-info-profile-img-icon"
                     alt=""
-                    src={fboardData.mPhoto}
+                    src={`${profileUrl}${fboardData.mPhoto}`}
                     onClick={handleNicknameClick}
                 />
                 <div className="fboard-detail-info-nickname"
@@ -295,19 +298,19 @@ function FboardDetail(props) {
             <div className="fboard-detail-header-btn">
                 <div className="fboard-detail-header-btn-like">
                     <img
-                        className="board-detail-header-btn-like-i-icon"
+                        className="fboard-detail-header-btn-like-i-icon"
                         alt=""
                         src={require("./assets/boarddetail/board_detail_header_btn_like_icon.svg").default}
                     />
-                    <div className="board-detail-header-btn-like-t">{fboardData.fboard.fb_like}</div>
+                    <div className="fboard-detail-header-btn-like-t">{fboardData.fboard.fb_like}</div>
                 </div>
                 <div className="fboard-detail-header-btn-disli">
                     <img
-                        className="board-detail-header-btn-dislik-icon"
+                        className="fboard-detail-header-btn-dislik-icon"
                         alt=""
                         src={require("./assets/boarddetail/board_detail_header_btn_dislike_icon.svg").default}
                     />
-                    <div className="board-detail-header-btn-like-t">{fboardData.fboard.fb_dislike}</div>
+                    <div className="fboard-detail-header-btn-like-t">{fboardData.fboard.fb_dislike}</div>
                 </div>
             </div>
 
@@ -328,7 +331,7 @@ function FboardDetail(props) {
                     {arrayFromString.map((imageId, index) => (
                         <div>
                             <img
-                                className="board-detail-photo" key={index}
+                                className="fboard-detail-photo" key={index}
                                 src={`${photoUrl}${imageId}`}
                                 alt={`Image ${index}`}
                             />
@@ -383,143 +386,10 @@ function FboardDetail(props) {
                 </div>
             </div>
 
-            {/* 댓글/대댓글 부분 일단주석처리 */}
-
-            {/*<img className="board-detail-hr-icon" alt="" src="/board-detail-hr.svg" />*/}
-
-            {/* 댓글 */}
-            {/*<div className="board-detail-comments-counts">nn개의 댓글</div>*/}
-            {/*<div className="board-detail-commnets-form">*/}
-            {/*    <div className="board-detail-commnets-form-box" />*/}
-            {/*    <img*/}
-            {/*        className="board-detail-commnets-form-img-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/notice_detail_info_profile_img.png").default}*/}
-            {/*    />*/}
-            {/*    <div className="board-detail-commnets-form-tex" />*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-commnets-submit-b">*/}
-            {/*    <div className="board-detail-commnets-form-sub" />*/}
-            {/*    <b className="board-detail-commnets-form-sub1">댓글 쓰기</b>*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-commnets-detail-i">*/}
-            {/*    <div className="board-detail-recom-info-text">*/}
-            {/*        <div className="board-detail-recom-info-counts">댓글 1</div>*/}
-            {/*        <div className="board-detail-recom-info-date">*/}
-            {/*            <span>{`약  6시간 전 · `}</span>*/}
-            {/*            <span className="span">{`수정됨 `}</span>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <img*/}
-            {/*        className="board-detail-commnets-detail-i-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/notice_detail_info_profile_img.png").default}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-commnets-all-like">*/}
-            {/*    <div className="board-detail-commnets-all-up">*/}
-            {/*        <div className="board-detail-commnets-all-up-b" />*/}
-            {/*        <img*/}
-            {/*            className="board-detail-commnets-all-up-i-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_up.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*    <div className="board-detail-recom-likes-count">*/}
-            {/*        <div className="board-detail-commnets-all-box" />*/}
-            {/*        <div className="board-detail-commnets-all-like2">27</div>*/}
-            {/*    </div>*/}
-            {/*    <div className="board-detail-commnets-all-down">*/}
-            {/*        <div className="board-detail-recom-down-box" />*/}
-            {/*        <img*/}
-            {/*            className="board-detail-commnets-all-down-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_down.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-commnets-all-cont">*/}
-            {/*    <p className="p">*/}
-            {/*        모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을*/}
-            {/*        박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는*/}
-            {/*    </p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        {" "}*/}
-            {/*        제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야 한다.*/}
-            {/*    </p>*/}
-            {/*    <p className="p">선거에 관한 경비는 법률이 정하는 경우를 제외하고</p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        는 정당 또는 후보자에게 부담시킬 수 없다. 행정각부의*/}
-            {/*    </p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        {" "}*/}
-            {/*        설치·조직과 직무범위는 법률로 정한다. 대통령은 국가의 원수이며, 외국에*/}
-            {/*        대하여 국가를 대표한다.*/}
-            {/*    </p>*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-commnets-hide">*/}
-            {/*    <img*/}
-            {/*        className="board-detail-commnets-hide-ico-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/board_detail_commnets_hide_icon.svg").default}*/}
-            {/*    />*/}
-            {/*    <div className="board-detail-commnets-hide-tex">댓글 모두 숨기기</div>*/}
-            {/*    <div className="board-detail-commnets-hide-com">댓글 쓰기</div>*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-recom-box" />*/}
-            {/*<div className="board-detail-recom-info">*/}
-            {/*    <div className="board-detail-recom-info-text">*/}
-            {/*        <div className="board-detail-recom-info-counts">대댓글 1</div>*/}
-            {/*        <div className="board-detail-recom-info-date">*/}
-            {/*            <span>{`약  1시간 전 · `}</span>*/}
-            {/*            <span className="span">{`수정됨 `}</span>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*    <img*/}
-            {/*        className="board-detail-commnets-detail-i-icon"*/}
-            {/*        alt=""*/}
-            {/*        src={require("./assets/boarddetail/notice_detail_info_profile_img.png").default}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-recom-likes">*/}
-            {/*    <div className="board-detail-commnets-all-up">*/}
-            {/*        <div className="board-detail-commnets-all-up-b" />*/}
-            {/*        <img*/}
-            {/*            className="board-detail-commnets-all-up-i-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_up.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*    <div className="board-detail-recom-likes-count">*/}
-            {/*        <div className="board-detail-commnets-all-box" />*/}
-            {/*        <div className="board-detail-commnets-all-like2">27</div>*/}
-            {/*    </div>*/}
-            {/*    <div className="board-detail-commnets-all-down">*/}
-            {/*        <div className="board-detail-recom-down-box" />*/}
-            {/*        <img*/}
-            {/*            className="board-detail-commnets-all-down-icon"*/}
-            {/*            alt=""*/}
-            {/*            src={require("./assets/boarddetail/board_detail_commnets_all_down.svg").default}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-recom-textarea">*/}
-            {/*    <p className="p">*/}
-            {/*        모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을*/}
-            {/*        박탈당하지 아니한다. 공공필요에 의한 재산권의 수용·사용 또는*/}
-            {/*    </p>*/}
-            {/*    <p className="p">&nbsp;</p>*/}
-            {/*    <p className="p">*/}
-            {/*        {" "}*/}
-            {/*        제한 및 그에 대한 보상은 법률로써 하되, 정당한 보상을 지급하여야 한다.*/}
-            {/*    </p>*/}
-            {/*    <p className="p">선거에 관한 경비는 법률이 정하는 경우를</p>*/}
-            {/*</div>*/}
-            {/*<div className="board-detail-recom-recom-form">{`댓글 쓰기 `}</div>*/}
+            <div className="fboard-comments-box">
+                <FboardCommentForm fb_idx={fb_idx}/>
+                <FboardComment fb_idx={fb_idx}/>
+            </div>
         </div>
     );
 }

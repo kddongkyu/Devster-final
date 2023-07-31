@@ -1,10 +1,12 @@
 package data.controller;
 
-import data.dto.FreeBoardDto;
-import data.entity.FreeBoardEntity;
+import data.dto.fboard.FboardCommentDto;
+import data.dto.fboard.FboardCommentLikeResponseDto;
+import data.dto.fboard.FboardCommentResponseDto;
+import data.dto.fboard.FreeBoardDto;
+import data.service.FboardCommentService;
 import data.service.FreeBoardService;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,11 @@ import java.util.Map;
 public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
+    private final FboardCommentService fboardCommentService;
 
-    public FreeBoardController(FreeBoardService freeBoardService) {
+    public FreeBoardController(FreeBoardService freeBoardService, FboardCommentService fboardCommentService) {
         this.freeBoardService = freeBoardService;
+        this.fboardCommentService =fboardCommentService;
     }
 
     @GetMapping("/D0")
@@ -108,7 +112,64 @@ public class FreeBoardController {
         return ResponseEntity.ok(isBad);
     }
 
+    // 댓글 , 대댓글
+    @GetMapping("/D0/comment/{fb_idx}")
+    public ResponseEntity<FboardCommentResponseDto> comment (@PathVariable int fb_idx){
+        return new ResponseEntity<FboardCommentResponseDto>(fboardCommentService.getAllCommentList(fb_idx),HttpStatus.OK);
+    }
 
+    @PostMapping("/D1/comment")
+    public ResponseEntity<String> insertComment(@RequestBody FboardCommentDto dto) {
+        return new ResponseEntity<>(fboardCommentService.insert(dto),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/D1/comment/{fbc_idx}")
+    public ResponseEntity<String> deleteComment(@PathVariable int fbc_idx) {
+        boolean returnResult = fboardCommentService.delete(fbc_idx);
+        if(returnResult) {
+            return new ResponseEntity<>("Fboard" + fbc_idx + "번 댓글 삭제완료",HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Fboard" + fbc_idx + "번 댓글이 존재하지 않습니다.",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/D1/comment/{fbc_idx}")
+    public ResponseEntity<String> updateComment(@RequestBody FboardCommentDto dto) {
+        boolean returnResult = fboardCommentService.update(dto);
+        if(returnResult) {
+            return new ResponseEntity<>("Fboard" + dto.getFbc_idx() + "번 댓글 업데이트 완료",HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Fboard" + dto.getFbc_idx() + "번 댓글이 존재하지 않습니다.",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/D1/comment/{m_idx}/like/{fbc_idx}")
+    public ResponseEntity<FboardCommentLikeResponseDto> likeFboardcomment(@PathVariable int fbc_idx, @PathVariable int m_idx) {
+        FboardCommentLikeResponseDto fboardCommentLikeResponseDto = fboardCommentService.like(m_idx, fbc_idx);
+        return ResponseEntity.ok(fboardCommentLikeResponseDto);
+    }
+
+    @PostMapping("/D1/comment/{m_idx}/dislike/{fbc_idx}")
+    public ResponseEntity<FboardCommentLikeResponseDto> dislikeFboardcomment(@PathVariable int fbc_idx, @PathVariable int m_idx) {
+
+        FboardCommentLikeResponseDto fboardCommentLikeResponseDto = fboardCommentService.dislike(m_idx, fbc_idx);
+        return ResponseEntity.ok(fboardCommentLikeResponseDto);
+
+    }
+    @GetMapping("/D0/comment/{m_idx}/checkGood/{fbc_idx}")
+    public ResponseEntity<Boolean> checkGoodcomment(@PathVariable int m_idx, @PathVariable int fbc_idx) {
+        boolean isGood = fboardCommentService.isAlreadyAddGoodRp(m_idx, fbc_idx);
+        return ResponseEntity.ok(isGood);
+    }
+
+    @GetMapping("/D0/comment/{m_idx}/checkBad/{fbc_idx}")
+    public ResponseEntity<Boolean> checkBadcomment(@PathVariable int m_idx, @PathVariable int fbc_idx) {
+        boolean isBad = fboardCommentService.isAlreadyAddBadRp(m_idx, fbc_idx);
+        return ResponseEntity.ok(isBad);
+    }
+
+
+    // escapeDto
     public FreeBoardDto escapeDto(FreeBoardDto dto) {
         dto.setFb_subject(StringEscapeUtils.escapeHtml4(dto.getFb_subject()));
         dto.setFb_content(StringEscapeUtils.escapeHtml4(dto.getFb_content()));

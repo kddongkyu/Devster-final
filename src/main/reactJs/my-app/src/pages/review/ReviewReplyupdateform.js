@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 function ReviewReplyupdateform({rbc_idx,rb_idx,currentContent,rbc_ref}) {
     const [rbc_content, setRbc_content] = useState(currentContent); // 상태를 정의합니다.
-    // const {rbc_idx}=useParams();
+    const { enqueueSnackbar } = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
 
     let de = jwt_decode(localStorage.getItem("accessToken"));
     const m_idx = de.idx;
@@ -21,7 +24,6 @@ function ReviewReplyupdateform({rbc_idx,rb_idx,currentContent,rbc_ref}) {
         if (rbc_ref !== 0) { // rbc_ref 값이 필요한 경우에만 추가
             dto.rbc_ref = rbc_ref;
         }
-        console.log(dto)
 
         // PUT 요청으로 수정
         axiosIns.put(`/api/review/D1/comment/${rbc_idx}`, dto)
@@ -31,8 +33,7 @@ function ReviewReplyupdateform({rbc_idx,rb_idx,currentContent,rbc_ref}) {
 
             })
             .catch(error => {
-                // 등록 실패 시 에러 처리
-                console.error(error);
+                toastAlert('등록 실패', 'warning');
             });
     }
 
