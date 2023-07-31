@@ -2,8 +2,7 @@ import { useSnackbar } from 'notistack';
 import React, { useCallback, useRef } from 'react';
 import ToastAlert from '../../api/ToastAlert';
 
-function ChatUpload({ imgArr, setImgArr }) {
-    const uploadRef = useRef();
+function ChatUpload({ imgArr, setImgArr, uploadRef }) {
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
 
@@ -67,6 +66,7 @@ function ChatUpload({ imgArr, setImgArr }) {
                 onChange={handleOnUpload}
                 accept='image/*'
                 multiple
+                hidden
             />
             <div>
                 {

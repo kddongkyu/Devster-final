@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Message from "./Message";
 import './style/Room.css'
 import { useDispatch, useSelector } from "react-redux";
-import { removeMarker, setSendingMsg, wsPublish } from "../../redux/devChat";
+import { removeMarker, setHidden, setSendingMsg, wsPublish } from "../../redux/devChat";
 import ChatUpload from './ChatUpload';
 import axiosIns from '../../api/JwtConfig';
 import { jwtHandleError } from '../../api/JwtHandleError';
@@ -15,12 +15,14 @@ function Room(props) {
     const sendingMsg = useSelector(state => state.devChat.sendingMsg);
     const roomName = useSelector(state => state.devChat.roomName);
     const userName = useSelector(state => state.devChat.userName);
-    const userProfile=useSelector(state=>state.devChat.userProfile);
+    const userProfile = useSelector(state => state.devChat.userProfile);
     const peopleCount = useSelector(state => state.devChat.peopleCount);
     const msg = useSelector(state => state.devChat.msg);
     const [imgArr, setImgArr] = useState([]);
     const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
+
+    const uploadRef=useRef();
 
     const msgSend = async () => {
         if (!sendingMsg.trim() && imgArr.length === 0) {
@@ -68,21 +70,42 @@ function Room(props) {
         }
     }
 
+    const handleMinimize = () => {
+        dispatch(setHidden(true));
+    }
+
     const handleOnMsgInput = (e) => {
         dispatch(setSendingMsg(e.target.value));
     }
 
     return (
-        <div>
-            <h1>{roomName}</h1>
-            <h1>{peopleCount}</h1>
-            <ChatList />
-            <div id='chats' style={{
-                width: '500px',
-                height: '400px',
-                border: '1px solid',
-                overflowY: 'auto'
-            }}>
+        <div className="moblie-chat">
+            <div className="chat-header">
+                <div className="chat-header-box" />
+                <b className="chat-header-acaname">{roomName.length > 14 ? roomName.slice(0, 14).concat("...") : roomName}</b>
+                <img
+                    className="chat-header-ppls-icon"
+                    alt=""
+                    src="/chat-header-ppls-icon.svg"
+                />
+                <b className="chat-header-ppls">{peopleCount}</b>
+                <img
+                    className="chat-header-menu-icon"
+                    alt=""
+                    src="/chat-header-menu.svg"
+                />
+                <div
+                    onClick={handleMinimize}
+                >
+                    <img
+                        className="chat-header-close-icon"
+                        alt=""
+                        src="/chat-header-close.svg"
+                    />
+                </div>
+            </div>
+            <div className="chat-body">
+                <div className="chat-body-box" />
                 {
                     msg.map((item, idx) => {
                         return (
@@ -91,74 +114,39 @@ function Room(props) {
                     })
                 }
             </div>
-            <div id='tooldbox'>
-                <ChatUpload imgArr={imgArr} setImgArr={setImgArr} />
-                <input placeholder='보낼메세지'
+            <div>
+                <img
+                    className="chat-footer-upload-icon"
+                    alt=""
+                    src="/chat-footer-upload.svg"
+                    onClick={()=>uploadRef.current.click()}
+                />
+                <textarea
+                    type='text'
+                    className="chat-footer-send-box"
                     value={sendingMsg}
                     onKeyUp={enterKey}
                     onChange={handleOnMsgInput}
                 />
-                <button onClick={msgSend}>전송</button>
+                <div
+                    className="chat-footer-send"
+                    onClick={msgSend}
+                >
+                    <div className="chat-footer-send-btn" />
+                    <img
+                        className="sf-symbol-arrowtriangletur"
+                        alt=""
+                        src="/sf-symbol--arrowtriangleturnuprightcirclefill.svg"
+                    />
+                </div>
             </div>
-
-
-
-
-
-            <div className="moblie-chat-room">
-                <div className="chat-header">
-                    <div className="chat-header-box" />
-                    <b className="chat-header-acaname">강남비트캠프701호일이삼사</b>
-                    <b className="chat-header-ppls">(12345)</b>
-                    <img
-                        className="chat-header-close-icon"
-                        alt=""
-                        src="/chat-header-close.svg"
-                    />
-                </div>
-                <div className="chat-body">
-                    <div className="chat-body-msg-r">
-                        <div className="chat-body-msg-r-img" />
-                        <div className="chat-body-msg-r-id">비트캠프 야붕이</div>
-                        <div className="chat-body-msg-r1">
-                            <div className="chat-body-msg-r-box" />
-                            <div className="chat-body-msg-r-text">
-                                ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
-                            </div>
-                        </div>
-                        <div className="chat-body-msg-r-date">오전 12:32</div>
-                    </div>
-                    <div className="chat-body-msg-s">
-                        <div className="chat-body-msg-s1">
-                            <div className="chat-body-msg-s-box" />
-                            <div className="chat-body-msg-s-text">
-                                ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇ
-                            </div>
-                        </div>
-                        <div className="chat-body-msg-s-date">오전 12:36</div>
-                    </div>
-                </div>
-                <div className="chat-footer">
-                    <img
-                        className="chat-footer-upload-icon"
-                        alt=""
-                        src="/chat-footer-upload.svg"
-                    />
-                    <div className="chat-footer-input">
-                        <div className="chat-footer-input-box" />
-                        <div className="chat-footer-input-text">
-                            ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-                        </div>
-                    </div>
-                    <div className="chat-footer-send">
-                        <div className="chat-footer-send-btn" />
-                        <img
-                            className="chat-footer-send-icon"
-                            alt=""
-                            src="/chat-footer-send-icon.svg"
-                        />
-                    </div>
-                </div>
+            {/* <ChatList /> */}
+            <div id='tooldbox'>
+                <ChatUpload 
+                imgArr={imgArr} 
+                setImgArr={setImgArr} 
+                uploadRef={uploadRef}
+                />
             </div>
         </div>
     );

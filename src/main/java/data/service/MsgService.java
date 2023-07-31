@@ -13,7 +13,6 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import data.dto.devchat.MsgDto;
@@ -69,15 +68,13 @@ public class MsgService {
         String userProfile = msg.getUserProfile();
         switch (msg.getType()) {
             case "ENTER":
-                msg.setMsg(msg.getUserName() + "님이 접속하셨습니다.");
-//                msg.setUserStats(msg.getUserName() + "님이 접속하셨습니다");
+                msg.setMsg(msg.getUserName() + "님이 입장하셨습니다.");
                 pplCounts.compute(roomId, (k, v) -> (v == null || v == 0 ? 1 : v + 1));
                 UserSession userSession = new UserSession(sessionId, roomId, userName, userProfile);
                 sessionIds.put(sessionId, userSession);
                 List<UserSession> sessionsInRoom = filterSessionsByRoomId(roomId);
                 sendingOperations.convertAndSend("/sub/" + roomId + "/users", sessionsInRoom);
                 sendingOperations.convertAndSend("/sub/" + roomId + "/ppl", pplCounts.get(roomId));
-//                sendingOperations.convertAndSend("/sub/"+roomId+"/userstat",msg.getUserStats());
                 break;
 
             case "CHAT":

@@ -27,7 +27,8 @@ function KakaoRedirect() {
                         'refreshToken',
                         res.headers['authorization-refresh']
                     );
-                    navi('/home',{replace:true});
+                    // navi('/home',{replace:true});
+                    window.location.replace('/home');
                 } else if(res?.status === 202) {
                     navi('/social',{replace:true, state:{
                         resData:res.data,
@@ -36,7 +37,7 @@ function KakaoRedirect() {
                     });
                 } else if(res?.status === 226) {
                     alert('일반회원으로 가입된 이메일입니다.\n확인 후 다시 시도해주세요.');
-                    navi('/home',{replace:true});
+                    window.location.replace('/home');
                 } else {
                     console.log(res);
                 }

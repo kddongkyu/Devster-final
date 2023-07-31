@@ -1,8 +1,8 @@
 import "./style/Fboard.css";
-import {Link, NavLink, useNavigate} from 'react-router-dom';
-import {useEffect, useState} from "react";
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import {useSnackbar} from "notistack";
+import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { useJwtPageChk } from "../../api/JwtPageChk";
 
@@ -19,7 +19,7 @@ function Fboard(props) {
     const [contentCount, setContentCount] = useState(15);
     const [subjectCount, setsubjectCount] = useState(10);
     const navi = useNavigate();
-    const {enqueueSnackbar} = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
     //정렬
     const [sortProperty, setSortProperty] = useState('');
@@ -229,11 +229,11 @@ function Fboard(props) {
     return (
         <div className="fboard">
             <div className="advertise-box">
-                <div className="advertise-main"/>
+                <div className="advertise-main" />
                 <b className="advertise-text">광고</b>
             </div>
             <div className="fboard-name">
-                <div className="board-name-box"/>
+                <div className="board-name-box" />
                 <div className="fboard-name-text">
                     <b className="fboard-name-text-type">자유게시판</b>
                     <div className="fboard-name-text-detail">
@@ -244,19 +244,19 @@ function Fboard(props) {
 
             <div className="fboard-selection">
                 <div className="fboard-selection-freeboard">
-                    <div className="fboard-selection-freeboard-box"/>
+                    <div className="fboard-selection-freeboard-box" />
                     <div className="fboard-selection-freeboard-tex">자유</div>
                 </div>
                 <NavLink to="/qboard" activeClassName="active" className="fboard-selection-qna">
-                    <div className="fboard-selection-qna-box"/>
+                    <div className="fboard-selection-qna-box" />
                     <div className="fboard-selection-qna-text">{`Q&A`}</div>
                 </NavLink>
                 <NavLink to="/hboard" activeClassName="active" className="fboard-selection-hire">
-                    <div className="fboard-selection-hire-box"/>
+                    <div className="fboard-selection-hire-box" />
                     <div className="fboard-selection-hire-text">채용정보</div>
                 </NavLink>
                 <NavLink to="/aboard" activeClassName="active" className="fboard-selection-academy">
-                    <div className="fboard-selection-qna-box"/>
+                    <div className="fboard-selection-qna-box" />
                     <div className="fboard-selection-academy-text">학원별</div>
                 </NavLink>
             </div>
@@ -268,7 +268,7 @@ function Fboard(props) {
                     JwtPageChk(navi, '/fboard/form');
                 }}
             >
-                <div className="fboard-write-box"/>
+                <div className="fboard-write-box" />
                 <img
                     className="fboard-write-icon"
                     alt=""
@@ -278,7 +278,7 @@ function Fboard(props) {
             </div>
 
             <div className="fboard-function-sort">
-                <div className="fboard-function-sort-box"/>
+                <div className="fboard-function-sort-box" />
                 <div className="fboard-function-sort-time" onClick={onClickLatest}>최신순</div>
                 <div className="fboard-function-sort-view" onClick={onClickViews}>조회순</div>
                 <div className="fboard-function-sort-like" onClick={onClickLikes}>인기순</div>
@@ -298,11 +298,11 @@ function Fboard(props) {
 
             <div className="fboard-function-search-input">
                 <input className="fboard-function-search-input1"
-                       type="text"
-                       value={inputKeyword}
-                       placeholder='검색어를 입력해주세요'
-                       onChange={(e) => setInputKeyword(e.target.value)}
-                       onKeyDown={handleEnterKeyPress}
+                    type="text"
+                    value={inputKeyword}
+                    placeholder='검색어를 입력해주세요'
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                    onKeyDown={handleEnterKeyPress}
                 />
                 <img
                     className="fboard-function-search-icon"
@@ -325,19 +325,19 @@ function Fboard(props) {
                     alt=""
                     src={require("./assets/board_pages_back.svg").default}
                     onClick={goToPreviousPage}
-                    style={{opacity: currentPage === 1 ? 0.5 : 1}}
+                    style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
                 />
                 <img
                     className="fboard-pages-forward-icon"
                     alt=""
                     src={require("./assets/board_pages_forward.svg").default}
                     onClick={goToNextPage}
-                    style={{opacity: currentPage === totalPages ? 0.5 : 1}}
+                    style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
                 />
             </div>
 
             <div className="fboard-notice">
-                <div className="fboard-notice-box"/>
+                <div className="fboard-notice-box" />
                 <div className="fboard-notice-preview">
                     <div className="fboard-notice-preview-info">
                         <img
@@ -351,7 +351,7 @@ function Fboard(props) {
                     </div>
                     <b className="fboard-notice-preview-subject">DEVSTER 공지사항</b>
                     <div className="fboard-notice-preview-notice">
-                        <div className="fboard-notice-preview-notice-bo"/>
+                        <div className="fboard-notice-preview-notice-bo" />
                         <div className="fboard-notice-preview-notice-te">공지사항</div>
                     </div>
                     <div className="fboard-notice-preview-hash">#공지사항 # Devster</div>
@@ -386,67 +386,67 @@ function Fboard(props) {
 
             <div className="fboard_list">
                 {freeBoardList && freeBoardList.map((fboard) => {
-                        return (
-                            <div key={fboard.fboard.fb_idx} className="fboard-preview">
-                                <div className="fboard-preview-box"/>
-                                <div className="fboard-preview-img-profile">
-                                    <img alt=""
-                                         src={fboard.mPhoto}/>
-                                </div>
-                                <div className="fboard-preview-type">
-                                    <b className="fboard-preview-type-text">자유게시판</b>
-                                    <div
-                                        className="fboard-preview-type-date">{timeForToday(fboard.fboard.fb_writeday)}</div>
-                                </div>
-                                <div className="fboard-preview-id">
-                                    <div className="fboard-preview-type-text">{fboard.mNicname}</div>
-                                </div>
-                                <NavLink to={`/fboard/detail/${fboard.fboard.fb_idx}/${currentPage}`}>
-                                    <b className="fboard-preview-subject">
-                                        {compareValues(String(fboard.fboard.fb_subject), subjectCount)
-                                            ? fboard.fboard.fb_subject.slice(0, subjectCount) + "···"
-                                            : fboard.fboard.fb_subject}
-                                    </b>
-                                    <div className="fboard-preview-contents">
-                                        {compareValues(String(fboard.fboard.fb_content), contentCount)
-                                            ? fboard.fboard.fb_content.slice(0, contentCount) + "···"
-                                            : fboard.fboard.fb_content}
-                                    </div>
-                                    <div>
-                                        <img alt=""
-                                             src={setPhotoUrl(fboard.fboard.fb_photo)}
-                                             className="fboard-preview-img-preview"/>
-                                    </div>
-                                </NavLink>
-
-                                <div className="fboard-preview-likes">
-                                    <div
-                                        className="fboard-preview-likes-text">{fboard.fboard.fb_like - fboard.fboard.fb_dislike}</div>
-                                    <img
-                                        className="fboard-preview-likes-icon"
-                                        alt=""
-                                        src={require("./assets/board_preview_likes_icon.svg").default}
-                                    />
-                                </div>
-                                <div className="fboard-preview-comments">
-                                    <div className="fboard-preview-likes-text">99</div>
-                                    <img
-                                        className="fboard-preview-comments-icon"
-                                        alt=""
-                                        src={require("./assets/board_preview_comments_icon.svg").default}
-                                    />
-                                </div>
-                                <div className="fboard-preview-views">
-                                    <div className="fboard-preview-views-text">{fboard.fboard.fb_readcount}</div>
-                                    <img
-                                        className="fboard-preview-views-icon"
-                                        alt=""
-                                        src={require("./assets/board_preview_views_icon.svg").default}
-                                    />
-                                </div>
+                    return (
+                        <div key={fboard.fboard.fb_idx} className="fboard-preview">
+                            <div className="fboard-preview-box" />
+                            <div className="fboard-preview-img-profile">
+                                <img alt=""
+                                    src={fboard.mPhoto} />
                             </div>
-                        )
-                    }
+                            <div className="fboard-preview-type">
+                                <b className="fboard-preview-type-text">자유게시판</b>
+                                <div
+                                    className="fboard-preview-type-date">{timeForToday(fboard.fboard.fb_writeday)}</div>
+                            </div>
+                            <div className="fboard-preview-id">
+                                <div className="fboard-preview-type-text">{fboard.mNicname}</div>
+                            </div>
+                            <NavLink to={`/fboard/detail/${fboard.fboard.fb_idx}/${currentPage}`}>
+                                <b className="fboard-preview-subject">
+                                    {compareValues(String(fboard.fboard.fb_subject), subjectCount)
+                                        ? fboard.fboard.fb_subject.slice(0, subjectCount) + "···"
+                                        : fboard.fboard.fb_subject}
+                                </b>
+                                <div className="fboard-preview-contents">
+                                    {compareValues(String(fboard.fboard.fb_content), contentCount)
+                                        ? fboard.fboard.fb_content.slice(0, contentCount) + "···"
+                                        : fboard.fboard.fb_content}
+                                </div>
+                                <div>
+                                    <img alt=""
+                                        src={setPhotoUrl(fboard.fboard.fb_photo)}
+                                        className="fboard-preview-img-preview" />
+                                </div>
+                            </NavLink>
+
+                            <div className="fboard-preview-likes">
+                                <div
+                                    className="fboard-preview-likes-text">{fboard.fboard.fb_like - fboard.fboard.fb_dislike}</div>
+                                <img
+                                    className="fboard-preview-likes-icon"
+                                    alt=""
+                                    src={require("./assets/board_preview_likes_icon.svg").default}
+                                />
+                            </div>
+                            <div className="fboard-preview-comments">
+                                <div className="fboard-preview-likes-text">99</div>
+                                <img
+                                    className="fboard-preview-comments-icon"
+                                    alt=""
+                                    src={require("./assets/board_preview_comments_icon.svg").default}
+                                />
+                            </div>
+                            <div className="fboard-preview-views">
+                                <div className="fboard-preview-views-text">{fboard.fboard.fb_readcount}</div>
+                                <img
+                                    className="fboard-preview-views-icon"
+                                    alt=""
+                                    src={require("./assets/board_preview_views_icon.svg").default}
+                                />
+                            </div>
+                        </div>
+                    )
+                }
                 )}
             </div>
 
@@ -457,14 +457,14 @@ function Fboard(props) {
                     alt=""
                     src={require("./assets/board_pages_back.svg").default}
                     onClick={goToPreviousPage}
-                    style={{opacity: currentPage === 1 ? 0.5 : 1}}
+                    style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
                 />
                 <img
                     className="fboard-pages-forward-icon"
                     alt=""
                     src={require("./assets/board_pages_forward.svg").default}
                     onClick={goToNextPage}
-                    style={{opacity: currentPage === totalPages ? 0.5 : 1}}
+                    style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
                 />
             </div>
 

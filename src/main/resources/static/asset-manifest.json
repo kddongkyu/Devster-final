@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.f9603f71.css",
-    "main.js": "/static/js/main.3127a2ff.js",
+    "main.js": "/static/js/main.6934405b.js",
     "static/js/27.262d8d9e.chunk.js": "/static/js/27.262d8d9e.chunk.js",
     "static/media/noimage.png": "/static/media/noimage.d3031ee351e2f27b0068.png",
     "static/media/qboard_form_fileupload_icon.svg": "/static/media/qboard_form_fileupload_icon.1ff1b289b82433289b276200c54a0a4e.svg",
@@ -115,6 +115,6 @@
   },
   "entrypoints": [
     "static/css/main.f9603f71.css",
-    "static/js/main.3127a2ff.js"
+    "static/js/main.6934405b.js"
   ]
 }

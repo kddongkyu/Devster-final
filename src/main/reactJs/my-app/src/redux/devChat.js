@@ -114,7 +114,7 @@ export const createWebSocketMiddleware = () => {
 
         switch (action.type) {
             case 'SOCKET_CONNECT':
-                let sock = new SockJS('https:/localhost/wss');
+                let sock = new SockJS('https://devster.kr/wss');
                 client = StompJS.Stomp.over(sock);
                 client.debug = () => { };
                 client.connect({}, () => {
