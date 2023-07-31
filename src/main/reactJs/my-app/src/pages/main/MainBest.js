@@ -1,48 +1,149 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import axiosIns from "../../api/JwtConfig";
 
 function MainBest(props) {
-    return (
-        <div className='main-best-preview'>
-            <div className='main-best-box'/>
-            <div className='main-best-profile-img'/>
-            <div className='main-best-info'>
-                <b className='main-best-info-type'>게시판명길이최대로</b>
-                <div className='main-best-info-date'>작성시간</div>
-            </div>
-            <div className='main-best-id'>
-                <div className='main-best-info-type'>ABCDEFGHIJ</div>
-            </div>
-            <b className='main-best-subject'>제목 일이삼사오육칠팔구...</b>
-            <div className='main-best-content'>
-                본문 일이삼사오육칠팔구십일이...
-            </div>
-            <div className='main-best-img'/>
-            <div className='main-best-likes'>
-                <div className='main-best-likes-text'>99.9k</div>
-                <img
-                    className='main-best-likes-icon'
-                    alt=''
-                    src={require('./assets/main_likes_icon.svg').default}
-                />
-            </div>
-            <div className='main-best-coments'>
-                <div className='main-best-likes-text'>99.9k</div>
-                <img
-                    className='main-best-coments-icon'
-                    alt=''
-                    src={require('./assets/main_coments_icon.svg').default}
-                />
-            </div>
-            <div className='main-best-views'>
-                <div className='main-best-views-text'>99.9k</div>
-                <img
-                    className='main-best-views-icon'
-                    alt=''
-                    src={require('./assets/main_views_icon.svg').default}
-                />
-            </div>
-        </div>
+  // const [loading, setLoading] = useState(true);
+  const [popularFreeArticle, setPopularFreeArticle] = useState([]);
+  const [popularQnaArticle, setPopularQnaArticle] = useState([]);
+
+  useEffect(() => {
+    // fboard에서 인기글 가져오는 API 호출
+    axiosIns
+      .get("/api/mainpage/D0/popularFarticle")
+      .then((response) => {
+        setPopularFreeArticle(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching fboard popular article:", error);
+      });
+  }, []);
+
+  //작성시간 몇 시간전으로 변경
+  const timeForToday = (value) => {
+    if (!value) {
+      return "";
+    }
+
+    //timeValue를 한국 시간대로 변환
+    const valueConv = value.slice(0, -10);
+    const today = new Date();
+    const timeValue = new Date(valueConv);
+
+    // timeValue를 한국 시간대로 변환
+    const timeValueUTC = new Date(timeValue.toISOString());
+    const offset = timeValue.getTimezoneOffset() * 60 * 1000; // 분 단위를 밀리초 단위로 변환
+    const timeValueKST = new Date(timeValueUTC.getTime() - offset);
+
+    const betweenTime = Math.floor(
+      (today.getTime() - timeValueKST.getTime()) / 1000 / 60
     );
+    if (betweenTime < 1) return "방금 전";
+    if (betweenTime < 60) {
+      return `${betweenTime}분 전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간 전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 8) {
+      return `${betweenTimeDay}일 전`;
+    }
+
+    const year = String(timeValue.getFullYear()).slice(0, 4);
+    const month = String(timeValue.getMonth() + 1).padStart(2, "0");
+    const day = String(timeValue.getDate()).padStart(2, "0");
+
+    const formattedDateWithoutTime = `${year}-${month}-${day}`;
+
+    return formattedDateWithoutTime;
+  };
+
+  // 사진 url 설정
+  const setPhotoUrl = (value) => {
+    if (value == null) {
+      return require("./assets/logo-img.svg").default;
+    }
+    const photoUrl = process.env.REACT_APP_PHOTO + "fboard/";
+    if (value.includes(",")) {
+      const firstCommaIndex = value.indexOf(",");
+      const parsedPhoto = value.substring(0, firstCommaIndex);
+      const srcUrl = photoUrl + parsedPhoto;
+      return srcUrl;
+    } else {
+      const srcUrl = photoUrl + value;
+      return srcUrl;
+    }
+  };
+
+  return (
+    <div>
+      {popularFreeArticle &&
+        popularFreeArticle.map((fboard) => {
+          return (
+            <div className="main-best-preview">
+              <div className="main-best-box" />
+              <div>
+                <img
+                  alt=""
+                  src={setPhotoUrl(fboard.mPhoto)}
+                  className="main-best-profile-img"
+                />
+              </div>
+              <div className="main-best-info">
+                <b className="main-best-info-type">자유게시판</b>
+                <div className="main-best-info-date">
+                  {timeForToday(fboard.freeBoardHotArticle.fbwriteDay)}
+                </div>
+              </div>
+              <div className="main-best-id">
+                <div className="main-best-info-type">{fboard.mNicname}</div>
+              </div>
+              <b className="main-best-subject">
+                {fboard.freeBoardHotArticle.fbsubject}
+              </b>
+              <div className="main-best-content">
+                본문 일이삼사오육칠팔구십일이...
+              </div>
+              <div>
+                <img
+                  alt=""
+                  src={setPhotoUrl(fboard.freeBoardHotArticle.fbphoto)}
+                  className="main-best-img"
+                />
+              </div>
+              <div className="main-best-likes">
+                <div className="main-best-likes-text">99.9k</div>
+                <img
+                  className="main-best-likes-icon"
+                  alt=""
+                  src={require("./assets/main_likes_icon.svg").default}
+                />
+              </div>
+              <div className="main-best-coments">
+                <div className="main-best-likes-text">99.9k</div>
+                <img
+                  className="main-best-coments-icon"
+                  alt=""
+                  src={require("./assets/main_coments_icon.svg").default}
+                />
+              </div>
+              <div className="main-best-views">
+                <div className="main-best-views-text">99.9k</div>
+                <img
+                  className="main-best-views-icon"
+                  alt=""
+                  src={require("./assets/main_views_icon.svg").default}
+                />
+              </div>
+            </div>
+          );
+        })}
+    </div>
+  );
 }
 
 export default MainBest;

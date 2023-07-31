@@ -8,10 +8,13 @@ import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
 
+import org.apache.ibatis.type.Alias;
+
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+@Alias("FreeBoardDto")
 public class FreeBoardDto {
     private int m_idx;
     private int fb_idx;

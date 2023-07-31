@@ -1,5 +1,6 @@
 package data.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -68,12 +69,17 @@ public class NoticeBoardController {
         return new ResponseEntity<NoticeBoardDto>(HttpStatus.OK);
     }
 
-    @PostMapping("/D1/photo/{fb_idx}")
-    public ResponseEntity<Void> updatePhoto(@PathVariable Integer nb_idx, @RequestBody MultipartFile upload) {
-        noticeBoardService.updatePhoto(nb_idx,upload);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+    // @PostMapping("/D1/photo/{fb_idx}")
+    // public ResponseEntity<Void> updatePhoto(@PathVariable Integer nb_idx, @RequestBody MultipartFile upload) {
+    //     noticeBoardService.updatePhoto(nb_idx,upload);
+    //     return new ResponseEntity<>(HttpStatus.OK);
+    // }
 
-    
+    @PostMapping("/D1/photo/{fb_idx}")
+    public ResponseEntity<String> updatePhoto(@PathVariable Integer nb_idx, @RequestBody List<MultipartFile> upload) {
+        // noticeBoardService.updatePhoto(nb_idx,upload);
+        // return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<String>(noticeBoardService.updatePhoto(nb_idx,upload),HttpStatus.OK);
+    }
 
 }

@@ -164,15 +164,15 @@ public class NoticeBoardService {
         }
     }
 
-    public void updatePhoto(Integer nb_idx , MultipartFile upload ) {
-        Optional<NoticeBoardEntity> entity = noticeBoardRepository.findById(nb_idx);
-        storageService.deleteFile(bucketName,"devster/nboard",entity.get().getNBphoto());
-        entity.get().setNBphoto(storageService.uploadFile(bucketName,"devster/nboard",upload));
-        noticeBoardRepository.save(entity.get());
 
-        log.info(nb_idx+" NoticeBoard 사진업데이트 완료");
+    // 사진 업데이트 여러장 
+    public String updatePhoto(Integer nb_idx , List<MultipartFile> uploads ) {
+        List<String> uploadedFileNames = new ArrayList<>();
+        for(MultipartFile files : uploads){
+            uploadedFileNames.add(storageService.uploadFile(bucketName,"devster/nboard",files));
+        }
+        return String.join(",",uploadedFileNames);
     }
     
-
 
 }
