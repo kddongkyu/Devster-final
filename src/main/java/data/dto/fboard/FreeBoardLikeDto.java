@@ -1,8 +1,6 @@
-package data.dto;
+package data.dto.fboard;
 
-import data.entity.FreeBoardEntity;
 import data.entity.FreeBoardLikeEntity;
-import data.entity.ReviewlikeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

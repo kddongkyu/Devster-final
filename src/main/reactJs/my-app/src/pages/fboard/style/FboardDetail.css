@@ -28,7 +28,7 @@
   color: #000;
 }
 
-.board-detail-type-text {
+.fboard-detail-type-text {
   position: absolute;
   top: 21.9rem;
   left: 2.4rem;
@@ -119,7 +119,7 @@
   height: 2.3rem;
 }
 
-.board-detail-header-btn-like-i-icon {
+.fboard-detail-header-btn-like-i-icon {
   position: absolute;
   top: 0.45rem;
   right: 2.4rem;
@@ -127,7 +127,7 @@
   height: 0.9rem;
 }
 
-.board-detail-header-btn-like-t {
+.fboard-detail-header-btn-like-t {
   position: absolute;
   top: 0;
   right: 0;
@@ -142,7 +142,7 @@
   height: 1.7rem;
 }
 
-.board-detail-header-btn-dislik-icon {
+.fboard-detail-header-btn-dislik-icon {
   position: absolute;
   top: 0.55rem;
   right: 1.8rem;
@@ -187,11 +187,11 @@
   margin-top: 5rem;
   background-color: #fff;
   box-sizing: border-box;
-  margin-bottom: 50rem;
+  /*margin-bottom: 50rem;*/
 }
 
 /* top 값 지움 */
-.board-detail-photo {
+.fboard-detail-photo {
   left: calc(50% - 150px);
   border: 1px solid #fff;
   width: 30rem;
@@ -392,7 +392,7 @@
   color: #000;
 }
 
-.board-detail-hr-icon {
+.fboard-detail-hr-icon {
   position: absolute;
   width: calc(100% - 40px);
   top: 142.44rem;
@@ -403,7 +403,7 @@
   height: 0.12rem;
 }
 
-.board-detail-comments-counts {
+.fboard-detail-comments-counts {
   position: absolute;
   top: 144.1rem;
   left: 2rem;
@@ -413,7 +413,7 @@
   color: #4a4a4a;
 }
 
-.board-detail-commnets-form-box {
+.fboard-detail-commnets-form-box {
   position: absolute;
   width: 100%;
   top: 0;
@@ -426,7 +426,7 @@
   height: 24.4rem;
 }
 
-.board-detail-commnets-form-img-icon {
+.fboard-detail-commnets-form-img-icon {
   position: absolute;
   top: 1.5rem;
   left: 1.6rem;
@@ -436,7 +436,7 @@
   object-fit: cover;
 }
 
-.board-detail-commnets-form-tex {
+.fboard-detail-commnets-form-tex {
   position: absolute;
   width: calc(100% - 68px);
   top: 1.7rem;
@@ -449,7 +449,7 @@
   height: 15.7rem;
 }
 
-.board-detail-commnets-form {
+.fboard-detail-commnets-form {
   position: absolute;
   width: calc(100% - 32px);
   top: 147.6rem;
@@ -458,7 +458,7 @@
   height: 24.4rem;
 }
 
-.board-detail-commnets-form-sub {
+.fboard-detail-commnets-form-sub {
   position: absolute;
   top: 0;
   right: 0;
@@ -468,14 +468,14 @@
   height: 4rem;
 }
 
-.board-detail-commnets-form-sub1 {
+.fboard-detail-commnets-form-sub1 {
   position: absolute;
   top: 1rem;
   right: 3.1rem;
   letter-spacing: -0.24px;
 }
 
-.board-detail-commnets-submit-b {
+.fboard-detail-commnets-submit-b {
   position: absolute;
   top: 166.3rem;
   right: 3.2rem;
@@ -485,7 +485,7 @@
   color: #fff;
 }
 
-.board-detail-commnets-detail-i-icon {
+.fboard-detail-commnets-detail-i-icon {
   position: absolute;
   top: 0;
   left: 0;
@@ -495,7 +495,7 @@
   object-fit: cover;
 }
 
-.board-detail-commnets-detail-i {
+.fboard-detail-commnets-detail-i {
   position: absolute;
   top: 174.4rem;
   left: 2rem;
@@ -504,7 +504,7 @@
   color: #1c1c1c;
 }
 
-.board-detail-commnets-all-up-b {
+.fboard-detail-commnets-all-up-b {
   position: absolute;
   top: 0;
   right: 0;
@@ -516,7 +516,7 @@
   height: 2.7rem;
 }
 
-.board-detail-commnets-all-up-i-icon {
+.fboard-detail-commnets-all-up-i-icon {
   position: absolute;
   top: 1.15rem;
   right: 0.81rem;
@@ -524,7 +524,7 @@
   height: 0.66rem;
 }
 
-.board-detail-commnets-all-up {
+.fboard-detail-commnets-all-up {
   position: absolute;
   top: 0;
   right: 7.57rem;
@@ -532,7 +532,7 @@
   height: 2.7rem;
 }
 
-.board-detail-commnets-all-box {
+.fboard-detail-commnets-all-box {
   position: absolute;
   top: 0;
   right: 0;
@@ -543,7 +543,7 @@
   height: 2.7rem;
 }
 
-.board-detail-commnets-all-like2 {
+.fboard-detail-commnets-all-like2 {
   position: absolute;
   top: 0.61rem;
   right: 1.36rem;
@@ -554,7 +554,7 @@
   height: 1.35rem;
 }
 
-.board-detail-commnets-all-down-icon {
+.fboard-detail-commnets-all-down-icon {
   position: absolute;
   top: 1.14rem;
   right: 0.81rem;
@@ -562,7 +562,7 @@
   height: 0.66rem;
 }
 
-.board-detail-commnets-all-down {
+.fboard-detail-commnets-all-down {
   position: absolute;
   top: 0;
   right: 0;
@@ -570,7 +570,7 @@
   height: 2.7rem;
 }
 
-.board-detail-commnets-all-like {
+.fboard-detail-commnets-all-like {
   position: absolute;
   top: 175.2rem;
   right: 1.9rem;
@@ -581,7 +581,7 @@
   color: #000;
 }
 
-.board-detail-commnets-all-cont {
+.fboard-detail-commnets-all-cont {
   position: absolute;
   width: calc(100% - 45px);
   top: 179.2rem;
@@ -592,7 +592,7 @@
   height: 20.8rem;
 }
 
-.board-detail-commnets-hide-ico-icon {
+.fboard-detail-commnets-hide-ico-icon {
   position: absolute;
   top: 0.5rem;
   left: -0.11rem;
@@ -600,20 +600,20 @@
   height: 0.59rem;
 }
 
-.board-detail-commnets-hide-com,
-.board-detail-commnets-hide-tex {
+.fboard-detail-commnets-hide-com,
+.fboard-detail-commnets-hide-tex {
   position: absolute;
   top: 0;
   left: 1.8rem;
   letter-spacing: -0.24px;
 }
 
-.board-detail-commnets-hide-com {
+.fboard-detail-commnets-hide-com {
   left: 10.8rem;
   color: #626567;
 }
 
-.board-detail-commnets-hide {
+.fboard-detail-commnets-hide {
   position: absolute;
   top: 200.9rem;
   left: 2.5rem;
@@ -624,7 +624,7 @@
   color: #721ea6;
 }
 
-.board-detail-recom-box {
+.fboard-detail-recom-box {
   position: absolute;
   top: 203.7rem;
   left: 4.1rem;
@@ -634,7 +634,7 @@
   height: 22rem;
 }
 
-.board-detail-recom-info-counts {
+.fboard-detail-recom-info-counts {
   position: absolute;
   top: 0;
   left: 0;
@@ -644,7 +644,7 @@
   height: 1.7rem;
 }
 
-.board-detail-recom-info-date {
+.fboard-detail-recom-info-date {
   position: absolute;
   top: 1.9rem;
   left: 0.1rem;
@@ -653,7 +653,7 @@
   color: #626567;
 }
 
-.board-detail-recom-info-text {
+.fboard-detail-recom-info-text {
   position: absolute;
   top: 0;
   left: 4.4rem;
@@ -661,7 +661,7 @@
   height: 3.3rem;
 }
 
-.board-detail-recom-info {
+.fboard-detail-recom-info {
   position: absolute;
   top: 204.6rem;
   left: 5rem;
@@ -670,7 +670,7 @@
   color: #1c1c1c;
 }
 
-.board-detail-recom-likes-count {
+.fboard-detail-recom-likes-count {
   position: absolute;
   top: 0;
   right: 2.84rem;
@@ -678,7 +678,7 @@
   height: 2.7rem;
 }
 
-.board-detail-recom-down-box {
+.fboard-detail-recom-down-box {
   position: absolute;
   top: 0;
   right: 0;
@@ -690,7 +690,7 @@
   height: 2.7rem;
 }
 
-.board-detail-recom-likes {
+.fboard-detail-recom-likes {
   position: absolute;
   top: 205.4rem;
   right: 1.9rem;
@@ -701,35 +701,376 @@
   color: #000;
 }
 
-.board-detail-recom-recom-form,
-.board-detail-recom-textarea {
+.fboard-detail-recom-recom-form,
+.fboard-detail-recom-textarea {
   position: absolute;
   left: 5.3rem;
   letter-spacing: -0.24px;
   font-weight: 500;
 }
 
-.board-detail-recom-textarea {
+.fboard-detail-recom-textarea {
   width: calc(100% - 82px);
   top: 209.2rem;
   display: inline-block;
   height: 12.4rem;
 }
 
-.board-detail-recom-recom-form {
+.fboard-detail-recom-recom-form {
   top: 222.9rem;
   text-align: center;
 }
 
 /* position이랑 height 값 뺌 */
 .fboard-detail {
+  position: relative;
   background-color: #fff;
   border: 1px solid rgba(210, 210, 210, 0.9);
   box-sizing: border-box;
   width: 100%;
-  overflow: hidden;
+  /*overflow: hidden;*/
   text-align: left;
   font-size: 1.2rem;
   color: #626567;
   font-family: "Noto Sans KR";
+  /*height: auto;*/
+}
+
+/* 댓글 대댓글 */
+
+
+.fboard-detail-commnets-form-bo {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  height: 24.4rem;
+}
+.fboard-detail-commnets-form-im-icon {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.6rem;
+  border-radius: 50%;
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: cover;
+}
+.fboard-detail-commnets-form-te {
+  position: absolute;
+  width: 90%;
+  top: 1.7rem;
+  right: 1.6rem;
+  left: 1.6rem;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #cfcfcf;
+  box-sizing: border-box;
+  height: 15.7rem;
+  resize: none;
+  padding-left: 1.5rem;
+  padding-top: 1.5rem;
+}
+.fboard-detail-commnets-form-su1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 8px;
+  background-color: #721ea6;
+  width: 11.6rem;
+  height: 4rem;
+  border: none;
+}
+.fboard-detail-commnets-form-su2 {
+  position: absolute;
+  top: 1rem;
+  right: 3.1rem;
+  letter-spacing: -0.24px;
+  color: white;
+}
+.fboard-detail-commnets-form-su {
+  position: absolute;
+  top: 18.7rem;
+  right: 1.6rem;
+  width: 11.6rem;
+  height: 4rem;
+  border: none;
+}
+
+.fboard-detail-commnets-detail-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 500;
+  display: inline-block;
+  width: 13.3rem;
+  height: 1.7rem;
+}
+.fboard-detail-commnets-detail-3 {
+  position: absolute;
+  top: 1.9rem;
+  left: 0.1rem;
+  font-size: 1rem;
+  letter-spacing: -0.24px;
+  color: #626567;
+}
+.fboard-detail-commnets-detail-1 {
+  position: absolute;
+  top: 0;
+  left: 4.4rem;
+  width: 13.3rem;
+  height: 3.3rem;
+}
+.fboard-detail-commnets-detail-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+}
+.fboard-detail-commnets-detail- {
+  position: absolute;
+  top: 0;
+  left: 0.1rem;
+  width: 17.7rem;
+  height: 3.5rem;
+}
+.fboard-detail-commnets-all-up- {
+  position: absolute;
+  top: 0;
+  right: 7.57rem;
+  border-radius: 5px 0 0 5px;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 2.93rem;
+  height: 2.7rem;
+}
+.fboard-detail-commnets-all-up-icon {
+  position: absolute;
+  top: 1.15rem;
+  right: 8.38rem;
+  width: 1.23rem;
+  height: 0.66rem;
+}
+.fboard-detail-commnets-all-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 4.82rem;
+  height: 2.7rem;
+}
+.fboard-detail-commnets-all-lik2 {
+  position: absolute;
+  top: 0.61rem;
+  right: 1.36rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  display: inline-block;
+  width: 1.89rem;
+  height: 1.35rem;
+}
+.fboard-detail-commnets-all-lik1 {
+  position: absolute;
+  top: 0;
+  right: 2.84rem;
+  width: 4.82rem;
+  height: 2.7rem;
+}
+.fboard-detail-commnets-all-dow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 5px 5px 0;
+  background-color: #fff;
+  border: 1px solid #bdc0c4;
+  box-sizing: border-box;
+  width: 2.93rem;
+  height: 2.7rem;
+}
+.fboard-detail-commnets-all-dow-icon {
+  position: absolute;
+  top: 1.14rem;
+  right: 0.81rem;
+  width: 1.23rem;
+  height: 0.66rem;
+}
+.fboard-detail-commnets-all-lik {
+  position: absolute;
+  top: 0.8rem;
+  right: 0;
+  width: 10.5rem;
+  height: 2.7rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #000;
+}
+.fboard-detail-commnets-all-con {
+  position: relative;
+  width: calc(100% - 7px);
+  top: 4.8rem;
+  left: 0;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  color: #626567;
+  display: inline-block;
+  height: auto;
+  margin-bottom: 7rem;
+  white-space: pre-line;
+}
+
+
+.fboard-detail-commnets-hide-co{
+  position: relative;
+  top: 0;
+  float: left;
+  /*left: 17.8rem;*/
+  letter-spacing: -0.24px;
+  color: #626567;
+  cursor: pointer;
+  /*padding-left: 2rem;*/
+}
+.fboard-detail-commnets-hide-te {
+  position: relative;
+  top: 0;
+  float: left;
+  /*left: 17.8rem;*/
+  letter-spacing: -0.24px;
+  color: #626567;
+  cursor: pointer;
+  /*padding-left: 2rem;*/
+  /*padding-bottom: 2rem;*/
+}
+/*.fboard-detail-commnets-hide-co {*/
+/*    left: 10.8rem;*/
+/*    color: #626567;*/
+/*}*/
+.fboard-detail-commnets-hide {
+  position: relative;
+  top: auto;
+  /*left: 0.6rem;*/
+  width: 90%;
+  height: auto;
+  text-align: center;
+  font-size: 1.1rem;
+  /*color: #721ea6;*/
+}
+
+/* 장수현 test */
+.fboard-detail-commnets-btns{
+  display: flex;
+  margin-top: 3rem;
+  /*width: calc(100% - 20px);*/
+}
+
+.fboard-detail-commnets-btns-delete{
+  display: inline-block;
+  color: #721ea6;
+  cursor: pointer;
+}
+
+.fboard-detail-commnets-btns-update{
+  display: inline-block;
+  margin-left: 1rem;
+  color: #721ea6;
+  cursor: pointer;
+}
+.fboard-detail-reply-all {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: auto;
+  margin-bottom: 1rem;
+  /*border-left: 1px solid #adadad;*/
+}
+.fboard-detail-reply-all:before {
+  content: "";
+  position: absolute;
+  left: -2rem; /* 세로선을 왼쪽으로 5px 이동시킵니다. */
+  top: 0;
+  height: 90%;
+  width: 1px;
+  background-color: #e3e3e5; /* 세로선의 색상을 정의합니다. */
+}
+
+.fboard-detail-commnets-hide-img{
+  width: 1rem;
+  cursor: pointer;
+}
+.fboard-comments-box{
+  position: relative;
+  width: calc(100% - 74px);
+  top: 35.7rem;
+  right: 3.7rem;
+  left: 3.7rem;
+}
+
+.fboard-detail-commnets-form {
+  position: absolute;
+  width: calc(100% - 32px);
+  top: 2rem;
+  right: 1.6rem;
+  left: 1.6rem;
+  height: 24.4rem;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.fboard-detail-commnets {
+  position: absolute;
+  top: 32.2rem;
+  left: 1.9rem;
+  width: 90%;
+  height: 28.1rem;
+  font-size: 1.2rem;
+  color: #1c1c1c;
+
+}
+.fboard-detail-comments-all {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  padding-bottom: 5rem;
+}
+
+.fboard-detail-comments-counts {
+  position: absolute;
+  top: -32rem;
+  left: 1rem;
+  font-size: 1.6rem;
+  letter-spacing: -0.24px;
+  font-weight: 500;
+  color: #4a4a4a;
+}
+
+.fboard-detail-comment-form{
+  position: absolute;
+  width: calc(100% - 32px);
+  top: 2rem;
+  right: 1.6rem;
+  left: 1.6rem;
+  height: 24.4rem;
+  color: #fff;
+  margin-top: 1rem;
+}
+.fboard-detail-comments{
+  position: absolute;
+  top: 32.2rem;
+  left: 1.9rem;
+  width: 90%;
+  height: 28.1rem;
+  font-size: 1.2rem;
+  color: #1c1c1c;
 }

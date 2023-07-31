@@ -86,7 +86,6 @@ function Reviewlist(props) {
 
     const fetchReviews = async (page, keyword, sortProperty, sortDirection) => {
         const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
-        console.log(sortDirection, sortProperty)
         try {
             const response = await axiosIns.get('/api/review/D0', {
                 params: {
@@ -98,7 +97,6 @@ function Reviewlist(props) {
             });
 
             setReviews(response.data.reviews);
-            console.log(response.data);
             setTotalPages(response.data.totalPages);
 
         } catch (error) {
@@ -175,7 +173,6 @@ function Reviewlist(props) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {

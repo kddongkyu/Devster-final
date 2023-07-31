@@ -1,4 +1,4 @@
-package data.dto;
+package data.dto.fboard;
 
 import data.entity.FreeBoardEntity;
 import lombok.AllArgsConstructor;

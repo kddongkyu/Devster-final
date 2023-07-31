@@ -1,0 +1,74 @@
+.f-detail-commnets-form {
+    width: 90%;
+    margin-left: 2.7rem;
+}
+
+.f-detail-commnets-form-te {
+    resize: none;
+    margin-top: 1.5rem;
+    width: 100%;
+    height: auto;
+    border: 1px solid #adadad;
+    padding-left: 0.5rem;
+    padding-top: 0.2rem;
+    border-radius: 5px;
+}
+
+.f-detail-reply-form-te {
+    resize: none;
+    margin-top: 1.5rem;
+    width: 93%;
+    height: auto;
+    border: 1px solid #adadad;
+    padding-left: 0.5rem;
+    padding-top: 0.2rem;
+    border-radius: 5px;
+}
+
+.f-detail-commnets-form-te:focus {
+    outline: none;
+    border: 0.2rem solid #721ea6;
+}
+
+.f-detail-reply-form-te:focus {
+    outline: none;
+    border: 0.2rem solid #721ea6;
+}
+
+
+.qboard-detail-commnets-hide-co {
+    text-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.qboard-detail-commnets-hide-te {
+    padding-right: 2rem;
+}
+
+.f-detail-commnets-form-su {
+    width: 100%;
+    text-align: right;
+}
+.f-detail-commnets-form-su-text {
+    border: none;
+    background: none;
+    outline: none;
+    color: #721ea6;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.f-detail-reply-form-su {
+    width: 100%;
+    text-align: right;
+    padding-right: 2.5rem;
+}
+.f-detail-reply-form-su-text{
+    border: none;
+    background: none;
+    outline: none;
+    color: #721ea6;
+    cursor: pointer;
+
+}
