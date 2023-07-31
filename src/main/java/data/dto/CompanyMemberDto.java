@@ -41,7 +41,7 @@ public class CompanyMemberDto {
                 .cm_post(entity.getCMpost())
                 .cm_role(entity.getCMrole())
                 .cm_refreshtoken(entity.getCMrefreshtoken())
-                .cm_name(entity.getCMcompname())
+                .cm_name(entity.getCMname())
                 .cm_cp(entity.getCMcp())
                 .cm_date(entity.getCMdate())
                 .cm_reg(entity.getCMreg())

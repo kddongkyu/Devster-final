@@ -26,11 +26,13 @@
     font-family: Lalezar;
     margin-top: 2rem;
     margin-right: auto;
+    display: flex;
 }
 /* 로고이미지 */
 .footer-logo-icon {
     width: 4.2rem;
     height: 2.7rem;
+    margin-top: 1rem;
 }
 /* 로고텍스트 */
 .footer-logo-text {

@@ -110,7 +110,7 @@ public class CompanyMemberService {
             entityForUpdate.setCMpost(dto.getCm_post());
             entityForUpdate.setCMname(dto.getCm_name());
             entityForUpdate.setCMcp(dto.getCm_cp());
-
+            entityForUpdate.setCMcompname(dto.getCm_compname());
             companyMemberRepository.save(entityForUpdate);
 
             log.info("기업회원정보 업데이트 완료");
@@ -145,8 +145,7 @@ public class CompanyMemberService {
         jwtService.removeRefreshTokenComp(token.substring(7));
     }
 
-    public String confirmRole(HttpServletRequest request, boolean sign) {
-        int cm_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+    public String confirmRole(int cm_idx, boolean sign) {
         CompanyMemberEntity companyMember = companyMemberRepository.findById(cm_idx).orElseThrow(()-> new EntityNotFoundException("해당 cm_idx 는 존재하지않습니다. " + cm_idx));
 
         if(sign) {

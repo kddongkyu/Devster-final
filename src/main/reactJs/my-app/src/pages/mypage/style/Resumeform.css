@@ -2,12 +2,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  font-size: 1.9rem;
+  font-size: 2.4rem;
   letter-spacing: -0.24px;
   display: inline-block;
   color: #000;
   width: 16.4rem;
   height: 2.3rem;
+  font-weight: 700;
 }
 .resumeform-header-ck-text {
   position: absolute;
@@ -95,11 +96,12 @@
 .resumeform-job-tiltle-text {
   position: absolute;
   top: 0;
-  left: 0.3rem;
+  left: 0rem;
   letter-spacing: -0.24px;
   display: inline-block;
   width: 34.1rem;
   height: 2.3rem;
+  font-weight: 700;
 }
 .resumeform-job-line-01-icon {
   position: absolute;
@@ -125,8 +127,12 @@
   right: 0;
   left: 0;
   border-radius: 5px;
-  background-color: #f5eff9;
-  height: 2.8rem;
+  background-color: #fff;
+  border: 1px solid #d3d4d8;
+  box-sizing: border-box;
+  height: 3.8rem;
+  font-size: 1.3rem;
+  padding-top: 5px;
 }
 .resumeform-job-box-text {
   position: absolute;
@@ -139,10 +145,10 @@
 }
 .resumeform-job-box {
   position: absolute;
-  width: calc(100% - 11px);
-  top: 4.1rem;
-  right: 0.6rem;
-  left: 0.5rem;
+  width: 100%;
+  top: 3rem;
+  right: 0rem;
+  left: 0rem;
   height: 2.8rem;
   font-size: 1.3rem;
   color: #626567;
@@ -212,8 +218,9 @@
   right: 0;
   left: 0;
   border-radius: 5px;
-  background-color: #f5eff9;
+  background-color: #fff;
   height: 2.8rem;
+  border: 1px solid #d3d4d8;
 }
 .resumeform-school-entrance-ico {
   position: absolute;
@@ -230,10 +237,10 @@
 }
 .resumeform-school-entrance {
   position: absolute;
-  width: 42%;
-  top: 4.1rem;
+  width: 49%;
+  top: 3rem;
   right: 52.29%;
-  left: 5.71%;
+  left: 0;
   height: 2.8rem;
 }
 .resumeform-school-graduation-i {
@@ -252,17 +259,17 @@
 .resumeform-school-graduation,
 .resumeform-school-inputname {
   position: absolute;
-  width: 41.43%;
-  top: 4.1rem;
-  right: 5.43%;
-  left: 53.14%;
+  width: 49%;
+  top: 3rem;
+  right: 0;
+  left: 51%;
   height: 2.8rem;
 }
 .resumeform-school-inputname {
-  width: 89.43%;
-  top: 8.1rem;
+  width: 100%;
+  top: 6.5rem;
   right: 4.86%;
-  left: 5.71%;
+  left: 0;
 }
 .resumeform-school {
   position: absolute;
@@ -275,10 +282,10 @@
 }
 .icon-add-circle-outline {
   position: absolute;
-  top: 0.64rem;
-  left: 3.74rem;
-  width: 1.43rem;
-  height: 1.43rem;
+  top: 0.2rem;
+  left: 3.4rem;
+  width: 2rem;
+  /* height: 1.43rem; */
   cursor: pointer;
 }
 .resumeform-career-group-02-tex {
@@ -299,7 +306,7 @@
 }
 .resumeform-career-group-02-gro {
   position: absolute;
-  width: 47.12%;
+  width: 45%;
   top: 0;
   right: 52.88%;
   left: 0;
@@ -313,10 +320,10 @@
 }
 .resumeform-career-group-02-gro2 {
   position: absolute;
-  width: 46.47%;
+  width: 45%;
   top: 0;
   right: 0.32%;
-  left: 53.21%;
+  left: 46%;
   height: 2.8rem;
 }
 .resumeform-career-group-02-tex2 {
@@ -332,7 +339,7 @@
 .resumeform-career-group-02-gro6 {
   position: absolute;
   width: 32.69%;
-  top: 4rem;
+  top: 3.5rem;
   right: 67.31%;
   left: 0;
   height: 2.8rem;
@@ -353,34 +360,34 @@
 .resumeform-career-group-02-gro8 {
   position: absolute;
   width: 32.69%;
-  top: 4rem;
+  top: 3.5rem;
   right: 0;
   left: 67.31%;
   height: 2.8rem;
 }
 .resumeform-career-group-02 {
   position: absolute;
-  width: 89.14%;
-  top: 4.1rem;
+  width: 100%;
+  top: 3rem;
   right: 5.14%;
-  left: 5.71%;
+  left: 0;
   height: 6.8rem;
   font-size: 1rem;
   color: #626567;
 }
 .resumeform-career {
   position: absolute;
-  top: 50rem;
+  top: 49rem;
   left: 0;
   width: 100%;
   height: 10.9rem;
 }
 .resume-certificate-plusicon {
   position: absolute;
-  top: 0.64rem;
-  left: 5.04rem;
-  width: 1.43rem;
-  height: 1.43rem;
+  top: 0.2rem;
+  left: 4.8rem;
+  width: 2rem;
+  /* height: 1.43rem; */
   cursor: pointer;
 }
 .resumeform-certificate-box-dat2 {
@@ -409,18 +416,19 @@
   height: 2.8rem;
 }
 .resumeform-certificate-box-inp {
-  width: 63.99%;
+  width: 56%;
   right: 0;
-  left: 36.01%;
+  left: 35%;
   border-radius: 5px;
-  background-color: #f5eff9;
+  background-color: #fff;
+  border: 1px solid #d3d4d8;
 }
 .resumeform-certificate-box {
   position: absolute;
-  width: 88.86%;
-  top: 4.1rem;
+  width: 100%;
+  top: 3rem;
   right: 5.43%;
-  left: 5.71%;
+  left: 0;
   height: 2.8rem;
   font-size: 1rem;
   color: #626567;
@@ -439,8 +447,10 @@
   right: 0;
   left: 0;
   border-radius: 5px;
-  background-color: #f5eff9;
-  height: 19.7rem;
+  background-color: #fff;
+  height: 20rem;
+  border: 1px solid #d3d4d8;
+  font-size: 1.3rem;
 }
 .p {
   margin: 0;
@@ -455,10 +465,10 @@
 }
 .resume-content-box {
   position: absolute;
-  width: calc(100% - 11px);
-  top: 4.1rem;
-  right: 0.6rem;
-  left: 0.5rem;
+  width: 100%;
+  top: 3rem;
+  right: 0rem;
+  left: 0rem;
   height: 19.7rem;
   font-size: 1.3rem;
   color: #626567;
@@ -511,42 +521,60 @@
   top: 4.1rem;
 }
 .resumeform-career-group-02:nth-child(3) {
-  top: 13rem;
+  top: 11rem;
 }
 
 .resumeform-career-group-02:nth-child(4) {
-  top: 22rem;
+  top: 19rem;
 }
 
 .resumeform-certificate-box:nth-child(3) {
-  top: 8.6rem;
+  top: 7.4rem;
 }
 
 .resumeform-certificate-box:nth-child(4) {
-  top: 13.2rem;
+  top: 11.8rem;
 }
 
 .resumeform-career-group-02-removeButton{
   position: absolute;
-  right: -2.5rem;
+  right: 0rem;
+  border: 1px solid rgb(228, 228, 228);
+  background-color: #fff;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 5px;
+}
+.resumeform-career-group-02-removeButton img{
+  width: 1.8rem;
 }
 
 .clearFileInput{
   position: absolute;
   right: 0rem;
+  border: 1px solid #d3d4d8;
+  background-color: #fff;
+  width: 3.9rem;
+  height: 3.9rem;
+  border-radius: 5px;
+}
+.clearFileInput img{
+  width: 1.8rem;
 }
 
 .customFileUpload {
-  background-color: #f5eff9;
+  background-color: rgb(245, 245, 248);
   border: none;
   color: #000;
   padding: 10px 20px;
-  text-align: center;
+  /* text-align: center; */
   text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 2px;
+  /* display: inline-block; */
+  font-size: 1.3rem;
+  /* margin: 4px 2px; */
   cursor: pointer;
+  border-radius: .5rem;
+  width: 87%;
 }
 
 .customFileUploadButton {
@@ -560,4 +588,23 @@
   font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.resume-update-submit-button {
+  border-radius: 6px;
+  background-color: #721ea6;
+  width: 8.8rem;
+  height: 4.1rem;
+  border: 0;
+  color: #fff;
+  font-weight: 700;
+}
+.resumeform-submit-button{
+  border-radius: 6px;
+    background-color: #721ea6;
+    width: 8.8rem;
+    height: 4.1rem;
+    border: 0;
+    color: #fff;
+    font-weight: 700;
 }

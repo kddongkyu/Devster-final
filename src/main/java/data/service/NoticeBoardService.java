@@ -61,7 +61,7 @@ public class NoticeBoardService {
 
 
     public Map<String, Object> getPagedNboard(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("NBwriteDay").descending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("NBwriteday").descending());
         Page<NoticeBoardEntity> result = noticeBoardRepository.findAll(pageable);
 
         List<Map<String, Object>> noticeBoardList = result
@@ -110,6 +110,9 @@ public class NoticeBoardService {
 
         session.setAttribute("photo",String.join(",",fullPhoto));
         log.info("NoticeBoard 사진 업로드 완료");
+
+        log.info("fullPhoto: " + fullPhoto);
+
         return fullPhoto;
     }
 
@@ -164,15 +167,47 @@ public class NoticeBoardService {
         }
     }
 
-    public void updatePhoto(Integer nb_idx , MultipartFile upload ) {
-        Optional<NoticeBoardEntity> entity = noticeBoardRepository.findById(nb_idx);
-        storageService.deleteFile(bucketName,"devster/nboard",entity.get().getNBphoto());
-        entity.get().setNBphoto(storageService.uploadFile(bucketName,"devster/nboard",upload));
-        noticeBoardRepository.save(entity.get());
+//    public void updatePhoto(Integer nb_idx , MultipartFile upload ) {
+//        Optional<NoticeBoardEntity> entity = noticeBoardRepository.findById(nb_idx);
+//        storageService.deleteFile(bucketName,"devster/nboard",entity.get().getNBphoto());
+//        entity.get().setNBphoto(storageService.uploadFile(bucketName,"devster/nboard",upload));
+//        noticeBoardRepository.save(entity.get());
+//
+//        log.info(nb_idx+" NoticeBoard 사진업데이트 완료");
+//    }
 
-        log.info(nb_idx+" NoticeBoard 사진업데이트 완료");
+//    public String updatePhoto(Integer nb_idx , MultipartFile upload ) {
+//        Optional<NoticeBoardEntity> entity = noticeBoardRepository.findById(nb_idx);
+//        storageService.deleteFile(bucketName,"devster/nboard",entity.get().getNBphoto());
+//        String fileName = storageService.uploadFile(bucketName,"devster/nboard",upload);
+//        entity.get().setNBphoto(fileName);
+//        noticeBoardRepository.save(entity.get());
+//
+//        log.info(nb_idx+" NoticeBoard 사진업데이트 완료");
+//        return fileName;
+//    }
+
+    public List<String> updatePhotos(Integer nb_idx , List<MultipartFile> uploads ) {
+        Optional<NoticeBoardEntity> entity = noticeBoardRepository.findById(nb_idx);
+        if(entity.isPresent()){
+            List<String> fileNames = new ArrayList<>();
+            for (MultipartFile upload : uploads) {
+                String fileName = storageService.uploadFile(bucketName,"devster/nboard",upload);
+                fileNames.add(fileName);
+            }
+            String photoNames = String.join(",", fileNames);
+            log.info("photoNames: " + photoNames);  // Log the photoNames string
+            entity.get().setNBphoto(photoNames);
+            noticeBoardRepository.save(entity.get());
+            log.info(nb_idx + " NoticeBoard 사진들 업데이트 완료");
+            return fileNames;
+        }else{
+            throw new EntityNotFoundException("NoticeBoardEntity with id " + nb_idx + " not found.");
+        }
     }
-    
+
+
+
 
 
 }
