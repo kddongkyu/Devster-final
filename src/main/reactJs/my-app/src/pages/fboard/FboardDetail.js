@@ -17,7 +17,6 @@ function FboardDetail(props) {
     const toastAlert = ToastAlert(enqueueSnackbar);
     //디코딩 함수
     const de = checkToken();
-    // const m_idx = de.idx;
     const [m_idx, setM_idx] = useState();
     const [fboardData, setFboardData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -38,10 +37,9 @@ function FboardDetail(props) {
                     setArrayFromString(response.data.fboard.fb_photo.split(","));
                 }
                 setIsLoading(false);
-                setM_idx(de.idx);
 
-                if (m_idx && fb_idx) {
-                    axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
+                if (de && de.idx && fb_idx) {
+                    axiosIns.get(`/api/fboard/D1/${de.idx}/checkGood/${fb_idx}`)
                         .then(response => {
                             setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
                         })
@@ -49,7 +47,7 @@ function FboardDetail(props) {
                             jwtHandleError(error, toastAlert);
                         });
 
-                    axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
+                    axiosIns.get(`/api/fboard/D1/${de.idx}/checkBad/${fb_idx}`)
                         .then(response => {
                             setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
                         })
@@ -80,87 +78,93 @@ function FboardDetail(props) {
     }
 
     // 좋아요 싫어요
-    const handlelike = (m_idx, fb_idx) => {
-        // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
-            .then(response => {
-                if (response.data === 2) {
-                    // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    fetchFboard(fb_idx, currentPage);
-                } else {
-                    // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
-                        .then(response => {
-                            if (response.data === 1) {
-                                // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                                alert("이미 좋아요가 눌려 있습니다");
-                                axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
-                                    .then(response => {
-                                        fetchFboard(fb_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        jwtHandleError(error, toastAlert);
-                                    });
-                            } else {
-                                // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
-                                    .then(response => {
-                                        fetchFboard(fb_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        jwtHandleError(error, toastAlert);
-                                    });
-                            }
-                        })
-                        .catch(error => {
-                            jwtHandleError(error, toastAlert);
-                        });
-                }
-            })
-            .catch(error => {
-                jwtHandleError(error, toastAlert);
-            });
+    const handlelike = (fb_idx) => {
+        if(de && de.idx) {
+            let m_idx = de.idx;
+            // 먼저 좋아요 상태를 체크합니다.
+            axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
+                .then(response => {
+                    if (response.data === 2) {
+                        // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                        fetchFboard(fb_idx, currentPage);
+                    } else {
+                        // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
+                        axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
+                            .then(response => {
+                                if (response.data === 1) {
+                                    // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                                    alert("이미 좋아요가 눌려 있습니다");
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
+                                        .then(response => {
+                                            fetchFboard(fb_idx, currentPage);
+                                        })
+                                        .catch(error => {
+                                            jwtHandleError(error, toastAlert);
+                                        });
+                                } else {
+                                    // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
+                                        .then(response => {
+                                            fetchFboard(fb_idx, currentPage);
+                                        })
+                                        .catch(error => {
+                                            jwtHandleError(error, toastAlert);
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                jwtHandleError(error, toastAlert);
+                            });
+                    }
+                })
+                .catch(error => {
+                    jwtHandleError(error, toastAlert);
+                });
+        }
     };
 
-    const handleDislike = (m_idx, fb_idx) => {
-        // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
-            .then(response => {
-                if (response.data === 1) {
-                    // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    fetchFboard(fb_idx, currentPage);
-                } else {
-                    // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
-                        .then(response => {
-                            if (response.data === 2) {
-                                // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                                axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
-                                    .then(response => {
-                                        fetchFboard(fb_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        jwtHandleError(error, toastAlert);
-                                    });
-                            } else {
-                                // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
-                                    .then(response => {
-                                        fetchFboard(fb_idx, currentPage);
-                                    })
-                                    .catch(error => {
-                                        jwtHandleError(error, toastAlert);
-                                    });
-                            }
-                        })
-                        .catch(error => {
-                            jwtHandleError(error, toastAlert);
-                        });
-                }
-            })
-            .catch(error => {
-                jwtHandleError(error, toastAlert);
-            });
+    const handleDislike = (fb_idx) => {
+        if( de && de.idx ) {
+            let m_idx = de.idx;
+            // 먼저 좋아요 상태를 체크합니다.
+            axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
+                .then(response => {
+                    if (response.data === 1) {
+                        // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                        fetchFboard(fb_idx, currentPage);
+                    } else {
+                        // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
+                        axiosIns.get(`/api/fboard/D1/${m_idx}/checkBad/${fb_idx}`)
+                            .then(response => {
+                                if (response.data === 2) {
+                                    // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
+                                        .then(response => {
+                                            fetchFboard(fb_idx, currentPage);
+                                        })
+                                        .catch(error => {
+                                            jwtHandleError(error, toastAlert);
+                                        });
+                                } else {
+                                    // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
+                                    axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
+                                        .then(response => {
+                                            fetchFboard(fb_idx, currentPage);
+                                        })
+                                        .catch(error => {
+                                            jwtHandleError(error, toastAlert);
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                jwtHandleError(error, toastAlert);
+                            });
+                    }
+                })
+                .catch(error => {
+                    jwtHandleError(error, toastAlert);
+                });
+        }
     };
 
     // 삭제
@@ -263,7 +267,7 @@ function FboardDetail(props) {
                  src={require("./assets/boarddetail/notice_detail_header_function_url.svg").default}
             />
 
-            {m_idx === fboardData.fboard.m_idx && (
+            { de && de.idx === fboardData.fboard.m_idx && (
                 <>
                     <img
                         className="fboard-update-icon"
@@ -340,7 +344,7 @@ function FboardDetail(props) {
                             <div className="fboard-detail-counter-like">
                                 <div className="fboard-detail-counter-like-box"
                                      style={isGood ? {backgroundColor: '#F5EFF9'} : {}}
-                                     onClick={() => handlelike(m_idx, fb_idx)}/>
+                                     onClick={() => handlelike(fb_idx)}/>
                                 <img
                                     className="fboard-detail-counter-like-icon"
                                     alt=""
@@ -356,7 +360,7 @@ function FboardDetail(props) {
                             <div className="fboard-detail-counter-dislike">
                                 <div className="fboard-detail-counter-dislike-b"
                                      style={isBad ? {backgroundColor: '#F5EFF9'} : {}}
-                                     onClick={() => handleDislike(m_idx, fb_idx)}/>
+                                     onClick={() => handleDislike(fb_idx)}/>
                                 <img
                                     className="fboard-detail-counter-like-icon"
                                     alt=""

@@ -279,17 +279,18 @@ function Hboard(props) {
           <div className="hboard-selection-hire-box" />
           <div className="hboard-selection-hire-text">채용정보</div>
         </div>
-        <NavLink
-          to="/aboard"
-          activeClassName="active"
+        <div
           className="hboard-selection-academy"
+          onClick={()=>{
+            JwtPageChk(navi, "/aboard")
+          }}
         >
           <div className="hboard-selection-qna-box" />
           <div className="hboard-selection-academy-text">학원별</div>
-        </NavLink>
+        </div>
       </div>
 
-      {de.type === "company" && (
+      {de && de.type === "company" && (
         <div
           className="hboard-write"
           onClick={() => {

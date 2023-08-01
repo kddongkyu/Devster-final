@@ -15,7 +15,6 @@ export const useJwtPageChk = () => {
         if (accessToken && refreshToken) {
             const decodedToken = jwt_decode(accessToken);
             role = decodedToken.role;
-            
             try {
                 const res = await axiosIns({
                     method: 'post',
