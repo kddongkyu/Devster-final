@@ -18,9 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.mysql.cj.xdevapi.Result;
-
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.util.*;
