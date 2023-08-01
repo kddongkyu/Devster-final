@@ -3,12 +3,16 @@ import './style/ReviewModal.css';
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 const Star = ({ filled }) => <span>{filled ? "★" : "☆"}&nbsp;</span>;
 function ReviewModal({ isReviewOpen, setIsReviewOpen ,setSelectedCompany, setSelectedCompanyIdx}) {
 
     const [keyword, setKeyword] = useState('');
     const [companies, setCompanies] = useState([]);
+    const { enqueueSnackbar } = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
 
 
     const closeFindCo = () => {
@@ -26,10 +30,9 @@ function ReviewModal({ isReviewOpen, setIsReviewOpen ,setSelectedCompany, setSel
             const response = await axiosIns.get(listUrl, {
                 params: { keyword: keyword }
             });
-            console.log(response.data);
             setCompanies(response.data); // Set the data to your state variable
         } catch (error) {
-            console.error(error.response); // Print the error response from the server
+            toastAlert('검색 처리 중 에러 발생', 'warning');
         }
     };
 

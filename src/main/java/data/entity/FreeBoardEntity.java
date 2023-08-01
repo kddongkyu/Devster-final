@@ -1,6 +1,6 @@
 package data.entity;
 
-import data.dto.FreeBoardDto;
+import data.dto.fboard.FreeBoardDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

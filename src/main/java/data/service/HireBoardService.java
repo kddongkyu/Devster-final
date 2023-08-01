@@ -10,9 +10,11 @@ import data.dto.HireBoardDto;
 import data.entity.CompanyMemberEntity;
 import data.entity.HireBoardEntity;
 import data.entity.HireBookmarkEntity;
+import data.entity.MemberEntity;
 import data.repository.CompanyMemberRepository;
 import data.repository.HireBoardRepository;
 import data.repository.HireBookmarkRepository;
+import data.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
 import data.mapper.HireBoardMapper;
@@ -56,17 +58,20 @@ public class HireBoardService {
     private final HireBookmarkRepository hireBookmarkRepository;
     private final NcpObjectStorageService storageService;
     private final CompanyMemberRepository companyMemberRepository;
+
     
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
     public HireBoardService(HireBoardMapper hireBoardMapper, HireBoardRepository hireBoardRepository, HireBookmarkRepository hireBoardBookmarkRepository,
-    NcpObjectStorageService storageService, CompanyMemberRepository companyMemberRepository) {
+    NcpObjectStorageService storageService, CompanyMemberRepository companyMemberRepository
+    ) {
         this.hireBoardMapper = hireBoardMapper;
         this.hireBoardRepository = hireBoardRepository;
         this.hireBookmarkRepository = hireBoardBookmarkRepository;
         this.storageService = storageService;
         this.companyMemberRepository = companyMemberRepository;
+
     }
 
 
@@ -332,6 +337,31 @@ public class HireBoardService {
             
         } catch (Exception e) {
             logger.error("Error occurred while bookmark",e);
+        }
+    }    
+
+
+    public List<Map<String, Object>> getNewestHboard(){
+        try{
+            List<HireBoardEntity> hireBoardEntities = hireBoardRepository.findTop3ByOrderByHbwriteDayDesc();
+            List<Map<String, Object>> hireBoardList = new ArrayList<>();
+    
+            for (HireBoardEntity hireBoardEntity : hireBoardEntities) {
+                CompanyMemberEntity companyMemberInfo = companyMemberRepository.findById(hireBoardEntity.getCMidx()).orElse(null);
+                Map<String, Object> hboardMemberInfo = new HashMap<>();
+                    hboardMemberInfo.put("hboard", HireBoardDto.toHireBoardDto(hireBoardEntity));
+                    
+                    if (companyMemberInfo != null) {
+                        hboardMemberInfo.put("cmCompname", companyMemberInfo.getCMcompname());
+                        hboardMemberInfo.put("cmPhoto", companyMemberInfo.getCMfilename());
+                    }
+                    hireBoardList.add(hboardMemberInfo);
+                }
+                return hireBoardList;
+
+        } catch (Exception e) {
+            log.error("Error finding newest qboard Articles", e);
+            throw e;
         }
     }    
 

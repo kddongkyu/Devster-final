@@ -5,48 +5,51 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import StarRating from "./StarRating";
 import {Reviewcomment, Reviewcommentform, Reviewcommentreply} from "./index";
+import {useSnackbar} from "notistack";
+import ToastAlert from "../../api/ToastAlert";
+import {jwtHandleError} from "../../api/JwtHandleError";
+
 function Reviewdetail() {
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
     const m_idx = de.idx;
     const [reviewData, setReviewData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const { rb_idx, currentPage } = useParams();
+    const {rb_idx, currentPage} = useParams();
     const [isGood, setIsGood] = useState(false);
     const [isBad, setIsBad] = useState(false);
     const [status, setStatus] = useState("");
     const navi = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const toastAlert = ToastAlert(enqueueSnackbar);
 
     const fetchReview = useCallback((rb_idx, currentPage = null) => {
-        const url=`/api/review/D0/${rb_idx}`;
+        const url = `/api/review/D0/${rb_idx}`;
         axiosIns.get(url)
             .then(response => {
-                console.log(response.data);
                 setReviewData(response.data);
                 setIsLoading(false);
 
-                // fetchReview가 성공적으로 완료된 후에 좋아요 상태 조회
                 if (m_idx && rb_idx) {
                     axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
                         .then(response => {
                             setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
                         })
                         .catch(error => {
-                            console.error('Error checking good status:', error);
+                            toastAlert('좋아요 처리에 문제가 발생했습니다.', 'warning');
                         });
 
-                    // fetchReview가 성공적으로 완료된 후에 싫어요 상태 조회
                     axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
                         .then(response => {
                             setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
                         })
                         .catch(error => {
-                            console.error('Error checking bad status:', error);
+                            toastAlert('싫어요 처리에 문제가 발생했습니다.', 'warning');
                         });
                 }
             })
             .catch(error => {
-                console.error('Error fetching review:', error);
+                jwtHandleError(error, toastAlert);
             });
     }, [m_idx, rb_idx]);
 
@@ -60,7 +63,7 @@ function Reviewdetail() {
     }
 
     // 목록 돌아가기
-    const reivewNavigation = () => {
+    const reviewNavigation = () => {
         const url = "/review";
         window.location.href = url;
     };
@@ -91,7 +94,6 @@ function Reviewdetail() {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -128,27 +130,27 @@ function Reviewdetail() {
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        console.error('좋아요 요청 실패:', error);
+                                        toastAlert('좋아요 처리에 문제가 발생했습니다.', 'warning');
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/${m_idx}/like/${rb_idx}`)
                                     .then(response => {
-                                        console.log('좋아요 요청 성공:', response.data);
+                                        toastAlert('좋아요를 누르셨습니다.', 'success');
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        console.error('좋아요 요청 실패:', error);
+                                        toastAlert('좋아요 처리에 문제가 발생했습니다.', 'warning');
                                     });
                             }
                         })
                         .catch(error => {
-                            console.error('좋아요 상태 체크 실패:', error);
+                            jwtHandleError(error, toastAlert);
                         });
                 }
             })
             .catch(error => {
-                console.error('싫어요 상태 체크 실패:', error);
+                jwtHandleError(error, toastAlert);
             });
     };
 
@@ -195,13 +197,12 @@ function Reviewdetail() {
     };
 
 
-
     const deleteReview = (rb_idx) => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             axiosIns.delete(`/api/review/D1/${rb_idx}`)
                 .then(response => {
                     console.log('Review deleted successfully');
-                    window.location.href="/review";
+                    window.location.href = "/review";
                 })
                 .catch(error => {
                     console.error('Error deleting review:', error);
@@ -210,26 +211,25 @@ function Reviewdetail() {
     };
 
 
-
     let result = reviewData.review.rb_like - reviewData.review.rb_dislike;
 
     if (reviewData.review.rb_like <= reviewData.review.rb_dislike) {
-        result = - result;
+        result = -result;
     }
 
     return (
         <div className="review-detail">
 
             <div className="advertise-box">
-                <div className="advertise-main" />
+                <div className="advertise-main"/>
                 <b className="advertise-text">광고</b>
             </div>
             <div className="review-detail-headline">
-                <div className="review-detail-headline-box" />
+                <div className="review-detail-headline-box"/>
                 <div className="review-detail-headline-text">리뷰게시판</div>
             </div>
             <div className="review-detail-comp">
-                <div className="review-detail-comp-box" />
+                <div className="review-detail-comp-box"/>
                 <div className="review-detail-comp-info">
                     <img
                         className="review-detail-comp-info-img-icon"
@@ -240,7 +240,7 @@ function Reviewdetail() {
 
                     <div
                         className="review-detail-comp-info-stars-icon">
-                        <StarRating rating={reviewData.ciStar} />
+                        <StarRating rating={reviewData.ciStar}/>
                     </div>
                 </div>
                 <div className="review-detail-comp-info-text">
@@ -283,7 +283,7 @@ function Reviewdetail() {
                     alt=""
                     src={require('./assets/review_detail_header_function_url.svg').default}
                 />
-                {m_idx === reviewData.review.m_idx &&(
+                {m_idx === reviewData.review.m_idx && (
                     <>
                         <Link to={`/review/update/${reviewData.review.rb_idx}`}>
                             <img className="review-edit-icon" alt=""
@@ -291,65 +291,71 @@ function Reviewdetail() {
                         </Link>
                         <img className="review-trash-icon" alt=""
                              src={require('./assets/review-trash.svg').default}
-                             onClick={() => deleteReview(rb_idx)} />
+                             onClick={() => deleteReview(rb_idx)}/>
                     </>
                 )}
             </div>
             <div className="review-detail-body">
+
+                <div className="review-detail-body-subject">{reviewData.review.rb_subject}</div>
                 <div className="review-detail-body-text">
-                   <pre style={{marginBottom: "5rem"}}>
+                   <pre className="review-detail-textarea-pre"
+                        style={{marginBottom: "5rem", wordWrap: "break-word"}}>
                     {reviewData.review.rb_content}
                     </pre>
                 </div>
-                <div className="review-detail-body-subject">{reviewData.review.rb_subject}</div>
-            </div>
 
-            <div className="review-detail-listbackcounter">
-            <div className="reivew-detail-listback" onClick={reivewNavigation}>
-                <div className="reivew-detail-listback-rec"/>
-                <div className="reivew-detail-listback-text">목록</div>
-                <img
-                    className="reivew-detail-listback-icon"
-                    alt=""
-                    src={require("../fboard/assets/boarddetail/board_detail_listback_icon.svg").default}
-                />
-            </div>
-            <div className="review-detail-counter">
-                <div className="review-detail-counter-like">
-                    <div className="review-detail-counter-like-box" style={isGood ? { backgroundColor: '#F5EFF9' } : {}} />
 
-                    <img
-                        className="review-detail-counter-like-ico-icon"
-                        alt=""
-                        src={require('./assets/review_detail_counter_like_icon.svg').default}
-                        onClick={()=>handlelike(m_idx,rb_idx)}
-                    />
+                <div className="review-detail-listbackcounter">
+                    <div className="review-detail-listback" onClick={reviewNavigation}>
+                        <div className="review-detail-listback-rec"/>
+                        <div className="review-detail-listback-text">목록</div>
+                        <img
+                            className="review-detail-listback-icon"
+                            alt=""
+                            src={require("../fboard/assets/boarddetail/board_detail_listback_icon.svg").default}
+                        />
+                    </div>
+                    <div className="review-detail-counter">
+                        <div className="review-detail-counter-like">
+                            <div className="review-detail-counter-like-box"
+                                 style={isGood ? {backgroundColor: '#F5EFF9'} : {}}/>
+
+                            <img
+                                className="review-detail-counter-like-ico-icon"
+                                alt=""
+                                src={require('./assets/review_detail_counter_like_icon.svg').default}
+                                onClick={() => handlelike(m_idx, rb_idx)}
+                            />
+                        </div>
+                        <div className="review-detail-counter-num">
+                            <div className="review-detail-counter-num-box"/>
+                            <div className="review-detail-counter-num-text">{result}</div>
+                        </div>
+                        <div className="review-detail-counter-dislike"
+                             onClick={() => handleDislike(m_idx, rb_idx)}>
+                            <div className="review-detail-counter-dislike-"
+                                 style={isBad ? {backgroundColor: '#F5EFF9'} : {}}
+                            />
+                            <img
+                                className="review-detail-counter-like-ico-icon"
+                                alt=""
+                                src={require('./assets/review_detail_counter_dislike_icon.svg').default}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div className="review-detail-counter-num">
-                    <div className="review-detail-counter-num-box" />
-                    <div className="review-detail-counter-num-text">{result}</div>
-                </div>
-                <div className="review-detail-counter-dislike"
-                     onClick={()=> handleDislike(m_idx,rb_idx)}>
-                    <div className="review-detail-counter-dislike-"
-                         style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
-                    />
-                    <img
-                        className="review-detail-counter-like-ico-icon"
-                        alt=""
-                        src={require('./assets/review_detail_counter_dislike_icon.svg').default}
-                    />
+
+                <div className="review-detail-advertise-box2">
+                    <div className="advertise-main"/>
+                    <b className="advertise-text1">광고 2</b>
                 </div>
             </div>
-            </div>
 
-            <div className="advertise-box1">
-                <div className="advertise-main" />
-                <b className="advertise-text1">광고 2</b>
+            <div className="review-comments-box">
+                <Reviewcommentform rb_idx={rb_idx}/>
+                <Reviewcomment rb_idx={rb_idx}/>
             </div>
-
-            <Reviewcommentform rb_idx={rb_idx}/>
-            <Reviewcomment rb_idx={rb_idx}/>
         </div>
 
     );

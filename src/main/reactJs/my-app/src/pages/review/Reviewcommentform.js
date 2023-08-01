@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-//
 import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
@@ -38,14 +37,9 @@ function Reviewcommentform({rb_idx}) {
 
 
     return (
-        <div >
-            <form className="review-detail-commnets-form" onSubmit={onSubmitEvent}>
+        <div className="review-detail-commnets-form">
+            <form onSubmit={onSubmitEvent}>
                 <div className="review-detail-commnets-form-bo" />
-                <img
-                    className="review-detail-commnets-form-im-icon"
-                    alt=""
-                    src=""
-                />
                 <textarea className="review-detail-commnets-form-te"
                 placeholder="내용을 입력해주세요"
                 required value={reviewcomment}

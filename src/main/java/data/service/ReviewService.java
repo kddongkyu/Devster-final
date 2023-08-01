@@ -5,6 +5,8 @@ import data.dto.ReviewDto;
 import data.entity.*;
 import data.mapper.ReviewMapper;
 import data.repository.*;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 @Service
+@Slf4j
 public class ReviewService {
     private final Logger logger = LoggerFactory.getLogger(ReviewService.class);
 
@@ -311,6 +314,37 @@ public class ReviewService {
     }
 
 
+    public List<Map<String, Object>> getNewestRboard(){
+        try{
+            List<ReviewEntity> reviewEntities = reviewRepository.findTop3ByOrderByRbwriteDayDesc();
+            List<Map<String, Object>> reviewBoardList = new ArrayList<>();
+    
+            for (ReviewEntity reviewEntity : reviewEntities) {
+                MemberEntity memberInfo = memberRepository.findById(reviewEntity.getMIdx()).orElse(null);
+                CompanyInfoEntity companyInfo = CompanyInfoRepository.findById(reviewEntity.getCIidx()).orElse(null);
+                // 댓글 수 가져오기 로직 추가
+                int reviewCommentCount = reviewCommentRepository.countAllByRBidx(reviewEntity.getRBidx());
+                Map<String, Object> rboardMemberInfo = new HashMap<>();
+                rboardMemberInfo.put("rboard", ReviewDto.toReviewDto(reviewEntity));
+                rboardMemberInfo.put("reviewCommentCount", reviewCommentCount);
+                    if (memberInfo != null) {
+                        rboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
+                        rboardMemberInfo.put("mNicname", memberInfo.getMNickname());
+                    }
+                    if (companyInfo != null) {
+                        rboardMemberInfo.put("ciName", companyInfo.getCIname());
+                        rboardMemberInfo.put("ciStar", companyInfo.getCIstar());
+                        rboardMemberInfo.put("ciPhoto", companyInfo.getCIphoto());
+                    }
+                    reviewBoardList.add(rboardMemberInfo);
+                }
+                return reviewBoardList;
+
+        }   catch (Exception e) {
+            log.error("Error finding newest qboard Articles", e);
+            throw e;
+        }
+    }  
 
 
 }
