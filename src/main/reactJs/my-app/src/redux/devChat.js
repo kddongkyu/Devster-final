@@ -16,6 +16,7 @@ const initialState = {
     modalOpen: false,
     unreadMsg: 0,
     userList: [],
+    imgDetail:false,
 };
 
 export const devChatSlice = createSlice({
@@ -73,6 +74,9 @@ export const devChatSlice = createSlice({
         setUserList: (state, action) => {
             state.userList = action.payload;
         },
+        setImgDetail:(state,action) => {
+            state.imgDetail = action.payload;
+        },
 
         resetDevChat: () => initialState,
     },
@@ -94,6 +98,7 @@ export const {
     incUnreadMsg,
     resetUnreadMsg,
     setUserList,
+    setImgDetail,
     resetDevChat,
 } = devChatSlice.actions;
 
