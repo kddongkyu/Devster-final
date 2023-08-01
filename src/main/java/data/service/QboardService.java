@@ -215,14 +215,15 @@ public class QboardService {
     
             for (QboardEntity qboardEntity : qboardEntities) {
                 MemberEntity memberInfo = memberRepository.findById(qboardEntity.getMIdx()).orElse(null);
+               int qboardCommentCount= qboardCommentRespository.countAllByQBidx(qboardEntity.getQBidx());
                 Map<String, Object> qboardMemberInfo = new HashMap<>();
                 qboardMemberInfo.put("qboard", QboardDto.toQboardDto(qboardEntity));
-    
+                qboardMemberInfo.put("qboardCommentCount",qboardCommentCount);
                 if (memberInfo != null) {
                     qboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
                     qboardMemberInfo.put("mNicname", memberInfo.getMNickname());
                 }
-    
+
                 qboardList.add(qboardMemberInfo);
             }
     

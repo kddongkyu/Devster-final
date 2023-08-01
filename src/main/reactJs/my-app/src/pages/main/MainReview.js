@@ -5,6 +5,7 @@ import ToastAlert from "../../api/ToastAlert";
 import { useSnackbar } from "notistack";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import StarRating from "../review/StarRating";
+import {checkToken} from "../../api/checkToken";
 
 function MainReview(props) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,6 +14,8 @@ function MainReview(props) {
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
   const [rboardNewestList, setRboardNewestList] = useState([]);
+  const navi = useNavigate();
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   useEffect(() => {
     //JPA로부터 자유게시판 최신순 글 3개 가져오는 API 호출
@@ -78,15 +81,29 @@ function MainReview(props) {
   const compareValues = (value1, value2) => {
     return value1.length > value2;
   };
+  const handleLinkClick = async (rb_idx) => {
+    try {
+      const tokenData = await checkToken();
+
+      if (!tokenData) {
+        toastAlert("로그인 후 이용 가능한 서비스입니다.",'warning'); // Show login requirement toast
+      } else {
+        navi(`/review/detail/${rb_idx}/${currentPage}`);
+      }
+    } catch (error) {
+      jwtHandleError(error, toastAlert);
+    }
+  }
+
 
   return (
     <div>
       {rboardNewestList &&
         rboardNewestList.map((rboard) => (
-          <Link
-            to={`/review/detail/${rboard.rboard.rb_idx}/${currentPage}`}
-            key={rboard.rboard.rb_idx}
-          >
+            <div
+                onClick={() => handleLinkClick(rboard.rboard.rb_idx)}
+                key={rboard.rboard.rb_idx}
+            >
             <div className="main-review-preview">
               <img
                 className="review-list-box-img-icon"
@@ -94,13 +111,19 @@ function MainReview(props) {
                 src={rboard.ciPhoto}
               />
               <div className="review-list-subject-text">
-                <p className="p">
                   {compareValues(String(rboard.rboard.rb_subject), subjectCount)
                     ? rboard.rboard.rb_subject.slice(0, subjectCount) + "···"
                     : rboard.rboard.rb_subject}
-                </p>
               </div>
-              <img className="logo-icon" alt="" src={rboard.mPhoto} />
+              <img
+                  className="logo-icon"
+                  alt=""
+                  src={
+                    rboard.mPhoto
+                        ? `${profileUrl}${rboard.mPhoto}`
+                        : require("./assets/logo.svg").default
+                  }
+              />
               <div className="review-list-user-time">
                 {rboard.mNicname} ·{timeForToday(rboard.rboard.rb_writeday)}
               </div>
@@ -162,7 +185,7 @@ function MainReview(props) {
               </div>
               {/* </div> */}
             </div>
-          </Link>
+            </div>
         ))}
     </div>
   );

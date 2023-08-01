@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './style/Reviewlist.css';
 import axiosIns from "../../api/JwtConfig";
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import StarRating from "./StarRating";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {JwtPageChk} from "../../api/JwtPageChk";
 import {jwtHandleError} from "../../api/JwtHandleError";
+import ad1 from "./assets/008.png";
 
 function Reviewlist(props) {
     const [reviews, setReviews] = useState([]);
@@ -88,7 +89,7 @@ function Reviewlist(props) {
     const fetchReviews = async (page, keyword, sortProperty, sortDirection) => {
         const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
         try {
-            const response = await axiosIns.get('/api/review/D0', {
+            const response = await axiosIns.get('/api/review/D1', {
                 params: {
                     page: page - 1, // Use the page parameter
                     keyword: searchKeyword,
@@ -198,8 +199,10 @@ function Reviewlist(props) {
     return (
         <div className="review">
             <div className="review-advertise">
-                <div className="review-advertise-main"/>
-                <b className="review-advertise-text">광고</b>
+                <img className="review-advertise-main"
+                 src={ad1}
+                alt=""
+                />
             </div>
             <div className="review-name">
                 <div className="review-list-box-rec"/>
@@ -288,9 +291,7 @@ function Reviewlist(props) {
                                 src={review.ciPhoto}
                             />
                             <div className="review-list-subject-text">
-                                <p className="p">
                                     {compareValues(String(review.review.rb_subject),subjectCount) ? review.review.rb_subject.slice(0, subjectCount) + "···" : review.review.rb_subject}
-                                </p>
                             </div>
                             <img className="logo-icon" alt=""
                                  src={review.mPhoto ? `${profileUrl}${review.mPhoto}`

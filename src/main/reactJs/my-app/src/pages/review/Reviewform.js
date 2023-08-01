@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import './style/Reviewform.css';
 import {ReviewModal} from "./index";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import {checkToken} from "../../api/checkToken";
 
 
 function Reviewform(props) {
-    let de = jwt_decode(localStorage.getItem('accessToken'));
+    let de = checkToken();
     const [isReviewOpen, setIsReviewOpen] = useState(false);
     const openReviewModal = () => {
         setIsReviewOpen(true);

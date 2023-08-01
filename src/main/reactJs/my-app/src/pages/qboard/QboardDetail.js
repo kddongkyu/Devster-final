@@ -18,7 +18,6 @@ function QboardDetail(props) {
     const toastAlert = ToastAlert(enqueueSnackbar);
     //디코딩 함수
     const de = checkToken();
-
     const [qboardData, setQboardData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const { qb_idx, currentPage } = useParams();

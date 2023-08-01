@@ -157,7 +157,8 @@ function MainQnA(props) {
                   />
                 </div>
                 <div className="main-best-coments">
-                  <div className="main-best-likes-text">99</div>
+                  <div className="main-best-likes-text">{qboard.qboardCommentCount
+                  }</div>
                   <img
                     className="main-best-coments-icon"
                     alt=""

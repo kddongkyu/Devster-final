@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import {checkToken} from "../../api/checkToken";
 
 function ReviewReplyupdateform({rbc_idx,rb_idx,currentContent,rbc_ref}) {
     const [rbc_content, setRbc_content] = useState(currentContent); // 상태를 정의합니다.
     const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
 
-    let de = jwt_decode(localStorage.getItem("accessToken"));
-    const m_idx = de.idx;
+    let de = checkToken();
 
     const onSubmitEvent = (e) => {
         e.preventDefault();
@@ -19,7 +18,7 @@ function ReviewReplyupdateform({rbc_idx,rb_idx,currentContent,rbc_ref}) {
             rbc_content: rbc_content,
             rb_idx :rb_idx,
             rbc_idx:rbc_idx,
-            m_idx :m_idx
+            m_idx :de.idx
         };
         if (rbc_ref !== 0) { // rbc_ref 값이 필요한 경우에만 추가
             dto.rbc_ref = rbc_ref;
