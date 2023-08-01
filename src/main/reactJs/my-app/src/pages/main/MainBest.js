@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
 import { jwtHandleError } from "../../api/JwtHandleError";
-
+import toastAlert from '../../api/ToastAlert';
 function MainBest(props) {
   // const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
