@@ -54,10 +54,6 @@ function InputPassChk(props) {
         setIsCapsOn(e.getModifierState('CapsLock'));
     }
 
-    useEffect(()=>{
-      console.log('passChk changed', passChk)
-    },[passChk]);
-
     return (
         <div>
             <div className='signup-guest-pass-check-text'>
@@ -68,7 +64,7 @@ function InputPassChk(props) {
                 {errorMessage}
             </div>
             <input
-                type='text'
+                type='password'
                 className={`${isInputValid? 'signup-guest-pass-check-inputb':'signup-guest-pass-check-inputb-error'}`}
                 value={m_passChk}
                 onKeyDown={capsLockChk}

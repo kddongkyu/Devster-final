@@ -43,13 +43,13 @@ function InputCompEmailReg(props) {
             const res = await axios({
                 method: 'post',
                 url: '/api/compmember/D0/email/validation',
-                data: JSON.stringify({m_email: cm_email}),
+                data: JSON.stringify({cm_email: cm_email}),
                 headers: {'Content-Type': 'application/json'}
             });
 
             if (res?.status === 200) {
                 dispatch(setIsEmailSent(true));
-                dispatch(setSeconds(10));
+                dispatch(setSeconds(180));
                 setEmailRegNum(res.data);
                 dispatch(setEmailRegInput(''));
                 toastAlert(isEmailSent ? '인증번호가 재발송되었습니다.' : '인증번호가 발송되었습니다.', 'success');
@@ -80,10 +80,6 @@ function InputCompEmailReg(props) {
             toastAlert(<>인증에 실패했습니다.<br/>인증번호를 확인해주세요.</>, 'warning');
         }
     }
-
-    useEffect(() => {
-        console.log('emailRegChk changed:', emailRegChk);
-    }, [emailRegChk]);
 
     return (
         <div>

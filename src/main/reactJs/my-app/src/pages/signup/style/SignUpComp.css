@@ -1,13 +1,13 @@
 .signup-comp-input-position-box {
-    position:relative;
-    top:-44.3rem;
+    position: relative;
+    top: -44.3rem;
 }
 
 .signup-comp-member {
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 166rem;
+    height: 150.3rem;
     overflow: hidden;
     text-align: center;
     font-size: 1.3rem;
@@ -104,7 +104,7 @@
 
 .signup-comp-compname-position-box {
     position: relative;
-    bottom: 44.3rem;
+    top: -44.3rem;
 }
 
 .signup-comp-compname-text {
@@ -521,6 +521,11 @@
     color: red;
 }
 
+.signup-comp-tele-position {
+    position: relative;
+    top: 16.2rem;
+}
+
 .signup-comp-tele-text {
     position: absolute;
     top: 70.6rem;
@@ -567,6 +572,11 @@
 
 .signup-comp-tele-inputbox-error:focus {
     border: 2px solid red;
+}
+
+.signup-comp-cmname-position {
+    position: relative;
+    top: 24.4rem;
 }
 
 .signup-comp-cmname-text {
@@ -617,27 +627,410 @@
     border: 2px solid red;
 }
 
+.signup-comp-rep-position-box {
+    position: relative;
+    top: 16.2rem;
+}
 
+.signup-comp-cp-exist-text,
+.signup-comp-cp-text {
+    position: absolute;
+    top: 87rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
 
+.signup-comp-cp-text {
+    left: 6rem;
+}
 
+.signup-comp-cp-exist-text,
+.signup-comp-cp-text {
+    position: absolute;
+    top: 87rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
 
+.signup-comp-cp-exist-text {
+    position: absolute;
+    top: 87.2rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    text-align: right;
+    display: inline-block;
+    width: 14rem;
+}
 
+.signup-comp-cp-inputbox {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 89.3rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
 
+.signup-comp-cp-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 89.3rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
 
+.signup-comp-cp-inputbox-error:focus {
+    border: 2px solid red;
+}
 
+.signup-comp-cp-reg-send {
+    position: absolute;
+    top: 94.4rem;
+    left: 5.6rem;
+    width: 9.9rem;
+    height: 3rem;
+    color: #626567;
+    cursor: pointer;
+}
 
+.signup-comp-cp-inputbox1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #f5eff9;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    width: 9.9rem;
+    height: 3rem;
+}
 
+.signup-comp-cp-reg-send-te {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.6rem;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 8.69rem;
+}
 
+.signup-comp-cp-reg-send-inprogress {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #b2b2b2;
+    border-radius: 50%;
+    border-top-color: #721ea6;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
 
+.signup-comp-cp-reg-input {
+    position: absolute;
+    width: calc(100% - 218px);
+    top: 94.4rem;
+    right: 5.6rem;
+    left: 16.2rem;
+    height: 3rem;
+    color: #626567;
+}
 
+.signup-comp-cp-input-reg-b,
+.signup-comp-cp-inputbox2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-sizing: border-box;
+    height: 3rem;
+}
 
+.signup-comp-cp-input-reg-b {
+    width: 100%;
+    left: 0;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+}
 
+.signup-comp-cp-reg-chk {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6rem;
+    height: 3rem;
+    cursor: pointer;
+}
 
+.signup-comp-cp-inputbox2 {
+    border-radius: 0 5px 5px 0;
+    background-color: #f5eff9;
+    border: 1px solid #d2d2d2;
+    width: 6rem;
+}
 
+.signup-comp-cp-reg-send-te1 {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.7rem;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 4.6rem;
+}
 
+.signup-comp-cp-reg-timelef {
+    position: absolute;
+    top: 97.6rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: #721ea6;
+    text-align: right;
+    display: inline-block;
+    width: 13rem;
+}
 
+.signup-comp-cp-reset-icon {
+    position: absolute;
+    top: 90.43rem;
+    right: 7.53rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    cursor: pointer;
+}
 
+.signup-comp-addr-position-box {
+    position: relative;
+    top: -52.3rem;
+}
 
+.signup-comp-post-text {
+    position: absolute;
+    top: 124.7rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-post-exist-text {
+    position: absolute;
+    top: 124.9rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    text-align: right;
+    display: inline-block;
+    width: 14rem;
+}
+
+.signup-comp-post-inputbox {
+    position: absolute;
+    /*width: calc(55% - 112px);*/
+    width: 27%;
+    top: 127rem;
+    /*right: 5.6rem;*/
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+    cursor: pointer;
+    padding-left: 4.5rem;
+}
+
+.signup-comp-post-inputbox-error {
+    position: absolute;
+    /*width: calc(55% - 112px);*/
+    width: 27%;
+    top: 127rem;
+    /*right: 5.6rem;*/
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    cursor: pointer;
+    padding-left: 4.5rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-post-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-post-search-ic-icon {
+    position: absolute;
+    top: 128.13rem;
+    left: 7.53rem;
+    width: 1.67rem;
+    height: 1.67rem;
+    cursor: pointer;
+}
+
+.signup-comp-first-addr-text {
+    position: absolute;
+    top: 124.7rem;
+    left: 6rem;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+}
+
+.signup-comp-first-addr-inputbox {
+    position: absolute;
+    width: calc(72% - 112px);
+    top: 127rem;
+    right: 5.6rem;
+    /*left: 5.6rem;*/
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+    cursor: pointer;
+}
+
+.signup-comp-first-addr-inputbox-error {
+    position: absolute;
+    width: calc(72% - 112px);
+    top: 127rem;
+    right: 5.6rem;
+    /*left: 5.6rem;*/
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    cursor: pointer;
+    padding-left: 4.5rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-first-addr-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-second-addr-valid {
+    position: absolute;
+    top: 70.8rem;
+    right: 6rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: red;
+    text-align: right;
+    display: inline-block;
+}
+
+.signup-comp-second-addr-inputbox {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 72.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    height: 3.9rem;
+}
+
+.signup-comp-second-addr-inputbox-error {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 72.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 3.9rem;
+    outline: none;
+    border: 2px solid red;
+}
+
+.signup-comp-second-addr-inputbox-error:focus {
+    border: 2px solid red;
+}
+
+.signup-comp-second-addr-position {
+    position: relative;
+    top: 60.3rem
+}
+
+.signup-comp-contract-conditio {
+    position: absolute;
+    top: 139rem;
+    left: calc(50% - 135px);
+    width: 27rem;
+    height: 2.2rem;
+    text-align: left;
+}
+
+.signup-comp-contract-conditio1 {
+    position: absolute;
+    top: 0.2rem;
+    left: calc(50% - 135px);
+    letter-spacing: 0.01em;
+    display: inline-block;
+    width: 9.4rem;
+    font-weight: 600;
+}
+
+.signup-comp-contract-conditio-icon {
+    position: absolute;
+    top: -0.21rem;
+    left: calc(50% + 87px);
+}
+
+.signup-comp-contract-detail {
+    position: absolute;
+    top: 144.7rem;
+    left: calc(50% - 111px);
+    width: 22.24rem;
+    height: 1.9rem;
+    color: #721ea6;
+}
+
+.signup-comp-contract-detail-o {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 111.22px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 8.67rem;
+    cursor: pointer;
+}
+
+.signup-comp-contract-detail-b-icon {
+    position: absolute;
+    top: 0.25rem;
+    left: calc(50% - 6.72px);
+    width: 0.12rem;
+    height: 1.5rem;
+}
+
+.signup-comp-contract-detail-t {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 12.24px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 9.9rem;
+    cursor: pointer;
+}
+
+.signup-comp-hr1 {
+    position: absolute;
+    width: 100%;
+    top: 134.9rem;
+    right: 0;
+    left: 0;
+    border-top: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 0.1rem;
+}
 
 .signup-comp-signup-text {
     position: absolute;
@@ -698,6 +1091,11 @@
     border: 2px solid red;
 }
 
+.signup-comp-cont-position-box {
+    position: relative;
+    top: -15.7rem;
+}
+
 .signup-comp-hr {
     position: absolute;
     width: 100%;
@@ -727,10 +1125,40 @@
 
 .signup-comp-signin {
     position: absolute;
-    top: 50.5rem;
+    top: 156.4rem;
     left: calc(50% - 73px);
     width: 14.6rem;
     height: 1.9rem;
+}
+
+.signup-comp-submit-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #721ea6;
+    height: 3.9rem;
+}
+
+.signup-comp-submit-text {
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - 25px);
+    letter-spacing: 0.03em;
+    font-weight: 500;
+}
+
+.signup-comp-submit {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 150.4rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    height: 3.9rem;
+    color: #fff;
+    cursor: pointer;
 }
 
 .signup-company-compreg-msg {

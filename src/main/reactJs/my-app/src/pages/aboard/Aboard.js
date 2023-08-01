@@ -1,16 +1,16 @@
 import "./style/Aboard.css";
-import {NavLink, useNavigate} from 'react-router-dom';
-import {useEffect, useState} from "react";
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import {JwtPageChk} from "../../api/JwtPageChk";
-import {useSnackbar} from "notistack";
+import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
+import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
-import {jwtHandleError} from "../../api/JwtHandleError";
+import { jwtHandleError } from "../../api/JwtHandleError";
 
 function Aboard(props) {
-
+    const JwtPageChk = useJwtPageChk();
     const [acacemyBoardList, setAcacemyBoardList] = useState([]);
-    const [noticePost,setNoticePost] = useState({});
+    const [noticePost, setNoticePost] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     // 미리보기 글자수
@@ -24,7 +24,7 @@ function Aboard(props) {
     const [finalKeyword, setFinalKeyword] = useState(''); // 최종 검색어 (검색 버튼
     // 추가 수정사항
     const navi = useNavigate();
-    const {enqueueSnackbar} = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
     const profileUrl = process.env.REACT_APP_MEMBERURL;
     // 새로고침
@@ -241,11 +241,11 @@ function Aboard(props) {
     return (
         <div className="aboard">
             <div className="advertise-box">
-                <div className="advertise-main"/>
+                <div className="advertise-main" />
                 <b className="advertise-text">광고</b>
             </div>
             <div className="aboard-name">
-                <div className="aboard-name-box"/>
+                <div className="aboard-name-box" />
                 <div className="aboard-name-text">
                     <b className="aboard-name-text-type">학원별 게시판</b>
                     <div className="aboard-name-text-detail">
@@ -255,29 +255,29 @@ function Aboard(props) {
             </div>
             <div className="aboard-selection">
                 <NavLink to="/fboard" activeClassName="active" className="aboard-selection-freeboard">
-                    <div className="aboard-selection-freeboard-box"/>
+                    <div className="aboard-selection-freeboard-box" />
                     <div className="aboard-selection-freeboard-tex">자유</div>
                 </NavLink>
                 <NavLink to="/qboard" activeClassName="active" className="aboard-selection-qna">
-                    <div className="aboard-selection-qna-box"/>
+                    <div className="aboard-selection-qna-box" />
                     <div className="aboard-selection-qna-text">{`Q&A`}</div>
                 </NavLink>
                 <NavLink to="/hboard" activeClassName="active" className="aboard-selection-hire">
-                    <div className="aboard-selection-hire-box"/>
+                    <div className="aboard-selection-hire-box" />
                     <div className="aboard-selection-hire-text">채용정보</div>
                 </NavLink>
 
                 <div className="aboard-selection-academy">
-                    <div className="aboard-selection-academy-box"/>
+                    <div className="aboard-selection-academy-box" />
                     <div className="aboard-selection-academy-text">학원별</div>
                 </div>
             </div>
             <div className="aboard-write"
-                 onClick={() => {
-                     //페이지 이동시 토큰여부 확인 함수
-                     JwtPageChk(navi, '/aboard/form');
-                 }}>
-                <div className="aboard-write-box"/>
+                onClick={() => {
+                    //페이지 이동시 토큰여부 확인 함수
+                    JwtPageChk(navi, '/aboard/form');
+                }}>
+                <div className="aboard-write-box" />
                 <img
                     className="aboard-write-icon"
                     alt=""
@@ -287,7 +287,7 @@ function Aboard(props) {
                 <div className="aboard-write-text">글쓰기</div>
             </div>
             <div className="aboard-function-sort">
-                <div className="aboard-function-sort-box"/>
+                <div className="aboard-function-sort-box" />
                 <button className="aboard-function-sort-time" onClick={onClickLatest}>최신순</button>
                 <button className="aboard-function-sort-view" onClick={onClickViews}>조회순</button>
                 <button className="aboard-function-sort-like" onClick={onClickLikes}>인기순</button>
@@ -305,10 +305,10 @@ function Aboard(props) {
 
             <div className="aboard-function-search-input">
                 <input type="text" className="aboard-function-search-input1"
-                       value={inputKeyword}
-                       placeholder='검색어를 입력해주세요'
-                       onChange={(e) => setInputKeyword(e.target.value)}
-                       onKeyDown={handleEnterKeyPress}
+                    value={inputKeyword}
+                    placeholder='검색어를 입력해주세요'
+                    onChange={(e) => setInputKeyword(e.target.value)}
+                    onKeyDown={handleEnterKeyPress}
                 />
                 <img
                     className="aboard-function-search-icon"
@@ -317,7 +317,7 @@ function Aboard(props) {
                     onClick={handleSearchButtonClick}
                 />
             </div>
-            <img className="aboard-hr-icon" alt="" src="/aboard-hr.svg"/>
+            <img className="aboard-hr-icon" alt="" src="/aboard-hr.svg" />
             <img
                 className="aboard-pages-reset-icon"
                 alt=""
@@ -331,22 +331,22 @@ function Aboard(props) {
                     alt=""
                     src={require("./assets/aboard_pages_back.svg").default}
                     onClick={() => goToPreviousPage(finalKeyword, sortProperty, sortDirection)}
-                    style={{opacity: currentPage === 1 ? 0.5 : 1}}
+                    style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
                 />
                 <img
                     className="aboard-pages-forward-icon"
                     alt=""
                     src={require("./assets/board_pages_forward.svg").default}
                     onClick={() => goToNextPage(finalKeyword, sortProperty, sortDirection)}
-                    style={{opacity: currentPage === totalPages ? 0.5 : 1}}
+                    style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
                 />
             </div>
             <div className="aboard-notice">
-                <div className="aboard-notice-box"/>
+                <div className="aboard-notice-box" />
                 <div className="aboard-notice-preview"
-                     onClick={() => {
-                         window.location.href = `/notice/detail/${noticePost.nb_idx}/1`;
-                     }}
+                    onClick={() => {
+                        window.location.href = `/notice/detail/${noticePost.nb_idx}/1`;
+                    }}
                 >
                     <div className="aboard-notice-preview-info">
                         <img
@@ -360,7 +360,7 @@ function Aboard(props) {
                     </div>
                     <b className="aboard-notice-preview-subject"> {noticePost.nb_subject}</b>
                     <div className="aboard-notice-preview-notice">
-                        <div className="aboard-notice-preview-notice-b"/>
+                        <div className="aboard-notice-preview-notice-b" />
                         <div className="aboard-notice-preview-notice-t">공지사항</div>
                     </div>
                     <div className="aboard-notice-preview-hash">#공지사항 # Devster</div>
@@ -399,7 +399,7 @@ function Aboard(props) {
                 {acacemyBoardList && acacemyBoardList.map((aboard) => {
                     return (
                         <div className="aboard-preview" key={aboard.academyboard.ab_idx}>
-                            <div className="aboard-preview-box"/>
+                            <div className="aboard-preview-box" />
                             <img
                                 className="aboard-preview-img-profile"
                                 alt=""
@@ -429,10 +429,10 @@ function Aboard(props) {
                                 </div>
                                 <div>
                                     <img alt=""
-                                         src={aboard.academyboard.ab_photo && aboard.academyboard.ab_photo.length > 0
-                                             ? setPhotoUrl(aboard.academyboard.ab_photo)
-                                             : require("./assets/logo-img.svg").default}
-                                         className="aboard-preview-img-preview"/>
+                                        src={aboard.academyboard.ab_photo && aboard.academyboard.ab_photo.length > 0
+                                            ? setPhotoUrl(aboard.academyboard.ab_photo)
+                                            : require("./assets/logo-img.svg").default}
+                                        className="aboard-preview-img-preview" />
                                 </div>
                             </NavLink>
 
@@ -474,14 +474,14 @@ function Aboard(props) {
                     alt=""
                     src={require("./assets/board_pages_back.svg").default}
                     onClick={() => goToPreviousPage(finalKeyword, sortProperty, sortDirection)}
-                    style={{opacity: currentPage === 1 ? 0.5 : 1}}
+                    style={{ opacity: currentPage === 1 ? 0.5 : 1 }}
                 />
                 <img
                     className="aboard-pages-forward-icon"
                     alt=""
                     src={require("./assets/board_pages_forward.svg").default}
                     onClick={() => goToNextPage(finalKeyword, sortProperty, sortDirection)}
-                    style={{opacity: currentPage === totalPages ? 0.5 : 1}}
+                    style={{ opacity: currentPage === totalPages ? 0.5 : 1 }}
                 />
             </div>
         </div>

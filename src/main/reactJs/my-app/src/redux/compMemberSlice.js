@@ -7,16 +7,23 @@ const initialState = {
     cm_pass: '',
     cm_tele: '',
     cm_name: '',
+    cm_cp: '',
+    cm_post: '',
+    cm_addr: '',
+    cm_addrFirst: '',
+    cm_addrSecond: '',
     seconds: null,
+    cpSeconds: null,
     emailRegInput: '',
-
+    cpRegInput: '',
 
     regChk: false,
     compChk: false,
     emailChk: false,
     emailRegChk: false,
     passChk: false,
-
+    cpChk: false,
+    cpRegChk: false,
 
     regIsValid: false,
     compIsValid: false,
@@ -24,14 +31,19 @@ const initialState = {
     passIsValid: false,
     teleIsValid: false,
     nameIsValid: false,
-
+    cpIsValid: false,
+    postIsValid: false,
+    firstAddrValid: false,
+    secondAddrValid:false,
+    contractValid:false,
 
     isEmailSent: false,
     sendingInProg: false,
-
-
+    isCpSent: false,
+    cpSendingInProg: false,
+    isSelectedTouched: false,
     isSubmitted: false,
-}
+};
 
 export const compMemberSlice = createSlice({
     name: 'compMember',
@@ -49,17 +61,38 @@ export const compMemberSlice = createSlice({
         setCm_pass: (state, action) => {
             state.cm_pass = action.payload;
         },
+        setCm_tele: (state, action) => {
+            state.cm_tele = action.payload;
+        },
+        setCm_name: (state, action) => {
+            state.cm_name = action.payload;
+        },
+        setCm_cp: (state, action) => {
+            state.cm_cp = action.payload;
+        },
+        setCm_post: (state, action) => {
+            state.cm_post = action.payload;
+        },
+        setCm_addr: (state, action) => {
+            state.cm_addr = action.payload;
+        },
+        setCm_addrFirst: (state, action) => {
+            state.cm_addrFirst = action.payload;
+        },
+        setCm_addrSecond: (state, action) => {
+            state.cm_addrSecond = action.payload;
+        },
         setSeconds: (state, action) => {
             state.seconds = action.payload;
+        },
+        setCpSeconds: (state, action) => {
+            state.cpSeconds = action.payload;
         },
         setEmailRegInput: (state, action) => {
             state.emailRegInput = action.payload;
         },
-        setCm_tele: (state, action) => {
-            state.cm_tele = action.payload
-        },
-        setCm_name: (state, action) => {
-            state.cm_name = action.payload
+        setCpRegInput: (state, action) => {
+            state.cpRegInput = action.payload;
         },
 
 
@@ -77,6 +110,12 @@ export const compMemberSlice = createSlice({
         },
         setPassChk: (state, action) => {
             state.passChk = action.payload;
+        },
+        setCpRegChk: (state, action) => {
+            state.cpRegChk = action.payload;
+        },
+        setCpChk: (state, action) => {
+            state.cpChk = action.payload;
         },
 
 
@@ -98,7 +137,21 @@ export const compMemberSlice = createSlice({
         setNameIsValid: (state, action) => {
             state.nameIsValid = action.payload;
         },
-
+        setCpIsValid: (state, action) => {
+            state.cpIsValid = action.payload;
+        },
+        setPostIsValid: (state, action) => {
+            state.postIsValid = action.payload;
+        },
+        setFirstAddrValid: (state, action) => {
+            state.firstAddrValid = action.payload;
+        },
+        setSecondAddrValid:(state,action) => {
+            state.secondAddrValid=action.payload;
+        },
+        setContractValid:(state,action) => {
+            state.contractValid=action.payload;
+        },
 
 
         setIsEmailSent: (state, action) => {
@@ -107,11 +160,20 @@ export const compMemberSlice = createSlice({
         setSendingInProg: (state, action) => {
             state.sendingInProg = action.payload;
         },
-
-
+        setIsCpSent: (state, action) => {
+            state.isCpSent = action.payload;
+        },
+        setCpSendingInProg: (state, action) => {
+            state.cpSendingInProg = action.payload;
+        },
+        setIsSelectedTouched: (state, action) => {
+            state.isSelectedTouched = action.payload;
+        },
         setIsSubmitted: (state, action) => {
             state.isSubmitted = action.payload;
         },
+
+        resetCompMember:() => initialState,
     },
 });
 
@@ -122,18 +184,24 @@ export const {
     setCm_pass,
     setCm_tele,
     setCm_name,
-
+    setCm_cp,
+    setCm_post,
+    setCm_addr,
+    setCm_addrFirst,
+    setCm_addrSecond,
 
     setSeconds,
+    setCpSeconds,
     setEmailRegInput,
-
+    setCpRegInput,
 
     setRegChk,
     setCompChk,
     setEmailChk,
     setEmailRegChk,
     setPassChk,
-
+    setCpChk,
+    setCpRegChk,
 
     setRegIsValid,
     setCompIsValid,
@@ -141,11 +209,20 @@ export const {
     setPassIsValid,
     setTeleIsValid,
     setNameIsValid,
+    setCpIsValid,
+    setPostIsValid,
+    setFirstAddrValid,
+    setSecondAddrValid,
+    setContractValid,
 
     setIsEmailSent,
     setSendingInProg,
-
+    setIsCpSent,
+    setCpSendingInProg,
+    setIsSelectedTouched,
     setIsSubmitted,
+
+    resetCompMember,
 } = compMemberSlice.actions;
 
 export default compMemberSlice.reducer;

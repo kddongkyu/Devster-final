@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
-    private static final String[] NO_CHECK_URLS = {"/api/member/login","/api/compmember/login","/api/member/login/kakao","/api/member/naver"};
+    private static final String[] NO_CHECK_URLS = {"/api/member/login","/api/compmember/login","/api/member/login/kakao","/api/member/login/naver"};
     private static final Pattern PERMIT_ALL_PATTERN = Pattern.compile("^/api/.*?/D0(/.*)?$");
 
     private final JwtService jwtService;

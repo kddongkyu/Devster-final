@@ -19,7 +19,6 @@ function MainHire(props) {
     axiosIns
       .get("/api/mainpage/D0/hboard")
       .then((response) => {
-        console.log(response.data);
         setHboardNewestList(response.data);
       })
       .catch((error) => {

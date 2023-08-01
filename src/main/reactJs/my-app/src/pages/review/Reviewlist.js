@@ -5,11 +5,12 @@ import {Link, useNavigate} from "react-router-dom";
 import StarRating from "./StarRating";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
-import {JwtPageChk} from "../../api/JwtPageChk";
+import {JwtPageChk, useJwtPageChk} from "../../api/JwtPageChk";
 import {jwtHandleError} from "../../api/JwtHandleError";
 import ad1 from "./assets/008.png";
 
 function Reviewlist(props) {
+    const JwtPageChk = useJwtPageChk();
     const [reviews, setReviews] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);

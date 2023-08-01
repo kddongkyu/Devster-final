@@ -13,10 +13,8 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
 
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
-    // const [m_idx,setM_idx] = useState(0);
 
     const de = checkToken();
-    const m_idx = de.idx;
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
 
@@ -28,7 +26,8 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
     const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const fetchFboard = useCallback((fbc_idx) => {
-        if(m_idx && fbc_idx) {
+        if(de && de.idx && fbc_idx) {
+            let m_idx = de.idx;
             axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkGood/${fbc_idx}`)
                 .then(res => {
                     setIsGood(res.data);
@@ -43,7 +42,7 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
                 toastAlert('에러 발생','warning');
             });
         }
-    }, [comment.fboardcommentdto.fbc_idx, m_idx]);
+    }, [comment.fboardcommentdto.fbc_idx]);
 
 
     useEffect(() => {
@@ -52,7 +51,7 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
 
     const handleReplyButtonClick = () => {
         try {
-            // setM_idx(de.idx);
+            if (!de.idx) throw new Error();
             setShowReplyForm(!showReplyForm);
         } catch (error) {
             toastAlert(<>댓글 작성은 로그인 회원만 이용 가능합니다.<br/>댓글을 작성하시려면 로그인해주세요.</>,'warning');
@@ -81,89 +80,95 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
     };
 
     //좋아요 싫어요 체크
-    const handleLikeClick = (m_idx, fbc_idx) => {
-        // 좋아요 상태 확인
-        axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkBad/${fbc_idx}`)
-            .then(response => {
-                if (response.data === 2) {
-                    setIsBad(false);
-                    setLikeCount(response.data.likeCount);
-                }else{
-                    axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkGood/${fbc_idx}`)
-                        .then(response => {
-                            if (response.data === 1) {
-                                axiosIns.post(`/api/fboard/D1/comment/${m_idx}/like/${fbc_idx}`)
-                                    .then(response => {
-                                        setIsGood(false);
-                                        setLikeCount(response.data.likeCount);
-                                    })
-                                    .catch(error => {
-                                        toastAlert('에러 발생','warning');
-                                    });
-                            } else {
-                                // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                axiosIns.post(`/api/fboard/D1/comment/${m_idx}/like/${fbc_idx}`)
-                                    .then(response => {
-                                        toastAlert('좋아요를 누르셨습니다.','success');
-                                        setIsGood(true);
-                                        setLikeCount(response.data.likeCount);
-                                    })
-                                    .catch(error => {
-                                        jwtHandleError(error, toastAlert);
-                                    });
-                            }
-                        })
-                        .catch(error => {
-                            jwtHandleError(error, toastAlert);
-                        });
-                }
-            })
-            .catch(error => {
-                jwtHandleError(error, toastAlert);
-            });
+    const handleLikeClick = (fbc_idx) => {
+        if( de && de.idx ) {
+            let m_idx = de.idx;
+            // 좋아요 상태 확인
+            axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkBad/${fbc_idx}`)
+                .then(response => {
+                    if (response.data === 2) {
+                        setIsBad(false);
+                        setLikeCount(response.data.likeCount);
+                    } else {
+                        axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkGood/${fbc_idx}`)
+                            .then(response => {
+                                if (response.data === 1) {
+                                    axiosIns.post(`/api/fboard/D1/comment/${m_idx}/like/${fbc_idx}`)
+                                        .then(response => {
+                                            setIsGood(false);
+                                            setLikeCount(response.data.likeCount);
+                                        })
+                                        .catch(error => {
+                                            toastAlert('에러 발생', 'warning');
+                                        });
+                                } else {
+                                    // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
+                                    axiosIns.post(`/api/fboard/D1/comment/${m_idx}/like/${fbc_idx}`)
+                                        .then(response => {
+                                            toastAlert('좋아요를 누르셨습니다.', 'success');
+                                            setIsGood(true);
+                                            setLikeCount(response.data.likeCount);
+                                        })
+                                        .catch(error => {
+                                            jwtHandleError(error, toastAlert);
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                jwtHandleError(error, toastAlert);
+                            });
+                    }
+                })
+                .catch(error => {
+                    jwtHandleError(error, toastAlert);
+                });
+        }
     };
 
 
-    const handleDislikeClick = (m_idx, fbc_idx) => {
-        // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkGood/${fbc_idx}`)
-            .then(response => {
-                if (response.data === 1) {
-                    setIsGood(false);
-                    setLikeCount(response.data.likeCount);
-                } else {
-                    // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkBad/${fbc_idx}`)
-                        .then(response => {
-                            if (response.data === 2) {
-                                axiosIns.post(`/api/fboard/D1/comment/${m_idx}/dislike/${fbc_idx}`)
-                                    .then(response => {
-                                        setIsBad(false);
-                                        setLikeCount(response.data.likeCount);
-                                    })
-                                    .catch(error => {
-                                        jwtHandleError(error, toastAlert);
-                                    });
-                            } else {
-                                // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
-                                axiosIns.post(`/api/fboard/D1/comment/${m_idx}/dislike/${fbc_idx}`)
-                                    .then(response => {
-                                        setIsBad(true);
-                                        setLikeCount(response.data.likeCount);
-                                    })
-                                    .catch(error => {
-                                        jwtHandleError(error, toastAlert);
-                                    });
-                            }
-                        })
-                        .catch(error => {
-                            jwtHandleError(error, toastAlert);
-                        });
-                }
-            })
-            .catch(error => {
-                jwtHandleError(error, toastAlert);
-            });
+    const handleDislikeClick = (fbc_idx) => {
+        if( de && de.idx ) {
+            let m_idx = de.idx;
+            // 먼저 좋아요 상태를 체크합니다.
+            axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkGood/${fbc_idx}`)
+                .then(response => {
+                    if (response.data === 1) {
+                        setIsGood(false);
+                        setLikeCount(response.data.likeCount);
+                    } else {
+                        // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
+                        axiosIns.get(`/api/fboard/D0/comment/${m_idx}/checkBad/${fbc_idx}`)
+                            .then(response => {
+                                if (response.data === 2) {
+                                    axiosIns.post(`/api/fboard/D1/comment/${m_idx}/dislike/${fbc_idx}`)
+                                        .then(response => {
+                                            setIsBad(false);
+                                            setLikeCount(response.data.likeCount);
+                                        })
+                                        .catch(error => {
+                                            jwtHandleError(error, toastAlert);
+                                        });
+                                } else {
+                                    // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
+                                    axiosIns.post(`/api/fboard/D1/comment/${m_idx}/dislike/${fbc_idx}`)
+                                        .then(response => {
+                                            setIsBad(true);
+                                            setLikeCount(response.data.likeCount);
+                                        })
+                                        .catch(error => {
+                                            jwtHandleError(error, toastAlert);
+                                        });
+                                }
+                            })
+                            .catch(error => {
+                                jwtHandleError(error, toastAlert);
+                            });
+                    }
+                })
+                .catch(error => {
+                    jwtHandleError(error, toastAlert);
+                });
+        }
     };
 
 
@@ -230,12 +235,12 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
             <div className="fboard-detail-commnets-all-lik">
                 <div className="fboard-detail-commnets-all-up-"
                      style={isGood ? { backgroundColor: '#F5EFF9' } : {}}
-                     onClick={()=>handleLikeClick(m_idx,fbc_idx)}/>
+                     onClick={()=>handleLikeClick(fbc_idx)}/>
                 <img
                     className="fboard-detail-commnets-all-up-icon"
                     alt=""
                     src={require('../../review/assets/star-like-icon.svg').default}
-                    onClick={()=>handleLikeClick(m_idx,fbc_idx)}
+                    onClick={()=>handleLikeClick(fbc_idx)}
                 />
                 <div className="fboard-detail-commnets-all-lik1">
                     <div className="fboard-detail-commnets-all-box" />
@@ -245,12 +250,12 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
                 </div>
                 <div className="fboard-detail-commnets-all-dow"
                      style={isBad ? { backgroundColor: '#F5EFF9' } : {}}
-                     onClick={()=>handleDislikeClick(m_idx,fbc_idx)}/>
+                     onClick={()=>handleDislikeClick(fbc_idx)}/>
                 <img
                     className="fboard-detail-commnets-all-dow-icon"
                     alt=""
                     src={require('../../review/assets/star-dislike-icon.svg').default}
-                    onClick={()=>handleDislikeClick(m_idx,fbc_idx)}
+                    onClick={()=>handleDislikeClick(fbc_idx)}
                 />
             </div>
 

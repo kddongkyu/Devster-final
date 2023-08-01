@@ -29,6 +29,9 @@ const initialState = {
     sendingInProg: false,
     isSelectedTouched : false,
     isSubmitted: false,
+
+    m_socialid:'',
+    m_socialtype:'',
 };
 
 export const normMemberSlice = createSlice({
@@ -116,6 +119,15 @@ export const normMemberSlice = createSlice({
         setIsSubmitted: (state, action) => {
             state.isSubmitted = action.payload;
         },
+
+        setM_socialid:(state,action) => {
+            state.m_socialid=action.payload;
+        },
+        setM_socialtype:(state,action) =>{
+            state.m_socialtype=action.payload;
+        },
+
+        resetNormMember:()=> initialState,
     },
 });
 
@@ -144,7 +156,12 @@ export const {
     setIsEmailSent,
     setSendingInProg,
     setIsSelectedTouched,
-    setIsSubmitted
+    setIsSubmitted,
+
+    setM_socialid,
+    setM_socialtype,
+
+    resetNormMember,
 } = normMemberSlice.actions;
 
 export default normMemberSlice.reducer;

@@ -10,7 +10,7 @@
     font-family: Lalezar;
     position: fixed;
     top: 0;
-    z-index: 1000;
+    z-index: 999;
 }
 
 /* ========== 로고 ============ */
@@ -83,4 +83,12 @@
     /* height: 1.33rem; */
     cursor: pointer;
 
+}
+
+.chat-logo-icon {
+    position: absolute;
+    top: 2.42rem;
+    right: 5.4rem;
+    width: 1.68rem;
+    height: 1.56rem;
 }
