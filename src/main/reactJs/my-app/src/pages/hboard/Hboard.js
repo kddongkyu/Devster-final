@@ -289,7 +289,7 @@ function Hboard(props) {
         </NavLink>
       </div>
 
-      {de.type === "company" && (
+      {de && de.type === "company" && (
         <div
           className="hboard-write"
           onClick={() => {
