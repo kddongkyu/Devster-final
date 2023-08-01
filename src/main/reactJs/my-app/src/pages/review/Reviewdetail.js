@@ -2,16 +2,17 @@ import React, {useCallback, useEffect, useState} from 'react';
 import './style/Reviewdetail.css';
 import axiosIns from "../../api/JwtConfig";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import StarRating from "./StarRating";
 import {Reviewcomment, Reviewcommentform, Reviewcommentreply} from "./index";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
-
+import {checkToken} from "../../api/checkToken";
+import ad1 from "./assets/001.png";
+import ad2 from "./assets/005.png";
 function Reviewdetail() {
 
-    let de = jwt_decode(localStorage.getItem('accessToken'));
+    const de = checkToken()
     const m_idx = de.idx;
     const [reviewData, setReviewData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,14 +26,14 @@ function Reviewdetail() {
     const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const fetchReview = useCallback((rb_idx, currentPage = null) => {
-        const url = `/api/review/D0/${rb_idx}`;
+        const url = `/api/review/D1/${rb_idx}`;
         axiosIns.get(url)
             .then(response => {
                 setReviewData(response.data);
                 setIsLoading(false);
 
                 if (m_idx && rb_idx) {
-                    axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
+                    axiosIns.get(`/api/review/D1/${m_idx}/checkGood/${rb_idx}`)
                         .then(response => {
                             setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
                         })
@@ -40,7 +41,7 @@ function Reviewdetail() {
                             jwtHandleError(error, toastAlert);
                         });
 
-                    axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
+                    axiosIns.get(`/api/review/D1/${m_idx}/checkBad/${rb_idx}`)
                         .then(response => {
                             setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
                         })
@@ -117,13 +118,13 @@ function Reviewdetail() {
 
     const handlelike = (m_idx, rb_idx) => {
         // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
+        axiosIns.get(`/api/review/D1/${m_idx}/checkBad/${rb_idx}`)
             .then(response => {
                 if (response.data === 2) {
                     fetchReview(rb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
+                    axiosIns.get(`/api/review/D1/${m_idx}/checkGood/${rb_idx}`)
                         .then(response => {
                             if (response.data === 1) {
                                 axiosIns.post(`/api/review/D1/${m_idx}/like/${rb_idx}`)
@@ -157,13 +158,13 @@ function Reviewdetail() {
 
     const handleDislike = (m_idx, rb_idx) => {
         // 먼저 좋아요 상태를 체크합니다.
-        axiosIns.get(`/api/review/D0/${m_idx}/checkGood/${rb_idx}`)
+        axiosIns.get(`/api/review/D1/${m_idx}/checkGood/${rb_idx}`)
             .then(response => {
                 if (response.data === 1) {
                     fetchReview(rb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
-                    axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
+                    axiosIns.get(`/api/review/D1/${m_idx}/checkBad/${rb_idx}`)
                         .then(response => {
                             if (response.data === 2) {
 
@@ -213,8 +214,10 @@ function Reviewdetail() {
         <div className="review-detail">
 
             <div className="advertise-box">
-                <div className="advertise-main"/>
-                <b className="advertise-text">광고</b>
+                <img className="advertise-main"
+                alt=""
+                     src={ad1}
+                />
             </div>
             <div className="review-detail-headline">
                 <div className="review-detail-headline-box"/>
@@ -343,8 +346,10 @@ function Reviewdetail() {
                 </div>
 
                 <div className="review-detail-advertise-box2">
-                    <div className="advertise-main"/>
-                    <b className="advertise-text1">광고 2</b>
+                    <img className="advertise-main"
+                    alt=""
+                    src={ad2}
+                    />
                 </div>
             </div>
 

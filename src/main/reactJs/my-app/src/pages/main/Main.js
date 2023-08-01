@@ -10,9 +10,11 @@ import {
   MainQnA,
   MainReview,
 } from "./index";
+import { jwtHandleError } from "../../api/JwtHandleError";
+
 function Main(props) {
   const navi = useNavigate();
-  
+
   return (
     <div className="moblie-main">
       <div className="main-preview-name">

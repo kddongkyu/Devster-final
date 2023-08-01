@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import toastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
+import {checkToken} from "../../api/checkToken";
 
 function Reviewcommentform({rb_idx}) {
     const [reviewcomment,setReviewcomment]=useState('');
     const navi=useNavigate();
 
-    let de = jwt_decode(localStorage.getItem('accessToken'));
+    let de = checkToken();
 
     const onSubmitEvent = (e) => {
         e.preventDefault();

@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import './style/Reviewdetail.css';
-
 import {useNavigate} from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import {checkToken} from "../../api/checkToken";
 
 
 function ReviewReplyform({rbc_idx,rb_idx}) {
@@ -15,10 +14,7 @@ function ReviewReplyform({rbc_idx,rb_idx}) {
     const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
 
-    let de = jwt_decode(localStorage.getItem('accessToken'));
-
-
-
+    let de = checkToken();
 
     const onSubmitEvent = (e) => {
         e.preventDefault();
