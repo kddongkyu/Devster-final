@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Main } from "../pages/main";
-import { DevChat } from "../pages/test";
 import { Layout, NotFound } from "../components";
 import {
   Bookmarks,
@@ -25,7 +24,7 @@ import {
   ResumeDetail,
 } from "../pages/mypage";
 import { SignIn } from "../pages/signin";
-import { Grats, SignUpCompForm, SignUpNorm } from "../pages/signup";
+import { Grats, SignUpCompForm, SignUpNorm, SocialForm } from "../pages/signup";
 import {
   Fboard,
   FboardDetail,
@@ -46,13 +45,14 @@ import {
   Reviewupdate,
   Reviewdetail,
 } from "../pages/review";
-import JwtTest from "../pages/test/JwtTest";
 import MessageList from "../pages/message/MessageList";
 import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
 import QboardDetail from "../pages/qboard/QboardDetail";
-import Translate from "../pages/test/translate";
-import FindID from "../pages/signin/find/FindID";
+import KakaoRedirect from "../api/social/KakaoRedirect";
+import NaverRedirect from "../api/social/NaverRedirect";
+import { DevChat } from "../pages/devchat";
+
 
 function RouteMain(props) {
   const location = useLocation();
@@ -175,18 +175,17 @@ function RouteMain(props) {
           path="/resume/detail/:m_idx/:currentPage"
           element={<ResumeDetail />}
         />
-
-        <Route path="/jwttest" element={<JwtTest />} />
       </Route>
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />
-      <Route path="/findID" element={<FindID />} />
       <Route path="/csignup" element={<SignUpCompForm />} />
+      <Route path="/social" element={<SocialForm />} />
       <Route path="/grats" element={<Grats />} />
+      <Route path="/oauth2/authorization/kakao" element={<KakaoRedirect />} />
+      <Route path="/oauth2/authorization/naver" element={<NaverRedirect />} />
       <Route path="/devchat/:ai_idx" element={<DevChat />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="/translate" element={<Translate />} />
     </Routes>
   );
 }

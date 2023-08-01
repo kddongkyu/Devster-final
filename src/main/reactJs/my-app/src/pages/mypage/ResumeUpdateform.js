@@ -189,12 +189,13 @@ function ResumeUpdateform(props) {
         <div className="resumeform-header">
           <b className="resumeform-header-name">{member.m_name}</b>
           <div className="resumeform-header-ck">
-            <div className="resumeform-header-ck-text">이력서 공개여부</div>
-            <img
-              className="resumeform-header-ck-rec-icon"
-              alt=""
-              src={require("./assets/resumeform_header_ck_rec.svg").default}
-            />
+            {/*<div className="resumeform-header-ck-text">이력서 공개여부</div>*/}
+            {/*<img*/}
+            {/*  className="resumeform-header-ck-rec-icon"*/}
+            {/*  alt=""*/}
+            {/*  src={require("./assets/resumeform_header_ck_rec.svg").default}*/}
+            {/*/>*/}
+            <input className="switch" type="checkbox" checked="true" />
             <div className="resumeform-header-ck-ecl" />
           </div>
           <div className="resumeform-header-email">

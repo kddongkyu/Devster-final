@@ -73,10 +73,6 @@ function InputNickname(props) {
         dispatch(setNicknameIsValid(false));
     }
 
-    useEffect(() => {
-        console.log('nicknameIsValid changed: ', nicknameIsValid);
-    }, [nicknameIsValid]);
-
     return (
         <div>
             <div className='signup-guest-nickname-text'>

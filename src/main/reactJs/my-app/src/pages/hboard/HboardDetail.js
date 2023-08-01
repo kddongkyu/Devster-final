@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import "./style/HboardDetail.css";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import { useNavigate, useParams } from "react-router-dom";
 import { checkToken } from "../../api/checkToken";
@@ -19,7 +18,6 @@ function HboardDetail(props) {
 
   //디코딩 함수
   const de = checkToken();
-  const m_idx = de.idx;
 
   const [hboardData, setHboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,8 +74,7 @@ function HboardDetail(props) {
   }, [hb_idx, currentPage, fetchHboard]);
 
   //북마크
-  const addbkmk = (m_idx, hb_idx) => {
-    m_idx = Number(m_idx);
+  const addbkmk = (hb_idx) => {
     hb_idx = Number(hb_idx);
     axiosIns
       .post(`/api/hboard/D1/${m_idx}/increaseBkmk/${hb_idx}`)
@@ -202,7 +199,7 @@ function HboardDetail(props) {
             ? require("./assets/Vector_bkmk2.svg").default
             : require("./assets/Vector.svg").default
         }
-        onClick={() => addbkmk(m_idx, hb_idx)}
+        onClick={() => addbkmk(hb_idx)}
       />
 
       <img
@@ -211,8 +208,7 @@ function HboardDetail(props) {
         src={require("./assets/hboard_url_icon.svg").default}
         onClick={() => handleOpen()}
       />
-
-      {m_idx === hboardData.cm_idx && (
+      {de && de.idx === hboardData.cm_idx && (
         <>
           <img
             className="hboard-update-icon"

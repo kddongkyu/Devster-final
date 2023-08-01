@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import './style/SignIn.css';
 import {SignInComp, SignInNorm} from './index';
+import {useNavigate} from "react-router-dom";
 
 function SignIn(props) {
+    const navi=useNavigate();
     const [normMember, setNormMember] = useState(true);
     const [compMember, setCompMember] = useState(false);
     const [isCapsOn, setIsCapsOn] = useState(false);
@@ -24,7 +26,9 @@ function SignIn(props) {
     return (
         <div className='login'>
             <div className='moblie'/>
-            <div className='login-logo-img'>
+            <div 
+            className='login-logo-img'
+            onClick={()=>navi('/home')}>
                 <img
                     className='login-logo-img-icon'
                     alt=''
@@ -68,7 +72,10 @@ function SignIn(props) {
                 className={`${normMember ? 'login-signuplink' : 'login-signuplink-comp'}`}
             >
                 <div className='login-signuplink-text'>아직 회원이 아니신가요?</div>
-                <div className='login-signuplink-signup'>회원가입</div>
+                <div
+                    className='login-signuplink-signup'
+                    onClick={()=>navi('/signup')}
+                >회원가입</div>
             </div>
         </div>
     );

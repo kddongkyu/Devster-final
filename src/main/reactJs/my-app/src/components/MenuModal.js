@@ -8,6 +8,7 @@ import { checkToken } from "../api/checkToken";
 function MenuModal({ isMenuOpen, setIsMenuOpen }) {
   const closeMenuBar = () => {
     setIsMenuOpen(false);
+    document.documentElement.style.overflow = 'auto';
   };
 
   const [member, setMember] = useState({
@@ -84,123 +85,130 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
   }
 
   return (
-    <div className="menu-modal-box">
-      <div className="moblie-menu-modal">
-        <div className="menu-modal">
-          <div className="menu-modal-logo">
-            <NavLink to={"/"} onClick={closeMenuBar}>
-              <img
-                className="menu-modal-img-icon"
-                alt=""
-                src={require("../assets/header-logo-img.svg").default}
-              />
-              <div className="menu-modal-text">Devster</div>
-            </NavLink>
-          </div>
-          <img
-            className="menu-modal-close-icon"
-            alt=""
-            src={require("../assets/menu_modal_close.svg").default}
-            onClick={closeMenuBar}
-          />
-        </div>
-        <div className="menu-modal-options">
-          <NavLink to={"/notice/admin"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-not">공지사항</b>
-          </NavLink>
-          <NavLink to={"/fboard"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-fb">일반게시판</b>
-          </NavLink>
-          <NavLink to={"/qboard"} onClick={closeMenuBar}>
-            <div className="menu-modal-options-qna">Q&A</div>
-          </NavLink>
-          <NavLink to={"/hboard"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-hire">채용정보</b>
-          </NavLink>
-          <NavLink to={"/aboard"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-aca">학원별게시판</b>
-          </NavLink>
-          <NavLink to={"/review"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-review">회사후기</b>
-          </NavLink>
-        </div>
-
-        {isLoggedIn ? (
-          <div className="menu-mypage">
-            <div className="menu-mypage-box">
-              <div className="menu-mypage-userinfo">
-                <div className="menu-mypage-userinfo">
-                  {memberType === "normal" && member.m_photo && (
-                    <div className="menu-mypage-userinfo-img">
-                      <img alt="" src={imageUrl} />
-                    </div>
-                  )}
-                  <div
-                    className="menu-mypage-userinfo-contents"
-                    style={{ marginLeft: memberType === "company" ? "0" : "" }}
-                  >
-                    {memberType === "normal" ? (
-                      <>
-                        <div className="menu-mypage-userinfo-nickname">
-                          {member.m_nickname}
-                        </div>
-                        <div className="menu-mypage-userinfo-email">
-                          {member.m_email}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="menu-mypage-userinfo-nickname">
-                          {companyMember.cm_name}
-                        </div>
-                        <div className="menu-mypage-userinfo-email">
-                          {companyMember.cm_email}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <NavLink
-                to={
-                  memberType === "normal" && member.m_role === "GUEST"
-                    ? "/userinfo"
-                    : memberType === "company" &&
-                      companyMember.cm_role === "GUEST"
-                    ? "/compuserinfo"
-                    : memberType === "normal" && member.m_role === "USER"
-                    ? "/userinfo"
-                    : memberType === "company" &&
-                      companyMember.cm_role === "USER"
-                    ? "/compuserinfo"
-                    : memberType === "normal" && member.m_role === "ADMIN"
-                    ? "/notice/admin"
-                    : "/default"
-                }
-                onClick={closeMenuBar}
-              >
-                <b className="menu-modal-options_mypage">
-                  <div style={{ marginTop: "2rem" }}>마이페이지</div>
-                </b>
+    <div
+      className='modal-overlay'
+      onClick={closeMenuBar}
+    >
+      <div
+        className="menu-modal-box"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="moblie-menu-modal">
+          <div className="menu-modal">
+            <div className="menu-modal-logo">
+              <NavLink to={"/"} onClick={closeMenuBar}>
+                <img
+                  className="menu-modal-img-icon"
+                  alt=""
+                  src={require("../assets/header-logo-img.svg").default}
+                />
+                <div className="menu-modal-text">Devster</div>
               </NavLink>
             </div>
+            <img
+              className="menu-modal-close-icon"
+              alt=""
+              src={require("../assets/menu_modal_close.svg").default}
+              onClick={closeMenuBar}
+            />
           </div>
-        ) : null}
+          <div className="menu-modal-options">
+            <NavLink to={"/notice/admin"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-not">공지사항</b>
+            </NavLink>
+            <NavLink to={"/fboard"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-fb">일반게시판</b>
+            </NavLink>
+            <NavLink to={"/qboard"} onClick={closeMenuBar}>
+              <div className="menu-modal-options-qna">Q&A</div>
+            </NavLink>
+            <NavLink to={"/hboard"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-hire">채용정보</b>
+            </NavLink>
+            <NavLink to={"/aboard"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-aca">학원별게시판</b>
+            </NavLink>
+            <NavLink to={"/review"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-review">회사후기</b>
+            </NavLink>
+          </div>
 
-        <div
-          className="menu-account"
-          style={{ top: isLoggedIn ? "45rem" : "30rem" }}
-        >
-          <div className="menu-account-box" />
+          {isLoggedIn ? (
+            <div className="menu-mypage">
+              <div className="menu-mypage-box">
+                <div className="menu-mypage-userinfo">
+                  <div className="menu-mypage-userinfo">
+                    {memberType === "normal" && member.m_photo && (
+                      <div className="menu-mypage-userinfo-img">
+                        <img alt="" src={imageUrl} />
+                      </div>
+                    )}
+                    <div
+                      className="menu-mypage-userinfo-contents"
+                      style={{ marginLeft: memberType === "company" ? "0" : "" }}
+                    >
+                      {memberType === "normal" ? (
+                        <>
+                          <div className="menu-mypage-userinfo-nickname">
+                            {member.m_nickname}
+                          </div>
+                          <div className="menu-mypage-userinfo-email">
+                            {member.m_email}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="menu-mypage-userinfo-nickname">
+                            {companyMember.cm_name}
+                          </div>
+                          <div className="menu-mypage-userinfo-email">
+                            {companyMember.cm_email}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <NavLink
+                  to={
+                    memberType === "normal" && member.m_role === "GUEST"
+                      ? "/userinfo"
+                      : memberType === "company" &&
+                        companyMember.cm_role === "GUEST"
+                        ? "/compuserinfo"
+                        : memberType === "normal" && member.m_role === "USER"
+                          ? "/userinfo"
+                          : memberType === "company" &&
+                            companyMember.cm_role === "USER"
+                            ? "/compuserinfo"
+                            : memberType === "normal" && member.m_role === "ADMIN"
+                              ? "/notice/admin"
+                              : "/default"
+                  }
+                  onClick={closeMenuBar}
+                >
+                  <b className="menu-modal-options_mypage">
+                    <div style={{ marginTop: "2rem" }}>마이페이지</div>
+                  </b>
+                </NavLink>
+              </div>
+            </div>
+          ) : null}
 
-          {
-            isLoggedIn ? (
+          <div
+            className="menu-account"
+            style={{ top: isLoggedIn ? "45rem" : "30rem" }}
+          >
+            <div className="menu-account-box" />
+
+            {
+              isLoggedIn ? (
                 <div className="menu-account-signin">
                   <button
-                      className="menu-account-signin-box"
-                      onClick={handleLogout}>로그아웃</button>
+                    className="menu-account-signin-box"
+                    onClick={handleLogout}>로그아웃</button>
                 </div>
-          ) : (
+              ) : (
                 <React.Fragment>
                   <NavLink to={"/signin"}>
                     <div className="menu-account-signin">
@@ -214,9 +222,8 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
                     </div>
                   </NavLink>
                 </React.Fragment>
-          )}
-
-
+              )}
+          </div>
         </div>
       </div>
     </div>

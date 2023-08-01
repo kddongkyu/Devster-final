@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCm_compname, setCompChk, setCompIsValid} from '../../../../redux/compMemberSlice';
+import {setCm_compname, setCompChk, setCompIsValid, setRegIsValid} from '../../../../redux/compMemberSlice';
 import axios from 'axios';
 import {useSnackbar} from 'notistack';
 import ToastAlert from '../../../../api/ToastAlert';
@@ -71,7 +71,7 @@ function InputCompname(props) {
         }
     }, [cm_compname, dispatch, isCompTouched, checkComp]);
 
-    const handleIdChange = (e) => {
+    const handleCompnameChange = (e) => {
         if (!isCompTouched) {
             setIsCompTouched(true);
         }
@@ -79,15 +79,11 @@ function InputCompname(props) {
         dispatch(setCompIsValid(false));
     }
 
-    useEffect(() => {
-        console.log('compIsValid changed: ', compIsValid);
-    }, [compIsValid]);
-
     return (
         <div className='signup-comp-compname-position-box'>
             <div
                 className='signup-comp-compname-text'
-                id='recheck'
+                id='compRecheck'
             >
                 <span>상호명</span>
                 <span className='signup-comp-input-name'> *</span>
@@ -106,7 +102,7 @@ function InputCompname(props) {
                 className={`${isInputValid ? 'signup-comp-compname-inputbox' : 'signup-comp-compname-inputbox-error'}`}
                 value={cm_compname}
                 required={isSubmitted}
-                onChange={handleIdChange}
+                onChange={handleCompnameChange}
             />
         </div>
     );

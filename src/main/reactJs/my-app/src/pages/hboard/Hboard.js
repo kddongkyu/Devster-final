@@ -3,7 +3,7 @@ import "./style/Hboard.css";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import { JwtPageChk } from "../../api/JwtPageChk";
+import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
 import { checkToken } from "../../api/checkToken";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
@@ -14,7 +14,7 @@ function Hboard(props) {
     //새로고침 버튼용
     window.location.reload();
   };
-
+  const JwtPageChk = useJwtPageChk();
   const [hireBoardList, setHireBoardList] = useState([]);
   const [noticeArticle, setNoticeArticle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -277,17 +277,18 @@ function Hboard(props) {
           <div className="hboard-selection-hire-box" />
           <div className="hboard-selection-hire-text">채용정보</div>
         </div>
-        <NavLink
-          to="/aboard"
-          activeClassName="active"
+        <div
           className="hboard-selection-academy"
+          onClick={()=>{
+            JwtPageChk(navi, "/aboard")
+          }}
         >
           <div className="hboard-selection-qna-box" />
           <div className="hboard-selection-academy-text">학원별</div>
-        </NavLink>
+        </div>
       </div>
 
-      {de.type === "company" && (
+      {de && de.type === "company" && (
         <div
           className="hboard-write"
           onClick={() => {

@@ -14,7 +14,6 @@ import { jwtHandleError } from "../../api/JwtHandleError";
 
 function Main(props) {
   const navi = useNavigate();
-  const [ai_idx, setAi_idx] = useState(3); //dummy
 
   return (
     <div className="moblie-main">
@@ -23,7 +22,6 @@ function Main(props) {
         <b className="main-preview-name-text">실시간 인기글</b>
       </div>
       <MainBest />
-
       <div className="main-preview-name1">
         <div className="main-preview-name-box" />
         <b className="main-preview-name-text">자유게시판 (최신순)</b>
@@ -66,7 +64,6 @@ function Main(props) {
           src={require("./assets/main_more_icon.svg").default}
         />
       </div>
-
       <div className="main-preview-name3">
         <div className="main-preview-name-box" />
         <b className="main-preview-name-text">채용게시판 (최신순)</b>
@@ -112,5 +109,4 @@ function Main(props) {
     </div>
   );
 }
-
 export default Main;

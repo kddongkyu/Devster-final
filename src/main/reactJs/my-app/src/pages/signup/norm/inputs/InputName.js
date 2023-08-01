@@ -46,10 +46,6 @@ function InputName(props) {
         dispatch(setNameIsValid(false));
     }
 
-    useEffect(() => {
-        console.log('nameIsValid changed:', nameIsValid);
-    }, [nameIsValid]);
-
     return (
         <div>
             <div

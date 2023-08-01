@@ -27,7 +27,6 @@ function FboardCommentForm({fb_idx}) {
 
         axiosIns.post("/api/fboard/D1/comment", dto)
             .then(res => {
-                window.location.reload()
             })
             .catch(error => {
                 jwtHandleError(error, toastAlert);
