@@ -3,12 +3,13 @@ import "./style/Board.css";
 import {NavLink, useNavigate} from 'react-router-dom';
 import QboardPreview from "./QboardPreview";
 import axiosIns from "../../api/JwtConfig";
-import {JwtPageChk} from "../../api/JwtPageChk";
+import {JwtPageChk, useJwtPageChk} from "../../api/JwtPageChk";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
 
 const Qboard = () => {
+  const JwtPageChk = useJwtPageChk();
   const {enqueueSnackbar} = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
   const navi = useNavigate();

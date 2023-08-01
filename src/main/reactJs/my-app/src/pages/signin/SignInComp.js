@@ -1,27 +1,16 @@
 import React, { useRef } from "react";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
-<<<<<<< HEAD
 import { userSignIn } from "../../api/SignInApi";
 import { jwtHandleError } from "../../api/JwtHandleError";
+import { useNavigate } from "react-router-dom";
 
 function SignInComp({ capsLockChk, isCapsOn }) {
-  const compIdRef = useRef("");
-  const compPwRef = useRef("");
+  const navi = useNavigate();
+  const compIdRef = useRef('');
+  const compPwRef = useRef('');
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
-=======
-import {userSignIn} from "../../api/SignInApi";
-import {jwtHandleError} from "../../api/JwtHandleError";
-import {useNavigate} from "react-router-dom";
-
-function SignInComp({capsLockChk, isCapsOn}) {
-    const navi=useNavigate();
-    const compIdRef = useRef('');
-    const compPwRef = useRef('');
-    const {enqueueSnackbar} = useSnackbar();
-    const toastAlert = ToastAlert(enqueueSnackbar);
->>>>>>> JK
 
   const compSignIn = async (e) => {
     e.preventDefault();
@@ -33,21 +22,13 @@ function SignInComp({capsLockChk, isCapsOn}) {
 
     const compUrl = "/api/compmember/login";
 
-<<<<<<< HEAD
     try {
       await userSignIn(compSignInInfo, compUrl);
-      window.location.replace("/home");
+      navi('/home', { replace: true });
     } catch (error) {
       jwtHandleError(error, toastAlert);
-=======
-        try {
-            await userSignIn(compSignInInfo, compUrl);
-            navi('/home',{replace:true});
-        } catch (error) {
-            jwtHandleError(error, toastAlert);
-        }
->>>>>>> JK
     }
+
   };
 
   const handleOnCompId = (e) => {

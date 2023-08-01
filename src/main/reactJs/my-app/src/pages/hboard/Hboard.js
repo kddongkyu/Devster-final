@@ -3,7 +3,7 @@ import "./style/Hboard.css";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import { JwtPageChk } from "../../api/JwtPageChk";
+import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
 import { checkToken } from "../../api/checkToken";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
@@ -13,7 +13,7 @@ function Hboard(props) {
     //새로고침 버튼용
     window.location.reload();
   };
-
+  const JwtPageChk = useJwtPageChk();
   const [hireBoardList, setHireBoardList] = useState([]);
   const [noticeArticle, setNoticeArticle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);

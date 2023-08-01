@@ -3,7 +3,7 @@ import "./style/Fboard.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import { JwtPageChk } from "../../api/JwtPageChk";
+import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
@@ -13,7 +13,7 @@ function Fboard(props) {
     // 새로고침 버튼용
     window.location.reload();
   };
-
+  const JwtPageChk = useJwtPageChk();
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
