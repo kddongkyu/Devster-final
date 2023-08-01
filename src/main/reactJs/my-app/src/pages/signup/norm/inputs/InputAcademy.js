@@ -38,16 +38,13 @@ function InputAcademy(props) {
 
     const openSearchModal = () => {
         setIsSearchOpen(true);
+        document.documentElement.style.overflow = 'hidden';
     }
 
     const handleSearchInput = () => {
         searchIconRef.current.focus();
         searchIconRef.current.click();
     }
-
-    useEffect(() => {
-        console.log('academyIsValid changed', academyIsValid);
-    }, [academyIsValid]);
 
     return (
         <div>

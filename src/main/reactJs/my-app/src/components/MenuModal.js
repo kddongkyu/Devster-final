@@ -8,6 +8,7 @@ import { checkToken } from "../api/checkToken";
 function MenuModal({ isMenuOpen, setIsMenuOpen }) {
   const closeMenuBar = () => {
     setIsMenuOpen(false);
+    document.documentElement.style.overflow = 'auto';
   };
 
   const [member, setMember] = useState({

@@ -39,7 +39,7 @@ function HboardForm(props) {
       })
       .catch((error) => {
         //등록 실패 시 에러 처리
-        console.error(error);
+        jwtHandleError(error, toastAlert);
       });
   };
 

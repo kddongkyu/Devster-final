@@ -33,7 +33,7 @@ public class ReviewController {
         this.reviewCommentService = reviewCommentService;
     }
 
-@GetMapping("/D0")
+@GetMapping("/D1")
 public ResponseEntity<Map<String, Object>> getPagedReviews(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "5") int size,
@@ -50,7 +50,7 @@ public ResponseEntity<Map<String, Object>> getPagedReviews(
         return new ResponseEntity<ReviewDto>(reviewService.insertReview(dto),HttpStatus.OK);
     }
 
-    @GetMapping("/D0/{rb_idx}")
+    @GetMapping("/D1/{rb_idx}")
     public ResponseEntity<Map<String, Object>> getOneReview(@PathVariable int rb_idx) {
         return new ResponseEntity<>(reviewService.getOneReview(rb_idx), HttpStatus.OK);
     }
@@ -85,13 +85,13 @@ public ResponseEntity<Map<String, Object>> getPagedReviews(
 
     }
 
-    @GetMapping("/D0/{m_idx}/checkGood/{rb_idx}")
+    @GetMapping("/D1/{m_idx}/checkGood/{rb_idx}")
     public ResponseEntity<Boolean> checkGood(@PathVariable int m_idx, @PathVariable int rb_idx) {
         boolean isGood = reviewService.isAlreadyAddGoodRp(m_idx, rb_idx);
         return ResponseEntity.ok(isGood);
     }
 
-    @GetMapping("/D0/{m_idx}/checkBad/{rb_idx}")
+    @GetMapping("/D1/{m_idx}/checkBad/{rb_idx}")
     public ResponseEntity<Boolean> checkBad(@PathVariable int m_idx, @PathVariable int rb_idx) {
         boolean isBad = reviewService.isAlreadyAddBadRp(m_idx, rb_idx);
         return ResponseEntity.ok(isBad);

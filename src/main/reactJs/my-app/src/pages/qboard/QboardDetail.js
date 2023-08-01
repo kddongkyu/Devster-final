@@ -18,7 +18,6 @@ function QboardDetail(props) {
     const toastAlert = ToastAlert(enqueueSnackbar);
     //디코딩 함수
     const de = checkToken();
-
     const [qboardData, setQboardData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const { qb_idx, currentPage } = useParams();
@@ -125,6 +124,16 @@ function QboardDetail(props) {
         return formattedDateWithoutTime;
     };
 
+    const setMemberPhotoUrl = (value) => {
+        if (!value) {
+            return require("./assets/logo_profile.svg").default;
+        }
+        const photoUrl = process.env.REACT_APP_PHOTO+"member/";
+        const srcUrl = photoUrl + value;
+
+        return srcUrl;
+    }
+
     return (
         <div className="qboard-detail">
             <div className="qboard-advertise-box">
@@ -137,7 +146,7 @@ function QboardDetail(props) {
                 <img
                     className="qboard-detail-info-profile-img-icon"
                     alt=""
-                    src={`${profileUrl}${m_photo}`}
+                    src={setMemberPhotoUrl(m_photo)}
                     onClick={handleNicknameClick}
                 />
                 <div className="qboard-detail-info-nickname" onClick={handleNicknameClick}>{m_nickname}</div>

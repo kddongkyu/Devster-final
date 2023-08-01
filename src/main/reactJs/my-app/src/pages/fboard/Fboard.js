@@ -3,7 +3,7 @@ import "./style/Fboard.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import { JwtPageChk } from "../../api/JwtPageChk";
+import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
@@ -13,7 +13,7 @@ function Fboard(props) {
     // 새로고침 버튼용
     window.location.reload();
   };
-
+  const JwtPageChk = useJwtPageChk();
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -281,14 +281,15 @@ function Fboard(props) {
           <div className="fboard-selection-hire-box" />
           <div className="fboard-selection-hire-text">채용정보</div>
         </NavLink>
-        <NavLink
-          to="/aboard"
-          activeClassName="active"
+        <div
           className="fboard-selection-academy"
+          onClick={()=>{
+              JwtPageChk(navi, "/aboard")
+            }}
         >
           <div className="fboard-selection-qna-box" />
           <div className="fboard-selection-academy-text">학원별</div>
-        </NavLink>
+        </div>
       </div>
 
       <div

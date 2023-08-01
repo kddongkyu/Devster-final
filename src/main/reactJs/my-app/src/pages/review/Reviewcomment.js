@@ -46,7 +46,7 @@ function Reviewcomment(props) {
                     <React.Fragment key={index}>
                         <ReviewCommentItem comment={comment} index={index} rbc_idx={comment.reviewcommentdto.rbc_idx} toggleReplyComments={toggleReplyComments}  />
                         {!hideReplyComments[comment.reviewcommentdto.rbc_idx] && comment.replyList && comment.replyList.map((reply, replyIndex) => (
-                            <ReplyCommentItem reply={reply} replyIndex={replyIndex}  />
+                             <ReplyCommentItem reply={reply} replyIndex={replyIndex}  />
                         ))}
                     </React.Fragment>
                 );

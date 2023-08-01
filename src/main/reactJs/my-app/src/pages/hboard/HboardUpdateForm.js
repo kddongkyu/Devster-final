@@ -4,6 +4,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import { useSnackbar } from "notistack";
+import ToastAlert from "../../api/ToastAlert";
 
 const HboardUpdateForm = () => {
   const [hb_subject, setHb_subject] = useState("");
@@ -17,6 +20,10 @@ const HboardUpdateForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [arrayFromString, setArrayFromString] = useState([]);
   const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
+
+  //에러 호출용 변수
+  const { enqueueSnackbar } = useSnackbar();
+  const toastAlert = ToastAlert(enqueueSnackbar);
 
   let de = jwt_decode(localStorage.getItem("accessToken"));
   const cm_idx = de.idx;
@@ -45,7 +52,7 @@ const HboardUpdateForm = () => {
         })
         .catch((error) => {
           // 삭제 실패 시 에러 처리
-          console.error(error);
+          jwtHandleError(error, toastAlert);
         });
     },
     [arrayFromString, hb_idx]
@@ -76,7 +83,7 @@ const HboardUpdateForm = () => {
         navi(`/hboard/detail/${hb_idx}/${currentPage}`);
       })
       .catch((error) => {
-        console.error(error);
+        jwtHandleError(error, toastAlert);
       });
   };
 
@@ -105,7 +112,6 @@ const HboardUpdateForm = () => {
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       setArrayFromString([...arrayFromString, ...res.data.split(",")]);
-      console.log(arrayFromString);
       setIsLoading(false);
     });
   };

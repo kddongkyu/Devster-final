@@ -13,7 +13,6 @@ function isTokenExpired(token) {
 async function refreshAccessToken(refreshToken) {
     const accessToken = localStorage.getItem('accessToken');
     const memberType = jwt_decode(accessToken).type;
-    console.log(memberType);
     let tokenUrl = '';
 
     if (memberType === 'normal') {
@@ -34,11 +33,9 @@ async function refreshAccessToken(refreshToken) {
         if (res.status === 200) {
             const newAccessToken = res.headers.authorization;
             const newRefreshToken = res.headers['authorization-refresh'];
-            const newDecodedToken = jwt_decode(newAccessToken);
 
             localStorage.setItem('accessToken', newAccessToken);
             localStorage.setItem('refreshToken', newRefreshToken);
-            localStorage.setItem('expiredTime', newDecodedToken.exp);
 
             return newAccessToken;
         }
@@ -57,7 +54,6 @@ axiosIns.interceptors.request.use(
         if (isTokenExpired(refreshToken) && refreshToken) {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
-            localStorage.removeItem('expiredTime');
             alert('세션이 만료되었습니다.\n로그아웃 되었습니다.');
             window.location.reload();
         } else if (isTokenExpired(accessToken) && refreshToken) {

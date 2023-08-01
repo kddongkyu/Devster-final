@@ -3,9 +3,9 @@ import './style/Reviewupdate.css';
 import axiosIns from "../../api/JwtConfig";
 import {useNavigate, useParams} from "react-router-dom";
 import { ReviewModal } from "./index";
-import jwt_decode from "jwt-decode";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import {checkToken} from "../../api/checkToken";
 
 function Reviewupdate({reviewData}) {
     const [rbSubject, setRbsubject] = useState("");
@@ -24,7 +24,7 @@ function Reviewupdate({reviewData}) {
     const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
 
-    let de = jwt_decode(localStorage.getItem("accessToken"));
+    let de = checkToken();
     const m_idx = de.idx;
 
     const openReviewModal = () => {

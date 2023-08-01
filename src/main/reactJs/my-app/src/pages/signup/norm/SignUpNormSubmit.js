@@ -1,13 +1,15 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setIsSubmitted} from "../../../redux/normMemberSlice";
+import {resetNormMember, setIsSubmitted} from "../../../redux/normMemberSlice";
 import axios from "axios";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../../api/ToastAlert";
 import {jwtHandleError} from "../../../api/JwtHandleError";
+import {useNavigate} from "react-router-dom";
 
 function SignUpNormSubmit(props) {
     const dispatch = useDispatch();
+    const navi=useNavigate();
     const m_name = useSelector(state => state.norm.m_name);
     const m_id = useSelector(state => state.norm.m_id);
     const m_email = useSelector(state => state.norm.m_email);
@@ -31,6 +33,12 @@ function SignUpNormSubmit(props) {
     ]);
     const {enqueueSnackbar} = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
+    const scrollUp = useSelector(state=> [
+        state.norm.nameIsValid,
+        state.norm.idIsValid,
+        state.norm.emailIsValid,
+        state.norm.emailRegChk,
+    ]);
 
     const handleOnSubmit = async () => {
         await dispatch(setIsSubmitted(true));
@@ -44,7 +52,7 @@ function SignUpNormSubmit(props) {
                 formData.append('m_nickname', m_nickname);
                 formData.append('ai_idx', ai_idx);
                 formData.append('ai_name', ai_name);
-                console.log(formData)
+
                 const res = await axios({
                     method: 'post',
                     url: '/api/member/D0',
@@ -52,7 +60,8 @@ function SignUpNormSubmit(props) {
                     headers:{'Content-Type':'application/json'}
                 });
                 if(res?.status === 200) {
-                    window.location.replace('/grats');
+                    dispatch(resetNormMember());
+                    navi('/grats',{replace:true});
                 } else {
                     dispatch(setIsSubmitted(false));
                     toastAlert(<>회원가입에 실패했습니다.<br/>잠시후 다시 시도해주세요.</>,'warning');
@@ -62,9 +71,13 @@ function SignUpNormSubmit(props) {
                 jwtHandleError(error,toastAlert);
             }
         } else {
-            dispatch(setIsSubmitted(false));
-            const element = document.getElementById('recheck');
-            element.scrollIntoView();
+            if(scrollUp.every(Boolean)) {
+                dispatch(setIsSubmitted(false));
+            } else {
+                dispatch(setIsSubmitted(false));
+                const element = document.getElementById('recheck');
+                element.scrollIntoView();
+            }
         }
     }
 

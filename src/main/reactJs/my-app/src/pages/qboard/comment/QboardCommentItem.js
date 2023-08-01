@@ -91,6 +91,16 @@ function QboardCommentItem({ comment, index ,toggleReplyComments }) {
         return formattedDateWithoutTime;
     };
 
+    const setMemberPhotoUrl = (value) => {
+        if (!value) {
+            return require("../assets/logo_profile.svg").default;
+        }
+        const photoUrl = process.env.REACT_APP_PHOTO+"member/";
+        const srcUrl = photoUrl + value;
+
+        return srcUrl;
+    }
+
     return (
         <div className="qboard-detail-comments-all"  key={index}>
             <div className="qboard-detail-commnets-detail-">
@@ -103,7 +113,7 @@ function QboardCommentItem({ comment, index ,toggleReplyComments }) {
                 <img
                     className="qboard-detail-commnets-detail-icon"
                     alt=""
-                    src={`${profileUrl}${comment.photo}`}
+                    src={setMemberPhotoUrl(comment.photo)}
                 />
             </div>
 

@@ -1,0 +1,87 @@
+.social-member {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 110.7rem;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+
+.social-intro {
+    position: absolute;
+    top: 6.4rem;
+    left: calc(50% - 86px);
+    width: 17.2rem;
+    height: 10.8rem;
+    font-size: 4.8rem;
+    font-family: Lalezar;
+    cursor: pointer;
+}
+
+.social-intro-icon {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 44px);
+    width: 8.7rem;
+    height: 5.1rem;
+}
+
+.social-intro-icon-text-d {
+    position: absolute;
+    top: 3.9rem;
+    left: calc(50% - 86px);
+    display: inline-block;
+    width: 17.2rem;
+    height: 4.5rem;
+}
+
+.social-intro-icon-text-h {
+    position: absolute;
+    top: 8.8rem;
+    left: calc(50% - 76px);
+    font-size: 1.3rem;
+    letter-spacing: 7.5px;
+    color: #721ea6;
+}
+
+.social-intro-text {
+    position: absolute;
+    top: 19rem;
+    left: calc(50% - 132px);
+    letter-spacing: 0.01em;
+    color: #626567;
+}
+
+.social-devster {
+    margin: 0;
+}
+
+.social-choose {
+    position: absolute;
+    top: 25.7rem;
+    left: calc(50% - 68px);
+    width: 13.5rem;
+    height: 2.2rem;
+    font-size: 1.5rem;
+    color: #721ea6;
+}
+
+.social-choose-comp {
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor:default;
+}
+
+.social-input-top {
+    position: relative;
+    top:-17.5rem;
+}
+
+.social-input-bot {
+    position: relative;
+    top:-55.3rem;
+}
