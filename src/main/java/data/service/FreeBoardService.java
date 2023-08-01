@@ -19,6 +19,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mysql.cj.xdevapi.Result;
+
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -282,4 +284,59 @@ public class FreeBoardService {
     }
 
 
+
+    public List<Map<String, Object>> getHottestFboard(){
+        try{            
+            List<FreeBoardEntity> freeBoardEntities = freeBoardRepository.findTopByOrderByFbLikeDesc();
+            List<Map<String, Object>> freeBoardList = new ArrayList<>();
+
+            for(FreeBoardEntity freeBoardEntity : freeBoardEntities) {
+                MemberEntity memberInfo = memberRepository.findById(freeBoardEntity.getMIdx()).orElse(null);
+                int fboardCommentCount = fboardCommentRepository.countAllByFBidx(freeBoardEntity.getFBidx());
+                Map<String,Object> hottsetFboardInfo = new HashMap<>();
+                if (memberInfo != null) {
+                    hottsetFboardInfo.put("mPhoto", memberInfo.getMPhoto());
+                    hottsetFboardInfo.put("mNicname", memberInfo.getMNickname());
+                }
+                hottsetFboardInfo.put("freeBoardHotArticle",freeBoardEntity);
+                hottsetFboardInfo.put("fboardCommentCount",fboardCommentCount);
+                freeBoardList.add(hottsetFboardInfo);
+            }
+            return freeBoardList;
+        } catch (Exception e) {
+            log.error("Error finding hottest freeboard Article", e);
+            throw e;
+        }
+    }
+
+
+
+    public List<Map<String, Object>> getNewestFboard(){
+        try{
+            List<FreeBoardEntity> freeBoardEntities = freeBoardRepository.findTop3ByOrderByFbwriteDayDesc();
+            List<Map<String, Object>> freeBoardList = new ArrayList<>();
+    
+            for (FreeBoardEntity freeBoardEntity : freeBoardEntities) {
+                MemberEntity memberInfo = memberRepository.findById(freeBoardEntity.getMIdx()).orElse(null);
+                int fboardCommentCount = fboardCommentRepository.countAllByFBidx(freeBoardEntity.getFBidx());
+                Map<String, Object> fboardMemberInfo = new HashMap<>();
+                fboardMemberInfo.put("fboard", FreeBoardDto.toFreeBoardDto(freeBoardEntity));
+                fboardMemberInfo.put("fboardCommentCount",fboardCommentCount);
+                if (memberInfo != null) {
+                    fboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
+                    fboardMemberInfo.put("mNicname", memberInfo.getMNickname());
+                }
+    
+                freeBoardList.add(fboardMemberInfo);
+            }
+    
+            return freeBoardList;
+        } catch (Exception e) {
+            log.error("Error finding newest freeboard Articles", e);
+            throw e;
+        }
+    }
+
+
+    
 }

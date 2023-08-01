@@ -174,7 +174,7 @@ const Qboard = () => {
       </div>
     </div>
     <div className="qboard-selection">
-      <NavLink to="/qboard" activeClassName="active" className="qboard-selection-freeboard">
+      <NavLink to="/fboard" activeClassName="active" className="qboard-selection-freeboard">
         <div className="qboard-selection-freeboard-box" />
         <div className="qboard-selection-freeboard-text">자유</div>
       </NavLink>

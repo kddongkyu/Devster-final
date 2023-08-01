@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     private static final String[] NO_CHECK_URLS = {"/api/member/login","/api/compmember/login","/api/member/login/kakao","/api/member/naver"};
-    private static final Pattern PERMIT_ALL_PATTERN = Pattern.compile("^/api/.*?/D0/.*$");
+    private static final Pattern PERMIT_ALL_PATTERN = Pattern.compile("^/api/.*?/D0(/.*)?$");
 
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
@@ -103,7 +103,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (optionalMemberEntity.isPresent()) {
             MemberEntity memberEntity = optionalMemberEntity.get();
             String reIssuedRefreshToken = reIssueRefreshToken(memberEntity);
-            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(memberEntity.getMIdx(),"normal"),
+            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(memberEntity.getMIdx(),"normal",memberEntity.getMRole().toString()),
                     reIssuedRefreshToken);
         } else {
             try {
@@ -118,7 +118,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (optionalCompanyMemberEntity.isPresent()) {
             CompanyMemberEntity companyMemberEntity = optionalCompanyMemberEntity.get();
             String reIssuedRefreshToken = reIssueRefreshTokenComp(companyMemberEntity);
-            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(companyMemberEntity.getCMidx(),"company"),
+            jwtService.sendAccessAndRefreshToken(response, jwtService.generateAccessToken(companyMemberEntity.getCMidx(),"company",companyMemberEntity.getCMrole().toString()),
                     reIssuedRefreshToken);
         } else {
             try {

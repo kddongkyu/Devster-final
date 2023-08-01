@@ -244,6 +244,21 @@ public class ResumeService {
         return "이력서 업데이트 완료.";
     }
 
+    public String updateRstatus(HttpServletRequest request) {
+        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+        ResumeEntity entity = resumeRepository.findByMIdx(m_idx).get();
+
+        if(entity.getRStatus() == 0) {
+            entity.setRStatus(1);
+            resumeRepository.saveAndFlush(entity);
+            return "공개";
+        } else {
+            entity.setRStatus(0);
+            resumeRepository.saveAndFlush(entity);
+            return "비공개";
+        }
+    }
+
      public String translateResume(String inputText) throws IOException {
          try {
              String text = URLEncoder.encode(inputText, "UTF-8");

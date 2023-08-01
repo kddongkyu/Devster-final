@@ -119,8 +119,9 @@ public class NaverController {
             deleteToken(accessToken);
 
             int m_idx = returnMember.getMIdx();
+            String role = returnMember.getMRole().toString();
 
-            String accessTokenNaver = jwtService.generateAccessToken(m_idx,"normal");
+            String accessTokenNaver = jwtService.generateAccessToken(m_idx,"normal",role);
             String refreshTokenNaver = jwtService.generateRefreshToken("normal");
 
             HttpHeaders responseHeaders = new HttpHeaders();

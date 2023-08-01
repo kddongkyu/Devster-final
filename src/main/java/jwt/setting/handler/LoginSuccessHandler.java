@@ -1,5 +1,7 @@
 package jwt.setting.handler;
 
+import data.entity.CompanyMemberEntity;
+import data.entity.MemberEntity;
 import data.repository.CompanyMemberRepository;
 import data.repository.MemberRepository;
 import jwt.setting.settings.JwtService;
@@ -45,8 +47,10 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private void isNormalMember(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String id = extractUsername(authentication);
-        int m_idx = memberRepository.findByMId(id).get().getMIdx();
-        String accessToken = jwtService.generateAccessToken(m_idx,"normal");
+        MemberEntity memberForToken = memberRepository.findByMId(id).get();
+        int m_idx = memberForToken.getMIdx();
+        String role = memberForToken.getMRole().toString();
+        String accessToken = jwtService.generateAccessToken(m_idx,"normal",role);
         String refreshToken = jwtService.generateRefreshToken("normal");
 
         jwtService.sendAccessAndRefreshToken(response,accessToken,refreshToken);
@@ -63,8 +67,12 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private void isCompanyMember(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String id = extractUsername(authentication);
-        int cm_idx = companyMemberRepository.findByCMemail(id).get().getCMidx();
-        String accessToken = jwtService.generateAccessToken(cm_idx,"company");
+
+        CompanyMemberEntity companyMemberEntity = companyMemberRepository.findByCMemail(id).get();
+        int cm_idx = companyMemberEntity.getCMidx();
+        String role = companyMemberEntity.getCMrole().toString();
+
+        String accessToken = jwtService.generateAccessToken(cm_idx,"company",role);
         String refreshToken = jwtService.generateRefreshToken("company");
 
         jwtService.sendAccessAndRefreshToken(response,accessToken,refreshToken);
