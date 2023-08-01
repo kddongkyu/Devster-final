@@ -126,7 +126,7 @@ function MainHire(props) {
                   <div className="main-best-info-type">{hboard.cmCompname}</div>
                 </div>
                 <NavLink
-                  to={`/fboard/detail/${hboard.hboard.hb_idx}/${currentPage}`}
+                  to={`/hboard/detail/${hboard.hboard.hb_idx}/${currentPage}`}
                 >
                   <b className="main-best-subject">
                     {" "}
