@@ -128,6 +128,7 @@
   width: auto;
   height: auto;
   padding: 0.7rem 1rem;
+  white-space: pre-wrap;
 }
 
 .chat-body-msg-r1 {
@@ -181,7 +182,6 @@
   word-break: break-word;
   padding: 0.7rem 1rem;
   white-space: pre-wrap;
-
 }
 
 .chat-body-msg-s1 {
@@ -237,11 +237,12 @@
   border-top: 1px solid #bdc0c4;
   box-sizing: border-box;
   height: 5.5rem;
-  max-height: 20rem;
-  overflow-y: hidden;
+  max-height: 10rem;
+  min-height:5.5rem;
+  overflow-y: auto;
   resize: none;
   font-size: 1.6rem;
-  padding: 0.5rem 1rem;
+  padding: 0 1.2rem;
   box-sizing: border-box;
 }
 

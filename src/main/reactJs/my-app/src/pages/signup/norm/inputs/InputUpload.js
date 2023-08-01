@@ -73,6 +73,7 @@ function InputUpload(props) {
 
     const openCropModal = () => {
         setIsCropOpen(true);
+        document.documentElement.style.overflow = 'hidden';
     }
 
     return (

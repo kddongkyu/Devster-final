@@ -35,6 +35,7 @@ function AddrSearch({isAddrOpen, setIsAddrOpen, openPostCode, setOpenPostCode}) 
             dispatch(setIsSelectedTouched(true));
             setIsAddrOpen(false);
             setOpenPostCode(false);
+            document.documentElement.style.overflow = 'auto';
         },
     }
 
@@ -42,6 +43,7 @@ function AddrSearch({isAddrOpen, setIsAddrOpen, openPostCode, setOpenPostCode}) 
         dispatch(setIsSelectedTouched(true));
         setIsAddrOpen(false);
         setOpenPostCode(false);
+        document.documentElement.style.overflow = 'auto';
     }
 
     if (!isAddrOpen) {

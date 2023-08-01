@@ -43,7 +43,7 @@ function InputCompEmailReg(props) {
             const res = await axios({
                 method: 'post',
                 url: '/api/compmember/D0/email/validation',
-                data: JSON.stringify({m_email: cm_email}),
+                data: JSON.stringify({cm_email: cm_email}),
                 headers: {'Content-Type': 'application/json'}
             });
 

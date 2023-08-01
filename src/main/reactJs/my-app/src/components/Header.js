@@ -5,19 +5,19 @@ import {MenuModal} from "./index";
 import {useDispatch, useSelector} from "react-redux";
 import {resetUnreadMsg, setHidden, setModalOpen} from "../redux/devChat";
 
-function Header(props) {
+function Header({isMenuOpen,setIsMenuOpen}) {
     const dispatch = useDispatch();
     const unreadMsg = useSelector(state=>state.devChat.unreadMsg);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const openMenuBar = () => {
         setIsMenuOpen(true);
+        document.documentElement.style.overflow = 'hidden';
     };
 
     const handleOpenChat =() => {
         dispatch(setModalOpen(true));
         dispatch(setHidden(false));
         dispatch(resetUnreadMsg());
-        document.body.style.overflow='hidden';
+        document.documentElement.style.overflow = 'hidden';
     }
 
     return (

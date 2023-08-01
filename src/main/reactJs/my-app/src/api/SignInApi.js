@@ -1,5 +1,4 @@
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
 
 export const userSignIn = async (userSignInInfo, signInUrl) => {
     try {
@@ -11,13 +10,11 @@ export const userSignIn = async (userSignInInfo, signInUrl) => {
         });
 
         if (res?.status === 200) {
-            // let decodedToken = jwt_decode(res.headers.authorization);
             localStorage.setItem('accessToken', res.headers.authorization);
             localStorage.setItem(
                 'refreshToken',
                 res.headers['authorization-refresh']
             );
-            // localStorage.setItem('expiredTime', decodedToken.exp);
             return res;
         }
     } catch (error) {

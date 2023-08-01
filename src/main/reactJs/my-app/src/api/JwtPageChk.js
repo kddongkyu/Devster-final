@@ -28,7 +28,6 @@ export const useJwtPageChk = () => {
                     return;
                 }
                 else {
-                    console.log(role);
                     navi(url);
                 }
             }

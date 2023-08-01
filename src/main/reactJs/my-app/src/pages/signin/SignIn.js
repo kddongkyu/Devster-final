@@ -26,7 +26,9 @@ function SignIn(props) {
     return (
         <div className='login'>
             <div className='moblie'/>
-            <div className='login-logo-img'>
+            <div 
+            className='login-logo-img'
+            onClick={()=>navi('/home')}>
                 <img
                     className='login-logo-img-icon'
                     alt=''

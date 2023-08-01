@@ -23,6 +23,7 @@ function Room(props) {
     const toastAlert = ToastAlert(enqueueSnackbar);
 
     const uploadRef = useRef();
+    const textArea = useRef();
 
     const msgSend = async () => {
         if (!sendingMsg.trim() && imgArr.length === 0) {
@@ -55,7 +56,7 @@ function Room(props) {
             dispatch(wsPublish({
                 type: 'CHAT',
                 userName: userName,
-                msg: sendingMsg ? sendingMsg : '',
+                msg: sendingMsg ? sendingMsg.replace(/\n{2,}/g, "\n") : '',
                 msgImg: imgUrl,
                 userProfile: userProfile,
             }));
@@ -65,19 +66,23 @@ function Room(props) {
     }
 
     const enterKey = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
+        const isMobile=window.innerWidth <= 768;
+        if (!isMobile && e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             msgSend();
+        } else if(isMobile && e.key === "Enter") {
         }
     }
 
     const handleMinimize = () => {
         dispatch(setHidden(true));
-        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
     }
 
     const handleOnMsgInput = (e) => {
         dispatch(setSendingMsg(e.target.value));
+        textArea.current.style.height = 'auto';
+        textArea.current.style.height = textArea.current.scrollHeight + 'px';
     }
 
     return (
@@ -126,9 +131,10 @@ function Room(props) {
                         src={require('./assets/chat_footer_upload_icon.svg').default}
                     /> */}
                 </div>
-                <textarea
+                <textarea rows={2}
                     type='text'
                     className='chat-footer-send-box'
+                    ref={textArea}
                     value={sendingMsg}
                     onKeyDown={enterKey}
                     onChange={handleOnMsgInput}

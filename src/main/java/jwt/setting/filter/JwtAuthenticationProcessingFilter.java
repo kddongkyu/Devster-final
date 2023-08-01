@@ -22,11 +22,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
-    private static final String[] NO_CHECK_URLS = {"/api/member/login","/api/compmember/login","/api/member/login/kakao","/api/member/naver"};
+    private static final String[] NO_CHECK_URLS = {"/api/member/login","/api/compmember/login","/api/member/login/kakao","/api/member/login/naver"};
     private static final Pattern PERMIT_ALL_PATTERN = Pattern.compile("^/api/.*?/D0(/.*)?$");
+
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
     private final CompanyMemberRepository companyMemberRepository;
@@ -37,11 +39,13 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         } else {
+
             Matcher matcher = PERMIT_ALL_PATTERN.matcher(request.getRequestURI());
             if (matcher.matches()) {
                 filterChain.doFilter(request, response);
                 return;
             }
+
             for (String url : NO_CHECK_URLS) {
                 if (request.getRequestURI().equals(url)) {
                     filterChain.doFilter(request, response);
@@ -51,6 +55,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             String refreshToken = jwtService.extractRefreshToken(request)
                     .filter(jwtService::isTokenValid)
                     .orElse(null);
+
             if (refreshToken != null) {
                 Optional<String> optionalType = jwtService.extractType(refreshToken);
                 if (optionalType.isPresent()) {
@@ -67,8 +72,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     return;
                 }
             }
+
             Optional<String> optionalAccessToken = jwtService.extractAccessToken(request)
                     .filter(jwtService::isTokenValid);
+
             if(optionalAccessToken.isPresent()) {
                 String accessToken = optionalAccessToken.get();
                 Optional<String> optionalType = jwtService.extractType(accessToken);
@@ -90,6 +97,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             }
         }
     }
+
     public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMRefreshtoken(refreshToken);
         if (optionalMemberEntity.isPresent()) {

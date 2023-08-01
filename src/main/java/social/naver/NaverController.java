@@ -32,13 +32,9 @@ public class NaverController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping("/oauth2/authorization/naver")
-    public void api(){
-
-    }
-
-    @GetMapping("/oauth2/callback/naver")
-    private ResponseEntity<?> naverCallBack(String code){
+    @PostMapping("/api/member/login/naver")
+    private ResponseEntity<?> naverCallBack(@RequestBody JsonNode json){
+        String code = json.get("code").asText();
         RestTemplate rt = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -92,8 +88,7 @@ public class NaverController {
 
             deleteToken(accessToken);
             int m_idx = returnMember.getMIdx();
-            String role = returnMember.getMRole().toString();
-
+            String role=returnMember.getMRole().toString();
             String accessTokenNaver = jwtService.generateAccessToken(m_idx,"normal",role);
             String refreshTokenNaver = jwtService.generateRefreshToken("normal");
             HttpHeaders responseHeaders = new HttpHeaders();
@@ -148,5 +143,4 @@ public class NaverController {
 
         log.info("네이버 accessToken 삭제완료");
     }
-
 }
