@@ -104,26 +104,47 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
             onClick={closeMenuBar}
           />
         </div>
-        <div className="menu-modal-options">
-          <NavLink to={"/notice/admin"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-not">공지사항</b>
-          </NavLink>
-          <NavLink to={"/fboard"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-fb">일반게시판</b>
-          </NavLink>
-          <NavLink to={"/qboard"} onClick={closeMenuBar}>
-            <div className="menu-modal-options-qna">Q&A</div>
-          </NavLink>
-          <NavLink to={"/hboard"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-hire">채용정보</b>
-          </NavLink>
-          <NavLink to={"/aboard"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-aca">학원별게시판</b>
-          </NavLink>
-          <NavLink to={"/review"} onClick={closeMenuBar}>
-            <b className="menu-modal-options-review">회사후기</b>
-          </NavLink>
-        </div>
+        {isLoggedIn ? (
+          <div className="menu-modal-options">
+            <NavLink to={"/notice/admin"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-not">공지사항</b>
+            </NavLink>
+            <NavLink to={"/fboard"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-fb">일반게시판</b>
+            </NavLink>
+            <NavLink to={"/qboard"} onClick={closeMenuBar}>
+              <div className="menu-modal-options-qna">Q&A</div>
+            </NavLink>
+            <NavLink to={"/hboard"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-hire">채용정보</b>
+            </NavLink>
+            <NavLink to={"/aboard"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-aca">학원별게시판</b>
+            </NavLink>
+            <NavLink to={"/review"} onClick={closeMenuBar}>
+              <b className="menu-modal-options-review">회사후기</b>
+            </NavLink>
+          </div>
+        ) : (
+            <div className="menu-modal-options">
+              <NavLink to={"/fboard"} onClick={closeMenuBar}>
+                <b className="menu-modal-options-fb2">일반게시판</b>
+              </NavLink>
+              <NavLink to={"/qboard"} onClick={closeMenuBar}>
+                <div className="menu-modal-options-qna2">Q&A</div>
+              </NavLink>
+              <NavLink to={"/hboard"} onClick={closeMenuBar}>
+                <b className="menu-modal-options-hire2">채용정보</b>
+              </NavLink>
+              <NavLink to={"/aboard"} onClick={closeMenuBar}>
+                <b className="menu-modal-options-aca2">학원별게시판</b>
+              </NavLink>
+              <NavLink to={"/review"} onClick={closeMenuBar}>
+                <b className="menu-modal-options-review2">회사후기</b>
+              </NavLink>
+            </div>
+        )}
+
 
         {isLoggedIn ? (
           <div className="menu-mypage">
@@ -195,19 +216,33 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
 
           {
             isLoggedIn ? (
+                <React.Fragment>
                 <div className="menu-account-signin">
                   <button
                       className="menu-account-signin-box"
                       onClick={handleLogout}>로그아웃</button>
                 </div>
+                {/* navlink 에러뜸, 쪽지 이모티콘 (왔는지 안왔는지) */}
+                <NavLink to={"/message"} onClick={closeMenuBar}>
+                  <div className="menu-account-signup">
+                    <div className="menu-account-signup-box" />
+                    <img
+                        className="menu-modal-mail-icon"
+                        alt=""
+                        src={require("../assets/Mail.svg").default}
+                    />
+                    <b className="menu-account-mail-text">쪽지</b>
+                  </div>
+                </NavLink>
+                </React.Fragment>
           ) : (
                 <React.Fragment>
-                  <NavLink to={"/signin"}>
+                  <NavLink to={"/signin"} onClick={closeMenuBar}>
                     <div className="menu-account-signin">
                       <button className="menu-account-signin-box">로그인</button>
                     </div>
                   </NavLink>
-                  <NavLink to={"/signup"}>
+                  <NavLink to={"/signup"} onClick={closeMenuBar}>
                     <div className="menu-account-signup">
                       <div className="menu-account-signup-box" />
                       <b className="menu-account-signup-text">회원가입</b>

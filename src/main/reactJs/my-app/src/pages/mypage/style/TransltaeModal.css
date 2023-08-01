@@ -1,0 +1,81 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.translate-rec,
+.translate-top-rec {
+    position: absolute;
+    width: calc(100% - 70px);
+    top: 23.1rem;
+    right: 3.5rem;
+    left: 3.5rem;
+    background-color: #fff;
+    height: 28.4rem;
+}
+.translate-top-rec {
+    background-color: #721ea6;
+    height: 4rem;
+}
+.translate-close-icon {
+    position: absolute;
+    top: 24.5rem;
+    right: 4.7rem;
+    width: 1.4rem;
+    height: 1.4rem;
+}
+.trans-logo-icon {
+    position: absolute;
+    top: 24rem;
+    left: 4.4rem;
+    width: 2.9rem;
+    height: 2.3rem;
+}
+.translate-bottom-text,
+.translate-text {
+    position: absolute;
+    letter-spacing: -0.24px;
+    font-weight: 500;
+    display: inline-block;
+}
+.translate-text {
+    width: calc(100% - 133px);
+    top: 29rem;
+    left: 6.7rem;
+    height: 17.2rem;
+    overflow: scroll;
+}
+.translate-bottom-text {
+    top: 48.1rem;
+    right: 4.7rem;
+    color: #626567;
+    text-align: right;
+    width: 27.5rem;
+}
+.translate {
+    position: relative;
+    background-color: #a5a4a4;
+    width: 100%;
+    height: 84.4rem;
+    overflow: hidden;
+    text-align: left;
+    font-size: 1.2rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+.translate-title {
+    position: absolute;
+    top: 24.3rem;
+    left: 8.2rem;
+    font-weight: 500;
+    font-family: Inter;
+    color: #fff;
+    display: inline-block;
+    width: 21.2rem;
+}

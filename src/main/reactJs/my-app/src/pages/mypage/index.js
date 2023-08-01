@@ -22,3 +22,5 @@ export { default as CompanyApprovalApply } from "./CompanyApprovalApply";
 export { default as WithdrawalCompany } from "./WithdrawalCompany";
 export { default as ResumeList } from "./ResumeList";
 export { default as ResumeDetail } from "./ResumeDetail";
+export { default as MyResumeTranslate } from "./MyResumeTranslate";
+

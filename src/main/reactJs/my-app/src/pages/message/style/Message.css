@@ -21,10 +21,11 @@
 }
 .textmsg-searchbar-search-icon {
     position: absolute;
-    top: 1.71rem;
-    left: 33rem;
+    top: 1.8rem;
+    right: 3rem;
     width: 1.58rem;
     height: 1.58rem;
+    opacity: 0.5;
 }
 .textmsg-searchbar-sort-icon {
     position: absolute;
@@ -47,6 +48,8 @@
     background-color: #fff;
     box-sizing: border-box;
     height: 9rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .textmsg-preview-img {
@@ -129,8 +132,9 @@
 .button-container {
     display: flex;
     justify-content: center;
-    gap: 1rem; /* 버튼들 사이에 간격을 추가합니다. */
-    margin-top: 2rem; /* 버튼들 위에 여백을 추가합니다. */
+    gap: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .delete-button, .list-button {
@@ -165,6 +169,14 @@
     color: #000;
 }
 
+.message-list-hr {
+    color: #cfcfcf;
+    clear: both;
+    opacity: 1;
+    border: 1px;
+    background-color: #cfcfcf;
+    z-index: 0;
+}
 
 
 

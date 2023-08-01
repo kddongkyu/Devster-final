@@ -41,7 +41,10 @@ function MessageDetail(props) {
             <div className="textmsg-preview" style={{ borderBottom: "1px solid black" }}>
                 {messageDetail && (
                     <div className="textmsg-preview-box" >
-                        <img className="textmsg-preview-img" alt={`${messageDetail.send_nick}의 프로필 사진`} src={`${photoUrl}${messageDetail.send_nick_photo}`}  />
+                        <img className="textmsg-preview-img" alt={`${messageDetail.send_nick}의 프로필 사진`}
+                             src={messageDetail.send_nick_photo ?  `${photoUrl}${messageDetail.send_nick_photo}`
+                                 : require("./assets/logo_profile.svg").default}
+                        />
                         <b className="textmsg-preview-subject">{messageDetail.subject}</b>
                         <div className="textmsg-preview-id">{messageDetail.send_nick}</div>
                         <div className="textmsg-preview-date">{messageDetail.send_time}</div>

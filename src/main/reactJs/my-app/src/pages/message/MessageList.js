@@ -46,6 +46,11 @@ function MessageList(props) {
         }
     };
 
+    const handleEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSearchClick();
+        }
+    };
 
     const goToPreviousPage = () => {
         if (page > 0) {
@@ -73,7 +78,10 @@ function MessageList(props) {
     return (
         <div className="moblie-textmsg">
             <div className="textmsg-searchbar">
-                <input type="text" className="textmsg-searchbar-box" placeholder="쪽지 내용 검색" onChange={handleSearchChange}
+                <input type="text" className="textmsg-searchbar-box"
+                       placeholder="쪽지 내용 검색"
+                       onChange={handleSearchChange}
+                       onKeyDown={handleEnterKeyPress}
                        value={searchTerm}/>
                 <img
                     className="textmsg-searchbar-search-icon"
@@ -85,11 +93,14 @@ function MessageList(props) {
             {
                 messageList && messageList.length > 0 ?
                     messageList.map((message, index) =>
+                        <>
                         <MessageListPreview
                             message={message}
                             isLast={index === messageList.length - 1}
                             key={message.id}
                         />
+                    <hr className="message-list-hr"/>
+                        </>
                     ) : <MessageZeroPreview />
             }
             <div className="button-container">

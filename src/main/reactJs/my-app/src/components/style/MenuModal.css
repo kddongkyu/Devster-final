@@ -6,6 +6,14 @@
     height: 2.3rem;
 }
 
+.menu-modal-mail-icon {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.9rem;
+    width: 2.4rem;
+    height: 1.5rem;
+}
+
 .menu-modal-text {
     position: absolute;
     top: 0;
@@ -144,6 +152,12 @@
     position: absolute;
     top: 0.7rem;
     left: 1.4rem;
+    letter-spacing: -0.24px;
+}
+.menu-account-mail-text {
+    position: absolute;
+    top: 0.7rem;
+    left: 3.4rem;
     letter-spacing: -0.24px;
 }
 

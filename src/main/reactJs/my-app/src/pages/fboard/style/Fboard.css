@@ -485,7 +485,7 @@
 .fboard-notice-preview-views-tex {
   position: absolute;
   top: 0;
-  right: 0;
+  right: calc(50% - 9.5px);
   letter-spacing: -0.24px;
 }
 
@@ -498,7 +498,6 @@
 }
 
 .fboard-notice-preview-views {
-  position: absolute;
   top: 0;
   right: 7.4rem;
   width: 3.6rem;
@@ -548,7 +547,6 @@
   position: absolute;
   top: 6.6rem;
   right: 0;
-  width: 11rem;
   height: 1.7rem;
 }
 

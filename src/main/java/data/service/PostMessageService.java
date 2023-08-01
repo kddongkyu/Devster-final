@@ -41,7 +41,7 @@ public class PostMessageService {
         String memberType = jwtService.extractType(jwtService.extractAccessToken(request).get()).get();
         String nickName;
 
-        if(memberType.equals("member")) {
+        if(memberType.equals("normal")) {
             int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
             nickName = memberRepository.findById(m_idx).get().getMNickname();
         } else {
