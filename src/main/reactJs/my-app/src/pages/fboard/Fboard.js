@@ -3,7 +3,7 @@ import "./style/Fboard.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import { JwtPageChk } from "../../api/JwtPageChk";
+import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
@@ -13,7 +13,7 @@ function Fboard(props) {
     // 새로고침 버튼용
     window.location.reload();
   };
-
+  const JwtPageChk = useJwtPageChk();
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -395,7 +395,7 @@ function Fboard(props) {
             <div className="fboard-notice-preview-notice-bo" />
             <div className="fboard-notice-preview-notice-te">공지사항</div>
           </div>
-          <div className="fboard-notice-preview-hash">#공지사항 # Devster</div>
+          <div className="fboard-notice-preview-hash"># 공지사항 # 필독 # Devster</div>
           <div className="fboard-notice-preview-icons">
             <div className="fboard-notice-preview-views">
               <div className="fboard-notice-preview-views-tex">
@@ -405,24 +405,6 @@ function Fboard(props) {
                 className="fboard-notice-preview-views-ico-icon"
                 alt=""
                 src={require("./assets/board_preview_views_icon.svg").default}
-              />
-            </div>
-            <div className="fboard-notice-preview-icons-com">
-              <div className="fboard-notice-preview-views-tex">99</div>
-              <img
-                className="fboard-notice-preview-icons-com2"
-                alt=""
-                src={
-                  require("./assets/board_preview_comments_icon.svg").default
-                }
-              />
-            </div>
-            <div className="fboard-notice-preview-icons-lik">
-              <div className="fboard-notice-preview-icons-lik1">9</div>
-              <img
-                className="fboard-notice-preview-icons-lik2"
-                alt=""
-                src={require("./assets/board_preview_likes_icon.svg").default}
               />
             </div>
           </div>

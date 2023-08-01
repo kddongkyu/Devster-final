@@ -1,42 +1,36 @@
 package data.controller;
 
-import data.dto.MsgDto;
+import data.dto.devchat.MsgDto;
+import data.service.MsgService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.context.event.EventListener;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class MsgController {
+    private final MsgService msgService;
 
-    private final SimpMessageSendingOperations sendingOperations;
-    private Map<String, Integer> pplCounts = new HashMap<>();
+    @EventListener
+    public void onDisconnect(SessionDisconnectEvent e) {
+        msgService.handleSessionDisconnect(e);
+    }
 
     @MessageMapping("/msg")
-    public void msg(MsgDto msg) {
-        String roomId = msg.getRoomId();
-        switch (msg.getType()) {
-            case "ENTER":
-                msg.setMsg(msg.getUserName() + "님이 접속하였습니다.");
-                pplCounts.compute(roomId, (k, v) -> v == null ? 1 : v + 1);
-                sendingOperations.convertAndSend("/sub/devchat/" + msg.getRoomId() + "/ppl", pplCounts.get(roomId));
-                break;
+    public void msg(MsgDto msg, StompHeaderAccessor headerAccessor) {
+        msgService.handleMessage(msg, headerAccessor);
+    }
 
-            case "CHAT":
-                break;
-
-            case "EXIT":
-//                pplCounts.compute(roomId, (k, v) -> (v == null || v == 0 ? 0 : v - 1));
-//                sendingOperations.convertAndSend("/sub/devchat/" + msg.getRoomId() + "/disppl", pplCounts.get(roomId));
-                break;
-
-            default:
-                break;
-        }
-        sendingOperations.convertAndSend("/sub/devchat/" + msg.getRoomId(), msg);
+    @PostMapping("/api/devchat/D1/upload")
+    public List<String> uploadImg(List<MultipartFile> upload) {
+        return msgService.handleImageUpload(upload);
     }
 }

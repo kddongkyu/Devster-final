@@ -84,10 +84,6 @@ function InputCompEmail(props) {
         dispatch(setEmailIsValid(false));
     }
 
-    useEffect(() => {
-        console.log('emailIsValid changed:', emailIsValid);
-    }, [emailIsValid])
-
     return (
         <div>
             <div className='signup-comp-email-text'>

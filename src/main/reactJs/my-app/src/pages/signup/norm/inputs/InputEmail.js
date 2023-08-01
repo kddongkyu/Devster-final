@@ -83,10 +83,6 @@ function InputEmail(props) {
         dispatch(setEmailIsValid(false));
     }
 
-    useEffect(() => {
-        console.log('emailIsValid changed:', emailIsValid);
-    }, [emailIsValid])
-
     return (
         <div>
             <div className='signup-guest-email-text'>
