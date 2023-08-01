@@ -24,6 +24,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
 
   const photoUrl = process.env.REACT_APP_MEMBERURL;
   const imageUrl = `${photoUrl}${member.m_photo}`;
+  const decodedToken = checkToken();
 
   const getMemberData = async (idx) => {
     try {
@@ -43,9 +44,23 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      window.confirm("로그아웃 하시겠습니까?");
+      await axiosIns.get('/api/member/D1/logout', {
+      });
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      console.log('로그아웃 성공');
+      window.location.href = '/';
+    } catch (error) {
+      console.error('로그아웃 에러:', error);
+    }
+  };
+
   useEffect(() => {
     try {
-      const decodedToken = checkToken();
+
       if (decodedToken) {
         setMemberType(decodedToken.type);
         setIsLoggedIn(true);
@@ -90,6 +105,9 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           />
         </div>
         <div className="menu-modal-options">
+          <NavLink to={"/notice/admin"} onClick={closeMenuBar}>
+            <b className="menu-modal-options-not">공지사항</b>
+          </NavLink>
           <NavLink to={"/fboard"} onClick={closeMenuBar}>
             <b className="menu-modal-options-fb">일반게시판</b>
           </NavLink>
@@ -174,15 +192,31 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
           style={{ top: isLoggedIn ? "45rem" : "30rem" }}
         >
           <div className="menu-account-box" />
-          <NavLink to={"/signin"}>
-            <div className="menu-account-signin">
-              <button className="menu-account-signin-box">로그인</button>
-            </div>
-          </NavLink>
-          <div className="menu-account-signup">
-            <div className="menu-account-signup-box" />
-            <b className="menu-account-signup-text">회원가입</b>
-          </div>
+
+          {
+            isLoggedIn ? (
+                <div className="menu-account-signin">
+                  <button
+                      className="menu-account-signin-box"
+                      onClick={handleLogout}>로그아웃</button>
+                </div>
+          ) : (
+                <React.Fragment>
+                  <NavLink to={"/signin"}>
+                    <div className="menu-account-signin">
+                      <button className="menu-account-signin-box">로그인</button>
+                    </div>
+                  </NavLink>
+                  <NavLink to={"/signup"}>
+                    <div className="menu-account-signup">
+                      <div className="menu-account-signup-box" />
+                      <b className="menu-account-signup-text">회원가입</b>
+                    </div>
+                  </NavLink>
+                </React.Fragment>
+          )}
+
+
         </div>
       </div>
     </div>

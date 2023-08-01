@@ -1,0 +1,94 @@
+.page-404-logo-icon {
+    position: absolute;
+    top: 17.8rem;
+    left: calc(50% - 95px);
+    width: 18.9rem;
+    height: 12rem;
+}
+.p {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #000;
+}
+.blank-line1 {
+    margin: 0;
+    font-weight: 500;
+}
+.page-404-test {
+    position: absolute;
+    top: 35rem;
+    left: calc(50% - 145px);
+    letter-spacing: -0.24px;
+    font-size: 1.6rem;
+    font-family: Inter;
+}
+.page-404-back-rec {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 65px);
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1.3px solid #d9d9d9;
+    box-sizing: border-box;
+    width: 13rem;
+    height: 3.8rem;
+}
+.page-404-back-text {
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - 44px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 8.8rem;
+    height: 1.9rem;
+}
+.page-404-back,
+.page-404-home-rec {
+    position: absolute;
+    width: 13rem;
+    height: 3.8rem;
+}
+.page-404-back {
+    top: 55.2rem;
+    left: calc(50% - 139px);
+    color: #000;
+}
+.page-404-home-rec {
+    top: 0;
+    left: calc(50% - 65px);
+    border-radius: 5px;
+    background-color: #721ea6;
+    border: 1.3px solid #721ea6;
+    box-sizing: border-box;
+}
+.page-404-home-text {
+    position: absolute;
+    top: 0.95rem;
+    left: calc(50% - 37px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    display: inline-block;
+    width: 7.4rem;
+    height: 1.9rem;
+}
+.page-404-home {
+    position: absolute;
+    top: 55.2rem;
+    left: calc(50% + 9px);
+    width: 13rem;
+    height: 3.8rem;
+    color: #fff;
+}
+.notfound {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 84.4rem;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #626567;
+    font-family: "Noto Sans KR";
+}

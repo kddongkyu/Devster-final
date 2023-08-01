@@ -44,16 +44,23 @@
     font-family: Lalezar;
 }
 
-.menu-modal-options-fb {
+.menu-modal-options-not {
     position: absolute;
     top: 0;
+    left: 0;
+    letter-spacing: -0.24px;
+    color: #721ea6;
+}
+.menu-modal-options-fb {
+    position: absolute;
+    top: 3.6rem;
     left: 0;
     letter-spacing: -0.24px;
 }
 
 .menu-modal-options-qna {
     position: absolute;
-    top: 4.5rem;
+    top: 7.2rem;
     left: 0;
     letter-spacing: -0.24px;
     font-family: Roboto;
@@ -61,7 +68,7 @@
 
 .menu-modal-options-hire {
     position: absolute;
-    top: 8.4rem;
+    top: 10.8rem;
     left: 0;
     letter-spacing: -0.24px;
 }
@@ -69,13 +76,13 @@
 .menu-modal-options-aca,
 .menu-modal-options-review {
     position: absolute;
-    top: 12.9rem;
+    top: 14.4rem;
     left: 0;
     letter-spacing: -0.24px;
 }
 
 .menu-modal-options-review {
-    top: 17.4rem;
+    top: 18rem;
 }
 
 .menu-modal-options {
