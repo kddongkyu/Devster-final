@@ -66,11 +66,11 @@ function Room(props) {
     }
 
     const enterKey = (e) => {
-        const isMobile=window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= 768;
         if (!isMobile && e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             msgSend();
-        } else if(isMobile && e.key === "Enter") {
+        } else if (isMobile && e.key === "Enter") {
         }
     }
 
