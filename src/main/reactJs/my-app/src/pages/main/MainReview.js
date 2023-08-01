@@ -5,6 +5,7 @@ import ToastAlert from "../../api/ToastAlert";
 import { useSnackbar } from "notistack";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import StarRating from "../review/StarRating";
+import { checkToken } from "../../api/checkToken";
 
 function MainReview(props) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,6 +14,7 @@ function MainReview(props) {
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
   const [rboardNewestList, setRboardNewestList] = useState([]);
+  const navi = useNavigate();
   const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   useEffect(() => {
@@ -20,6 +22,7 @@ function MainReview(props) {
     axiosIns
       .get("/api/mainpage/D0/rboard")
       .then((response) => {
+        console.log(response.data);
         setRboardNewestList(response.data);
       })
       .catch((error) => {
@@ -78,13 +81,28 @@ function MainReview(props) {
   const compareValues = (value1, value2) => {
     return value1.length > value2;
   };
+  const handleLinkClick = async (rb_idx) => {
+    try {
+      const tokenData = await checkToken();
+
+      if (!tokenData) {
+        toastAlert("로그인 후 이용 가능한 서비스입니다.", "warning"); // Show login requirement toast
+        // window.location.href='/signin';
+        // navi("/signin"); // Redirect to login page
+      } else {
+        navi(`/review/detail/${rb_idx}/${currentPage}`);
+      }
+    } catch (error) {
+      jwtHandleError(error, toastAlert);
+    }
+  };
 
   return (
     <div>
       {rboardNewestList &&
         rboardNewestList.map((rboard) => (
-          <Link
-            to={`/review/detail/${rboard.rboard.rb_idx}/${currentPage}`}
+          <div
+            onClick={() => handleLinkClick(rboard.rboard.rb_idx)}
             key={rboard.rboard.rb_idx}
           >
             <div className="main-review-preview">
@@ -94,16 +112,13 @@ function MainReview(props) {
                 src={rboard.ciPhoto}
               />
               <div className="review-list-subject-text">
-                <p className="p">
-                  {compareValues(String(rboard.rboard.rb_subject), subjectCount)
-                    ? rboard.rboard.rb_subject.slice(0, subjectCount) + "···"
-                    : rboard.rboard.rb_subject}
-                </p>
+                {compareValues(String(rboard.rboard.rb_subject), subjectCount)
+                  ? rboard.rboard.rb_subject.slice(0, subjectCount) + "···"
+                  : rboard.rboard.rb_subject}
               </div>
               <img
                 className="logo-icon"
                 alt=""
-                // src={rboard.mPhoto}
                 src={
                   rboard.mPhoto
                     ? `${profileUrl}${rboard.mPhoto}`
@@ -171,7 +186,7 @@ function MainReview(props) {
               </div>
               {/* </div> */}
             </div>
-          </Link>
+          </div>
         ))}
     </div>
   );

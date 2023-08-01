@@ -7,6 +7,10 @@ import { checkToken } from "../../api/checkToken";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
+import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 function HboardDetail(props) {
   //에러 호출용 변수
@@ -24,6 +28,26 @@ function HboardDetail(props) {
   const [arrayFromString, setArrayFromString] = useState([]);
   const navi = useNavigate();
   const photoUrl = process.env.REACT_APP_PHOTO + "hboard/";
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  //모달 & SNS공유
+  const url = window.location.href; // 현재 페이지의 URL
+  const title = "devster"; // 공유하고 싶은 제목
+
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    url
+  )}`;
+
+  const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+    url
+  )}&text=${encodeURIComponent(title)}`;
+
+  const bandShareUrl = `https://www.band.us/plugin/share?body=${encodeURIComponent(
+    title
+  )}&route=${encodeURIComponent(url)}}`;
 
   const fetchHboard = useCallback(
     (hb_idx, currentPage = null) => {
@@ -185,6 +209,7 @@ function HboardDetail(props) {
         className="hboard-url-icon"
         alt=""
         src={require("./assets/hboard_url_icon.svg").default}
+        onClick={() => handleOpen()}
       />
 
       {m_idx === hboardData.cm_idx && (
@@ -254,6 +279,41 @@ function HboardDetail(props) {
             <b className="hboard-advertise-text1">광고 2</b>
           </div>
         </div>
+      </div>
+
+      {/* SNS공유 모달            */}
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className="hboard-modal">
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              SNS 공유하기
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              <img
+                style={{ width: 30 }}
+                src={require("./assets/fbicon.svg").default}
+                onClick={() => window.open(facebookShareUrl, "_blank")}
+              />
+              &nbsp;&nbsp;&nbsp;
+              <img
+                style={{ width: 30 }}
+                src={require("./assets/twiticon.svg").default}
+                onClick={() => window.open(twitterShareUrl, "_blank")}
+              />
+              &nbsp;&nbsp;&nbsp;
+              <img
+                style={{ width: 30 }}
+                src={require("./assets/bandicon.svg").default}
+                onClick={() => window.open(bandShareUrl, "_blank")}
+              />
+            </Typography>
+          </Box>
+        </Modal>
       </div>
     </div>
   );
