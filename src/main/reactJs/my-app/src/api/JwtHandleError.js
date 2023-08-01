@@ -6,8 +6,8 @@ export const jwtHandleError = (error,toastAlert) => {
                 break;
 
             case 401:
-                alert('로그인 후 이용 가능한 서비스입니다.');
-                window.location.href='/signin';
+                // alert('로그인 후 이용 가능한 서비스입니다.');
+                // window.location.href='/signin';
                 break;
 
             case 403:

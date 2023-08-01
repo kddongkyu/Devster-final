@@ -237,13 +237,12 @@
   border-top: 1px solid #bdc0c4;
   box-sizing: border-box;
   height: 5.5rem;
-  max-height: 10rem;
-  min-height:5.5rem;
   overflow-y: auto;
   resize: none;
   font-size: 1.6rem;
   padding: 0 1.2rem;
   box-sizing: border-box;
+  outline: none;
 }
 
 .chat-footer-send-btn {

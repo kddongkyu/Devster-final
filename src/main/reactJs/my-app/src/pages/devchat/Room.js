@@ -62,6 +62,7 @@ function Room(props) {
             }));
             dispatch(setSendingMsg(''));
             setImgArr([]);
+            textArea.current.style.height = '5.5rem';
         }
     }
 
@@ -81,8 +82,6 @@ function Room(props) {
 
     const handleOnMsgInput = (e) => {
         dispatch(setSendingMsg(e.target.value));
-        textArea.current.style.height = 'auto';
-        textArea.current.style.height = textArea.current.scrollHeight + 'px';
     }
 
     return (
@@ -112,7 +111,6 @@ function Room(props) {
                 </div>
             </div>
             <div className='chat-body'>
-                <div className='chat-body-box' />
                 {
                     msg.map((item, idx) => {
                         return (
@@ -121,35 +119,33 @@ function Room(props) {
                     })
                 }
             </div>
-            <div>
-                <div
-                    onClick={() => uploadRef.current.click()}
-                >
-                    {/* <img
+            <div
+                onClick={() => uploadRef.current.click()}
+            >
+                {/* <img
                         className='chat-footer-upload-icon'
                         alt=''
                         src={require('./assets/chat_footer_upload_icon.svg').default}
                     /> */}
-                </div>
-                <textarea rows={2}
-                    type='text'
-                    className='chat-footer-send-box'
-                    ref={textArea}
-                    value={sendingMsg}
-                    onKeyDown={enterKey}
-                    onChange={handleOnMsgInput}
+            </div>
+            <textarea
+                type='text'
+                className='chat-footer-send-box'
+                ref={textArea}
+                value={sendingMsg}
+                onKeyDown={enterKey}
+                onChange={handleOnMsgInput}
+            />
+            <div
+                className='chat-footer-send'
+                onClick={msgSend}
+            >
+                <div className='chat-footer-send-btn' />
+                <img
+                    className='sf-symbol-arrowtriangletur'
+                    alt=''
+                    src={require('./assets/chat_footer_send.svg').default}
                 />
-                <div
-                    className='chat-footer-send'
-                    onClick={msgSend}
-                >
-                    <div className='chat-footer-send-btn' />
-                    <img
-                        className='sf-symbol-arrowtriangletur'
-                        alt=''
-                        src={require('./assets/chat_footer_send.svg').default}
-                    />
-                </div>
             </div>
             {/* <ChatList /> */}
             <ChatUpload
