@@ -76,18 +76,20 @@ function HboardDetail(props) {
   //북마크
   const addbkmk = (hb_idx) => {
     hb_idx = Number(hb_idx);
-    axiosIns
-      .post(`/api/hboard/D1/${m_idx}/increaseBkmk/${hb_idx}`)
-      .then((response) => {
-        if (isBkmk == false) {
-          setIsBkmk(true);
-        } else if (isBkmk == true) {
-          setIsBkmk(false);
-        }
-      })
-      .catch((error) => {
-        jwtHandleError(error, toastAlert);
-      });
+    if (de && de.idx) {
+      axiosIns
+        .post(`/api/hboard/D1/${de.idx}/increaseBkmk/${hb_idx}`)
+        .then((response) => {
+          if (isBkmk == false) {
+            setIsBkmk(true);
+          } else if (isBkmk == true) {
+            setIsBkmk(false);
+          }
+        })
+        .catch((error) => {
+          jwtHandleError(error, toastAlert);
+        });
+    }
   };
 
   // 업데이트 폼으로 이동하는 함수
