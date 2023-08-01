@@ -10,11 +10,9 @@ import {
   MainQnA,
   MainReview,
 } from "./index";
-
 function Main(props) {
   const navi = useNavigate();
-  const [ai_idx, setAi_idx] = useState(3); //dummy
-
+  
   return (
     <div className="moblie-main">
       <div className="main-preview-name">
@@ -22,7 +20,6 @@ function Main(props) {
         <b className="main-preview-name-text">실시간 인기글</b>
       </div>
       <MainBest />
-
       <div className="main-preview-name1">
         <div className="main-preview-name-box" />
         <b className="main-preview-name-text">자유게시판 (최신순)</b>
@@ -33,7 +30,7 @@ function Main(props) {
           className="main-best-more-text"
           style={{ cursor: "pointer" }}
           onClick={() => {
-            JwtPageChk(navi, "/fboard");
+            navi("/fboard");
           }}
         >
           더보기
@@ -50,14 +47,21 @@ function Main(props) {
       </div>
       <MainQnA />
       <div className="main-qna-more">
-        <div className="main-best-more-text">더보기</div>
+        <div
+          className="main-best-more-text"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navi("/qboard");
+          }}
+        >
+          더보기
+        </div>
         <img
           className="main-best-more-icon"
           alt=""
           src={require("./assets/main_more_icon.svg").default}
         />
       </div>
-
       <div className="main-preview-name3">
         <div className="main-preview-name-box" />
         <b className="main-preview-name-text">채용게시판 (최신순)</b>
@@ -68,7 +72,7 @@ function Main(props) {
           className="main-best-more-text"
           style={{ cursor: "pointer" }}
           onClick={() => {
-            JwtPageChk(navi, "/hboard");
+            navi("/hboard");
           }}
         >
           더보기
@@ -89,7 +93,7 @@ function Main(props) {
           className="main-best-more-text"
           style={{ cursor: "pointer" }}
           onClick={() => {
-            JwtPageChk(navi, "/review");
+            navi("/review");
           }}
         >
           더보기
@@ -103,5 +107,4 @@ function Main(props) {
     </div>
   );
 }
-
 export default Main;

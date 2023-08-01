@@ -73,10 +73,6 @@ function InputId(props) {
         dispatch(setIdIsValid(false));
     }
 
-    useEffect(() => {
-        console.log('idIsValid changed: ', idIsValid);
-    }, [idIsValid]);
-
     return (
         <div>
             <div className='signup-guest-id-text'>

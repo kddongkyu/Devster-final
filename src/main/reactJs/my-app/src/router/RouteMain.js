@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Main } from "../pages/main";
 import { DevChat } from "../pages/test";
 import { Layout, NotFound } from "../components";
+=======
+import React, {useEffect} from "react";
+import {Route, Routes, useLocation} from "react-router-dom";
+import {Main} from "../pages/main";
+import {Layout, NotFound} from "../components";
+>>>>>>> JK
 import {
   Bookmarks,
   MyResume,
@@ -24,8 +31,13 @@ import {
   ResumeList,
   ResumeDetail,
 } from "../pages/mypage";
+<<<<<<< HEAD
 import { SignIn } from "../pages/signin";
 import { Grats, SignUpCompForm, SignUpNorm } from "../pages/signup";
+=======
+import {SignIn} from "../pages/signin";
+import {Grats, SignUpCompForm, SignUpNorm, SocialForm} from "../pages/signup";
+>>>>>>> JK
 import {
   Fboard,
   FboardDetail,
@@ -46,13 +58,19 @@ import {
   Reviewupdate,
   Reviewdetail,
 } from "../pages/review";
-import JwtTest from "../pages/test/JwtTest";
 import MessageList from "../pages/message/MessageList";
 import MessageDetail from "../pages/message/MessageDetail";
 import MessageForm from "../pages/message/MessageForm";
 import QboardDetail from "../pages/qboard/QboardDetail";
+<<<<<<< HEAD
 import Translate from "../pages/test/translate";
 import FindID from "../pages/signin/find/FindID";
+=======
+import KakaoRedirect from "../api/social/KakaoRedirect";
+import NaverRedirect from "../api/social/NaverRedirect";
+import {DevChat} from "../pages/devchat";
+
+>>>>>>> JK
 
 function RouteMain(props) {
   const location = useLocation();
@@ -101,6 +119,7 @@ function RouteMain(props) {
           element={<HboardDetail />}
         />
 
+<<<<<<< HEAD
         <Route
           path="hboard/updateform/:hb_idx/:currentPage"
           element={<HboardUpdateForm />}
@@ -189,6 +208,33 @@ function RouteMain(props) {
       <Route path="/translate" element={<Translate />} />
     </Routes>
   );
+=======
+                <Route>
+                    <Route path="/message" element={<MessageList/>}/>
+                </Route>
+                <Route
+                    path="/message/detail/:mes_idx"
+                    element={<MessageDetail/>}
+                />
+                <Route path="/message/form/:recv_nick" element={<MessageForm/>}/>
+                <Route>
+                    <Route path="/myresume/form" element={<Resumeform/>}/>
+                    <Route path="/updateresume" element={<ResumeUpdateform/>}/>
+                </Route>
+            </Route>
+
+            <Route path="/signin" element={<SignIn/>}/>
+            <Route path="/signup" element={<SignUpNorm/>}/>
+            <Route path="/csignup" element={<SignUpCompForm/>}/>
+            <Route path="/social" element={<SocialForm/>}/>
+            <Route path="/grats" element={<Grats/>}/>
+            <Route path="/oauth2/authorization/kakao" element={<KakaoRedirect/>}/>
+            <Route path="/oauth2/authorization/naver" element={<NaverRedirect/>}/>
+            <Route path="/devchat/:ai_idx" element={<DevChat/>}/>
+            <Route path="*" element={<NotFound/>}/>
+        </Routes>
+    );
+>>>>>>> JK
 }
 
 export default RouteMain;

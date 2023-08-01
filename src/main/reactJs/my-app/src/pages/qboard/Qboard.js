@@ -8,10 +8,14 @@ import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
 
+<<<<<<< HEAD
 const Qboard = () => {
   const {enqueueSnackbar} = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
   const navi = useNavigate();
+=======
+const Qboard = (props) => {
+>>>>>>> JK
 
   const [qboardList, setQboardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);

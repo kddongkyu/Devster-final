@@ -1,4 +1,5 @@
 import "./style/QboardForm.css";
+<<<<<<< HEAD
 import React, {useCallback, useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSnackbar} from "notistack";
@@ -134,6 +135,11 @@ const QboardForm = (props) => {
     return (
       <div>
     <form className="qboard-form" onSubmit={onSubmitEvent}>
+=======
+const QboardForm = (props) => {
+  return (
+    <div className="qboard-form">
+>>>>>>> JK
       <div className="advertise-box">
         <div className="advertise-main" />
         <b className="advertise-text">광고</b>

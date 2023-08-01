@@ -84,10 +84,6 @@ function InputCompPass(props) {
         }
     }
 
-    useEffect(() => {
-        console.log('passIsValid changed', passIsValid);
-    }, [passIsValid]);
-
     return (
         <div>
             <div className='signup-comp-pass-text'>
@@ -128,7 +124,7 @@ function InputCompPass(props) {
                 </div>
             </div>
             <input
-                type='text'
+                type='password'
                 className={`${isInputValid ? 'signup-comp-pass-inputbox' : 'signup-comp-pass-inputbox-error'}`}
                 value={cm_pass}
                 onKeyDown={capsLockChk}
