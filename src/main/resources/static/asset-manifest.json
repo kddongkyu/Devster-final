@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.91a54f59.css",
-    "main.js": "/static/js/main.8b806161.js",
+    "main.js": "/static/js/main.45581983.js",
     "static/js/27.262d8d9e.chunk.js": "/static/js/27.262d8d9e.chunk.js",
     "static/media/ad_resume.png": "/static/media/ad_resume.a2c4c7373212cce38c40.png",
     "static/media/qboard_form_fileupload_icon.svg": "/static/media/qboard_form_fileupload_icon.1ff1b289b82433289b276200c54a0a4e.svg",
@@ -75,6 +75,7 @@
     "static/media/review_headerbar_btn_icon.svg": "/static/media/review_headerbar_btn_icon.59f98621e5fc92f5a06ddd2a8b9632fd.svg",
     "static/media/icon_file-attach.svg": "/static/media/icon_file-attach.678db53060981d05aabc35dc4bdb25e1.svg",
     "static/media/bookmark.svg": "/static/media/bookmark.7fa90193fe568ba54b596bb65332191c.svg",
+    "static/media/logo_profile.svg": "/static/media/logo_profile.6c2e6a9be18217bcd08b7869ea5906e2.svg",
     "static/media/aboard_update_icon.svg": "/static/media/aboard_update_icon.8b55289bbbb022b3db4fcac0b4eca469.svg",
     "static/media/fboard_update_icon.svg": "/static/media/fboard_update_icon.c70a931d81341cd0ceba29f8ed35005d.svg",
     "static/media/review-edit.svg": "/static/media/review-edit.e96ddccd01b6582867918acaebe41d7b.svg",
@@ -130,6 +131,6 @@
   },
   "entrypoints": [
     "static/css/main.91a54f59.css",
-    "static/js/main.8b806161.js"
+    "static/js/main.45581983.js"
   ]
 }

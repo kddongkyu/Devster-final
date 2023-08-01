@@ -3,6 +3,7 @@ package data.controller;
 import data.dto.PostMessage.PostMessageDetailDto;
 import data.dto.PostMessage.PostMessageDto;
 import data.dto.PostMessage.PostMessageRespnoseDto;
+import data.repository.CompanyMemberRepository;
 import data.repository.MemberRepository;
 import data.service.PostMessageService;
 import jwt.setting.settings.JwtService;
@@ -20,11 +21,13 @@ public class PostMessageController {
     private final PostMessageService postMessageService;
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
+    private final CompanyMemberRepository companyMemberRepository;
 
-    public PostMessageController(PostMessageService postMessageService, JwtService jwtService, MemberRepository memberRepository) {
+    public PostMessageController(PostMessageService postMessageService, JwtService jwtService, MemberRepository memberRepository, CompanyMemberRepository companyMemberRepository) {
         this.postMessageService = postMessageService;
         this.jwtService = jwtService;
         this.memberRepository = memberRepository;
+        this.companyMemberRepository = companyMemberRepository;
     }
 
     @GetMapping("/D1/list/{currentPage}")
@@ -47,8 +50,18 @@ public class PostMessageController {
 
     @PostMapping("/D1")
     public ResponseEntity<String> sendPostMessage(@RequestBody PostMessageDto dto,HttpServletRequest request) {
-        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
-        dto.setSend_nick(memberRepository.findById(m_idx).get().getMNickname());
+        String memberType = jwtService.extractType(jwtService.extractAccessToken(request).get()).get();
+        String nickName;
+
+        if(memberType.equals("member")) {
+            int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+            nickName = memberRepository.findById(m_idx).get().getMNickname();
+        } else {
+            int cm_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+            nickName = companyMemberRepository.findById(cm_idx).get().getCMcompname();
+        }
+
+        dto.setSend_nick(nickName);
         return new ResponseEntity<String>(postMessageService.sendPostMessage(dto), HttpStatus.OK);
     }
 

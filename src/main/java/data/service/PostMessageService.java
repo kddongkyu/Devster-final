@@ -4,6 +4,7 @@ import data.dto.PostMessage.PostMessageDetailDto;
 import data.dto.PostMessage.PostMessageDto;
 import data.dto.PostMessage.PostMessageRespnoseDto;
 import data.entity.PostMessageEntity;
+import data.repository.CompanyMemberRepository;
 import data.repository.MemberRepository;
 import data.repository.PostMessageRepository;
 import jwt.setting.settings.JwtService;
@@ -25,18 +26,28 @@ import java.util.List;
 public class PostMessageService {
 
     private final MemberRepository memberRepository;
+    private final CompanyMemberRepository companyMemberRepository;
     private final PostMessageRepository postMessageRepository;
     private final JwtService jwtService;
 
-    public PostMessageService(MemberRepository memberRepository, PostMessageRepository postMessageRepository, JwtService jwtService) {
+    public PostMessageService(MemberRepository memberRepository, CompanyMemberRepository companyMemberRepository, PostMessageRepository postMessageRepository, JwtService jwtService) {
         this.memberRepository = memberRepository;
+        this.companyMemberRepository = companyMemberRepository;
         this.postMessageRepository = postMessageRepository;
         this.jwtService = jwtService;
     }
 
     public PostMessageRespnoseDto getAllPostMessages(HttpServletRequest request, int currentPage) {
-        int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
-        String nickName = memberRepository.findById(m_idx).get().getMNickname();
+        String memberType = jwtService.extractType(jwtService.extractAccessToken(request).get()).get();
+        String nickName;
+
+        if(memberType.equals("member")) {
+            int m_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+            nickName = memberRepository.findById(m_idx).get().getMNickname();
+        } else {
+            int cm_idx = jwtService.extractIdx(jwtService.extractAccessToken(request).get()).get();
+            nickName = companyMemberRepository.findById(cm_idx).get().getCMcompname();
+        }
 
         Pageable pageable = PageRequest.of(currentPage,7, Sort.by("SENDtime").descending());
 

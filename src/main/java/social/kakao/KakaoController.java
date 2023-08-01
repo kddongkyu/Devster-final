@@ -121,8 +121,9 @@ public class KakaoController {
             deleteToken(accessToken);
 
             int m_idx = returnMember.getMIdx();
+            String role = returnMember.getMRole().toString();
 
-            String accessTokenKakao = jwtService.generateAccessToken(m_idx,"normal");
+            String accessTokenKakao = jwtService.generateAccessToken(m_idx,"normal",role);
             String refreshTokenKakao = jwtService.generateRefreshToken("normal");
 
             HttpHeaders responseHeaders = new HttpHeaders();
