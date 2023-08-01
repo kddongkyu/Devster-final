@@ -30,19 +30,15 @@ function HboardDetail(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   //모달 & SNS공유
   const url = window.location.href; // 현재 페이지의 URL
   const title = "devster"; // 공유하고 싶은 제목
-
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     url
   )}`;
-
   const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
     url
   )}&text=${encodeURIComponent(title)}`;
-
   const bandShareUrl = `https://www.band.us/plugin/share?body=${encodeURIComponent(
     title
   )}&route=${encodeURIComponent(url)}}`;
