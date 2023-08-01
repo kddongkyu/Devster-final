@@ -86,8 +86,7 @@ function FboardDetail(props) {
             .then(response => {
                 if (response.data === 2) {
                     // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    alert("이미 싫어요가 눌려 있습니다");
-                    window.location.reload();
+                    fetchFboard(fb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
                     axiosIns.get(`/api/fboard/D1/${m_idx}/checkGood/${fb_idx}`)
@@ -100,19 +99,15 @@ function FboardDetail(props) {
                                         fetchFboard(fb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("좋아요 요청 실패");
                                         jwtHandleError(error, toastAlert);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/fboard/D1/${m_idx}/like/${fb_idx}`)
                                     .then(response => {
-                                        alert("좋아요를 눌렀습니다");
-                                        console.log('좋아요 요청 성공:', response.data);
                                         fetchFboard(fb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("좋아요 요청 실패");
                                         jwtHandleError(error, toastAlert);
                                     });
                             }
@@ -133,7 +128,6 @@ function FboardDetail(props) {
             .then(response => {
                 if (response.data === 1) {
                     // 이미 좋아요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                    alert("이미 좋아요가 눌려 있습니다");
                     fetchFboard(fb_idx, currentPage);
                 } else {
                     // 좋아요가 눌러져 있지 않으면, 싫어요 상태를 체크합니다.
@@ -141,25 +135,20 @@ function FboardDetail(props) {
                         .then(response => {
                             if (response.data === 2) {
                                 // 이미 싫어요가 눌러져 있으면, 경고 메시지를 표시하고 작업을 중단합니다.
-                                alert("이미 싫어요가 눌려 있습니다");
                                 axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
                                     .then(response => {
                                         fetchFboard(fb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("싫어요 요청 실패");
                                         jwtHandleError(error, toastAlert);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/fboard/D1/${m_idx}/dislike/${fb_idx}`)
                                     .then(response => {
-                                        alert("싫어요를 눌렀습니다");
-                                        console.log('싫어요 요청 성공:', response.data);
                                         fetchFboard(fb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        alert("싫어요 요청 실패");
                                         jwtHandleError(error, toastAlert);
                                     });
                             }
@@ -174,16 +163,11 @@ function FboardDetail(props) {
             });
     };
 
-    let result = fboardData.fboard.rb_like - fboardData.fboard.rb_dislike;
-    if (fboardData.fboard.rb_like <= fboardData.fboard.rb_dislike) {
-        result = -result;
-    }
     // 삭제
     const deleteFboard = (fb_idx) => {
         if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
             axiosIns.delete(`/api/fboard/D1/${fb_idx}`)
                 .then(response => {
-                    console.log('FreeBoard deleted successfully');
                     window.location.href = "/fboard";
                 })
                 .catch(error => {
@@ -225,7 +209,6 @@ function FboardDetail(props) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -258,7 +241,8 @@ function FboardDetail(props) {
                 <img
                     className="fboard-detail-info-profile-img-icon"
                     alt=""
-                    src={`${profileUrl}${fboardData.mPhoto}`}
+                    src={fboardData.mPhoto ?  `${profileUrl}${fboardData.mPhoto}`
+                        : require("./assets/logo_profile.svg").default}
                     onClick={handleNicknameClick}
                 />
                 <div className="fboard-detail-info-nickname"
@@ -328,15 +312,18 @@ function FboardDetail(props) {
                 </div>
 
                 <div className="fboard-detail-photo-list">
-                    {arrayFromString.map((imageId, index) => (
-                        <div>
-                            <img
-                                className="fboard-detail-photo" key={index}
-                                src={`${photoUrl}${imageId}`}
-                                alt={`Image ${index}`}
-                            />
-                        </div>
-                    ))}
+                    {arrayFromString.map((imageId, index) => {
+                        if (imageId && imageId.length > 0) {
+                            return(
+                                <img
+                                    className="fboard-detail-photo" key={index}
+                                    src={`${photoUrl}${imageId}`}
+                                    alt={`Image ${index}`}
+                                />
+                            );
+                        }
+                        return null;
+                    })}
 
                     {/* 여기서부터 밑으로 정렬 */}
                     <div className="fboard-detail-listbackcounter">

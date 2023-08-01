@@ -27,7 +27,6 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
     const deleteComment = () => {
         axiosIns.delete(`/api/academyboard/D1/comment/${abc_idx}`)
             .then(res => {
-                console.log(res.data);  // 성공 메시지 출력
             fetchAboard(abc_idx);
             })
             .catch(err => jwtHandleError(err, toastAlert));
@@ -78,7 +77,6 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
                     // 이미 좋아요가 눌려있으면 좋아요 취소
                     setIsBad(false);
                     setLikeCount(response.data.likeCount);
-                    console.log("sssss"+response.data)
                 }else{
                     axiosIns.get(`/api/academyboard/D0/comment/${m_idx}/checkGood/${abc_idx}`)
                         .then(response => {
@@ -95,7 +93,6 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/academyboard/D1/comment/${m_idx}/like/${abc_idx}`)
                                     .then(response => {
-                                        console.log('좋아요 요청 성공:', response.data);
                                         setIsGood(true);
                                         setLikeCount(response.data.likeCount);
                                     })
@@ -139,7 +136,6 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/academyboard/D1/comment/${m_idx}/dislike/${abc_idx}`)
                                     .then(response => {
-                                        console.log('싫어요 요청 성공:', response.data);
                                         setIsBad(true);
                                         setLikeCount(response.data.likeCount);
                                     })
@@ -178,7 +174,7 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
+
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -213,7 +209,8 @@ function AboardReplyCommentitem({ reply, replyIndex }) {
                 <img
                     className="aboard-detail-commnets-detail-icon"
                     alt=""
-                    src={`${profileUrl}${reply.photo}`}
+                    src={reply.photo ? `${profileUrl}${reply.photo}`
+                        : require("../assets/logo_profile.svg").default}
                 />
             </div>
             <div className="aboard-detail-commnets-all-lik-reply" >

@@ -3,6 +3,9 @@ package data.repository;
 import data.entity.HireBoardEntity;
 
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,9 +17,12 @@ import org.springframework.data.jpa.repository.Query;
 public interface HireBoardRepository extends JpaRepository<HireBoardEntity, Integer> {
     Long countBy();
     Page<HireBoardEntity> findByHBsubjectContaining(String keyword, Pageable pageable);
+    
     @Query("SELECT h FROM hireboard h WHERE h.HBsubject LIKE %:keyword% OR h.HBcontent LIKE %:keyword%")
     Page<HireBoardEntity> findByHBsubjectContainingOrHBcontentContaining(@Param("keyword") String keyword, Pageable pageable);
 
+    @Query(value = "SELECT * FROM hireboard ORDER BY hb_writeday DESC LIMIT 3", nativeQuery = true)
+    List<HireBoardEntity> findTop3ByOrderByHbwriteDayDesc();
 }
 
 

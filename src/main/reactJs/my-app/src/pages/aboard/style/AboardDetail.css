@@ -188,6 +188,10 @@
 }
 
 /* 중단 */
+.aboard-detail-textarea-pre {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
 .aboard-detail-textarea-contents {
     position: relative;
     width: 100%;
@@ -228,7 +232,9 @@
     font-size: 1.8rem;
     letter-spacing: -0.24px;
     color: #000;
-
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .aboard-detail-textarea {
@@ -854,8 +860,8 @@
     top: 0;
     left: 0;
     border-radius: 50%;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3rem;
+    height: 3rem;
     object-fit: cover;
 }
 .aboard-detail-commnets-detail- {

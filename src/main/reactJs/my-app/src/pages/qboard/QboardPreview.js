@@ -117,11 +117,21 @@ const QboardPreview = (props) => {
         return srcUrl;
     }
 
+    const setMemberPhotoUrl = (value) => {
+        if (!value) {
+            return require("./assets/logo_profile.svg").default;
+        }
+        const photoUrl = process.env.REACT_APP_PHOTO+"member/";
+        const srcUrl = photoUrl + value;
+
+        return srcUrl;
+    }
+
     return (
         <div className="qboard-preview" >
             <div className="qboard-preview-box" />
             <NavLink to={`/qboard/detail/${props.data.qboardDto.qb_idx}/${props.currentPage}`}>
-            <img className="qboard-preview-img-profile" src={`${photoUrl}${props.data.photo}`}/>
+            <img className="qboard-preview-img-profile" src={setMemberPhotoUrl(props.data.photo)}/>
             <div className="qboard-preview-type">
                 <b className="qboard-preview-type-text">Q&A 게시판</b>
                 <div className="qboard-preview-type-date">{timeForToday(props.data.qboardDto.qb_writeday)}</div>

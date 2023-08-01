@@ -24,7 +24,6 @@ function AboardComment(props) {
     const fetchAboardComment = () => {
         axiosIns.get(`/api/academyboard/D0/comment/${props.ab_idx}`)
             .then(res => {
-                console.log(res.data);  // 서버로부터 받은 전체 응답을 출력합니다.
                 setTotalCount(res.data.totalCount);
                 setAboardCommentList(res.data.academyCommentDetailDtoList);  // "reviewCommentDetailDtoList"라는 이름의 배열을 사용한다고 가정
             })
@@ -33,7 +32,6 @@ function AboardComment(props) {
 
 
     const toggleReplyComments = (abc_idx) => { // props.rbc_idx가 아니라 함수 인자 rbc_idx를 사용
-        // console.log(rbc_idx)
         setHideAboardComments(prevState => ({
             ...prevState,
             [abc_idx]: !prevState[abc_idx]

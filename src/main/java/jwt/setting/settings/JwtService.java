@@ -40,18 +40,20 @@ public class JwtService {
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     private static final String IDX_CLAIM = "idx";
     private static final String TYPE_CLAIM = "type";
+    private static final String ROLE_CLAIM = "role";
     private static final String BEARER = "Bearer ";
 
     private final MemberRepository memberRepository;
     private final CompanyMemberRepository companyMemberRepository;
 
-    public String generateAccessToken(int idx,String type) {
+    public String generateAccessToken(int idx,String type,String role) {
         Date now = new Date();
             return JWT.create()
                     .withSubject(ACCESS_TOKEN_SUBJECT)
                     .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
                     .withClaim(IDX_CLAIM, idx)
                     .withClaim(TYPE_CLAIM, type)
+                    .withClaim(ROLE_CLAIM, role)
                     .sign(Algorithm.HMAC512(secretKey));
     }
 

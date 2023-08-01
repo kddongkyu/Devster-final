@@ -23,6 +23,7 @@ function Hboard(props) {
   const [subjectCount, setsubjectCount] = useState(10);
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   //정렬
   const [sortProperty, setSortProperty] = useState("");

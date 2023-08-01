@@ -22,6 +22,7 @@ function Reviewdetail() {
     const navi = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const fetchReview = useCallback((rb_idx, currentPage = null) => {
         const url = `/api/review/D0/${rb_idx}`;
@@ -36,7 +37,7 @@ function Reviewdetail() {
                             setIsGood(response.data); // 좋아요 상태를 받아서 상태 변수에 저장
                         })
                         .catch(error => {
-                            toastAlert('좋아요 처리에 문제가 발생했습니다.', 'warning');
+                            jwtHandleError(error, toastAlert);
                         });
 
                     axiosIns.get(`/api/review/D0/${m_idx}/checkBad/${rb_idx}`)
@@ -44,7 +45,7 @@ function Reviewdetail() {
                             setIsBad(response.data); // 싫어요 상태를 받아서 상태 변수에 저장
                         })
                         .catch(error => {
-                            toastAlert('싫어요 처리에 문제가 발생했습니다.', 'warning');
+                            jwtHandleError(error, toastAlert);
                         });
                 }
             })
@@ -130,17 +131,16 @@ function Reviewdetail() {
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        toastAlert('좋아요 처리에 문제가 발생했습니다.', 'warning');
+                                        jwtHandleError(error, toastAlert);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/${m_idx}/like/${rb_idx}`)
                                     .then(response => {
-                                        toastAlert('좋아요를 누르셨습니다.', 'success');
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        toastAlert('좋아요 처리에 문제가 발생했습니다.', 'warning');
+                                        jwtHandleError(error, toastAlert);
                                     });
                             }
                         })
@@ -172,27 +172,26 @@ function Reviewdetail() {
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        console.error('싫어요 요청 실패:', error);
+                                        jwtHandleError(error, toastAlert);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/${m_idx}/dislike/${rb_idx}`)
                                     .then(response => {
-                                        console.log('싫어요 요청 성공:', response.data);
                                         fetchReview(rb_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        console.error('싫어요 요청 실패:', error);
+                                        jwtHandleError(error, toastAlert);
                                     });
                             }
                         })
                         .catch(error => {
-                            console.error('싫어요 상태 체크 실패:', error);
+                            jwtHandleError(error, toastAlert);
                         });
                 }
             })
             .catch(error => {
-                console.error('좋아요 상태 체크 실패:', error);
+                jwtHandleError(error, toastAlert);
             });
     };
 
@@ -201,21 +200,14 @@ function Reviewdetail() {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             axiosIns.delete(`/api/review/D1/${rb_idx}`)
                 .then(response => {
-                    console.log('Review deleted successfully');
                     window.location.href = "/review";
                 })
                 .catch(error => {
-                    console.error('Error deleting review:', error);
+                    jwtHandleError(error, toastAlert);
                 });
         }
     };
 
-
-    let result = reviewData.review.rb_like - reviewData.review.rb_dislike;
-
-    if (reviewData.review.rb_like <= reviewData.review.rb_dislike) {
-        result = -result;
-    }
 
     return (
         <div className="review-detail">
@@ -257,7 +249,8 @@ function Reviewdetail() {
                     <img
                         className="review-detail-info-profile-img-icon"
                         alt=""
-                        src={require('./assets/review_detail_info_profile_img.png').default}
+                        src={reviewData.mPhoto ? `${profileUrl}${reviewData.mPhoto}`
+                            : require("./assets/logo_profile.svg").default}
                         onClick={handleNicknameClick}
                     />
                     <div className="review-detail-info-nickname"
@@ -274,7 +267,6 @@ function Reviewdetail() {
                         />
                         <div className="review-detail-info-status-text1">
                             <span className="rview-readcount">{reviewData.review.rb_readcount}</span>
-                            {/*<span className="span">{`수정됨 `}</span>*/}
                         </div>
                     </div>
                 </div>
@@ -330,7 +322,11 @@ function Reviewdetail() {
                         </div>
                         <div className="review-detail-counter-num">
                             <div className="review-detail-counter-num-box"/>
-                            <div className="review-detail-counter-num-text">{result}</div>
+                            <div className="review-detail-counter-num-text">
+                                {reviewData.review.rb_like > reviewData.review.rb_dislike
+                                    ? reviewData.review.rb_like - reviewData.review.rb_dislike
+                                    : -reviewData.review.rb_dislike}
+                            </div>
                         </div>
                         <div className="review-detail-counter-dislike"
                              onClick={() => handleDislike(m_idx, rb_idx)}>

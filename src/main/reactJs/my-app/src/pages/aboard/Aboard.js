@@ -108,7 +108,6 @@ function Aboard(props) {
 
     const fetchacdemy = async (page, keyword, sortProperty, sortDirection) => {
         const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
-        console.log(sortDirection, sortProperty)
         try {
             const response = await axiosIns.get('/api/academyboard/D1', {
                 params: {
@@ -121,7 +120,6 @@ function Aboard(props) {
 
             setAcacemyBoardList(response.data.academyBoardList); // Typo 수정 (acacemy -> academy)
             setTotalPages(response.data.totalPages);
-            console.log(response.data)
         } catch (error) {
             jwtHandleError(error, toastAlert);
         }
@@ -138,7 +136,6 @@ function Aboard(props) {
         axiosIns.get(`/api/nboard/D0/notice`)
             .then(response => {
                 setNoticePost(response.data.nboard);
-                console.log(response.data)
             })
             .catch(error => {
                 jwtHandleError(error, toastAlert);
@@ -203,7 +200,6 @@ function Aboard(props) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -404,10 +400,14 @@ function Aboard(props) {
                     return (
                         <div className="aboard-preview" key={aboard.academyboard.ab_idx}>
                             <div className="aboard-preview-box"/>
-                            <img className="aboard-preview-img-profile"
-                                 alt=""
-                                 src={`${profileUrl}${aboard.mPhoto}`}
+                            <img
+                                className="aboard-preview-img-profile"
+                                alt=""
+                                src={aboard.mPhoto ? `${profileUrl}${aboard.mPhoto}`
+                                    : require("./assets/logo_profile.svg").default}
                             />
+
+
                             <div className="aboard-preview-type">
                                 <b className="aboard-preview-type-text">{aboard.AIname} 게시판</b>
                                 <div
@@ -429,7 +429,9 @@ function Aboard(props) {
                                 </div>
                                 <div>
                                     <img alt=""
-                                         src={setPhotoUrl(aboard.academyboard.ab_photo)}
+                                         src={aboard.academyboard.ab_photo && aboard.academyboard.ab_photo.length > 0
+                                             ? setPhotoUrl(aboard.academyboard.ab_photo)
+                                             : require("./assets/logo-img.svg").default}
                                          className="aboard-preview-img-preview"/>
                                 </div>
                             </NavLink>

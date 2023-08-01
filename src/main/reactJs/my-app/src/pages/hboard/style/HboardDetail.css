@@ -200,13 +200,17 @@
   letter-spacing: -0.24px;
   display: inline-block;
 }
-.hboard-detail-textarea-subject {
-  position: absolute;
+.fboard-detail-textarea-subject {
+  /*position: absolute;*/
   top: 0;
   left: 0;
   font-size: 1.8rem;
   letter-spacing: -0.24px;
   color: #000;
+  width: calc(100% - 74px);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 .hboard-detail-textarea {
   position: relative;
@@ -215,6 +219,10 @@
   right: 3.7rem;
   left: 3.7rem;
   font-size: 1.3rem;
+}
+.hboard-detail-textarea-pre {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 /* 하단 */

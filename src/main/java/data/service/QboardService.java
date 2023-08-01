@@ -11,6 +11,8 @@ import data.repository.board.qboard.QboardCommentRespository;
 import data.repository.board.qboard.QboardRepository;
 import lombok.extern.slf4j.Slf4j;
 import naver.cloud.NcpObjectStorageService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,17 +25,21 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
+import data.mapper.QboardMapper;
 
 @Service
 @Slf4j
 public class QboardService {
 
+    @Autowired   
+    private final QboardMapper qboardMapper;
     private final QboardRepository qboardRepository;
     private final QboardCommentRespository qboardCommentRespository;
     private final MemberRepository memberRepository;
     private final NcpObjectStorageService storageService;
 
-    public QboardService(QboardRepository qboardRepository, QboardCommentRespository qboardCommentRespository, MemberRepository memberRepository, NcpObjectStorageService storageService) {
+    public QboardService(QboardMapper qboardMapper, QboardRepository qboardRepository, QboardCommentRespository qboardCommentRespository, MemberRepository memberRepository, NcpObjectStorageService storageService) {
+        this.qboardMapper = qboardMapper;
         this.qboardRepository = qboardRepository;
         this.qboardCommentRespository = qboardCommentRespository;
         this.memberRepository = memberRepository;
@@ -182,4 +188,51 @@ public class QboardService {
         log.info(qb_idx + " QBoard 사진 업데이트 완료");
         return String.join(",", uploadedFileNames);
     }
+
+    public List<Map<String, Object>> getHottestQboard(){
+        try{
+            List<Map<String, Object>> qboardList = new ArrayList<>();
+            QboardEntity qboardEntity = qboardRepository.findTopByOrderByQbLikeDesc();
+            Map<String,Object> hottsetQboardInfo = new HashMap<>();
+            MemberEntity memberInfo = memberRepository.findById(qboardEntity.getMIdx()).orElse(null);
+            if(memberInfo !=null) {
+                hottsetQboardInfo.put("mPhoto",memberInfo.getMPhoto());
+                hottsetQboardInfo.put("mNicname",memberInfo.getMNickname());
+            }
+            hottsetQboardInfo.put("qboardHotArticle",qboardEntity);
+            qboardList.add(hottsetQboardInfo);
+            return qboardList;
+        } catch (Exception e) {
+            log.error("Error finding hottest freeboard Article", e);
+            throw e;
+        }
+    }
+
+    public List<Map<String, Object>> getNewestQboard(){
+        try{
+            List<QboardEntity> qboardEntities = qboardRepository.findTop3ByOrderByQbwriteDayDesc();
+            List<Map<String, Object>> qboardList = new ArrayList<>();
+    
+            for (QboardEntity qboardEntity : qboardEntities) {
+                MemberEntity memberInfo = memberRepository.findById(qboardEntity.getMIdx()).orElse(null);
+                Map<String, Object> qboardMemberInfo = new HashMap<>();
+                qboardMemberInfo.put("qboard", QboardDto.toQboardDto(qboardEntity));
+    
+                if (memberInfo != null) {
+                    qboardMemberInfo.put("mPhoto", memberInfo.getMPhoto());
+                    qboardMemberInfo.put("mNicname", memberInfo.getMNickname());
+                }
+    
+                qboardList.add(qboardMemberInfo);
+            }
+    
+            return qboardList;
+        } catch (Exception e) {
+            log.error("Error finding newest qboard Articles", e);
+            throw e;
+        }
+    }
+
+
+
 }

@@ -3,6 +3,8 @@ import ReviewReplyupdateform from "./ReviewReplyupdateform";
 import axiosIns from "../../api/JwtConfig";
 import jwt_decode from "jwt-decode";
 import './style/replyform.css';
+import toastAlert from "../../api/ToastAlert";
+import {jwtHandleError} from "../../api/JwtHandleError";
 
 function ReplyCommentItem({ reply, replyIndex }) {
     const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -10,7 +12,7 @@ function ReplyCommentItem({ reply, replyIndex }) {
     const [isBad, setIsBad] = useState(false);
     const dislike=reply.reviewcommentdto.rbc_dislike;
     const [likeCount, setLikeCount] = useState(reply.likeDislikeDifference);
-
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const handleUpdateClick = () => {
         setShowUpdateForm(!showUpdateForm);
@@ -24,11 +26,9 @@ function ReplyCommentItem({ reply, replyIndex }) {
     const deleteComment = (rbc_idx) => {
         axiosIns.delete(`/api/review/D1/comment/${rbc_idx}`)
             .then(res => {
-                console.log(res.data);  // 성공 메시지 출력
-                // fetchreviewcomment();  // 댓글 삭제 후 댓글 목록을 다시 불러옴
-                window.location.reload()
+                fetchReview(rbc_idx);
             })
-            .catch(err => console.log(err));
+            .catch(err => jwtHandleError(err, toastAlert));
     }
 
     const fetchReview = useCallback((rbc_idx) => {
@@ -36,16 +36,13 @@ function ReplyCommentItem({ reply, replyIndex }) {
             axiosIns.get(`/api/review/D0/comment/${m_idx}/checkGood/${rbc_idx}`)
                 .then(res => {
                     setIsGood(res.data);
-                }).catch(err => {
-                console.log(err);
-            });
+                })
+                .catch(err => jwtHandleError(err, toastAlert));
 
             axiosIns.get(`/api/review/D0/comment/${m_idx}/checkBad/${rbc_idx}`)
                 .then(res => {
                     setIsBad(res.data);
-                }).catch(err => {
-                console.log(err);
-            });
+                })  .catch(err => jwtHandleError(err, toastAlert));
         }
     }, [reply.reviewcommentdto.rbc_idx, m_idx]);
 
@@ -68,7 +65,6 @@ function ReplyCommentItem({ reply, replyIndex }) {
                     // 이미 좋아요가 눌려있으면 좋아요 취소
                     setIsBad(false);
                     setLikeCount(response.data.likeCount);
-                    console.log("sssss"+response.data)
                 }else{
                     axiosIns.get(`/api/review/D0/comment/${m_idx}/checkGood/${rbc_idx}`)
                         .then(response => {
@@ -78,30 +74,21 @@ function ReplyCommentItem({ reply, replyIndex }) {
                                         setIsGood(false);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        console.error('좋아요 요청 실패:', error);
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/comment/${m_idx}/like/${rbc_idx}`)
                                     .then(response => {
-                                        console.log('좋아요 요청 성공:', response.data);
                                         setIsGood(true);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        console.error('좋아요 요청 실패:', error);
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             }
                         })
-                        .catch(error => {
-                            console.error('좋아요 상태 체크 실패:', error);
-                        });
+                        .catch(err => jwtHandleError(err, toastAlert));
                 }
             })
-            .catch(error => {
-                console.error('싫어요 상태 체크 실패:', error);
-            });
+            .catch(err => jwtHandleError(err, toastAlert));
     };
 
 
@@ -122,30 +109,21 @@ function ReplyCommentItem({ reply, replyIndex }) {
                                         setIsBad(false);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        console.error('싫어요 요청 실패:', error);
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/comment/${m_idx}/dislike/${rbc_idx}`)
                                     .then(response => {
-                                        console.log('싫어요 요청 성공:', response.data);
                                         setIsBad(true);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        console.error('싫어요 요청 실패:', error);
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             }
                         })
-                        .catch(error => {
-                            console.error('싫어요 상태 체크 실패:', error);
-                        });
+                        .catch(err => jwtHandleError(err, toastAlert));
                 }
             })
-            .catch(error => {
-                console.error('좋아요 상태 체크 실패:', error);
-            });
+            .catch(err => jwtHandleError(err, toastAlert));
     };
 
     const timeForToday = (value) => {
@@ -168,7 +146,6 @@ function ReplyCommentItem({ reply, replyIndex }) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -203,7 +180,8 @@ function ReplyCommentItem({ reply, replyIndex }) {
                 <img
                     className="review-detail-commnets-detail-icon"
                     alt=""
-                    src="/review-detail-commnets-detail-info-img@2x.png"
+                    src={reply.photo ? `${profileUrl}${reply.photo}`
+                        : require("./assets/logo_profile.svg").default}
                 />
             </div>
             <div className="review-detail-commnets-all-lik-reply" >

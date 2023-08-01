@@ -3,7 +3,8 @@ import './style/Reviewdetail.css';
 import axiosIns from "../../api/JwtConfig";
 import ReviewCommentItem from "./ReviewCommentItem";
 import ReplyCommentItem from "./ReplyCommentItem";
-
+import toastAlert from "../../api/ToastAlert";
+import {jwtHandleError} from "../../api/JwtHandleError";
 
 
 function Reviewcomment(props) {
@@ -20,17 +21,14 @@ function Reviewcomment(props) {
     const fetchreviewcomment = () => {
         axiosIns.get(`/api/review/D0/comment/${props.rb_idx}`)
             .then(res => {
-                console.log(res.data);  // 서버로부터 받은 전체 응답을 출력합니다.
-                //      console.log(res.data.reviewCommentDetailDtoList[2].replyConut);
                 setTotalCount(res.data.totalCount);
                 setReviewcommentlist(res.data.reviewCommentDetailDtoList);  // "reviewCommentDetailDtoList"라는 이름의 배열을 사용한다고 가정
             })
-            .catch(err => console.log(err));
+            .catch(err => jwtHandleError(err, toastAlert));
     }
 
 
     const toggleReplyComments = (rbc_idx) => { // props.rbc_idx가 아니라 함수 인자 rbc_idx를 사용
-        // console.log(rbc_idx)
         setHideReplyComments(prevState => ({
             ...prevState,
             [rbc_idx]: !prevState[rbc_idx]

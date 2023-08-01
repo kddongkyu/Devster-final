@@ -62,6 +62,11 @@ public class ResumeController {
         return new ResponseEntity<String>(resumeService.updateResume(resumeWrapper.getResumeDto(),resumeWrapper.getResumeCareerDtoList(), resumeWrapper.getResumeLicenseDtoList(),session), HttpStatus.OK);
     }
 
+    @PutMapping("/D1/status")
+    public ResponseEntity<String> updateStatus(HttpServletRequest request) {
+        return new ResponseEntity<String>("이력서 공개여부가 " + resumeService.updateRstatus(request) + "로 변경되었습니다.",HttpStatus.OK);
+    }
+
      @PostMapping("/D1/translate")
      public ResponseEntity<String> translate(@RequestBody JsonNode jsonNode) throws IOException {
          return new ResponseEntity<String>(resumeService.translateResume(jsonNode.get("text").asText()),HttpStatus.OK);

@@ -212,7 +212,13 @@ function HboardDetail(props) {
         </div>
 
         <div className="hboard-detail-textarea-contents">
-          <pre style={{ marginBottom: "5rem" }}>{hboardData.hb_content}</pre>
+          {/* <pre style={{ marginBottom: "5rem" }}>{hboardData.hb_content}</pre> */}
+          <pre
+            className="hboard-detail-textarea-pre"
+            style={{ marginBottom: "5rem", wordWrap: "break-word" }}
+          >
+            {hboardData.hb_content}
+          </pre>
         </div>
 
         <div className="hboard-detail-photo-list">

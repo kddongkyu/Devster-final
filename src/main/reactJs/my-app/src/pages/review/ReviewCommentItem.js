@@ -5,7 +5,8 @@ import ReviewReplyupdateform from "./ReviewReplyupdateform";
 import './style/Reviewdetail.css';
 import jwt_decode from "jwt-decode";
 import {useSnackbar} from "notistack";
-import ToastAlert from "../../api/ToastAlert";
+import toastAlert from "../../api/ToastAlert";
+import {jwtHandleError} from "../../api/JwtHandleError";
 
 function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
 
@@ -16,8 +17,7 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
     const dislike=comment.reviewcommentdto.rbc_dislike;
     const [likeCount, setLikeCount] = useState(comment.likeDislikeDifference);
     const { enqueueSnackbar } = useSnackbar();
-    const toastAlert = ToastAlert(enqueueSnackbar);
-
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     let de = jwt_decode(localStorage.getItem("accessToken"));
     const m_idx = de.idx;
@@ -29,16 +29,12 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
             axiosIns.get(`/api/review/D0/comment/${m_idx}/checkGood/${rbc_idx}`)
                 .then(res => {
                     setIsGood(res.data);
-                }).catch(err => {
-                toastAlert('에러 발생','warning');
-            });
+                })   .catch(err => jwtHandleError(err, toastAlert));
 
             axiosIns.get(`/api/review/D0/comment/${m_idx}/checkBad/${rbc_idx}`)
                 .then(res => {
                     setIsBad(res.data);
-                }).catch(err => {
-                toastAlert('에러 발생','warning');
-            });
+                })   .catch(err => jwtHandleError(err, toastAlert));
         }
     }, [comment.reviewcommentdto.rbc_idx, m_idx]);
 
@@ -63,7 +59,7 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
             .then(res => {
                 fetchReview(rbc_idx);
             })
-        toastAlert('에러 발생','warning');
+            .catch(err => jwtHandleError(err, toastAlert));
     }
 
     const handleDeleteClick = () => {
@@ -91,30 +87,21 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                                         setIsGood(false);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        toastAlert('에러 발생','warning');
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/comment/${m_idx}/like/${rbc_idx}`)
                                     .then(response => {
-                                        toastAlert('좋아요를 누르셨습니다.','success');
                                         setIsGood(true);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        toastAlert('에러 발생','warning');
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             }
                         })
-                        .catch(error => {
-                            toastAlert('에러 발생','warning');
-                        });
+                        .catch(err => jwtHandleError(err, toastAlert));
                 }
             })
-            .catch(error => {
-                toastAlert('에러 발생','warning');
-            });
+            .catch(err => jwtHandleError(err, toastAlert));
     };
 
 
@@ -135,30 +122,21 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                                         setIsBad(false);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        toastAlert('에러 발생','warning');
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/review/D1/comment/${m_idx}/dislike/${rbc_idx}`)
                                     .then(response => {
-                                        toastAlert('싫어요를 누르셨습니다.','success');
                                         setIsBad(true);
                                         setLikeCount(response.data.likeCount);
                                     })
-                                    .catch(error => {
-                                        toastAlert('에러 발생','warning');
-                                    });
+                                    .catch(err => jwtHandleError(err, toastAlert));
                             }
                         })
-                        .catch(error => {
-                            toastAlert('에러 발생','warning');
-                        });
+                        .catch(err => jwtHandleError(err, toastAlert));
                 }
             })
-            .catch(error => {
-                toastAlert('에러 발생','warning');
-            });
+            .catch(err => jwtHandleError(err, toastAlert));
     };
 
 
@@ -214,7 +192,8 @@ function ReviewCommentItem({ comment, index ,toggleReplyComments}) {
                 <img
                     className="review-detail-commnets-detail-icon"
                     alt=""
-                    src="/review-detail-commnets-detail-info-img@2x.png"
+                    src={comment.photo ? `${profileUrl}${comment.photo}`
+                        : require("./assets/logo_profile.svg").default}
                 />
             </div>
 
