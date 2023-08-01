@@ -187,10 +187,13 @@ const Qboard = () => {
         <div className="qboard-selection-hire-box" />
         <div className="qboard-selection-hire-text">채용정보</div>
       </NavLink>
-      <NavLink to="/aboard" activeClassName="active" className="qboard-selection-academy">
+      <div className="qboard-selection-academy"
+           onClick={()=>{
+             JwtPageChk(navi, "/aboard")
+           }}>
         <div className="qboard-selection-academy-box" />
         <div className="qboard-selection-academy-text">학원별</div>
-      </NavLink>
+      </div>
     </div>
       <div
           className='qboard-write'

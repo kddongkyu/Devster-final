@@ -34,7 +34,7 @@ function QboardCommentForm({qb_idx}) {
 
         axiosIns.post("/api/qboard/D1/comment", dto)
             .then(res => {
-                window.location.reload()
+
             })
             .catch(error => {
                 // 등록 실패 시 에러 처리

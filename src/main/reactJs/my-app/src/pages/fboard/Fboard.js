@@ -281,14 +281,15 @@ function Fboard(props) {
           <div className="fboard-selection-hire-box" />
           <div className="fboard-selection-hire-text">채용정보</div>
         </NavLink>
-        <NavLink
-          to="/aboard"
-          activeClassName="active"
+        <div
           className="fboard-selection-academy"
+          onClick={()=>{
+              JwtPageChk(navi, "/aboard")
+            }}
         >
           <div className="fboard-selection-qna-box" />
           <div className="fboard-selection-academy-text">학원별</div>
-        </NavLink>
+        </div>
       </div>
 
       <div
