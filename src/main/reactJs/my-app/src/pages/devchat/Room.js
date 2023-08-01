@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import Message from "./Message";
+import Message from './Message';
 import './style/Room.css'
-import { useDispatch, useSelector } from "react-redux";
-import { removeMarker, setHidden, setSendingMsg, wsPublish } from "../../redux/devChat";
+import { useDispatch, useSelector } from 'react-redux';
+import { removeMarker, setHidden, setSendingMsg, wsPublish } from '../../redux/devChat';
 import ChatUpload from './ChatUpload';
 import axiosIns from '../../api/JwtConfig';
 import { jwtHandleError } from '../../api/JwtHandleError';
@@ -22,7 +22,7 @@ function Room(props) {
     const { enqueueSnackbar } = useSnackbar();
     const toastAlert = ToastAlert(enqueueSnackbar);
 
-    const uploadRef=useRef();
+    const uploadRef = useRef();
 
     const msgSend = async () => {
         if (!sendingMsg.trim() && imgArr.length === 0) {
@@ -65,13 +65,15 @@ function Room(props) {
     }
 
     const enterKey = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
             msgSend();
         }
     }
 
     const handleMinimize = () => {
         dispatch(setHidden(true));
+        document.body.style.overflow = 'auto';
     }
 
     const handleOnMsgInput = (e) => {
@@ -79,33 +81,33 @@ function Room(props) {
     }
 
     return (
-        <div className="moblie-chat">
-            <div className="chat-header">
-                <div className="chat-header-box" />
-                <b className="chat-header-acaname">{roomName.length > 14 ? roomName.slice(0, 14).concat("...") : roomName}</b>
+        <div className='moblie-chat'>
+            <div className='chat-header'>
+                <div className='chat-header-box' />
+                <b className='chat-header-acaname'>{roomName.length > 14 ? roomName.slice(0, 14).concat('...') : roomName}</b>
                 <img
-                    className="chat-header-ppls-icon"
-                    alt=""
-                    src="/chat-header-ppls-icon.svg"
+                    className='chat-header-ppls-icon'
+                    alt=''
+                    src={require('./assets/chat_header_ppls_icon.svg').default}
                 />
-                <b className="chat-header-ppls">{peopleCount}</b>
+                <b className='chat-header-ppls'>{peopleCount}</b>
                 <img
-                    className="chat-header-menu-icon"
-                    alt=""
-                    src="/chat-header-menu.svg"
+                    className='chat-header-menu-icon'
+                    alt=''
+                    src={require('./assets/chat_header_menu.svg').default}
                 />
                 <div
                     onClick={handleMinimize}
                 >
                     <img
-                        className="chat-header-close-icon"
-                        alt=""
-                        src="/chat-header-close.svg"
+                        className='chat-header-close-icon'
+                        alt=''
+                        src={require('./assets/chat_header_close.svg').default}
                     />
                 </div>
             </div>
-            <div className="chat-body">
-                <div className="chat-body-box" />
+            <div className='chat-body'>
+                <div className='chat-body-box' />
                 {
                     msg.map((item, idx) => {
                         return (
@@ -115,39 +117,40 @@ function Room(props) {
                 }
             </div>
             <div>
-                <img
-                    className="chat-footer-upload-icon"
-                    alt=""
-                    src="/chat-footer-upload.svg"
-                    onClick={()=>uploadRef.current.click()}
-                />
+                <div
+                    onClick={() => uploadRef.current.click()}
+                >
+                    {/* <img
+                        className='chat-footer-upload-icon'
+                        alt=''
+                        src={require('./assets/chat_footer_upload_icon.svg').default}
+                    /> */}
+                </div>
                 <textarea
                     type='text'
-                    className="chat-footer-send-box"
+                    className='chat-footer-send-box'
                     value={sendingMsg}
-                    onKeyUp={enterKey}
+                    onKeyDown={enterKey}
                     onChange={handleOnMsgInput}
                 />
                 <div
-                    className="chat-footer-send"
+                    className='chat-footer-send'
                     onClick={msgSend}
                 >
-                    <div className="chat-footer-send-btn" />
+                    <div className='chat-footer-send-btn' />
                     <img
-                        className="sf-symbol-arrowtriangletur"
-                        alt=""
-                        src="/sf-symbol--arrowtriangleturnuprightcirclefill.svg"
+                        className='sf-symbol-arrowtriangletur'
+                        alt=''
+                        src={require('./assets/chat_footer_send.svg').default}
                     />
                 </div>
             </div>
             {/* <ChatList /> */}
-            <div id='tooldbox'>
-                <ChatUpload 
-                imgArr={imgArr} 
-                setImgArr={setImgArr} 
+            <ChatUpload
+                imgArr={imgArr}
+                setImgArr={setImgArr}
                 uploadRef={uploadRef}
-                />
-            </div>
+            />
         </div>
     );
 }

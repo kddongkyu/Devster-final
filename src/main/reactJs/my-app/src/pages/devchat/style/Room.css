@@ -112,28 +112,44 @@
   position: absolute;
   top: 0;
   left: 5.3rem;
+  letter-spacing: -0.24px;
   font-weight: 500;
 }
 
 .chat-body-msg-r-box {
   position: relative;
-  top: 2.1rem;
-  left: 5.3rem;
+  top: 0;
+  left: 0;
   border-radius: 7px;
   background-color: #fff;
   border: 1px solid #cfcfcf;
   box-sizing: border-box;
-  width: 25.4rem;
+  max-width: 25.4rem;
+  width: auto;
   height: auto;
   padding: 0.7rem 1rem;
 }
 
+.chat-body-msg-r1 {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
 .chat-body-msg-r-date {
   position: relative;
-  top: 0;
-  left: 31.2rem;
   letter-spacing: -0.24px;
-  width: 6.5rem;
+}
+
+.chat-body-msg-r-parent {
+  position: relative;
+  top: 2.1rem;
+  left: 5.3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 0.5rem;
 }
 
 .chat-body-msg-r {
@@ -141,8 +157,11 @@
   top: 1.6rem;
   left: 1.2rem;
   width: 36.6rem;
-  margin-bottom: 2.2rem;
+  height: auto;
+  margin-bottom: 4.4rem;
 }
+
+
 
 .chat-body-msg-s-date {
   position: relative;
@@ -156,15 +175,18 @@
   background-color: #f5eff9;
   border: 1px solid #cfcfcf;
   box-sizing: border-box;
-  width: 25.4rem;
+  max-width: 25.4rem;
+  width: auto;
   height: auto;
   word-break: break-word;
   padding: 0.7rem 1rem;
+  white-space: pre-wrap;
+
 }
 
 .chat-body-msg-s1 {
   position: relative;
-  width: 25.4rem;
+  width: auto;
   height: auto;
 }
 
@@ -216,10 +238,10 @@
   box-sizing: border-box;
   height: 5.5rem;
   max-height: 20rem;
-  overflow-y: none;
+  overflow-y: hidden;
   resize: none;
   font-size: 1.6rem;
-  padding:0.5rem 1rem;
+  padding: 0.5rem 1rem;
   box-sizing: border-box;
 }
 

@@ -21,6 +21,7 @@ function Message({ item }) {
         );
     } else {
         if (item.type === 'CHAT') {
+            console.log(item.msg);
             return (
                 item.userName === userName ?
                     <div className="chat-body-msg-s">
@@ -38,23 +39,38 @@ function Message({ item }) {
                                         />
                                     ))
                                 }
+                                {
+                                item.msg.length > 100?<><div>{item.msg.substring(0,100)}...</div><button>전체보기</button></>:
                                 <div>{item.msg}</div>
+                                }
                             </div>
                         </div>
                     </div>
                     :
-                    <div className='chat-body-msg-r'>
-                        <div className='chat-body-msg-r-img' />
-                        <img
-                            alt=''
-                            className='chat-body-msg-r-img'
-                            src={`${userImg}${item.userProfile}`}
-                        />
-                        <div className='chat-body-msg-r-id'>{item.userName}</div>
-                        <div className='chat-body-msg-r-box'>
-                            {item.msg}
+                    // <div className='chat-body-msg-r'>
+                    //     <div className='chat-body-msg-r-img' />
+                    //     <img
+                    //         alt=''
+                    //         className='chat-body-msg-r-img'
+                    //         src={`${userImg}${item.userProfile}`}
+                    //     />
+                    //     <div className='chat-body-msg-r-id'>{item.userName}</div>
+                    //     <div className='chat-body-msg-r-box'>
+                    //         {item.msg}
+                    //     </div>
+                    //     <div className='chat-body-msg-r-date'>{timeString}</div>
+                    // </div>
+                    <div className="chat-body-msg-r">
+                        <div className="chat-body-msg-r-img" />
+                        <div className="chat-body-msg-r-id">비트캠프 야붕이</div>
+                        <div className="chat-body-msg-r-parent">
+                            <div className="chat-body-msg-r1">
+                                <div className="chat-body-msg-r-box">
+                                    {item.msg}
+                                </div>
+                            </div>
+                            <div className="chat-body-msg-r-date">오전 12:32</div>
                         </div>
-                        <div className='chat-body-msg-r-date'>{timeString}</div>
                     </div>
             );
         } else if (item.type === 'ENTER') {

@@ -17,6 +17,7 @@ function Header(props) {
         dispatch(setModalOpen(true));
         dispatch(setHidden(false));
         dispatch(resetUnreadMsg());
+        document.body.style.overflow='hidden';
     }
 
     return (
