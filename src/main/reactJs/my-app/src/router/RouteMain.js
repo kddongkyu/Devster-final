@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Main } from "../pages/main";
-import { Layout, NotFound } from "../components";
+import {DetailLayout, Layout, NotFound} from "../components";
+
 import {
   Bookmarks,
   MyResume,
@@ -81,14 +82,7 @@ function RouteMain(props) {
         <Route path="/aboard/form" element={<AboardForm />} />
         <Route path="/review/form" element={<Reviewform />} />
 
-        <Route
-          path="/review/detail/:rb_idx/:currentPage"
-          element={<Reviewdetail />}
-        />
-        <Route
-          path="/fboard/detail/:fb_idx/:currentPage"
-          element={<FboardDetail />}
-        />
+
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
         <Route
@@ -96,34 +90,10 @@ function RouteMain(props) {
           element={<FboardUpdateForm />}
         />
 
-        <Route
-          path="/hboard/detail/:hb_idx/:currentPage"
-          element={<HboardDetail />}
-        />
 
         <Route
           path="hboard/updateform/:hb_idx/:currentPage"
           element={<HboardUpdateForm />}
-        />
-
-        <Route
-          path="/aboard/detail/:ab_idx/:currentPage"
-          element={<Aboarddtail />}
-        />
-
-        <Route
-          path="/qboard/detail/:qb_idx/:currentPage"
-          element={<QboardDetail />}
-        />
-
-        <Route
-          path="/fboard/detail/:fb_idx/:currentPage"
-          element={<FboardDetail />}
-        />
-
-        <Route
-          path="/review/detail/:rb_idx/:currentPage"
-          element={<Reviewdetail />}
         />
 
         <Route path="/review/update/:rb_idx" element={<Reviewupdate />} />
@@ -176,6 +146,34 @@ function RouteMain(props) {
           element={<ResumeDetail />}
         />
       </Route>
+
+      <Route element={<DetailLayout />}>
+        <Route
+            path="/aboard/detail/:ab_idx/:currentPage"
+            element={<Aboarddtail />}
+        />
+
+        <Route
+            path="/qboard/detail/:qb_idx/:currentPage"
+            element={<QboardDetail />}
+        />
+
+        <Route
+            path="/fboard/detail/:fb_idx/:currentPage"
+            element={<FboardDetail />}
+        />
+
+        <Route
+            path="/review/detail/:rb_idx/:currentPage"
+            element={<Reviewdetail />}
+        />
+
+        <Route
+            path="/hboard/detail/:hb_idx/:currentPage"
+            element={<HboardDetail />}
+        />
+      </Route>
+
 
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUpNorm />} />

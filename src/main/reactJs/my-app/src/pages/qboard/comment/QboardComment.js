@@ -56,7 +56,7 @@ function QboardComment(props) {
                     <React.Fragment key={index}>
                         <QboardCommentItem comment={comment} index={index} qbc_idx={comment.qboardCommentDto.qbc_idx} toggleReplyComments={toggleReplyComments}  />
                         {!hideQboardComments[comment.qboardCommentDto.qbc_idx] && comment.replyList && comment.replyList.map((reply, replyIndex) => (
-                            <QboardReplyCommentItem reply={reply} replyIndex={replyIndex}  />
+                            <QboardReplyCommentItem reply={reply} replyIndex={replyIndex} qbc_idx={reply.qboardCommentDto.qbc_idx} />
                         ))}
                     </React.Fragment>
                 );

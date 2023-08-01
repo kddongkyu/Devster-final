@@ -10,42 +10,6 @@
   height: 2.3rem;
   font-weight: 700;
 }
-.resumeform-header-ck-text {
-  position: absolute;
-  top: 0.2rem;
-  right: 4.4rem;
-  letter-spacing: 0.01em;
-  font-weight: 500;
-  display: inline-block;
-  width: 8.8rem;
-  height: 1.8rem;
-}
-.resumeform-header-ck-rec-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 10px;
-  width: 4.2rem;
-  height: 2.2rem;
-}
-.resumeform-header-ck-ecl {
-  position: absolute;
-  top: 0;
-  right: 0.05rem;
-  border-radius: 50%;
-  background-color: #fff;
-  border: 1.5px solid #721ea6;
-  box-sizing: border-box;
-  width: 2.2rem;
-  height: 2.2rem;
-}
-.resumeform-header-ck {
-  position: absolute;
-  top: 0.1rem;
-  right: 0;
-  width: 13.2rem;
-  height: 2.2rem;
-}
 .resumeform-header-email-icon {
   position: absolute;
   top: 0.2rem;
@@ -608,3 +572,73 @@
     color: #fff;
     font-weight: 700;
 }
+
+/* 토글 */
+.resumeform-header-ck-text {
+  position: absolute;
+  top: 0.4rem;
+  right: 5.2rem;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  font-size: 1.5rem;
+  display: inline-block;
+  width: 12rem;
+  height: 1.8rem;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: absolute;
+  top: 0.1rem;
+  right: 0;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #cfcfcf;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  left: 0.3em;
+  bottom: 0.3em;
+  background-color: white;
+  border-radius: 50px;
+  box-shadow: 0 0px 20px rgba(0,0,0,0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.switch input:checked + .slider {
+  background: #721ea6;
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #721ea6;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(1.6em);
+  width: 2em;
+  height: 2em;
+  bottom: 0;
+}
+

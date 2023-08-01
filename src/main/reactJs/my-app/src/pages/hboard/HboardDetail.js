@@ -241,7 +241,7 @@ function HboardDetail(props) {
           {arrayFromString.map((imageId, index) => (
             <div>
               <img
-                className="board-detail-photo"
+                className="hboard-detail-photo"
                 key={index}
                 src={`${photoUrl}${imageId}`}
                 alt={`Image ${index}`}

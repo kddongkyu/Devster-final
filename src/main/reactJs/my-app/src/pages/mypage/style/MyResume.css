@@ -85,7 +85,8 @@
     height: 5rem;
     border-radius: 8rem;
     border: 1px solid #D9D9D9;
-    background: lightgray 50% / cover no-repeat, #FFF;
+    background: lightgray 50%;
+    cover : no-repeat, #FFF;
     margin-top: 4rem;
   }
 
@@ -168,6 +169,25 @@
     line-height: normal;
     letter-spacing: -0.024rem;
     margin-bottom: 1.2rem;
+  }
+  .resume_info_box_title2{
+    color: #000;
+    font-family: Noto Sans KR;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.024rem;
+    margin-bottom: 1.2rem;
+    display: inline-block;
+  }
+
+  .translate-btn {
+    display: inline-block;
+    width: 10rem;
+    height: 3rem;
+    position: absolute;
+    right: 3.4rem;
   }
 
   .resume_info_box_content{

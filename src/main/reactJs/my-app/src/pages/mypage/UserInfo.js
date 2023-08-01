@@ -5,6 +5,7 @@ import { checkToken } from "../../api/checkToken";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import defaultProfileImage from './assets/logo_profile.svg';
 
 function UserInfo(props) {
   const decodedToken = checkToken();
@@ -29,7 +30,11 @@ function UserInfo(props) {
     try {
       const response = await axiosIns.get(`/api/member/D1/${idx}`);
       setMember(response.data);
-      setPreviewImage(`${photoUrl}${response.data.m_photo}`); // 서버에서 불러온 이미지 경로를 저장
+      if(response.data.m_photo === null || response.data.m_photo === undefined || response.data.m_photo === '') {
+        setPreviewImage(defaultProfileImage); // 서버에서 불러온 이미지 경로를 저장
+      } else {
+        setPreviewImage(`${photoUrl}${response.data.m_photo}`); // 서버에서 불러온 이미지 경로를 저장
+      }
     } catch (e) {
       jwtHandleError(e, toastAlert);
     }

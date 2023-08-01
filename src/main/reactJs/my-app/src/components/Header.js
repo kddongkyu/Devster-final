@@ -17,7 +17,6 @@ function Header({ isMenuOpen, setIsMenuOpen }) {
         dispatch(setModalOpen(true));
         dispatch(setHidden(false));
         dispatch(resetUnreadMsg());
-        document.documentElement.style.overflow = 'hidden';
     }
 
     return (

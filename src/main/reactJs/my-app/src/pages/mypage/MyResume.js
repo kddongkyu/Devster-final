@@ -6,6 +6,9 @@ import { checkToken } from "../../api/checkToken";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import MyResumeTranslate from "./MyResumeTranslate";
+import defaultProfileImage from './assets/logo_profile.svg';
+
 
 function MyResume(props) {
   const decodedToken = checkToken();
@@ -23,11 +26,16 @@ function MyResume(props) {
   });
 
   const photoUrl = process.env.REACT_APP_MEMBERURL;
-  const imageUrl = `${photoUrl}${member.m_photo}`;
+  const imageUrl = (member.m_photo === null || member.m_photo === undefined || member.m_photo === '')?defaultProfileImage:`${photoUrl}${member.m_photo}`;
   const FileUrl = process.env.REACT_APP_RESUMEFILEURL;
   const REFileUrl = process.env.REACT_APP_RESUMEREFILEURL;
 
-  const [isLoadingMemberData, setIsLoadingMemberData] = useState(true); // 초기값은 true
+  const [isLoadingMemberData, setIsLoadingMemberData] = useState(true);
+
+  const [isTransOpen, setIsTransOpen] = useState(false);
+  const openTransModal = () => {
+    setIsTransOpen(true);
+  }
 
   // Functions
   const getMemberData = async (idx) => {
@@ -302,10 +310,21 @@ function MyResume(props) {
                 ))}
             </div>
             <div className="resume_info_box_07">
-              <div className="resume_info_box_title">간단 자기소개</div>
+              <div className="resume_info_box_title2">간단 자기소개</div>
+
+              <img className="translate-btn"
+                  alt=""
+                  src={require("./assets/translate_btn.svg").default}
+                   onClick={openTransModal}
+              />
+
               <div className="resume_info_box_content">
                 {resume.resumeDto.r_self}
               </div>
+
+              <MyResumeTranslate isTransOpen={isTransOpen}
+                                 setIsTransOpen={setIsTransOpen}
+                                 transConent = {resume.resumeDto.r_self}/>
             </div>
             {resume && resume.resumeDto && resume.resumeDto.r_file && (
               <div className="resume_info_box_08">
@@ -384,7 +403,7 @@ function MyResume(props) {
                   style={{
                     width: "100%",
                     background: "#721EA6",
-                    border: "0",
+                    // border: "0",
                     padding: "1rem 0 1rem 0",
                     color: "#fff  ",
                     borderRadius: ".5rem",
@@ -400,7 +419,7 @@ function MyResume(props) {
                 style={{
                   width: "100%",
                   background: "#fff",
-                  border: "0",
+                  // border: "0",
                   padding: "1rem 0 1rem 0",
                   color: "#000  ",
                   borderRadius: ".5rem",
@@ -434,6 +453,7 @@ function MyResume(props) {
           style={{ width: "100%" }}
         />
       </div>
+
     </div>
   );
 }

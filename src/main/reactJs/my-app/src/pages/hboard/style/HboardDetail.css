@@ -200,7 +200,7 @@
   letter-spacing: -0.24px;
   display: inline-block;
 }
-.fboard-detail-textarea-subject {
+.hboard-detail-textarea-subject {
   /*position: absolute;*/
   top: 0;
   left: 0;
@@ -228,7 +228,7 @@
 /* 하단 */
 
 /* 나란히 줘야 되는 div 묶어서 display : flex */
-.fboard-detail-listbackcounter {
+.hboard-detail-listbackcounter {
   position: relative;
   display: flex;
   margin-top: 5rem;
@@ -251,7 +251,7 @@
   /* top: 55rem; */
   left: calc(50% - 150px);
   border: 1px solid #fff;
-  width: 30rem;
+  max-width: 30rem;
   height: 30rem;
   position: relative;
 }
@@ -400,7 +400,7 @@
 
 .hboard-detail {
   background-color: #fff;
-  border: 1px solid rgba(210, 210, 210, 0.9);
+  /*border: 1px solid rgba(210, 210, 210, 0.9);*/
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;

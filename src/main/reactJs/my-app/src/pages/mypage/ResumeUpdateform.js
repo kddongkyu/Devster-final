@@ -28,6 +28,29 @@ function ResumeUpdateform(props) {
   const [resumeCareerList, setResumeCareerList] = useState([]);
   const [resumeLicenseList, setResumeLicenseList] = useState([]);
 
+  const [isPublic, setIsPublic] = useState();
+
+  const toggleResumeStatus = () => {
+    axiosIns.put('/api/resume/D1/status')
+        .then(response => {
+          const newStatus = response.data === '공개' ? true : false;
+
+          if(isPublic) {
+            setIsPublic(false);
+          } else {
+            setIsPublic(true);
+          }
+
+          setResume((prevResume) => ({
+            ...prevResume, r_status : newStatus ? 1 : 0
+          }));
+
+        })
+        .catch(error => {
+          console.error("이력서 공개여부 변경 실패:", error);
+        });
+  };
+
   const getMemberData = async (idx) => {
     try {
       const response = await axiosIns.get(`/api/member/D1/${idx}`);
@@ -43,6 +66,7 @@ function ResumeUpdateform(props) {
       setResume(response.data.resumeDto);
       setResumeCareerList(response.data.resumeCareerDtoList);
       setResumeLicenseList(response.data.resumeLicenseDtoList);
+      setIsPublic(response.data.resumeDto.r_status === 0 ? false :  true);
       console.log(response.data);
     } catch (e) {
       jwtHandleError(e, toastAlert);
@@ -188,16 +212,20 @@ function ResumeUpdateform(props) {
       <div className="resumeform-wrapper">
         <div className="resumeform-header">
           <b className="resumeform-header-name">{member.m_name}</b>
+
+
           <div className="resumeform-header-ck">
-            {/*<div className="resumeform-header-ck-text">이력서 공개여부</div>*/}
-            {/*<img*/}
-            {/*  className="resumeform-header-ck-rec-icon"*/}
-            {/*  alt=""*/}
-            {/*  src={require("./assets/resumeform_header_ck_rec.svg").default}*/}
-            {/*/>*/}
-            <input className="switch" type="checkbox" checked="true" />
-            <div className="resumeform-header-ck-ecl" />
+            <div className="resumeform-header-ck-text">이력서 공개여부</div>
+            <label className="switch">
+              <input type="checkbox"
+                     checked={isPublic}
+                     onChange={toggleResumeStatus} />
+                <span className="slider"></span>
+            </label>
           </div>
+
+
+
           <div className="resumeform-header-email">
             <img
               className="resumeform-header-email-icon"
