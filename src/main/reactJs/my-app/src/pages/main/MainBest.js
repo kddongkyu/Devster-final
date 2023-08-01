@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import axiosIns from "../../api/JwtConfig";
+import { jwtHandleError } from "../../api/JwtHandleError";
 
 function MainBest(props) {
   // const [loading, setLoading] = useState(true);
@@ -15,10 +16,9 @@ function MainBest(props) {
       .get("/api/mainpage/D0/popularFarticle")
       .then((response) => {
         setPopularFreeArticle(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching fboard popular article:", error);
+        jwtHandleError(error, toastAlert);
       });
   }, []);
 
@@ -110,7 +110,7 @@ function MainBest(props) {
                 <div className="main-best-info-type">{fboard.mNicname}</div>
               </div>
               <NavLink
-                to={`/fboard/detail/${fboard.freeBoardHotArticle.fb_idx}/${currentPage}`}
+                to={`/fboard/detail/${fboard.freeBoardHotArticle.fbidx}/${currentPage}`}
               >
                 <b className="main-best-subject">
                   {fboard.freeBoardHotArticle.fbsubject}

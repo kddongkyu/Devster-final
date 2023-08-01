@@ -19,7 +19,6 @@ function MainQnA(props) {
     axiosIns
       .get("/api/mainpage/D0/qboard")
       .then((response) => {
-        console.log(response.data);
         setQnaBoardNewestList(response.data);
       })
       .catch((error) => {

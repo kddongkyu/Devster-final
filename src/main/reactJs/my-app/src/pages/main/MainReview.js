@@ -13,13 +13,13 @@ function MainReview(props) {
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
   const [rboardNewestList, setRboardNewestList] = useState([]);
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   useEffect(() => {
     //JPA로부터 자유게시판 최신순 글 3개 가져오는 API 호출
     axiosIns
       .get("/api/mainpage/D0/rboard")
       .then((response) => {
-        console.log(response.data);
         setRboardNewestList(response.data);
       })
       .catch((error) => {
@@ -100,7 +100,16 @@ function MainReview(props) {
                     : rboard.rboard.rb_subject}
                 </p>
               </div>
-              <img className="logo-icon" alt="" src={rboard.mPhoto} />
+              <img
+                className="logo-icon"
+                alt=""
+                // src={rboard.mPhoto}
+                src={
+                  rboard.mPhoto
+                    ? `${profileUrl}${rboard.mPhoto}`
+                    : require("./assets/logo.svg").default
+                }
+              />
               <div className="review-list-user-time">
                 {rboard.mNicname} ·{timeForToday(rboard.rboard.rb_writeday)}
               </div>

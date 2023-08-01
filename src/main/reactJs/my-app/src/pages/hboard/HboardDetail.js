@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import "./style/HboardDetail.css";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
@@ -32,7 +32,6 @@ function HboardDetail(props) {
       axiosIns
         .get(url, { params: { m_idx: de.idx } })
         .then((response) => {
-          console.log(response);
           setHboardData(response.data);
           if (response.data.hb_photo != null) {
             setArrayFromString(response.data.hb_photo.split(","));
@@ -56,9 +55,6 @@ function HboardDetail(props) {
   const addbkmk = (m_idx, hb_idx) => {
     m_idx = Number(m_idx);
     hb_idx = Number(hb_idx);
-    console.log(m_idx);
-    console.log(hb_idx);
-    console.log("파라미터 값 테스트");
     axiosIns
       .post(`/api/hboard/D1/${m_idx}/increaseBkmk/${hb_idx}`)
       .then((response) => {
@@ -156,7 +152,7 @@ function HboardDetail(props) {
         <img
           className="hboard-detail-info-profile-img-icon"
           alt=""
-          src={hboardData.hb_photo}
+          src={require("./assets/companymembericon.svg").default}
         />
         <div className="hboard-detail-info-nickname">
           {hboardData.cm_compname}
@@ -190,6 +186,7 @@ function HboardDetail(props) {
         alt=""
         src={require("./assets/hboard_url_icon.svg").default}
       />
+
       {m_idx === hboardData.cm_idx && (
         <>
           <img
@@ -237,7 +234,12 @@ function HboardDetail(props) {
           <div className="hboard-detail-listbackcounter">
             <div className="hboard-detail-listback" onClick={hboardNavigation}>
               <div className="hboard-detail-listback-rec" />
-              <div className="hboard-detail-listback-text">목록</div>
+              <div
+                className="hboard-detail-listback-text"
+                style={{ cursor: "pointer" }}
+              >
+                목록
+              </div>
               <img
                 className="hboard-detail-listback-icon"
                 alt=""

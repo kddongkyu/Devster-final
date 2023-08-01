@@ -12,14 +12,13 @@ function MainFreeboard(props) {
   const [subjectCount, setsubjectCount] = useState(10);
   const { enqueueSnackbar } = useSnackbar();
   const toastAlert = ToastAlert(enqueueSnackbar);
-  const profileUrl = process.env.REACT_APP_PHOTO;
+  const profileUrl = process.env.REACT_APP_MEMBERURL;
 
   useEffect(() => {
     //JPA로부터 자유게시판 최신순 글 3개 가져오는 API 호출
     axiosIns
       .get("/api/mainpage/D0/fboard")
       .then((response) => {
-        console.log(response.data);
         setFreeBoardNewestList(response.data);
       })
       .catch((error) => {

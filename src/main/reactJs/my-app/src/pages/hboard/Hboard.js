@@ -7,6 +7,7 @@ import { JwtPageChk } from "../../api/JwtPageChk";
 import { checkToken } from "../../api/checkToken";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
+import { jwtHandleError } from "../../api/JwtHandleError";
 
 function Hboard(props) {
   const handleRefresh = () => {
@@ -128,7 +129,7 @@ function Hboard(props) {
       setHireBoardList(response.data.hireBoardList);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error("Error fetching hboards:", error);
+      jwtHandleError(error, toastAlert);
     }
   };
 
@@ -140,7 +141,7 @@ function Hboard(props) {
         setHireBoardList(response.data.hireBoardList);
       })
       .catch((error) => {
-        console.error("Error fetching hboards:", error);
+        jwtHandleError(error, toastAlert);
       });
   }, []);
 
@@ -149,13 +150,10 @@ function Hboard(props) {
     axiosIns
       .get("/api/nboard/D0/notice")
       .then((response) => {
-        console.log("콘솔테스트");
-        console.log(response.data);
-        console.log(response.data.nboard);
         setNoticeArticle(response.data.nboard);
       })
       .catch((error) => {
-        console.error("Error fetching notice article:", error);
+        jwtHandleError(error, toastAlert);
       });
   }, []);
 
@@ -415,7 +413,7 @@ function Hboard(props) {
                 }
               />
             </div>
-            <div className="hboard-notice-preview-icons-co">
+            {/* <div className="hboard-notice-preview-icons-co">
               <div className="hboard-notice-preview-views-te">99</div>
               <img
                 className="hboard-notice-preview-icons-co2"
@@ -436,7 +434,7 @@ function Hboard(props) {
                     .default
                 }
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -448,7 +446,11 @@ function Hboard(props) {
               <div key={hboard.hboard.hb_idx} className="hboard-preview">
                 <div className="hboard-preview-box" />
                 <div className="fboard-preview-img-profile">
-                  <img alt="" src={hboard.cmPhoto} />
+                  <img
+                    alt=""
+                    src={require("./assets/companymembericon.svg").default}
+                    className="fboard-preview-img-profile"
+                  />
                 </div>
                 <div className="hboard-preview-type">
                   <b className="hboard-preview-type-text">채용게시판</b>
@@ -473,8 +475,11 @@ function Hboard(props) {
 
                 <div
                   onClick={() => {
-                    JwtPageChk(
-                      navi,
+                    // JwtPageChk(
+                    //   navi,
+                    //   `/hboard/detail/${hboard.hboard.hb_idx}/${currentPage}`
+                    // );
+                    navi(
                       `/hboard/detail/${hboard.hboard.hb_idx}/${currentPage}`
                     );
                   }}

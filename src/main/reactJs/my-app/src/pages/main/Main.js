@@ -10,6 +10,7 @@ import {
   MainQnA,
   MainReview,
 } from "./index";
+import { jwtHandleError } from "../../api/JwtHandleError";
 
 function Main(props) {
   const navi = useNavigate();
@@ -33,7 +34,7 @@ function Main(props) {
           className="main-best-more-text"
           style={{ cursor: "pointer" }}
           onClick={() => {
-            JwtPageChk(navi, "/fboard");
+            navi("/fboard");
           }}
         >
           더보기
@@ -50,7 +51,15 @@ function Main(props) {
       </div>
       <MainQnA />
       <div className="main-qna-more">
-        <div className="main-best-more-text">더보기</div>
+        <div
+          className="main-best-more-text"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navi("/qboard");
+          }}
+        >
+          더보기
+        </div>
         <img
           className="main-best-more-icon"
           alt=""
@@ -68,7 +77,7 @@ function Main(props) {
           className="main-best-more-text"
           style={{ cursor: "pointer" }}
           onClick={() => {
-            JwtPageChk(navi, "/hboard");
+            navi("/hboard");
           }}
         >
           더보기
@@ -89,7 +98,7 @@ function Main(props) {
           className="main-best-more-text"
           style={{ cursor: "pointer" }}
           onClick={() => {
-            JwtPageChk(navi, "/review");
+            navi("/review");
           }}
         >
           더보기
