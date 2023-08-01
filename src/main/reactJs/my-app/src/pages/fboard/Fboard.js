@@ -17,6 +17,7 @@ function Fboard(props) {
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [noticePost,setNoticePost] = useState({});
   const [contentCount, setContentCount] = useState(15);
   const [subjectCount, setsubjectCount] = useState(10);
   const navi = useNavigate();
@@ -107,8 +108,19 @@ function Fboard(props) {
 
   useEffect(() => {
     const page = Math.max(1, currentPage);
+    getNoticeData();
     fetchFboards(page, finalKeyword, sortProperty, sortDirection);
   }, [currentPage, finalKeyword, sortProperty, sortDirection]);
+
+  const getNoticeData = () => {
+    axiosIns.get(`/api/nboard/D0/notice`)
+        .then(response => {
+          setNoticePost(response.data.nboard);
+        })
+        .catch(error => {
+          jwtHandleError(error, toastAlert);
+        })
+  }
 
   const fetchFboards = async (page, keyword, sortProperty, sortDirection) => {
     const searchKeyword =
@@ -362,7 +374,10 @@ function Fboard(props) {
 
       <div className="fboard-notice">
         <div className="fboard-notice-box" />
-        <div className="fboard-notice-preview">
+        <div className="fboard-notice-preview"
+             onClick={() => {
+               window.location.href = `/notice/detail/${noticePost.nb_idx}/1`;
+             }}>
           <div className="fboard-notice-preview-info">
             <img
               className="fboard-notice-preview-info-logo-icon"
@@ -372,10 +387,10 @@ function Fboard(props) {
               }
             />
             <div className="fboard-notice-preview-info-text">
-              admin_01 · 약 4시간 전
+              관리자 · {timeForToday(noticePost.nb_writeday)}
             </div>
           </div>
-          <b className="fboard-notice-preview-subject">DEVSTER 공지사항</b>
+          <b className="fboard-notice-preview-subject">{noticePost.nb_subject}</b>
           <div className="fboard-notice-preview-notice">
             <div className="fboard-notice-preview-notice-bo" />
             <div className="fboard-notice-preview-notice-te">공지사항</div>
@@ -383,7 +398,9 @@ function Fboard(props) {
           <div className="fboard-notice-preview-hash">#공지사항 # Devster</div>
           <div className="fboard-notice-preview-icons">
             <div className="fboard-notice-preview-views">
-              <div className="fboard-notice-preview-views-tex">800</div>
+              <div className="fboard-notice-preview-views-tex">
+                {noticePost.nb_readcount}
+              </div>
               <img
                 className="fboard-notice-preview-views-ico-icon"
                 alt=""
@@ -420,7 +437,10 @@ function Fboard(props) {
                 <div className="fboard-preview-box" />
                 <div className="fboard-preview-img-profile">
                   <img className="fboard-preview-img-profile"
-                      alt="" src={`${profileUrl}${fboard.mPhoto}`} />
+                      alt=""
+                       src={fboard.mPhoto ? `${profileUrl}${fboard.mPhoto}`
+                           : require("./assets/logo_profile.svg").default}
+                  />
                 </div>
                 <div className="fboard-preview-type">
                   <b className="fboard-preview-type-text">자유게시판</b>
@@ -455,7 +475,9 @@ function Fboard(props) {
                   <div>
                     <img
                       alt=""
-                      src={setPhotoUrl(fboard.fboard.fb_photo)}
+                      src={fboard.fboard.fb_photo && fboard.fboard.fb_photo.length > 0
+                      ? setPhotoUrl(fboard.fboard.fb_photo)
+                          : require("./assets/logo-img.svg").default}
                       className="fboard-preview-img-preview"
                     />
                   </div>

@@ -159,7 +159,6 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/academyboard/D1/comment/${m_idx}/dislike/${abc_idx}`)
                                     .then(response => {
-                                        console.log('싫어요 요청 성공:', response.data);
                                         setIsBad(true);
                                         setLikeCount(response.data.likeCount);
                                     })
@@ -198,7 +197,6 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -230,7 +228,8 @@ function AboardCommentitem( {comment, index ,toggleReplyComments }) {
                 <img
                     className="aboard-detail-commnets-detail-icon"
                     alt=""
-                    src={`${profileUrl}${comment.mPhoto}`}
+                    src={comment.mPhoto ? `${profileUrl}${comment.mPhoto}`
+                        : require("../assets/logo_profile.svg").default}
                 />
             </div>
 

@@ -32,13 +32,10 @@ function AboardDetail(props) {
     const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const fetchAboard = useCallback((ab_idx,currentPage=null) => {
-        console.log(ab_idx);
         const url = `/api/academyboard/D0/${ab_idx}`;
         axiosIns.get(url)
             .then(response => {
-                console.log(response.data);
                 setAboardData(response.data);
-                console.log(response.data.aboard.ab_photo);
                 if(response.data.aboard.ab_photo != null) {
                     let photos = response.data.aboard.ab_photo.includes(",")
                         ? response.data.aboard.ab_photo.split(",")
@@ -103,13 +100,12 @@ function AboardDetail(props) {
                                         fetchAboard(ab_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        console.error('좋아요 요청 실패:', error);
+                                        jwtHandleError(error, toastAlert);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/academyboard/D1/${m_idx}/like/${ab_idx}`)
                                     .then(response => {
-                                        console.log('좋아요 요청 성공:', response.data);
                                         fetchAboard(ab_idx, currentPage);
                                     })
                                     .catch(error => {
@@ -144,13 +140,12 @@ function AboardDetail(props) {
                                         fetchAboard(ab_idx, currentPage);
                                     })
                                     .catch(error => {
-                                        console.error('싫어요 요청 실패:', error);
+                                        jwtHandleError(error, toastAlert);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/academyboard/D1/${m_idx}/dislike/${ab_idx}`)
                                     .then(response => {
-                                        console.log('싫어요 요청 성공:', response.data);
                                         fetchAboard(ab_idx, currentPage);
                                     })
                                     .catch(error => {
@@ -173,19 +168,13 @@ function AboardDetail(props) {
         if (window.confirm('해당 게시글을 삭제하시겠습니까?')) {
             axiosIns.delete(`/api/academyboard/D1/${ab_idx}`)
                 .then(response => {
-                    console.log('AcademyBoard deleted successfully');
                     window.location.href="/aboard";
                 })
                 .catch(error => {
-                    console.error('Error deleting fboard:', error);
+                    jwtHandleError(error, toastAlert);
                 });
         }
     };
-
-    // let result = aboardDate.aboard.ab_like - aboardDate.aboard.ab_dislike;
-    // if (aboardDate.aboard.ab_like <= aboardDate.aboard.ab_dislike) {
-    //     result = - result;
-    // }
 
     //목록 돌아가기
     const aboardNavigation = () => {
@@ -219,7 +208,6 @@ function AboardDetail(props) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -253,7 +241,8 @@ function AboardDetail(props) {
                 <img
                     className="aboard-detail-info-profile-img-icon"
                     alt=""
-                    src={`${profileUrl}${aboardDate.mPhoto}`}
+                    src={aboardDate.mPhoto ? `${profileUrl}${aboardDate.mPhoto}`
+                        : require("./assets/logo_profile.svg").default}
                     onClick={handleNicknameClick}
                 />
                 <div className="aboard-detail-info-nickname" onClick={handleNicknameClick}>{aboardDate.mNicname}</div>
@@ -295,20 +284,25 @@ function AboardDetail(props) {
                 </div>
 
                 <div className="aboard-detail-textarea-contents">
-                   <pre style={{marginBottom:"5rem"}}>
+                   <pre className="aboard-detail-textarea-pre"
+                        style={{marginBottom: "5rem", wordWrap:"break-word"}}>
                       {aboardDate.aboard.ab_content}
                    </pre>
                 </div>
 
                 <div className="aboard-detail-photo-list">
                     {arrayFromString.map((imageId, index) => {
-                        return (
-                            <img
-                                className="aboard-detail-photo" key={index}
-                                src={`${photoUrl}${imageId}`}
-                                alt={`Image ${index}`}
-                            />
-                        )
+                        if (imageId && imageId.length > 0) {
+                            return (
+                                <img
+                                    className="aboard-detail-photo"
+                                    key={index}
+                                    src={`${photoUrl}${imageId}`}
+                                    alt={`Image ${index}`}
+                                />
+                            );
+                        }
+                        return null;
                     })}
 
                     {/* 여기서부터 밑으로 정렬 */}

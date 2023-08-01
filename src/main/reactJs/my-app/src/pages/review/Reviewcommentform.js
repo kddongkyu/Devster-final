@@ -2,16 +2,14 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
+import toastAlert from "../../api/ToastAlert";
+import {jwtHandleError} from "../../api/JwtHandleError";
+
 function Reviewcommentform({rb_idx}) {
-    console.log("111:"+rb_idx);
     const [reviewcomment,setReviewcomment]=useState('');
     const navi=useNavigate();
 
     let de = jwt_decode(localStorage.getItem('accessToken'));
-    console.log(de.idx);
-
-
-
 
     const onSubmitEvent = (e) => {
         e.preventDefault();
@@ -28,10 +26,7 @@ function Reviewcommentform({rb_idx}) {
                 window.location.reload()
 
             })
-            .catch(error => {
-                // 등록 실패 시 에러 처리
-                console.error(error);
-            });
+            .catch(err => jwtHandleError(err, toastAlert));
     }
 
 

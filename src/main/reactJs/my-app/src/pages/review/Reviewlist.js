@@ -23,6 +23,7 @@ function Reviewlist(props) {
     const [finalKeyword, setFinalKeyword] = useState(''); // 최종 검색어 (검색 버튼
 
     const [subjectCount, setsubjectCount] = useState(25);
+    const profileUrl = process.env.REACT_APP_MEMBERURL;
 
     const handleSubjectResize = () => { // 화면 너비에 따라 subject 미리보기 갯수 반응형으로 변경
         // 화면 너비에 따라 텍스트 개수를 업데이트
@@ -291,7 +292,10 @@ function Reviewlist(props) {
                                     {compareValues(String(review.review.rb_subject),subjectCount) ? review.review.rb_subject.slice(0, subjectCount) + "···" : review.review.rb_subject}
                                 </p>
                             </div>
-                            <img className="logo-icon" alt="" src={review.mPhoto}/>
+                            <img className="logo-icon" alt=""
+                                 src={review.mPhoto ? `${profileUrl}${review.mPhoto}`
+                                     : require("./assets/logo.svg").default}
+                            />
                             <div className="review-list-user-time">{review.mNicname} ·
                                 {timeForToday(review.review.rb_writeday)}</div>
                             <div className="review-list-rb-type">

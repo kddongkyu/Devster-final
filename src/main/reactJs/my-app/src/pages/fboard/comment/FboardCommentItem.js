@@ -109,17 +109,17 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
                                         setLikeCount(response.data.likeCount);
                                     })
                                     .catch(error => {
-                                        toastAlert('에러 발생','warning');
+                                        jwtHandleError(error, toastAlert);
                                     });
                             }
                         })
                         .catch(error => {
-                            toastAlert('에러 발생','warning');
+                            jwtHandleError(error, toastAlert);
                         });
                 }
             })
             .catch(error => {
-                toastAlert('에러 발생','warning');
+                jwtHandleError(error, toastAlert);
             });
     };
 
@@ -142,28 +142,27 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
                                         setLikeCount(response.data.likeCount);
                                     })
                                     .catch(error => {
-                                        toastAlert('에러 발생','warning');
+                                        jwtHandleError(error, toastAlert);
                                     });
                             } else {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/fboard/D1/comment/${m_idx}/dislike/${fbc_idx}`)
                                     .then(response => {
-                                        toastAlert('싫어요를 누르셨습니다.','success');
                                         setIsBad(true);
                                         setLikeCount(response.data.likeCount);
                                     })
                                     .catch(error => {
-                                        toastAlert('에러 발생','warning');
+                                        jwtHandleError(error, toastAlert);
                                     });
                             }
                         })
                         .catch(error => {
-                            toastAlert('에러 발생','warning');
+                            jwtHandleError(error, toastAlert);
                         });
                 }
             })
             .catch(error => {
-                toastAlert('에러 발생','warning');
+                jwtHandleError(error, toastAlert);
             });
     };
 
@@ -188,7 +187,6 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -223,7 +221,8 @@ function FboardCommentItem({ comment, index ,toggleReplyComments }) {
                 <img
                     className="fboard-detail-commnets-detail-icon"
                     alt=""
-                    src={`${profileUrl}${comment.photo}`}
+                    src={comment.photo ? `${profileUrl}${comment.photo}`
+                        : require("../assets/logo_profile.svg").default}
                 />
             </div>
 

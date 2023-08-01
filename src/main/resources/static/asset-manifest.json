@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.8dc68644.css",
-    "main.js": "/static/js/main.7fe500c5.js",
+    "main.css": "/static/css/main.d39ae0e4.css",
+    "main.js": "/static/js/main.9fe25d94.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/ad_resume.png": "/static/media/ad_resume.a2c4c7373212cce38c40.png",
     "static/media/qboard_form_fileupload_icon.svg": "/static/media/qboard_form_fileupload_icon.793472ff149446ac56ca2de986498588.svg",
@@ -39,6 +39,7 @@
     "static/media/aboard_detail_info_status_views.svg": "/static/media/aboard_detail_info_status_views.0ddbaf5b73e0d3e2a86e275927bde421.svg",
     "static/media/hire_detail_info_status_views.svg": "/static/media/hire_detail_info_status_views.f65bfc38bddd9ea6a214b981c0f1e5bb.svg",
     "static/media/notice_detail_info_status_views.svg": "/static/media/notice_detail_info_status_views.f65bfc38bddd9ea6a214b981c0f1e5bb.svg",
+    "static/media/logo.svg": "/static/media/logo.da7739147a77c701decc5c19abfeaf60.svg",
     "static/media/review_detail_info_status_views.svg": "/static/media/review_detail_info_status_views.64fbfe38f5b1bf59dbf09bffa844a56b.svg",
     "static/media/hboard_preview_views_icon.svg": "/static/media/hboard_preview_views_icon.c3b1821025f711bb6b541fbb98a8fc7c.svg",
     "static/media/board_preview_views_icon.svg": "/static/media/board_preview_views_icon.30f3c7583324eb954533d4092409c9b1.svg",
@@ -75,6 +76,7 @@
     "static/media/review_headerbar_btn_icon.svg": "/static/media/review_headerbar_btn_icon.8dea859421ad18eba72887045ddfc64e.svg",
     "static/media/icon_file-attach.svg": "/static/media/icon_file-attach.1e690120d00e770f5da459c8849a2084.svg",
     "static/media/bookmark.svg": "/static/media/bookmark.86a2d083ca2bee4c4786886ed6c47431.svg",
+    "static/media/logo_profile.svg": "/static/media/logo_profile.6c2e6a9be18217bcd08b7869ea5906e2.svg",
     "static/media/aboard_update_icon.svg": "/static/media/aboard_update_icon.2186dbb2b90c0eb1ff5479ddcb29001e.svg",
     "static/media/fboard_update_icon.svg": "/static/media/fboard_update_icon.cb390a6ed21c47a25ba5f31eaff55249.svg",
     "static/media/review-edit.svg": "/static/media/review-edit.e25d852c68994b8bebc9a5a402bcdae4.svg",
@@ -130,12 +132,12 @@
     "static/media/qboard_function_sort_bar.svg": "/static/media/qboard_function_sort_bar.d3e30a2a131ab5cfbfb66ad5866c6a43.svg",
     "static/media/rboard_function_sort_bar.svg": "/static/media/rboard_function_sort_bar.753477baae31c22a1921ace0cdbb725a.svg",
     "static/media/signup_guest_choose_bar.svg": "/static/media/signup_guest_choose_bar.8d6daf596f8075f15a7164354951d854.svg",
-    "main.8dc68644.css.map": "/static/css/main.8dc68644.css.map",
-    "main.7fe500c5.js.map": "/static/js/main.7fe500c5.js.map",
+    "main.d39ae0e4.css.map": "/static/css/main.d39ae0e4.css.map",
+    "main.9fe25d94.js.map": "/static/js/main.9fe25d94.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8dc68644.css",
-    "static/js/main.7fe500c5.js"
+    "static/css/main.d39ae0e4.css",
+    "static/js/main.9fe25d94.js"
   ]
 }

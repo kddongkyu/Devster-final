@@ -28,7 +28,6 @@ function AboardReplyUpdateForm({abc_idx,ab_idx,currentContent,abc_ref}) {
         if (abc_ref !== 0) { // rbc_ref 값이 필요한 경우에만 추가
             dto.abc_ref = abc_ref;
         }
-        console.log(dto)
 
         // PUT 요청으로 수정
         axiosIns.put(`/api/academyboard/D1/comment/${abc_idx}`, dto)

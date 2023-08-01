@@ -31,7 +31,6 @@ function FboardReplyCommentItem({reply, replyIndex}) {
     const deleteComment = (fbc_idx) => {
         axiosIns.delete(`/api/fboard/D1/comment/${fbc_idx}`)
             .then(res => {
-                console.log(res.data);
                 window.location.reload()
             })
             .catch(err => jwtHandleError(err, toastAlert));
@@ -91,22 +90,21 @@ function FboardReplyCommentItem({reply, replyIndex}) {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/fboard/D1/comment/${m_idx}/like/${fbc_idx}`)
                                     .then(response => {
-                                        console.log('좋아요 요청 성공:', response.data);
                                         setIsGood(true);
                                         setLikeCount(response.data.likeCount);
                                     })
                                     .catch(error => {
-                                        toastAlert('에러 발생','warning');
+                                        jwtHandleError(error, toastAlert);
                                     });
                             }
                         })
                         .catch(error => {
-                            toastAlert('에러 발생','warning');
+                            jwtHandleError(error, toastAlert);
                         });
                 }
             })
             .catch(error => {
-                toastAlert('에러 발생','warning');
+                jwtHandleError(error, toastAlert);
             });
     };
 
@@ -135,22 +133,21 @@ function FboardReplyCommentItem({reply, replyIndex}) {
                                 // 좋아요와 싫어요 둘 다 눌러져 있지 않으면, 싫어요 작업을 수행합니다.
                                 axiosIns.post(`/api/fboard/D1/comment/${m_idx}/dislike/${fbc_idx}`)
                                     .then(response => {
-                                        console.log('싫어요 요청 성공:', response.data);
                                         setIsBad(true);
                                         setLikeCount(response.data.likeCount);
                                     })
                                     .catch(error => {
-                                        toastAlert('에러 발생','warning');
+                                        jwtHandleError(error, toastAlert);
                                     });
                             }
                         })
                         .catch(error => {
-                            toastAlert('에러 발생','warning');
+                            jwtHandleError(error, toastAlert);
                         });
                 }
             })
             .catch(error => {
-                toastAlert('에러 발생','warning');
+                jwtHandleError(error, toastAlert);
             });
     };
 
@@ -175,7 +172,6 @@ function FboardReplyCommentItem({reply, replyIndex}) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -211,7 +207,8 @@ function FboardReplyCommentItem({reply, replyIndex}) {
                 <img
                     className="fboard-detail-commnets-detail-icon"
                     alt=""
-                    src={`${profileUrl}${reply.photo}`}
+                    src={reply.photo ? `${profileUrl}${reply.photo}`
+                        : require("../assets/logo_profile.svg").default}
                 />
             </div>
 

@@ -108,7 +108,6 @@ function Aboard(props) {
 
     const fetchacdemy = async (page, keyword, sortProperty, sortDirection) => {
         const searchKeyword = keyword && keyword.trim() !== '' ? keyword.trim() : null;
-        console.log(sortDirection, sortProperty)
         try {
             const response = await axiosIns.get('/api/academyboard/D1', {
                 params: {
@@ -121,18 +120,6 @@ function Aboard(props) {
 
             setAcacemyBoardList(response.data.academyBoardList); // Typo 수정 (acacemy -> academy)
             setTotalPages(response.data.totalPages);
-
-          // //   if(response.data.mPhoto == null){
-          // //       // If mPhoto is null, set it to a default image
-          // //       response.data.mPhoto = '../'; // use trim() to remove spaces from start and end
-          // //   } else {
-          // //       // If mPhoto is not null, trim any spaces from start and end
-          // //       response.data.mPhoto = response.data.mPhoto.trim();
-          // // }
-          //   if (response.data.mPhoto) {
-          //       return require("./assets/logo-img.svg").default;
-          //   }
-            console.log(response.data.mPhoto)
         } catch (error) {
             jwtHandleError(error, toastAlert);
         }
@@ -149,7 +136,6 @@ function Aboard(props) {
         axiosIns.get(`/api/nboard/D0/notice`)
             .then(response => {
                 setNoticePost(response.data.nboard);
-                console.log(response.data)
             })
             .catch(error => {
                 jwtHandleError(error, toastAlert);
@@ -214,7 +200,6 @@ function Aboard(props) {
         if (betweenTime < 60) {
             return `${betweenTime}분 전`;
         }
-        //console.log(betweenTime);
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
         if (betweenTimeHour < 24) {
@@ -419,7 +404,7 @@ function Aboard(props) {
                                 className="aboard-preview-img-profile"
                                 alt=""
                                 src={aboard.mPhoto ? `${profileUrl}${aboard.mPhoto}`
-                                    : require("./assets/logo-img.svg").default}
+                                    : require("./assets/logo_profile.svg").default}
                             />
 
 
@@ -444,7 +429,9 @@ function Aboard(props) {
                                 </div>
                                 <div>
                                     <img alt=""
-                                         src={setPhotoUrl(aboard.academyboard.ab_photo)}
+                                         src={aboard.academyboard.ab_photo && aboard.academyboard.ab_photo.length > 0
+                                             ? setPhotoUrl(aboard.academyboard.ab_photo)
+                                             : require("./assets/logo-img.svg").default}
                                          className="aboard-preview-img-preview"/>
                                 </div>
                             </NavLink>
