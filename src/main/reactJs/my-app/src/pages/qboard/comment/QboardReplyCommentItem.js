@@ -9,7 +9,7 @@ import {checkToken} from "../../../api/checkToken";
 
 
 
-function QboardReplyCommentItem({ reply, replyIndex }) {
+function QboardReplyCommentItem({ reply, replyIndex ,qbc_idx }) {
 
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const profileUrl = process.env.REACT_APP_MEMBERURL;
@@ -22,7 +22,6 @@ function QboardReplyCommentItem({ reply, replyIndex }) {
     };
 
     let de = checkToken();
-    const rbc_idx=reply.qboardCommentDto.qbc_idx;
 
 
     const deleteComment = (qbc_idx) => {
@@ -35,8 +34,9 @@ function QboardReplyCommentItem({ reply, replyIndex }) {
     }
 
     const handleDeleteClick = () => {
+        console.log(reply.qboardCommentDto.qbc_idx);
         if (window.confirm("댓글을 삭제하시겠습니까?")) {
-            deleteComment(reply.qbc_idx);
+            deleteComment(qbc_idx);
         }
     };
 

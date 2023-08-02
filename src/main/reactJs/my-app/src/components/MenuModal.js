@@ -27,36 +27,39 @@ function MenuModal({isMenuOpen, setIsMenuOpen}) {
     const imageUrl = `${photoUrl}${member.m_photo}`;
     const decodedToken = checkToken();
 
-    const getMemberData = async (idx) => {
-        try {
-            const response = await axiosIns.get(`/api/member/D1/${idx}`);
-            setMember(response.data);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+  const getMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/member/D1/${idx}`);
+      setMember(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    const getCompMemberData = async (idx) => {
-        try {
-            const response = await axiosIns.get(`/api/compmember/D1/${idx}`);
-            setCompanyMember(response.data);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+  const getCompMemberData = async (idx) => {
+    try {
+      const response = await axiosIns.get(`/api/compmember/D1/${idx}`);
+      setCompanyMember(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    const handleLogout = async () => {
-        try {
-            window.confirm("로그아웃 하시겠습니까?");
-            await axiosIns.get('/api/member/D1/logout', {});
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            console.log('로그아웃 성공');
-            window.location.href = '/';
-        } catch (error) {
-            console.error('로그아웃 에러:', error);
-        }
-    };
+  const handleLogout = async () => {
+    try {
+      if(window.confirm("로그아웃 하시겠습니까?")) {
+        await axiosIns.get('/api/member/D1/logout', {
+        });
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        console.log('로그아웃 성공');
+        window.location.href = '/';
+      }
+    } catch (error) {
+      console.error('로그아웃 에러:', error);
+    }
+  };
+
 
     useEffect(() => {
         try {

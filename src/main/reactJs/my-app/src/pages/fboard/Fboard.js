@@ -7,6 +7,7 @@ import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
+import ad1 from './assets/devster.png';
 
 function Fboard(props) {
   const handleRefresh = () => {
@@ -247,8 +248,8 @@ function Fboard(props) {
   return (
     <div className="fboard">
       <div className="advertise-box">
-        <div className="advertise-main" />
-        <b className="advertise-text">광고</b>
+        <img className="advertise-main"
+        alt="" src={ad1}/>
       </div>
       <div className="fboard-name">
         <div className="board-name-box" />

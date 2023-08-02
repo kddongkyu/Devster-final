@@ -5,6 +5,7 @@ import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { checkToken } from "../../api/checkToken";
 import { useSnackbar } from "notistack";
+import ad1 from './assets/weply.png';
 
 function FboardUpdateForm(props) {
   const [fbSubject, setFbSubject] = useState("");
@@ -118,8 +119,8 @@ function FboardUpdateForm(props) {
     <div>
       <form className="fboard-form" onSubmit={onSubmitEvent}>
         <div className="advertise-box">
-          <div className="advertise-main" />
-          <b className="advertise-text">광고</b>
+          <img className="advertise-main"
+               alt="" src={ad1}/>
         </div>
         <div className="fboard-name">
           <div className="board-name-box" />

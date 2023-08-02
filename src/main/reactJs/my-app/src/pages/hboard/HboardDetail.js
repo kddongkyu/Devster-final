@@ -10,7 +10,8 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-
+import ad1 from './assets/005.png'
+import ad2 from './assets/007.png';
 function HboardDetail(props) {
   //에러 호출용 변수
   const { enqueueSnackbar } = useSnackbar();
@@ -30,19 +31,15 @@ function HboardDetail(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   //모달 & SNS공유
   const url = window.location.href; // 현재 페이지의 URL
   const title = "devster"; // 공유하고 싶은 제목
-
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     url
   )}`;
-
   const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
     url
   )}&text=${encodeURIComponent(title)}`;
-
   const bandShareUrl = `https://www.band.us/plugin/share?body=${encodeURIComponent(
     title
   )}&route=${encodeURIComponent(url)}}`;
@@ -167,8 +164,9 @@ function HboardDetail(props) {
   return (
     <div className="hboard-detail">
       <div className="hboard-advertise-box">
-        <div className="hboard-advertise-main" />
-        <b className="hboard-advertise-text">광고</b>
+        <img className="hboard-advertise-main"
+             alt="" src={ad1}/>
+
       </div>
       <div className="board-detail-type-text">자유게시판</div>
       <div className="hboard-detail-info">
@@ -245,7 +243,7 @@ function HboardDetail(props) {
           {arrayFromString.map((imageId, index) => (
             <div>
               <img
-                className="board-detail-photo"
+                className="hboard-detail-photo"
                 key={index}
                 src={`${photoUrl}${imageId}`}
                 alt={`Image ${index}`}
@@ -273,8 +271,8 @@ function HboardDetail(props) {
             </div>
           </div>
           <div className="hboard-advertise-box2">
-            <div className="hboard-advertise-main" />
-            <b className="hboard-advertise-text1">광고 2</b>
+            <img className="hboard-advertise-main"
+                 alt="" src={ad2}/>
           </div>
         </div>
       </div>

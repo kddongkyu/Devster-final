@@ -5,7 +5,7 @@ import axiosIns from "../../api/JwtConfig";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {checkToken} from "../../api/checkToken";
-
+import ad1 from './assets/004.png';
 
 function Reviewform(props) {
     let de = checkToken();
@@ -87,8 +87,9 @@ function Reviewform(props) {
     return (
         <div className="review-write-form">
             <div className="advertise-box">
-                <div className="advertise-main"/>
-                <b className="advertise-text">광고</b>
+                <img className="advertise-main"
+                alt="" src={ad1}/>
+
             </div>
             <div className="review-write">
                 <div className="review-write-scolum-box"/>

@@ -1,13 +1,12 @@
 import "./style/HboardForm.css";
-import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axiosIns from "../../api/JwtConfig";
-import jwt_decode from "jwt-decode";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { checkToken } from "../../api/checkToken";
+import ad1 from './assets/008.png';
 
 function HboardForm(props) {
   const [hbSubject, setHbSubject] = useState("");
@@ -86,8 +85,8 @@ function HboardForm(props) {
     <div>
       <form className="hboard-form" onSubmit={onSubmitEvent}>
         <div className="advertise-box">
-          <div className="advertise-main" />
-          <b className="advertise-text">광고</b>
+          <img className="advertise-main"
+               alt='' src={ad1}/>
         </div>
         <div className="hboard-name">
           <div className="hboard-name-box" />

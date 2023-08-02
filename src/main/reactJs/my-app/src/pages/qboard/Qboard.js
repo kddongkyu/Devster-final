@@ -3,10 +3,11 @@ import "./style/Board.css";
 import {NavLink, useNavigate} from 'react-router-dom';
 import QboardPreview from "./QboardPreview";
 import axiosIns from "../../api/JwtConfig";
-import {JwtPageChk, useJwtPageChk} from "../../api/JwtPageChk";
+import { useJwtPageChk} from "../../api/JwtPageChk";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
+import ad1 from './assets/weply.png';
 
 const Qboard = () => {
   const JwtPageChk = useJwtPageChk();
@@ -139,7 +140,6 @@ const Qboard = () => {
     if (betweenTime < 60) {
       return `${betweenTime}분 전`;
     }
-    console.log(betweenTime);
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
@@ -164,8 +164,9 @@ const Qboard = () => {
   return (
     <div className="qboard">
     <div className="qboard-advertise-box">
-      <div className="qboard-advertise-main" />
-      <b className="qboard-advertise-text">광고</b>
+      <img className="qboard-advertise-main"
+      alt= "" src={ad1}/>
+
     </div>
     <div className="qboard-name">
       <div className="qboard-name-box" />

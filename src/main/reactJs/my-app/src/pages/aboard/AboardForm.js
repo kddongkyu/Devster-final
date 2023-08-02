@@ -6,6 +6,7 @@ import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
 import {checkToken} from "../../api/checkToken";
+import ad1 from './assets/004.png';
 
 function AboardForm(props) {
     const [abSubject,setAbSubject]=useState('');
@@ -82,8 +83,8 @@ function AboardForm(props) {
         <div>
             <form className="aboard-form" onSubmit={onSubmitEvnet}>
                 <div className="advertise-box">
-                    <div className="advertise-main" />
-                    <b className="advertise-text">광고</b>
+                    <img className="advertise-main"
+                         alt="" src={ad1}/>
                 </div>
 
                 <div className="aboard-name">

@@ -22,7 +22,6 @@ function MainReview(props) {
     axiosIns
       .get("/api/mainpage/D0/rboard")
       .then((response) => {
-        console.log(response.data);
         setRboardNewestList(response.data);
       })
       .catch((error) => {

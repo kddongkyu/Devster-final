@@ -1,7 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import { setImgDetail } from '../../redux/devChat';
 
 function Message({ item }) {
+    const dispatch = useDispatch();
     const date = new Date(item.date);
     const msgTime = { hour: 'numeric', minute: 'numeric', hour12: true };
     const uploadTime = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -12,62 +15,51 @@ function Message({ item }) {
 
     const userName = useSelector(state => state.devChat.userName);
 
-    console.log({ item });
     if (item?.type === 'READ_MARKER') {
         return (
             <div className='chat-body-readmarker'>
+                {console.log(item)}
                 {item.msg}
             </div>
         );
     } else {
         if (item?.type === 'CHAT') {
-            console.log(item.msg);
             return (
                 item.userName === userName ?
                     <div>
                         {
-                            item.msgImg &&
-                            item.msgImg.map((url, idx) => (
-                                <img
-                                    key={idx}
-                                    alt=''
-                                    src={`${msgImgUrl}${msgImgDir}/${url}`}
-                                    style={{ width: '100px' }}
-                                />
-                            ))
-                        }
-                        <div className="chat-body-msg-s">
-                            <div className="chat-body-msg-s-date">{timeString}</div>
-                            <div className="chat-body-msg-s1">
-                                <div className="chat-body-msg-s-box">
+                            item.msgImg.length > 0 &&
+                            <div className='chat-img-container'>
+                                <div className='chat-img-slice'>
                                     {
-                                        item.msg.length > 200 ? <><div>{item.msg.substring(0, 200)}...</div>
-                                            <button>전체보기</button></> :
-                                            <div>{item.msg}</div>
+                                        item.msgImg.slice(0, 1).map((url, idx) => (
+                                            <img
+                                                key={idx}
+                                                alt=''
+                                                src={`${msgImgUrl}${msgImgDir}/${url}`}
+                                                className='chat-msg-sended-preview'
+                                                onClick={()=>dispatch(setImgDetail(true))}
+                                            />
+                                        ))
+                                    }
+                                    <div className='chat-img-time'>{timeString}</div>
+                                </div>
+                                <div className='chat-img-more-pic'>
+                                    {
+                                        item.msgImg.length > 1 &&
+                                        <span>
+                                            <CameraAltOutlinedIcon fontSize='large' />+{item.msgImg.length}
+                                        </span>
                                     }
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    :
-                    <div>
-                        {
-                            item.msgImg &&
-                            item.msgImg.map((url, idx) => (
-                                <img
-                                    key={idx}
-                                    alt=''
-                                    src={`${msgImgUrl}${msgImgDir}/${url}`}
-                                    style={{ width: '100px' }}
-                                />
-                            ))
                         }
-                        <div className="chat-body-msg-r">
-                            <div className="chat-body-msg-r-img" />
-                            <div className="chat-body-msg-r-id">{item.userName}</div>
-                            <div className="chat-body-msg-r-parent">
-                                <div className="chat-body-msg-r1">
-                                    <div className="chat-body-msg-r-box">
+                        {
+                            item.msg &&
+                            <div className='chat-body-msg-s'>
+                                <div className='chat-body-msg-s-date'>{timeString}</div>
+                                <div className='chat-body-msg-s1'>
+                                    <div className='chat-body-msg-s-box'>
                                         {
                                             item.msg.length > 200 ? <><div>{item.msg.substring(0, 200)}...</div>
                                                 <button>전체보기</button></> :
@@ -75,9 +67,61 @@ function Message({ item }) {
                                         }
                                     </div>
                                 </div>
-                                <div className="chat-body-msg-r-date">{timeString}</div>
                             </div>
-                        </div>
+                        }
+                    </div>
+                    :
+                    <div>
+                        {
+                            item.msgImg.length > 0 &&
+                            <div className='chat-img-container-left'>
+                                <div className='chat-img-slice-left'>
+                                    {
+                                        item.msgImg.slice(0, 1).map((url, idx) => (
+                                            <img
+                                                key={idx}
+                                                alt=''
+                                                src={`${msgImgUrl}${msgImgDir}/${url}`}
+                                                className='chat-msg-sended-preview'
+                                                onClick={()=>dispatch(setImgDetail(true))}
+                                            />
+                                        ))
+                                    }
+                                    <div className='chat-img-time-left'>{timeString}</div>
+                                </div>
+                                <div className='chat-img-more-pic-left'>
+                                    {
+                                        item.msgImg.length > 1 &&
+                                        <span>
+                                            <CameraAltOutlinedIcon fontSize='large' />+{item.msgImg.length}
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        {
+                            item.msg &&
+                            <div className='chat-body-msg-r'>
+                                <img 
+                                    alt=''
+                                    className='chat-body-msg-r-img'
+                                    src={`${userImg}${item.userProfile}`}
+                                />
+                                <div className='chat-body-msg-r-id'>{item.userName}</div>
+                                <div className='chat-body-msg-r-parent'>
+                                    <div className='chat-body-msg-r1'>
+                                        <div className='chat-body-msg-r-box'>
+                                            {
+                                                item.msg.length > 200 ? <><div>{item.msg.substring(0, 200)}...</div>
+                                                    <button>전체보기</button></> :
+                                                    <div>{item.msg}</div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className='chat-body-msg-r-date'>{timeString}</div>
+                                </div>
+                            </div>
+                        }
                     </div>
             );
         } else if (item?.type === 'ENTER') {

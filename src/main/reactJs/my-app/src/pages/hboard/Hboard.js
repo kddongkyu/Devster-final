@@ -8,6 +8,7 @@ import { checkToken } from "../../api/checkToken";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
+import ad1 from './assets/weply.png';
 
 function Hboard(props) {
   const handleRefresh = () => {
@@ -244,8 +245,8 @@ function Hboard(props) {
   return (
     <div className="hboard">
       <div className="advertise-box">
-        <div className="advertise-main" />
-        <b className="advertise-text">광고</b>
+        <img className="advertise-main"
+        alt='' src={ad1}/>
       </div>
       <div className="hboard-name">
         <div className="hboard-name-box" />

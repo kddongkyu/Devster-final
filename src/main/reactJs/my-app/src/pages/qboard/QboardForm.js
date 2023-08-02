@@ -6,6 +6,7 @@ import ToastAlert from "../../api/ToastAlert";
 import {checkToken} from "../../api/checkToken";
 import axiosIns from "../../api/JwtConfig";
 import {jwtHandleError} from "../../api/JwtHandleError";
+import ad1 from './assets/006.png';
 const QboardForm = (props) => {
     const [qbSubject, setQbSubject] = useState('');
     const [qbContent, setQbContent] = useState('');
@@ -135,8 +136,9 @@ const QboardForm = (props) => {
       <div>
     <form className="qboard-form" onSubmit={onSubmitEvent}>
       <div className="advertise-box">
-        <div className="advertise-main" />
-        <b className="advertise-text">광고</b>
+        <img className="advertise-main"
+             alt= "" src={ad1}/>
+
       </div>
         <div className="qboard-name">
             <div className="board-name-box"/>

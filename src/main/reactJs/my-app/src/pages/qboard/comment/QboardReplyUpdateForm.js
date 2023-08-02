@@ -31,7 +31,7 @@ function QboardReplyUpdateForm({qbc_idx,qb_idx,currentContent,qbc_ref}) {
         console.log(dto)
 
         // PUT 요청으로 수정
-        axiosIns.put(`/api/qboard/D1/comment/${qbc_idx}`, dto)
+        axiosIns.put(`/api/qboard/D1/comment/`, dto)
             .then(res => {
                 // 성공적으로 등록된 경우, 목록으로 이동
                 window.location.reload();

@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './style/AboardUpdateForm.css';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../../api/JwtConfig";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {checkToken} from "../../api/checkToken";
 import {jwtHandleError} from "../../api/JwtHandleError";
+import ad1 from './assets/005.png';
 
 function AboardUpdateForm(props) {
 
@@ -125,8 +125,8 @@ function AboardUpdateForm(props) {
         return (
         <form className="aboard-update-form" onSubmit={onSubmitEvent}>
             <div className="advertise-box">
-                <div className="advertise-main" />
-                <b className="advertise-text">광고</b>
+                <img className="advertise-main"
+                     alt="" src={ad1}/>
             </div>
             <div className="aboard-update-name">
                 <div className="aboard-update-name-box" />

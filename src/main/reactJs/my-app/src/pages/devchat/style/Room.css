@@ -42,6 +42,7 @@
   right: 5.09rem;
   width: 1.83rem;
   height: 1.83rem;
+  cursor: pointer;
 }
 
 .chat-header-close-icon {
@@ -93,7 +94,7 @@
   height: 2rem;
   text-align: center;
   color: #fff;
-  margin-bottom: 2.2rem;
+  margin-bottom: 3rem;
 }
 
 .chat-body-msg-r-img {
@@ -203,6 +204,7 @@
 
 .chat-body-readmarker {
   position: relative;
+  margin-bottom: 2.4rem;
   top: 1.6rem;
 }
 
@@ -217,15 +219,30 @@
   font-size: 1.2rem;
   color: #000;
   overflow-y: auto;
+  overflow-x:hidden
+}
+
+.chat-footer-upload-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  border-top: 1px solid #bdc0c4;
+  border-bottom: 1px solid #767676;
+  box-sizing: border-box;
+  width: 5.5rem;
+  height: 5.5rem;
+  cursor: pointer;
 }
 
 .chat-footer-upload-icon {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 5.5rem;
-  height: 5.5rem;
+  bottom: 1.73rem;
+  left: 1.63rem;
+  width: 2.15rem;
+  height: 2.15rem;
 }
+
 
 .chat-footer-send-box {
   position: absolute;
@@ -243,6 +260,8 @@
   padding: 0 1.2rem;
   box-sizing: border-box;
   outline: none;
+  padding-top: 1.4rem;
+  border-left: transparent;
 }
 
 .chat-footer-send-btn {
@@ -257,7 +276,7 @@
 .sf-symbol-arrowtriangletur {
   position: absolute;
   right: 1.4rem;
-  bottom: 1.4rem;
+  bottom: 1.2rem;
   width: 2.7rem;
   height: 2.7rem;
 }
@@ -268,6 +287,43 @@
   bottom: 0;
   width: 5.5rem;
   height: 5.5rem;
+  cursor: pointer;
+}
+
+.chat-upload-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  right: 0;
+  bottom: 5.5rem;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 20rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* white-space: nowrap; */
+}
+
+.chat-upload-preivew-box {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
+  margin: 0.5rem;
+  border: 1px solid gray;
+  flex-shrink: 0;
+}
+
+.chat-upload-preivew {
+  width: 100%;
+  height: 100%;
+}
+
+.chat-upload-del {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 .moblie-chat {
@@ -280,4 +336,125 @@
   font-size: 1.6rem;
   color: #fff;
   font-family: "Noto Sans KR";
+}
+
+.disabled-footer {
+  pointer-events: none;
+}
+
+.disabled-overlay {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 25.5rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+.chat-img-container {
+  position: relative;
+  right: 4%;
+  display: flex;
+  justify-content: flex-end;
+  height: auto;
+}
+
+.chat-img-slice {
+  width: 10rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chat-img-more-pic {
+  position: absolute;
+  right: 10.6rem;
+  top: 5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.chat-img-time {
+  position: relative;
+  right: 100%;
+  bottom: 1.5rem;
+  margin-right: 0.7rem;
+}
+
+.chat-img-container-left {
+  position: relative;
+  left: 4%;
+  display: flex;
+  justify-content: flex-start;
+  height: auto;
+}
+
+.chat-img-slice-left {
+  width: 10rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.chat-img-more-pic-left {
+  position: absolute;
+  left: 10.6rem;
+  top: 5rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.chat-img-time-left {
+  position: relative;
+  left: 100%;
+  bottom: 1.5rem;
+  margin-left: 0.7rem;
+}
+
+.chat-msg-sended-preview {
+  width: 10rem;
+  height: 10rem;
+  object-fit: fill; 
+  border: 1px solid #d2d2d2;
+  cursor: pointer;
+}
+
+.chat-footer-inprogress {
+  display: inline-block;
+  width: 8rem;
+  height: 8rem;
+  border: 7px solid #b2b2b2;
+  border-radius: 50%;
+  border-top-color: #721ea6;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.chat-upload-detail-box {
+  width: 96%;
+  height: 74vh;
+  z-index: 2000;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: red;
 }
