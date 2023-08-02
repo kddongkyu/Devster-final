@@ -6,7 +6,7 @@ import { ReviewModal } from "./index";
 import {useSnackbar} from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import {checkToken} from "../../api/checkToken";
-
+import ad1 from './assets/003.png';
 function Reviewupdate({reviewData}) {
     const [rbSubject, setRbsubject] = useState("");
     const [rbContent, setRbcontent] = useState("");
@@ -69,7 +69,7 @@ function Reviewupdate({reviewData}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosIns.get(`/api/review/D0/${rb_idx}`);
+                const response = await axiosIns.get(`/api/review/D1/${rb_idx}`);
                 if (response.data && response.data.review) {
                     setRbsubject(response.data.review.rb_subject);
                     setRbcontent(response.data.review.rb_content);
@@ -80,7 +80,7 @@ function Reviewupdate({reviewData}) {
                     setIsLoading(false);  // 추가: 데이터를 불러오는데 성공하면 로딩 상태를 종료합니다.
                 }
             } catch (error) {
-               toastAlert('로딩 처리 중 에러 발생','warning');
+                toastAlert('로딩 처리 중 에러 발생','warning');
             }
         };
 
@@ -118,8 +118,9 @@ function Reviewupdate({reviewData}) {
     return (
         <div className="review-update-form">
             <div className="advertise-box">
-                <div className="advertise-main" />
-                <b className="advertise-text">광고</b>
+                <img className="advertise-main"
+                     alt= "" src={ad1}/>
+
             </div>
             <div className="reviewupdate-write">
                 <div className="reviewupdate-write-scolum-box" />
@@ -136,7 +137,7 @@ function Reviewupdate({reviewData}) {
                     name="rb_subject"
                     required
                     value={rbSubject}
-                   onChange={(e)=>setRbsubject(e.target.value)}
+                    onChange={(e)=>setRbsubject(e.target.value)}
                 />
                 <select
                     className="reviewupdate-write-select-box-icon"
@@ -195,7 +196,7 @@ function Reviewupdate({reviewData}) {
                             className="notice-like-count-input"
                             name="rb_star"
                             value={rbStar}
-                             //onChange={handleupdateChange}
+                            //onChange={handleupdateChange}
                         >
                             {rating}
                         </div>

@@ -8,7 +8,8 @@ import {checkToken} from "../../api/checkToken";
 import {useSnackbar} from "notistack";
 import FboardCommentForm from "./comment/FboardCommentForm";
 import FboardComment from  "./comment/FboardComment";
-
+import ad1 from './assets/007.png';
+import ad2 from './assets/008.png';
 
 function FboardDetail(props) {
 
@@ -236,8 +237,8 @@ function FboardDetail(props) {
     return (
         <div className="fboard-detail">
             <div className="fboard-advertise-box">
-                <div className="fboard-advertise-main"/>
-                <b className="fboard-advertise-text">광고</b>
+                <img className="fboard-advertise-main"
+                alt="" src={ad1}/>
             </div>
 
             <div className="fboard-detail-type-text">자유게시판</div>
@@ -370,8 +371,8 @@ function FboardDetail(props) {
                         </div>
                     </div>
                     <div className="fboard-advertise-box2">
-                        <div className="fboard-advertise-main"/>
-                        <b className="fboard-advertise-text1">광고 2</b>
+                        <img className="fboard-advertise-main"
+                             alt="" src={ad2}/>
                     </div>
 
                 </div>

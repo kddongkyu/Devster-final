@@ -8,7 +8,8 @@ import {useSnackbar} from "notistack";
 import {jwtHandleError} from "../../api/JwtHandleError";
 import QboardCommentForm from "./comment/QboardCommentForm";
 import QboardComment from "./comment/QboardComment";
-
+import ad1 from './assets/devster.png';
+import ad2 from './assets/007.png';
 
 
 function QboardDetail(props) {
@@ -137,8 +138,9 @@ function QboardDetail(props) {
     return (
         <div className="qboard-detail">
             <div className="qboard-advertise-box">
-                <div className="qboard-advertise-main" />
-                <b className="qboard-advertise-text">광고</b>
+                <img className="qboard-advertise-main"
+                     alt= "" src={ad1}/>
+
             </div>
 
             <div className="qboard-detail-type-text">Q&A 게시판</div>
@@ -217,8 +219,8 @@ function QboardDetail(props) {
                         </div>
                     </div>
                     <div className="qboard-advertise-box2">
-                        <div className="qboard-advertise-main" />
-                        <b className="qboard-advertise-text1">광고 2</b>
+                        <img className="qboard-advertise-main"
+                             alt= "" src={ad2}/>
                     </div>
                 </div>
 

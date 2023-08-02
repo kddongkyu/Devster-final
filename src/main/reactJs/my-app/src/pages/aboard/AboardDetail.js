@@ -9,7 +9,8 @@ import ToastAlert from "../../api/ToastAlert";
 import {jwtHandleError} from "../../api/JwtHandleError";
 import AboardCommentForm from "./comment/AboardCommentForm";
 import AboardComment from "./comment/AboardComment";
-
+import ad1 from './assets/weply.png';
+import ad2 from './assets/003.png';
 function AboardDetail(props) {
     //에러 호출용 변수
     const {enqueueSnackbar} = useSnackbar();
@@ -232,8 +233,8 @@ function AboardDetail(props) {
     return (
         <div className="aboard-detail">
             <div className="aboard-advertise-box">
-                <div className="aboard-advertise-main" />
-                <b className="aboard-advertise-text">광고</b>
+                <img className="aboard-advertise-main"
+                alt="" src={ad1}/>
             </div>
 
             <div className="aboard-detail-type-text">{aboardDate.ciName} 게시판</div>
@@ -352,8 +353,8 @@ function AboardDetail(props) {
                     </div>
 
                     <div className="aboard-advertise-box2">
-                        <div className="aboard-advertise-main" />
-                        <b className="aboard-advertise-text1">광고 2</b>
+                        <img className="aboard-advertise-main"
+                             alt="" src={ad2}/>
                     </div>
                 </div>
 

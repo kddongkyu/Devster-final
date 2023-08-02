@@ -10,7 +10,8 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-
+import ad1 from './assets/005.png'
+import ad2 from './assets/007.png';
 function HboardDetail(props) {
   //에러 호출용 변수
   const { enqueueSnackbar } = useSnackbar();
@@ -167,8 +168,9 @@ function HboardDetail(props) {
   return (
     <div className="hboard-detail">
       <div className="hboard-advertise-box">
-        <div className="hboard-advertise-main" />
-        <b className="hboard-advertise-text">광고</b>
+        <img className="hboard-advertise-main"
+             alt="" src={ad1}/>
+
       </div>
       <div className="board-detail-type-text">자유게시판</div>
       <div className="hboard-detail-info">
@@ -273,8 +275,8 @@ function HboardDetail(props) {
             </div>
           </div>
           <div className="hboard-advertise-box2">
-            <div className="hboard-advertise-main" />
-            <b className="hboard-advertise-text1">광고 2</b>
+            <img className="hboard-advertise-main"
+                 alt="" src={ad2}/>
           </div>
         </div>
       </div>

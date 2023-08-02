@@ -6,6 +6,7 @@ import { JwtPageChk, useJwtPageChk } from "../../api/JwtPageChk";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import { jwtHandleError } from "../../api/JwtHandleError";
+import ad1 from './assets/002.png';
 
 function Aboard(props) {
     const JwtPageChk = useJwtPageChk();
@@ -241,8 +242,10 @@ function Aboard(props) {
     return (
         <div className="aboard">
             <div className="advertise-box">
-                <div className="advertise-main" />
-                <b className="advertise-text">광고</b>
+                <img className="advertise-main"
+                alt=""
+                src={ad1}/>
+
             </div>
             <div className="aboard-name">
                 <div className="aboard-name-box" />
