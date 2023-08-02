@@ -29,7 +29,6 @@ function QboardComment(props) {
     const fetchQboardComment = () => {
         axiosIns.get(`/api/qboard/D0/comment/${props.qb_idx}`)
             .then(res => {
-                console.log(res.data);  // 서버로부터 받은 전체 응답을 출력합니다.
                 setTotalCount(res.data.totalCount);
                 setQboardCommentList(res.data.qboardCommentDetailDtoList);  // "reviewCommentDetailDtoList"라는 이름의 배열을 사용한다고 가정
             })
@@ -38,7 +37,6 @@ function QboardComment(props) {
 
 
     const toggleReplyComments = (qbc_idx) => { // props.rbc_idx가 아니라 함수 인자 rbc_idx를 사용
-        // console.log(rbc_idx)
         setHideQboardComments(prevState => ({
             ...prevState,
             [qbc_idx]: !prevState[qbc_idx]
@@ -56,7 +54,7 @@ function QboardComment(props) {
                     <React.Fragment key={index}>
                         <QboardCommentItem comment={comment} index={index} qbc_idx={comment.qboardCommentDto.qbc_idx} toggleReplyComments={toggleReplyComments}  />
                         {!hideQboardComments[comment.qboardCommentDto.qbc_idx] && comment.replyList && comment.replyList.map((reply, replyIndex) => (
-                            <QboardReplyCommentItem reply={reply} replyIndex={replyIndex}  />
+                            <QboardReplyCommentItem reply={reply} replyIndex={replyIndex} qbc_idx={reply.qboardCommentDto.qbc_idx} />
                         ))}
                     </React.Fragment>
                 );

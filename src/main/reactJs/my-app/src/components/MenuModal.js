@@ -47,13 +47,14 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
 
   const handleLogout = async () => {
     try {
-      window.confirm("로그아웃 하시겠습니까?");
-      await axiosIns.get('/api/member/D1/logout', {
-      });
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      console.log('로그아웃 성공');
-      window.location.href = '/';
+      if(window.confirm("로그아웃 하시겠습니까?")) {
+        await axiosIns.get('/api/member/D1/logout', {
+        });
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        console.log('로그아웃 성공');
+        window.location.href = '/';
+      }
     } catch (error) {
       console.error('로그아웃 에러:', error);
     }

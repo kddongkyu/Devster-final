@@ -200,12 +200,11 @@ function Resumeform(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let formData = new FormData();
-
     if (resumeDto.r_fileLocal) {
-      formData.append("upload", resumeDto.r_fileLocal);
+      let formData1 = new FormData();
+      formData1.append("upload", resumeDto.r_fileLocal);
       try {
-        const response = await axiosIns.post("/api/resume/D1/file", formData);
+        const response = await axiosIns.post("/api/resume/D1/file", formData1);
         let url = response.data.url;
         resumeDto.r_file = url; // Update the resumeDto with the returned URL
       } catch (e) {
@@ -214,9 +213,10 @@ function Resumeform(props) {
     }
 
     if (resumeDto.r_refileLocal) {
-      formData.append("upload", resumeDto.r_refileLocal);
+      let formData2 = new FormData();
+      formData2.append("upload", resumeDto.r_refileLocal);
       try {
-        const response = await axiosIns.post("/api/resume/D1/refile", formData);
+        const response = await axiosIns.post("/api/resume/D1/refile", formData2);
         let url = response.data.url;
         resumeDto.r_refile = url; // Update the resumeDto with the returned URL
       } catch (e) {

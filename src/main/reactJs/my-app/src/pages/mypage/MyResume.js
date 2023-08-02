@@ -7,6 +7,8 @@ import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
 import MyResumeTranslate from "./MyResumeTranslate";
+import defaultProfileImage from './assets/logo_profile.svg';
+
 
 function MyResume(props) {
   const decodedToken = checkToken();
@@ -24,7 +26,7 @@ function MyResume(props) {
   });
 
   const photoUrl = process.env.REACT_APP_MEMBERURL;
-  const imageUrl = `${photoUrl}${member.m_photo}`;
+  const imageUrl = (member.m_photo === null || member.m_photo === undefined || member.m_photo === '')?defaultProfileImage:`${photoUrl}${member.m_photo}`;
   const FileUrl = process.env.REACT_APP_RESUMEFILEURL;
   const REFileUrl = process.env.REACT_APP_RESUMEREFILEURL;
 

@@ -8,7 +8,7 @@ import {useSnackbar} from "notistack";
 import QboardReplyUpdateForm from "./QboardReplyUpdateForm";
 import QboardCommentReplyForm from "./QboardCommentReplyForm";
 
-function QboardCommentItem({ comment, index ,toggleReplyComments }) {
+function QboardCommentItem({ comment, index, qbc_idx ,toggleReplyComments }) {
 
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -46,7 +46,7 @@ function QboardCommentItem({ comment, index ,toggleReplyComments }) {
 
     const handleDeleteClick = () => {
         if (window.confirm("댓글을 삭제하시겠습니까?")) {
-            deleteComment(comment.qbc_idx);
+            deleteComment(qbc_idx);
         }
     };
 
