@@ -117,6 +117,46 @@
 .menu-modal-options-review2 {
     top: 18rem;
 }
+.menu-modal-options-resume {
+    position: absolute;
+    width : 20rem;
+    color: #721ea6;
+    top: 3.6rem;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+.menu-modal-options-fb3 {
+    position: absolute;
+    top: 7.2rem;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+
+.menu-modal-options-qna3 {
+    position: absolute;
+    top: 10.8rem;
+    left: 0;
+    letter-spacing: -0.24px;
+    font-family: Roboto;
+}
+
+.menu-modal-options-hire3 {
+    position: absolute;
+    top: 14.4rem;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+
+.menu-modal-options-review3 {
+    position: absolute;
+    top: 18rem;
+    left: 0;
+    letter-spacing: -0.24px;
+}
+
+.menu-modal-options-review3 {
+    top: 18rem;
+}
 
 .menu-modal-options {
     position: absolute;
