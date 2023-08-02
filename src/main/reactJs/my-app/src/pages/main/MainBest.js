@@ -7,6 +7,8 @@ function MainBest(props) {
   // const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [popularFreeArticle, setPopularFreeArticle] = useState([]);
+  const [subjectCount, setsubjectCount] = useState(10);
+  const [contentCount, setContentCount] = useState(15);
   const [popularQnaArticle, setPopularQnaArticle] = useState([]);
   const profileUrl = process.env.REACT_APP_MEMBERURL;
 
@@ -82,6 +84,10 @@ function MainBest(props) {
     }
   };
 
+  const compareValues = (value1, value2) => {
+    return value1.length > value2;
+  };
+
   return (
     <div>
       {popularFreeArticle &&
@@ -113,10 +119,21 @@ function MainBest(props) {
                 to={`/fboard/detail/${fboard.freeBoardHotArticle.fbidx}/${currentPage}`}
               >
                 <b className="main-best-subject">
-                  {fboard.freeBoardHotArticle.fbsubject}
+                  {compareValues(
+                      String(fboard.freeBoardHotArticle.fbsubject),
+                      subjectCount
+                  )
+                      ? fboard.freeBoardHotArticle.fbsubject.slice(0, subjectCount) + "···"
+                      : fboard.freeBoardHotArticle.fbsubject}
+
                 </b>
                 <div className="main-best-content">
-                  본문 일이삼사오육칠팔구십일이...
+                  {compareValues(
+                      String(fboard.freeBoardHotArticle.fbcontent),
+                      contentCount
+                  )
+                      ? fboard.freeBoardHotArticle.fbcontent.slice(0, contentCount) + "···"
+                      : fboard.freeBoardHotArticle.fbcontent}
                 </div>
                 {/* <div>
                   <img

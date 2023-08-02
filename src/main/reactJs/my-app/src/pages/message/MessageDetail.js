@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import '../message/style/Message.css'
 import axiosIns from "../../api/JwtConfig";
 import {useParams} from "react-router-dom";
+import { jwtHandleError } from "../../api/JwtHandleError";
+import toastAlert from '../../api/ToastAlert';
+
 
 function MessageDetail(props) {
 
@@ -14,7 +17,6 @@ function MessageDetail(props) {
         const url = `/api/message/D1/${mes_idx}`
         axiosIns.get(url)
             .then(response =>{
-                console.log(response.data);
                 setMessageDetail(response.data);
             })
     }
@@ -23,11 +25,11 @@ function MessageDetail(props) {
         if (window.confirm('해당 쪽지를 삭제하시겠습니까?')) {
             axiosIns.delete(`/api/message/D1/${mes_idx}`)
                 .then(response => {
-                    console.log('Message deleted successfully');
                     window.location.href="/message";
                 })
                 .catch(error => {
-                    console.error('Error deleting message:', error);
+                    jwtHandleError(error, toastAlert);
+
                 });
         }
     };

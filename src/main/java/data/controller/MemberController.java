@@ -30,7 +30,6 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-
     private final MailService mailService;
     private final JwtService jwtService;
     private final MessageService messageService;
