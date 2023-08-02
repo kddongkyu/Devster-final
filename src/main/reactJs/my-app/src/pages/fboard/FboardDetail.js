@@ -7,7 +7,6 @@ import { jwtHandleError } from "../../api/JwtHandleError";
 import { checkToken } from "../../api/checkToken";
 import { useSnackbar } from "notistack";
 import FboardCommentForm from "./comment/FboardCommentForm";
-import FboardComment from  "./comment/FboardComment";
 import ad1 from './assets/007.png';
 import ad2 from './assets/008.png';
 import FboardComment from "./comment/FboardComment";
