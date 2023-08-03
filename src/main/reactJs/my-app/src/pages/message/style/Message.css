@@ -129,6 +129,12 @@
     height: auto; /* 요소의 높이가 자동으로 조정되게 합니다. */
 }
 
+.textmsg-detail-box pre {
+    white-space: pre-wrap;       /* CSS3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    overflow-wrap: break-word;   /* Modern browsers */
+}
+
 .button-container {
     display: flex;
     justify-content: center;
