@@ -40,7 +40,7 @@ public class KakaoController {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", client_id);
-        params.add("redirect_uri", "http://localhost:3000/oauth2/authorization/kakao");
+        params.add("redirect_uri", "http://devster.kr/oauth2/authorization/kakao");
         params.add("code", code);
         // 요청하기 위해 헤더(Header)와 데이터(Body)를 합친다.
         // kakaoTokenRequest는 데이터(Body)와 헤더(Header)를 Entity가 된다.
