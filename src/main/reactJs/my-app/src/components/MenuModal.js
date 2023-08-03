@@ -108,7 +108,7 @@ function MenuModal({ isMenuOpen, setIsMenuOpen }) {
         </div>
         {isLoggedIn ? (
           <div className="menu-modal-options">
-            <NavLink to={"/notice/admin"} onClick={closeMen6uBar}>
+            <NavLink to={"/notice/admin"} onClick={closeMenuBar}>
               <b className="menu-modal-options-not">공지사항</b>
             </NavLink>
             <NavLink to={"/fboard"} onClick={closeMenuBar}>
