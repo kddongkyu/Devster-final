@@ -16,7 +16,6 @@ function ResizeCrop({isCropOpen, setIsCropOpen, cropImg, setSavedImg}) {
 
     const closeCropModal = () => {
         setIsCropOpen(false);
-        document.documentElement.style.overflow = 'auto';
     }
 
     if (!isCropOpen) {

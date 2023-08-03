@@ -17,6 +17,8 @@ const initialState = {
     unreadMsg: 0,
     userList: [],
     imgDetail:false,
+    menuList:false,
+    selectedMessage:null,
 };
 
 export const devChatSlice = createSlice({
@@ -45,7 +47,6 @@ export const devChatSlice = createSlice({
             if (!state.hidden && action.payload) {
                 state.msg = state.msg.filter(item => item.type !== 'READ_MARKER').concat({
                     type: 'READ_MARKER',
-                    msg: '여기까지 읽으셨습니다.',
                 });
             }
             state.hidden = action.payload;
@@ -77,6 +78,12 @@ export const devChatSlice = createSlice({
         setImgDetail:(state,action) => {
             state.imgDetail = action.payload;
         },
+        setMenuList:(state,action) => {
+            state.menuList=action.payload;
+        },
+        setSelectedMessage :(state,action) => {
+            state.selectedMessage = action.payload;
+        },
 
         resetDevChat: () => initialState,
     },
@@ -99,7 +106,10 @@ export const {
     resetUnreadMsg,
     setUserList,
     setImgDetail,
+    setMenuList,
+    setSelectedMessage,
     resetDevChat,
+
 } = devChatSlice.actions;
 
 export const wsConnect = createAction('SOCKET_CONNECT');

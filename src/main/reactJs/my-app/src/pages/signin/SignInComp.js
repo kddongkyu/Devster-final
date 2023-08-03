@@ -61,7 +61,10 @@ function SignInComp({ capsLockChk, isCapsOn }) {
             onKeyDown={capsLockChk}
             onChange={handleOnCompPw}
           />
-          <div className='login-company-finder'>Email / 비밀번호 찾기</div>
+          <div
+              className='login-company-finder'
+              onClick={()=>{navi('/finder')}}
+          >Email / 비밀번호 찾기</div>
           <button type='submit' className='login-company-loginbtn'>
             <div className='comp-loginbtn-box' />
             <div className='comp-loginbtn-text'>로그인</div>

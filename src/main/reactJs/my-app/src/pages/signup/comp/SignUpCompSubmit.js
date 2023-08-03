@@ -102,7 +102,7 @@ function SignUpCompSubmit(props) {
             <div
                 className='signup-comp-submit'
                 onClick={handleOnSubmit}
-            >s
+            >
                 <div className='signup-comp-submit-box'/>
                 <div className='signup-comp-submit-text'>회원가입</div>
             </div>

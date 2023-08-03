@@ -1,6 +1,7 @@
 .signup-comp-addr-modal-box {
     width: 96%;
-    height: 65vh;
+    max-width: 500px;
+    height: 57rem;
     z-index: 999;
     position: fixed;
     left: 50%;

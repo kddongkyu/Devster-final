@@ -68,7 +68,10 @@ function SignInNorm({capsLockChk, isCapsOn}) {
                         onKeyDown={capsLockChk}
                         onChange={handleOnNormPw}
                     />
-                    <div className='login-devster-finder'>사용자 ID / 비밀번호 찾기</div>
+                    <div
+                        className='login-devster-finder'
+                        onClick={()=>(navi('/finder'))}
+                    >사용자 ID / 비밀번호 찾기</div>
                     <button
                         type='submit'
                         className='login-loginbtn'>

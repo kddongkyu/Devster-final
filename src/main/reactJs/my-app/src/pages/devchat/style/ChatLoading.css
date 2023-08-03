@@ -1,22 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Lalezar:wght@400&display=swap");
-
-html {
-    font-size: 10px;
-}
-
-body {
-    margin: 0;
-    line-height: normal;
-}
-
-.chat-logo-icon,
+.chat-logo-icon-loading,
 .chat-logo-text {
     position: absolute;
     top: calc(50% + 4px);
     left: calc(50% - 106px);
+    cursor:default;
 }
 
-.chat-logo-icon {
+.chat-logo-icon-loading {
     top: calc(50% - 103px);
     left: calc(50% - 100px);
     width: 20rem;
@@ -29,9 +19,10 @@ body {
     left: calc(50% - 115px);
     font-size: 2.8rem;
     letter-spacing: 7.5px;
+    cursor:default;
 }
 
-.moblie-chat {
+.mobile-chat {
     position: relative;
     background-color: #721ea6;
     width: 100%;
@@ -59,7 +50,7 @@ body {
 
 @keyframes chat-logo-position {
     0% {
-        translate: -100px 0px;
+        translate: -150px 0px;
     }
 
     38% {
@@ -93,7 +84,7 @@ body {
     }
 }
 
-.chat-logo-icon {
+.chat-logo-icon-loading {
     animation: chat-logo-position 0.8s cubic-bezier(0.33, 0, 0.67, 1) 0.15s normal both,
     chat-logo-opacity 0.8s cubic-bezier(0.33, 0, 0.67, 1) 0.15s 1 normal both;
 }
@@ -118,11 +109,11 @@ body {
     }
 }
 
-.moblie-chat-loaded {
+.mobile-chat-loaded {
     animation: chat-bgcolor 0.15s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
 }
 
-.moblie-logo-loaded {
+.mobile-logo-loaded {
     animation: chat-logo-fadeout 0.15s cubic-bezier(0.5, 0.35, 0.15, 1) 0.1s 1 normal both;
 }
 
@@ -167,16 +158,16 @@ body {
     chat-slogan-opacity 0.6s cubic-bezier(0.33, 0, 0.67, 1) 0.96s 1 normal both;
 }
 
-@keyframes chat-list-fadein {
-    0% {
-        opacity: 0%;
-    }
+/*@keyframes chat-list-fadein {*/
+/*    0% {*/
+/*        opacity: 0%;*/
+/*    }*/
 
-    100% {
-        opacity: 100%;
-    }
-}
+/*    100% {*/
+/*        opacity: 100%;*/
+/*    }*/
+/*}*/
 
-.chat-list {
-    animation: chat-list-fadein 0.6s cubic-bezier(0.5, 0.35, 0.15, 1) 0.5s 1 normal both;
-}
+/*.chat-list {*/
+/*    animation: chat-list-fadein 0.6s cubic-bezier(0.5, 0.35, 0.15, 1) 0.5s 1 normal both;*/
+/*}*/

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./style/MenuModal.css";
 import { NavLink } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import axiosIns from "../api/JwtConfig";
 import { checkToken } from "../api/checkToken";
 
 function MenuModal({ isMenuOpen, setIsMenuOpen }) {
   const closeMenuBar = () => {
     setIsMenuOpen(false);
-    document.documentElement.style.overflow = 'auto';
   };
 
   const [member, setMember] = useState({

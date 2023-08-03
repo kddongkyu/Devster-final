@@ -38,7 +38,6 @@ function InputAcademy(props) {
 
     const openSearchModal = () => {
         setIsSearchOpen(true);
-        document.documentElement.style.overflow = 'hidden';
     }
 
     const handleSearchInput = () => {

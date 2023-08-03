@@ -5,8 +5,8 @@ import { setAi_idx, setRoomName, setUserName, setUserProfile, wsConnect, wsDisco
 import { jwtHandleError } from "../../api/JwtHandleError";
 import { useSnackbar } from "notistack";
 import ToastAlert from "../../api/ToastAlert";
-import Room from "./Room";
 import { checkToken } from "../../api/checkToken";
+import {Room} from "./index";
 
 function DevChat(props) {
     const dispatch = useDispatch();

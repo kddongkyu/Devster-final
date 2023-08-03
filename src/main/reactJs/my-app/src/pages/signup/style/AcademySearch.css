@@ -172,7 +172,8 @@
 
 .signup-academy-modal-box {
     width: 96%;
-    height: 62.5vh;
+    height: 53rem;
+    max-width: 500px;
     z-index: 999;
     position: fixed;
     left: 50%;
