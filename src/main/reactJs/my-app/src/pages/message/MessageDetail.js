@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import '../message/style/Message.css'
 import axiosIns from "../../api/JwtConfig";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { jwtHandleError } from "../../api/JwtHandleError";
 import toastAlert from '../../api/ToastAlert';
 
@@ -9,6 +9,7 @@ import toastAlert from '../../api/ToastAlert';
 function MessageDetail(props) {
 
     const photoUrl = process.env.REACT_APP_MEMBERURL;
+    const navi = useNavigate();
 
     const [messageDetail, setMessageDetail] = useState(null);
     const { mes_idx } = useParams();  // URL 파라미터를 가져옵니다.
@@ -34,6 +35,16 @@ function MessageDetail(props) {
         }
     };
 
+    const setMemberPhotoUrl = (value) => {
+        if (!value) {
+            return require("./assets/logo_profile.svg").default;
+        }
+        const photoUrl = process.env.REACT_APP_PHOTO + "member/";
+        const srcUrl = photoUrl + value;
+
+        return srcUrl;
+    };
+
     useEffect(()=> {
         getMessageDetail();
     },[])
@@ -55,7 +66,7 @@ function MessageDetail(props) {
             </div>
             <div className="textmsg-detail-box">
                 {messageDetail && (
-                    <b>{messageDetail.content}</b>
+                    <pre>{messageDetail.content}</pre>
                 )}
             </div>
             <div className="button-container">
@@ -63,6 +74,9 @@ function MessageDetail(props) {
                 <button className="list-button" onClick={()=>{
                     window.location.href = "/message";
                 }}>목록</button>
+                <button className="responese-button" onClick={()=>{
+                    navi(`/message/form/${messageDetail.send_nick}`);
+                }}>답장</button>
             </div>
         </div>
     );

@@ -137,7 +137,7 @@
     margin-bottom: 3rem;
 }
 
-.delete-button, .list-button {
+.delete-button, .list-button, .responese-button {
     padding: 0.5rem 1rem; /* 버튼 내부에 여백을 추가합니다. */
     background-color: white; /* 버튼의 배경색을 설정합니다. */
     color: #721ea6; /* 버튼의 텍스트 색을 설정합니다. */
