@@ -91,26 +91,22 @@ function AcademySearch({isSearchOpen, setIsSearchOpen}) {
         dispatch(setAcademyIsValid(true));
         dispatch(setIsSelectedTouched(true));
         setIsSearchOpen(false);
-        document.documentElement.style.overflow = 'auto';
     }
 
     const confirmSearchModal = () => {
         dispatch(setIsSelectedTouched(true));
         setIsSearchOpen(false);
-        document.documentElement.style.overflow = 'auto';
     }
 
     const closeSearchModal = () => {
         if (ai_name !== null || ai_name !== '') {
             dispatch(setIsSelectedTouched(true));
             setIsSearchOpen(false);
-            document.documentElement.style.overflow = 'auto';
         } else {
             dispatch(setAi_idx(''));
             dispatch(setAi_name(''));
             dispatch(setIsSelectedTouched(true));
             setIsSearchOpen(false);
-            document.documentElement.style.overflow = 'auto';
         }
     }
 

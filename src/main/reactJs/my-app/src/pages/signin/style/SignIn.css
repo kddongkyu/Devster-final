@@ -392,6 +392,7 @@
     letter-spacing: 0.01em;
     font-weight: 500;
     color: #721ea6;
+    cursor: pointer;
 }
 
 .login-loginbtn-box {

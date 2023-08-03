@@ -73,7 +73,6 @@ function InputUpload(props) {
 
     const openCropModal = () => {
         setIsCropOpen(true);
-        document.documentElement.style.overflow = 'hidden';
     }
 
     return (
@@ -94,7 +93,7 @@ function InputUpload(props) {
                 <input
                     type='file'
                     hidden
-                    accept='image/*'
+                    accept='.jpg, .jpeg, .png'
                     ref={profileRef}
                     onChange={uploadProfileImg}
                 />

@@ -198,7 +198,12 @@ public class CompanyMemberService {
     }
 
     public String findId(String number) {
-        Optional<CompanyMemberEntity> optionalCompanyMember = companyMemberRepository.findByCMcp(number);
+        Optional<CompanyMemberEntity> optionalCompanyMember;
+        if(number.startsWith("0")) {
+            optionalCompanyMember = companyMemberRepository.findByCMcp(number);
+        } else {
+            optionalCompanyMember = companyMemberRepository.findByCMreg(number);
+        }
         if (optionalCompanyMember.isPresent()) {
             return optionalCompanyMember.get().getCMemail(); // 가정: MemberEntity에 getId() 메서드가 존재함
         } else {
@@ -206,9 +211,13 @@ public class CompanyMemberService {
             return "해당 email 로 가입된 회원은 존재하지 않습니다. " + number;
         }
     }
-
     public String resetPass(String number,String password) {
-        Optional<CompanyMemberEntity> optionalCompanyMember = companyMemberRepository.findByCMcp(number);
+        Optional<CompanyMemberEntity> optionalCompanyMember;
+        if(number.startsWith("0")) {
+            optionalCompanyMember = companyMemberRepository.findByCMcp(number);
+        } else {
+            optionalCompanyMember = companyMemberRepository.findByCMreg(number);
+        }
         if (optionalCompanyMember.isPresent()) {
             optionalCompanyMember.get().setCMpass(passwordEncoder.encode(password));
             companyMemberRepository.save(optionalCompanyMember.get());

@@ -1,0 +1,364 @@
+.finder {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 120rem;
+    overflow: hidden;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000;
+    font-family: "Noto Sans KR";
+}
+
+.finder-norm-id {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 33.9rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    height: 3.9rem;
+    text-align: left;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.85);
+    font-family: Roboto;
+    cursor: pointer;
+}
+
+.finder-norm-id-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 6px;
+    background-color: #721ea6;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 3.9rem;
+    text-align: center;
+}
+
+.finder-norm-id-box-false {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 3.9rem;
+    text-align: center;
+}
+
+.finder-norm-id-text {
+    line-height: 3.9rem;
+    font-weight: bold;
+    color: white;
+}
+
+.finder-norm-id-text-false {
+    line-height: 3.9rem;
+    font-weight: bold;
+    color: black;
+}
+
+.finder-norm-pass {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 38.6rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    height: 3.9rem;
+    text-align: left;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: Roboto;
+    cursor: pointer;
+}
+
+.finder-norm-pass-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 3.9rem;
+    text-align: center;
+}
+
+.finder-norm-pass-box-false {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 4px;
+    background-color: #721ea6;
+    border: 1px solid #d2d2d2;
+    box-sizing: border-box;
+    height: 3.9rem;
+    text-align: center;
+}
+
+.finder-norm-pass-text {
+    line-height: 3.9rem;
+    font-weight: bold;
+    color: black;
+}
+
+.finder-norm-pass-text-false {
+    line-height: 3.9rem;
+    font-weight: bold;
+    color: white;
+}
+
+.finder-norm-email-verify {
+    position: relative;
+    top: -30rem;
+}
+
+.finder-norm-email-pass {
+    position: relative;
+    top: -21.8rem;
+}
+
+.finder-norm-select {
+    position: absolute;
+    top: 51.7rem;
+    left: calc(50% - 42px);
+    width: 13.5rem;
+    height: 2.2rem;
+    font-size: 1.5rem;
+}
+
+.finder-norm-found {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.finder-norm-found .membership-type {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.finder-norm-found .user-id {
+    font-size: 2rem;
+    margin-top: 1rem;
+    color: #721ea6;
+}
+
+.finder-norm-found .login-link {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+    display: block;
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    transition: background-color 0.3s;
+    font-weight: 700;
+}
+
+.finder-norm-found .login-link:hover {
+    background-color: #f0f0f0;
+}
+
+.finder-norm-pass-update {
+    position: relative;
+    top: 8rem;
+}
+
+.finder-norm-newpass {
+    position: absolute;
+    top: 72.6rem;
+    left: 2.3rem;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+}
+
+.finder-norm-newpass-input {
+    position: relative;
+    top: -22rem;
+}
+
+.finder-norm-submit-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #721ea6;
+    height: 3.9rem;
+}
+
+.finder-norm-submit-text {
+    display: flex;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    line-height: 3.9rem;
+}
+
+.finder-norm-submit {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 150.4rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    height: 3.9rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.finder-comp-select {
+    position: absolute;
+    top: 51.7rem;
+    left: calc(50% - 78px);
+    width: 16.5rem;
+    height: 2.2rem;
+    font-size: 1.5rem;
+}
+
+.finder-comp-select-norm {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 94.5px);
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor: pointer;
+}
+
+.finder-comp-select-norm-false {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 94.5px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+}
+
+.finder-comp-select-bar-icon {
+    position: absolute;
+    top: 0.25rem;
+    left: calc(50% - 0.1px);
+    width: 0.12rem;
+    height: 1.9rem;
+}
+
+.finder-comp-select-comp {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 11.5px);
+    letter-spacing: 0.01em;
+    font-weight: bold;
+    color: #721ea6;
+    cursor: pointer;
+}
+
+.finder-comp-select-comp-false {
+    position: absolute;
+    top: 0;
+    left: calc(50% + 11.5px);
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+}
+
+.finder-comp-reg {
+    position: relative;
+    top: 25.4rem;
+}
+
+.finder-comp-cp {
+    position: relative;
+    top: -22rem;
+}
+
+.finder-comp-cp-id {
+    position:relative;
+    top:-30rem;
+}
+
+.finder-comp-found {
+    position: relative;
+    top: 78rem;
+}
+
+.finder-comp-email {
+    position:relative;
+    top:-30rem;
+}
+
+.finder-comp-reg-input {
+    position:relative;
+    top:8rem;
+}
+
+.finder-comp-reg-passupdate {
+    position: relative;
+    top:-17rem;
+}
+
+.finder-comp-reg-passupdate-text {
+    position: absolute;
+    top: 95.6rem;
+    left: 2.3rem;
+    letter-spacing: 0.01em;
+    font-weight: 700;
+}
+
+.finder-comp-submit-box {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 5px;
+    background-color: #721ea6;
+    height: 3.9rem;
+}
+
+.finder-comp-submit-text {
+    position: relative;
+    line-height: 3.9rem;
+    letter-spacing: 0.03em;
+}
+
+.finder-comp-submit {
+    position: absolute;
+    width: calc(100% - 112px);
+    top: 120.4rem;
+    right: 5.6rem;
+    left: 5.6rem;
+    height: 3.9rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.finder-comp-cp-text {
+    position: absolute;
+    top: 95.6rem;
+    left: 2.3rem;
+    letter-spacing: 0.01em;
+    font-weight: 700;
+}

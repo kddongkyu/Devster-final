@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import { setImgDetail } from '../../redux/devChat';
+import { setImgDetail, setSelectedMessage } from '../../redux/devChat';
 
 function Message({ item }) {
     const dispatch = useDispatch();
@@ -15,11 +15,16 @@ function Message({ item }) {
 
     const userName = useSelector(state => state.devChat.userName);
 
+    const handleOnImgDetail = (detailImg) => {
+        dispatch(setImgDetail(true));
+        dispatch(setSelectedMessage(detailImg));
+    }
+
+
     if (item?.type === 'READ_MARKER') {
         return (
             <div className='chat-body-readmarker'>
-                {console.log(item)}
-                {item.msg}
+                    <img alt='' src={require('./assets/chat_bookmark.svg').default}/>
             </div>
         );
     } else {
@@ -38,7 +43,7 @@ function Message({ item }) {
                                                 alt=''
                                                 src={`${msgImgUrl}${msgImgDir}/${url}`}
                                                 className='chat-msg-sended-preview'
-                                                onClick={()=>dispatch(setImgDetail(true))}
+                                                onClick={() => handleOnImgDetail(item)}
                                             />
                                         ))
                                     }
@@ -83,7 +88,7 @@ function Message({ item }) {
                                                 alt=''
                                                 src={`${msgImgUrl}${msgImgDir}/${url}`}
                                                 className='chat-msg-sended-preview'
-                                                onClick={()=>dispatch(setImgDetail(true))}
+                                                onClick={() => handleOnImgDetail(item)}
                                             />
                                         ))
                                     }
@@ -102,11 +107,20 @@ function Message({ item }) {
                         {
                             item.msg &&
                             <div className='chat-body-msg-r'>
-                                <img 
-                                    alt=''
-                                    className='chat-body-msg-r-img'
-                                    src={`${userImg}${item.userProfile}`}
-                                />
+                                {
+                                    item.userProfile ?
+                                        <img
+                                            alt=''
+                                            className='chat-body-msg-r-img'
+                                            src={`${userImg}${item.userProfile}`}
+                                        />
+                                        :
+                                        <img
+                                            alt=''
+                                            className='chat-body-msg-r-img'
+                                            src={require('./assets/logo_profile.svg').default}
+                                        />
+                                }
                                 <div className='chat-body-msg-r-id'>{item.userName}</div>
                                 <div className='chat-body-msg-r-parent'>
                                     <div className='chat-body-msg-r1'>

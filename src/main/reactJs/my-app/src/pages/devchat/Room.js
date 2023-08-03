@@ -1,20 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Message from './Message';
 import './style/Room.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeMarker, setHidden, setSendingMsg, wsPublish } from '../../redux/devChat';
-import ChatUpload from './ChatUpload';
+import { removeMarker, setHidden, setMenuList, setSendingMsg, wsPublish } from '../../redux/devChat';
 import axiosIns from '../../api/JwtConfig';
 import { jwtHandleError } from '../../api/JwtHandleError';
 import { useSnackbar } from 'notistack';
 import ToastAlert from '../../api/ToastAlert';
-import ChatList from './ChatList';
-import ImgDetail from './ImgDetail';
+import {ChatList, ChatUpload, ImgDetail, Message} from "./index";
 
 function Room(props) {
     const dispatch = useDispatch();
     const hidden = useSelector(state => state.devChat.hidden);
     const imgDetail = useSelector(state => state.devChat.imgDetail);
+    const menuList = useSelector(state => state.devChat.menuList);
     const modalOpen = useSelector(state => state.devChat.modalOpen);
     const sendingMsg = useSelector(state => state.devChat.sendingMsg);
     const roomName = useSelector(state => state.devChat.roomName);
@@ -110,12 +108,15 @@ function Room(props) {
                     src={require('./assets/chat_header_ppls_icon.svg').default}
                 />
                 <b className='chat-header-ppls'>{peopleCount}</b>
-                <img
-                    className='chat-header-menu-icon'
-                    alt=''
-                    src={require('./assets/chat_header_menu.svg').default}
-                />
-                <ChatList />
+                <div
+                    onClick={() => dispatch(setMenuList(true))}
+                >
+                    <img
+                        className='chat-header-menu-icon'
+                        alt=''
+                        src={require('./assets/chat_header_menu.svg').default}
+                    />
+                </div>
                 <div
                     onClick={handleMinimize}
                 >
@@ -184,13 +185,10 @@ function Room(props) {
                     setIsUploadOpen={setIsUploadOpen}
                 />
                 {
-                    imgDetail &&
-                    msg.map((item,idx)=> {
-                        return (
-                            <ImgDetail key={idx} item={item}/>
-                        )
-                    })
-                    
+                    imgDetail && <ImgDetail />
+                }
+                {
+                    menuList && <ChatList />
                 }
             </div>
         </div>

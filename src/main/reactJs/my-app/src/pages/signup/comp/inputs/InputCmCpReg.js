@@ -51,7 +51,6 @@ function InputCmCpReg(props) {
                 dispatch(setIsCpSent(true));
                 dispatch(setCpSeconds(180));
                 setCpRegNum(res.data);
-                console.log(res.data);
                 dispatch(setCpRegInput(''));
                 toastAlert(isCpSent ? '인증번호가 재발송되었습니다.' : '인증번호가 발송되었습니다.', 'success');
                 dispatch(setCpSendingInProg(false));

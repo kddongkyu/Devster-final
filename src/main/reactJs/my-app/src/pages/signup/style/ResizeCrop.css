@@ -107,12 +107,13 @@
 
 .sigup-crop-modal-box {
     width: 96%;
-    height: 74vh;
+    height: 62rem;
     z-index: 999;
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    max-width: 500px;
 }
 
 

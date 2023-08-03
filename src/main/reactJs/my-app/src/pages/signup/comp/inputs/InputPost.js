@@ -39,7 +39,6 @@ function InputPost(props) {
     const openAddrModal = () => {
         setIsAddrOpen(true);
         setOpenPostCode(true);
-        document.documentElement.style.overflow = 'hidden';
     }
 
     const handleSearchInput = () => {

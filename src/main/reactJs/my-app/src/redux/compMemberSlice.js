@@ -16,6 +16,7 @@ const initialState = {
     cpSeconds: null,
     emailRegInput: '',
     cpRegInput: '',
+    idType: false,
 
     regChk: false,
     compChk: false,
@@ -34,8 +35,8 @@ const initialState = {
     cpIsValid: false,
     postIsValid: false,
     firstAddrValid: false,
-    secondAddrValid:false,
-    contractValid:false,
+    secondAddrValid: false,
+    contractValid: false,
 
     isEmailSent: false,
     sendingInProg: false,
@@ -94,6 +95,9 @@ export const compMemberSlice = createSlice({
         setCpRegInput: (state, action) => {
             state.cpRegInput = action.payload;
         },
+        setIdType: (state, action) => {
+            state.idType = action.payload;
+        },
 
 
         setRegChk: (state, action) => {
@@ -146,11 +150,11 @@ export const compMemberSlice = createSlice({
         setFirstAddrValid: (state, action) => {
             state.firstAddrValid = action.payload;
         },
-        setSecondAddrValid:(state,action) => {
-            state.secondAddrValid=action.payload;
+        setSecondAddrValid: (state, action) => {
+            state.secondAddrValid = action.payload;
         },
-        setContractValid:(state,action) => {
-            state.contractValid=action.payload;
+        setContractValid: (state, action) => {
+            state.contractValid = action.payload;
         },
 
 
@@ -173,7 +177,7 @@ export const compMemberSlice = createSlice({
             state.isSubmitted = action.payload;
         },
 
-        resetCompMember:() => initialState,
+        resetCompMember: () => initialState,
     },
 });
 
@@ -194,6 +198,7 @@ export const {
     setCpSeconds,
     setEmailRegInput,
     setCpRegInput,
+    setIdType,
 
     setRegChk,
     setCompChk,

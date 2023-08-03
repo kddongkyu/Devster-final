@@ -10,6 +10,7 @@ const initialState = {
     ai_name: '',
     seconds: null,
     emailRegInput: '',
+    idType:false,
 
     idChk: false,
     emailChk: false,
@@ -64,6 +65,9 @@ export const normMemberSlice = createSlice({
         },
         setEmailRegInput: (state, action) => {
             state.emailRegInput = action.payload;
+        },
+        setIdType:(state,action) => {
+            state.idType=action.payload;
         },
 
 
@@ -141,6 +145,7 @@ export const {
     setAi_name,
     setSeconds,
     setEmailRegInput,
+    setIdType,
     setIdChk,
     setEmailChk,
     setEmailRegChk,

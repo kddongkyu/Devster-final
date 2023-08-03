@@ -70,7 +70,7 @@ function ChatUpload({ imgArr, setImgArr, uploadRef, isUploadOpen, setIsUploadOpe
             />
             {
                 isUploadOpen && imgArr.length > 0 &&
-                <div className="chat-upload-box">
+                <div className='chat-upload-box'>
                     {
                         imgArr.map((img, idx) => (
                             <div

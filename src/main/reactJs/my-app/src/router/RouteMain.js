@@ -53,6 +53,7 @@ import QboardDetail from "../pages/qboard/QboardDetail";
 import KakaoRedirect from "../api/social/KakaoRedirect";
 import NaverRedirect from "../api/social/NaverRedirect";
 import { DevChat } from "../pages/devchat";
+import {Finder} from "../pages/finder";
 
 
 function RouteMain(props) {
@@ -182,6 +183,7 @@ function RouteMain(props) {
       <Route path="/grats" element={<Grats />} />
       <Route path="/oauth2/authorization/kakao" element={<KakaoRedirect />} />
       <Route path="/oauth2/authorization/naver" element={<NaverRedirect />} />
+      <Route path="/finder" element={<Finder/>}/>
       <Route path="/devchat/:ai_idx" element={<DevChat />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
