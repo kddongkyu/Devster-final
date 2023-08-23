@@ -176,8 +176,16 @@
 
 ## 🎥 발표영상 🎥
 
-<a href="https://youtu.be/NXt0J5pUHhM"><img src="https://i.ibb.co/YdBrq6M/Kakao-Talk-20230808-164408077-01.png" alt="Kakao-Talk-20230808-164408077-01" border="0"></a>
-🌞 사진을 클릭하시면 유튜브 동영상으로 이동됩니다 🌞
+
+<div>
+<a href="https://youtu.be/NXt0J5pUHhM">
+<img src="https://i.ibb.co/YdBrq6M/Kakao-Talk-20230808-164408077-01.png" alt="Kakao-Talk-20230808-164408077-01" border="0">
+<br>
+</div>
+</a>
+　　　　　　　<b> 🌞 사진을 클릭하시면 유튜브 동영상으로 이동됩니다 🌞 </b>    
+
+
 
 <br><br>
 
