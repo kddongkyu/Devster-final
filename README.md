@@ -7,7 +7,10 @@
 <details>
   <summary><b> DB 설계</b></summary>
   <div>
-<img src="https://github.com/kddongkyu/Devster-final/assets/124576045/6732cb1f-61bd-4958-85fb-ac5172ae5fba">
+   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/00a532d6-3372-475f-9e71-1d2695f6f7e8">
+<br/>
+    <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/abb075f0-b190-4742-8843-d9f0dedd3b72" align="center" width="48%">
+    <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/e5a987bb-5449-4b57-8ba8-2e08282205b5" align="center" width="48%">
   </div>
 </details>
 
@@ -41,18 +44,18 @@
   <summary><b> 기술 소개</b></summary>
   <div>
     <b>JWT</b> <br/>
-  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/6c41957b-b8d3-4733-9d34-225674574334" align="center" width="48%">
-  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/560dc600-9f37-4c5e-a161-88e5ad67e249" align="center" width="48%">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/eb745824-ce01-449b-96c7-36d329d85c5d" align="center" width="48%">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/3b604e91-82c1-4281-907a-e576fb10bdd4" align="center" width="48%">
   </div>
 <br/>
     <b>Recux</b> <br/>
-  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/6c41957b-b8d3-4733-9d34-225674574334" align="center" width="48%">
-  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/560dc600-9f37-4c5e-a161-88e5ad67e249" align="center" width="48%">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/6c0c838c-e715-4909-b935-9395a9e74a1e" align="center" width="48%">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/f2da4e05-1ac0-4e5f-9a15-f986f0729056" align="center" width="48%">
   </div>
 <br/>
    <b>Architecture</b> <br/>
-  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/6c41957b-b8d3-4733-9d34-225674574334" align="center" width="48%">
-  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/560dc600-9f37-4c5e-a161-88e5ad67e249" align="center" width="48%">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/099d56bd-9389-4960-b63a-8b19936ce1fb" align="center" width="48%">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/65f8d96f-dabe-4820-955e-6b69ff5f7a9f" align="center" width="48%">
   </div>
 
   <br/>
