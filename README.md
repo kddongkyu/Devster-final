@@ -9,9 +9,11 @@
 </details>
 
 <details>
-  <summary><b> 컨벤</b></summary>
+  <summary><b> 컨벤션</b></summary>
   <div>
-<img src="https://github.com/kddongkyu/Devster-final/assets/124576045/4ea2a191-b7b1-47b9-b603-847cbadc932c">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/4ea2a191-b7b1-47b9-b603-847cbadc932c" align="center" width="48%">
+  <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/4ea2a191-b7b1-47b9-b603-847cbadc932c" align="center" width="48%">
+</p>
   </div>
 </details>
 
