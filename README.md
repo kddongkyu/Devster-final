@@ -174,6 +174,12 @@
 </details>
 <br><br>
 
+## 🎥 발표영상 🎥
+
+<a href="https://youtu.be/NXt0J5pUHhM"><img src="https://i.ibb.co/YdBrq6M/Kakao-Talk-20230808-164408077-01.png" alt="Kakao-Talk-20230808-164408077-01" border="0"></a>
+
+<br><br>
+
 ## 🛠 Design 🛠
 
 <br>
@@ -238,10 +244,6 @@
 
 <img src="https://img.shields.io/badge/mysql-%234479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white" />
 <img src="https://img.shields.io/badge/naver-%2303C75A.svg?&style=for-the-badge&logo=naver&logoColor=white" />
-
-## 🎥 발표영상 🎥
-
-<a href= "[https://www.youtube.com/watch?v=NXt0J5pUHhM&t=938s&ab_channel=%EB%A7%A4%EC%A7%81%EC%97%90%EA%BC%B4magicecole](https://youtu.be/NXt0J5pUHhM)">YouTube</a>
 ​
 </div>
 
