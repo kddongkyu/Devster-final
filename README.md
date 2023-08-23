@@ -24,11 +24,12 @@
 <details>
   <summary><b>컨벤션</b></summary>
   <div>
+<br/>
     <b>Git</b> <br/>
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/4d0bdd97-28a9-4faa-8d84-a997accfe1d0" align="center" width="48%">
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/01981718-52cd-46eb-823f-81451e69345a" align="center" width="48%">
   </div>
-<br/>
+<br/><br/>
    <b>JAVA</b> <br/>
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/b77fb94b-5cc3-409f-9598-13fc8f67f718" align="center" width="48%">
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/1a8179f7-7a76-410b-a0c3-5ab82a232990" align="center" width="48%">
@@ -41,8 +42,9 @@
 </details>
 
 <details>
-  <summary><b> 기술 소개</b></summary>
+  <summary><b>기술 소개</b></summary>
   <div>
+<br/>
     <b>JWT</b> <br/>
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/eb745824-ce01-449b-96c7-36d329d85c5d" align="center" width="48%">
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/3b604e91-82c1-4281-907a-e576fb10bdd4" align="center" width="48%">
@@ -52,6 +54,7 @@
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/6c0c838c-e715-4909-b935-9395a9e74a1e" align="center" width="48%">
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/f2da4e05-1ac0-4e5f-9a15-f986f0729056" align="center" width="48%">
   </div>
+<br/>
 <br/>
    <b>Architecture</b> <br/>
   <img src="https://github.com/kddongkyu/Devster-final/assets/124576045/099d56bd-9389-4960-b63a-8b19936ce1fb" align="center" width="48%">
